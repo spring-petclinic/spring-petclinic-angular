@@ -1,0 +1,68 @@
+<!--
+  ~ /*
+  ~  * Copyright 2016-2017 the original author or authors.
+  ~  *
+  ~  * Licensed under the Apache License, Version 2.0 (the "License");
+  ~  * you may not use this file except in compliance with the License.
+  ~  * You may obtain a copy of the License at
+  ~  *
+  ~  *      http://www.apache.org/licenses/LICENSE-2.0
+  ~  *
+  ~  * Unless required by applicable law or agreed to in writing, software
+  ~  * distributed under the License is distributed on an "AS IS" BASIS,
+  ~  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~  * See the License for the specific language governing permissions and
+  ~  * limitations under the License.
+  ~  */
+  -->
+
+<div class="container-fluid">
+  <div class="container xd-container">
+    <h2>Owners</h2>
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th>Name</th>
+          <th>Address</th>
+          <th>City</th>
+          <th>Telephone</th>
+          <th>Pets</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <!-- <a  routerLink="/owners/{{owner.id}}" routerLinkActive="active" -->
+        <tr *ngFor="let owner of owners">
+          <td class="ownerFullName"><a routerLink="/owners/{{owner.id}}" routerLinkActive="active"
+                                       (click)="onSelect(owner)">{{owner.firstName}} {{owner.lastName}}</a></td>
+          <td>{{owner.address}}</td>
+          <td>{{owner.city}}</td>
+          <td>{{owner.telephone}}</td>
+          <td>
+        <tr *ngFor="let pet of owner.pets">
+          {{pet.name}}
+        </tr>
+        </td>
+        </tr>
+        </tbody>
+      </table>
+      <div>
+        <button class="btn btn-default" (click)="addOwner()">Add Owner</button>
+      </div>
+    </div>
+
+    <br/>
+    <br/>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-12 text-center"><img src="../../../assets/images/angular.png"
+                                             alt="Angular" height="80" width="80"/>
+          <img src="../../../assets/images/spring-pivotal-logo.png"
+               alt="Sponsored by Pivotal"/></div>
+      </div>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,95 @@
+<!--
+  ~ /*
+  ~  * Copyright 2016-2017 the original author or authors.
+  ~  *
+  ~  * Licensed under the Apache License, Version 2.0 (the "License");
+  ~  * you may not use this file except in compliance with the License.
+  ~  * You may obtain a copy of the License at
+  ~  *
+  ~  *      http://www.apache.org/licenses/LICENSE-2.0
+  ~  *
+  ~  * Unless required by applicable law or agreed to in writing, software
+  ~  * distributed under the License is distributed on an "AS IS" BASIS,
+  ~  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~  * See the License for the specific language governing permissions and
+  ~  * limitations under the License.
+  ~  */
+  -->
+
+<div class="container-fluid">
+  <div class="container xd-container">
+
+    <h2>New Visit</h2>
+
+    <b>Pet</b>
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th>Name</th>
+        <th>Birth Date</th>
+        <th>Type</th>
+        <th>Owner</th>
+      </tr>
+      </thead>
+      <tr>
+        <td>{{ current_pet.name }}</td>
+        <td>{{ current_pet.birthDate }}</td>
+        <td>{{ current_pet_type.name }}</td>
+        <td>{{ current_owner.firstName }} {{ current_owner.lastName }}</td>
+      </tr>
+
+    </table>
+
+    <form id="visit" class="form-horizontal" (ngSubmit)="onSubmit(visitForm.value)" #visitForm="ngForm">
+
+      <div class="form-group has-feedback">
+
+        <div class="form-group ">
+          <label class="col-sm-2 control-label">Date</label>
+          <div class="col-sm-10">
+            <input id="date" name="date" class="form-control" type="text" [(ngModel)]="visit.date"/>
+            <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+          </div>
+        </div>
+        <div class="form-group ">
+          <label class="col-sm-2 control-label">Description</label>
+          <div class="col-sm-10">
+            <input id="description" name="description" class="form-control" type="text"
+                   [(ngModel)]="visit.description"/>
+          </div>
+        </div>
+
+      </div>
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+          <input type="hidden" name="id" id="id" [(ngModel)]="visit.id"/>
+          <input type="hidden" name="pet" id="pet" [(ngModel)]="visit.pet"/>
+          <button class="btn btn-default" type="button" (click)="gotoOwnerDetail()">Back</button>
+          <button class="btn btn-default" type="submit">Add Visit</button>
+        </div>
+      </div>
+    </form>
+
+    <br/>
+    <div class="col-12 text-left">
+      <p>
+        <b>Previous Visits</b>
+      </p>
+    </div>
+    <br/>
+    <div class="container">
+      <div class="row">
+        <div class="col-12 text-center">
+          <app-visit-list *ngFor="let visit of current_pet.visits" [visit]="visit"></app-visit-list>
+        </div>
+      </div>
+    </div>
+    <br/>
+    <div class="container">
+      <div class="row">
+        <div class="col-12 text-center"><img src="/petclinic/assets/images/spring-pivotal-logo.png"
+                                             alt="Sponsored by Pivotal"/></div>
+      </div>
+    </div>
+  </div>
+</div>
