@@ -7,6 +7,25 @@ Warning: **client only**.
   You need start backend server before start frontend application.
   
 
+## Installation
+1. Update angular-cli to latest version (1.0.0-beta.32.3 current)
+as described on [angular-cli github readme.md](https://github.com/angular/angular-cli#updating-angular-cli)
+
+````
+npm uninstall -g angular-cli @angular/cli
+npm cache clean
+npm install -g @angular/cli@latest
+````
+Clone project from github
+````
+git clone https://github.com/spring-petclinic/spring-petclinic-angular2.git
+````
+Install local project package
+````
+npm install --save-dev @angular/cli@latest
+npm install
+````
+
 ## Development server
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
