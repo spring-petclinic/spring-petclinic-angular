@@ -16,6 +16,38 @@
   ~  */
   -->
 
-<p>
-  specialty-list works!
-</p>
+<div class="container-fluid">
+  <div class="container xd-container">
+
+    <h2>Specialties</h2>
+
+    <table id="vets" class="table table-striped">
+      <thead>
+      <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th></th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let specialty of specialties; let element_id=index">
+        <td>
+          {{ specialty.id }}
+        </td>
+        <td>
+          <input [readonly]="!is_edit" type="text" class="form-control"  [id]=element_id [(ngModel)]="specialty.name" name="spec_name" />
+        </td>
+        <td>
+          <button class="btn btn-default" (click)="editSpecialty(specialty)">{{current_state}}</button>
+          <button class="btn btn-default" (click)="deleteSpecialty(specialty)">Delete</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+    <div>
+      <button class="btn btn-default" (click)="gotoHome()">Home</button>
+      <button class="btn btn-default" (click)="addSpecialty()"> Add </button>
+    </div>
+  </div>
+</div>
