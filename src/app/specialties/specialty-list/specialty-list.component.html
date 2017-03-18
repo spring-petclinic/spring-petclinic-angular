@@ -45,6 +45,9 @@
       </tr>
       </tbody>
     </table>
+    <div *ngIf="is_insert">
+      <app-specialty-add>...</app-specialty-add>
+    </div>
     <div>
       <button class="btn btn-default" (click)="gotoHome()">Home</button>
       <button class="btn btn-default" (click)="addSpecialty()"> Add </button>

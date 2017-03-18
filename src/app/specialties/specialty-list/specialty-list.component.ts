@@ -35,6 +35,7 @@ export class SpecialtyListComponent implements OnInit {
   errorMessage: string;
   response_status: number;
   is_edit: boolean = false;
+  is_insert: boolean = false;
   current_state: string = 'Edit';
 
 
@@ -54,6 +55,12 @@ export class SpecialtyListComponent implements OnInit {
   }
 
   addSpecialty(specialty: Specialty) {
+    if (this.is_insert) {
+
+      this.is_insert = false;
+    } else {
+      this.is_insert = true;
+    }
 
   }
 
