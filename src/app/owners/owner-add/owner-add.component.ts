@@ -34,7 +34,6 @@ export class OwnerAddComponent implements OnInit {
 
   owner: Owner;
   errorMessage: string;
-  added_success: boolean = false;
 
   constructor(private ownerService: OwnerService, private router: Router) {
     this.owner = <Owner>{};
@@ -47,8 +46,8 @@ export class OwnerAddComponent implements OnInit {
     owner.id = null;
     this.ownerService.addOwner(owner).subscribe(
       new_owner => {
-        this.added_success = true;
-        return this.owner = new_owner;
+        this.owner = new_owner;
+        this.gotoOwnersList();
       },
       error => this.errorMessage = <any>error
     );
