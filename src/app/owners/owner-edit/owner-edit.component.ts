@@ -47,6 +47,7 @@ export class OwnerEditComponent implements OnInit {
   }
 
   onSubmit(owner) {
+    var that = this;
     this.ownerService.updateOwner(owner.id.toString(), owner).subscribe(
       get_result,
       get_error
@@ -61,7 +62,8 @@ export class OwnerEditComponent implements OnInit {
     function get_result(update_status) {
       console.log(update_status);
       if (update_status.status === 204) {
-        return console.log('update success');
+        console.log('update success');
+        that.gotoOwnerDetail(owner);
       } else {
         return console.log('update failed');
       }
@@ -71,5 +73,7 @@ export class OwnerEditComponent implements OnInit {
   gotoOwnerDetail(owner: Owner) {
     this.router.navigate(['/owners', owner.id]);
   }
+
+
 
 }
