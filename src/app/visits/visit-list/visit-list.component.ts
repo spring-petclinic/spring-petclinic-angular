@@ -32,13 +32,13 @@ import {Router} from '@angular/router';
 })
 export class VisitListComponent implements OnInit {
 
-  @Input() visit: Visit;
+  @Input() visits: Visit[];
   response_status: number;
   delete_success: boolean = false;
   errorMessage: string;
 
   constructor(private router: Router, private visitService: VisitService) {
-    this.visit = <Visit>{};
+    this.visits = [];
   }
 
   ngOnInit() {
@@ -54,7 +54,7 @@ export class VisitListComponent implements OnInit {
         this.response_status = response;
         if (this.response_status === 204) {
           this.delete_success = true;
-          this.visit = <Visit>{};
+          this.visits = [];
         }
       },
       error => this.errorMessage = <any> error);

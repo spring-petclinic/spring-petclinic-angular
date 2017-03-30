@@ -21,17 +21,14 @@
   <tr>
     <th>Visit Date</th>
     <th>Description</th>
+    <th>Actions</th>
   </tr>
   </thead>
-  <tr>
+  <tr *ngFor="let visit of visits">
     <td>{{visit.date}}</td>
     <td>{{visit.description}}</td>
-  </tr>
-  <tr>
     <td>
       <button class="btn btn-default" (click)="editVisit(visit)">Edit Visit</button>
-    </td>
-    <td>
       <button class="btn btn-default" (click)="deleteVisit(visit)">Delete Visit</button>
     </td>
   </tr>

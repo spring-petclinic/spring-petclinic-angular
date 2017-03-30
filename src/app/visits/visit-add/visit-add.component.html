@@ -80,7 +80,7 @@
     <div class="container">
       <div class="row">
         <div class="col-12 text-center">
-          <app-visit-list *ngFor="let visit of current_pet.visits" [visit]="visit"></app-visit-list>
+          <app-visit-list [visits]="current_pet.visits"></app-visit-list>
         </div>
       </div>
     </div>
