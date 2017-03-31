@@ -34,7 +34,7 @@ export class VisitListComponent implements OnInit {
 
   @Input() visits: Visit[];
   response_status: number;
-  delete_success: boolean = false;
+  no_visits: boolean = false;
   errorMessage: string;
 
   constructor(private router: Router, private visitService: VisitService) {
@@ -53,8 +53,11 @@ export class VisitListComponent implements OnInit {
       response => {
         this.response_status = response;
         if (this.response_status === 204) {
-          this.delete_success = true;
-          this.visits = [];
+          console.log('delete success');
+          this.visits.splice(this.visits.indexOf(visit), 1 );
+          if (this.visits.length === 0) {
+            this.no_visits = true;
+          }
         }
       },
       error => this.errorMessage = <any> error);
