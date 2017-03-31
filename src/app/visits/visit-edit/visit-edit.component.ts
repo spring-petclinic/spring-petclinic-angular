@@ -62,12 +62,14 @@ export class VisitEditComponent implements OnInit {
 
   onSubmit(visit: Visit) {
     visit.pet = this.current_pet;
+    var that = this;
     this.visitService.updateVisit(visit.id.toString(), visit).subscribe(
-      response => get_result,
+      get_result,
       error => this.errorMessage = <any> error);
     function get_result(update_status) {
       if (update_status.status === 204) {
-        return console.log('update success');
+        console.log('update success');
+        that.gotoOwnerDetail();
       } else {
         return console.log('update failed');
       }

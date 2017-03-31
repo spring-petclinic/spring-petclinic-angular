@@ -66,11 +66,13 @@ export class VisitAddComponent implements OnInit {
 
   onSubmit(visit: Visit) {
     visit.id = null;
+    var that = this;
     console.log(visit);
     this.visitService.addVisit(visit).subscribe(
       new_visit => {
         this.visit = new_visit;
         this.added_success = true;
+        that.gotoOwnerDetail();
       },
       error => this.errorMessage = <any>error
     );
