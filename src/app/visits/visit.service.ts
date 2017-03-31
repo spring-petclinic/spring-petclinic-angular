@@ -65,7 +65,9 @@ export class VisitService {
   }
 
   deleteVisit(visit_id: string): Observable<number> {
-    return this._http.delete((this.entity_url + '/' + visit_id))
+    const headers = new Headers({'Content-Type': ' application/json;charset=UTF-8'});
+    const options = new RequestOptions({headers: headers});
+    return this._http.delete((this.entity_url + '/' + visit_id), options)
       .map((response: Response) => response.status)
       .catch(this.handleError);
 
