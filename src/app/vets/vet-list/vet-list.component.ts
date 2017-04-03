@@ -43,4 +43,12 @@ export class VetListComponent implements OnInit {
       error => this.errorMessage = <any> error);
   }
 
+  gotoHome() {
+    // TODO not completed
+  }
+
+  addVet() {
+    // TODO not completed
+  }
+
 }

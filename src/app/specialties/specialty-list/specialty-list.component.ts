@@ -54,7 +54,7 @@ export class SpecialtyListComponent implements OnInit {
     this.router.navigate(['/welcome']);
   }
 
-  addSpecialty(specialty: Specialty) {
+  addSpecialty() {
     if (this.is_insert) {
 
       this.is_insert = false;

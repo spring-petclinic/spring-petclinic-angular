@@ -35,4 +35,8 @@ export class SpecialtyAddComponent implements OnInit {
   ngOnInit() {
   }
 
+  onSubmit(specialty: Specialty) {
+    // TODO not completed
+}
+
 }
