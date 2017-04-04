@@ -62,23 +62,8 @@ export class VisitAddComponent implements OnInit {
     { text: 'Dialog', value: 'dialog' }];
 
   date: Date = null;
-  minDate: Date = null;
-  maxDate: Date = null;
-  enableDates: Array<Date> = [
-    new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate() - 7),
-    new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate() - 1),
-    new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate() + 5),
-    new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate() + 7),
-    new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate() + 8)
-  ];
-  disableDates: Array<Date> = [
-    new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate() - 2),
-    new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate() - 1),
-    new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate() + 2),
-    new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate() + 5),
-    new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate() + 9)
-  ];
-  disableWeekDays: Array<number> = [0, 6];
+
+  dateFormat: string = 'yyyy/MM/dd';
 
   //  end copy datepicker demo
 
