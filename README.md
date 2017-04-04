@@ -8,7 +8,7 @@ Warning: **client only**.
   
 
 ## Installation
-1. Update angular-cli to latest version (1.0.0-beta.32.3 current)
+1. Update angular-cli to latest version (1.0 current)
 as described on [angular-cli github readme.md](https://github.com/angular/angular-cli#updating-angular-cli)
 
 ````
