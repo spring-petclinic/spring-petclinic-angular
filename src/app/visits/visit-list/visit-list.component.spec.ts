@@ -41,7 +41,7 @@ describe('VisitListComponent', () => {
   let component: VisitListComponent;
   let fixture: ComponentFixture<VisitListComponent>;
   let visitService: VisitService;
-  let testVisit: Visit;
+  let testVisits: Visit[];
   let testPet: Pet;
   let spy: Spy;
   let response_status: number;
@@ -79,16 +79,16 @@ describe('VisitListComponent', () => {
       },
       visits: null
     };
-    testVisit = {
+    testVisits =  [{
       id: 1,
       date: '2016-09-07',
       description: '',
       pet: testPet
-    };
+    }];
 
     visitService = fixture.debugElement.injector.get(VisitService);
     response_status = 204; // success delete return NO_CONTENT
-    component.visit = testVisit;
+    component.visits = testVisits;
 
     spy = spyOn(visitService, 'deleteVisit')
       .and.returnValue(Observable.of(response_status));
@@ -102,7 +102,7 @@ describe('VisitListComponent', () => {
 
   it('should call deleteVisit() method', () => {
     fixture.detectChanges();
-    component.deleteVisit(component.visit);
+    component.deleteVisit(component.visits[0]);
     expect(spy.calls.any()).toBe(true, 'deleteVisit called');
   });
 
