@@ -17,13 +17,13 @@
  */
 
 
-import { SpringPetclinicAngular2Page } from './app.po';
+import { SpringPetclinicAngularPage } from './app.po';
 
-describe('spring-petclinic-angular2 App', function() {
-  let page: SpringPetclinicAngular2Page;
+describe('spring-petclinic-angular App', function() {
+  let page: SpringPetclinicAngularPage;
 
   beforeEach(() => {
-    page = new SpringPetclinicAngular2Page();
+    page = new SpringPetclinicAngularPage();
   });
 
   it('should display message saying app works', () => {

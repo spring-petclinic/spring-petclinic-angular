@@ -1,6 +1,6 @@
 {
-  "name": "spring-petclinic-angular2",
-  "version": "0.0.0",
+  "name": "spring-petclinic-angular",
+  "version": "0.1.0",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
@@ -35,6 +35,7 @@
   "devDependencies": {
     "@angular/cli": "^1.0.0",
     "@angular/compiler-cli": "^4.0.0",
+    "@angular/language-service": "^4.0.1",
     "@types/jasmine": "2.5.38",
     "@types/node": "~6.0.60",
     "codelyzer": "~2.0.0",

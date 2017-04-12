@@ -1,6 +1,6 @@
-# Spring Petclinic Angular2
+# Spring Petclinic Angular
 
-####**Angular2 frontend for Spring Petclinic.**
+####**Angular frontend for Spring Petclinic.**
 
 Warning: **client only**. 
   Use REST API from backend [spring-petclinic-rest project](https://github.com/spring-petclinic/spring-petclinic-rest)
@@ -18,13 +18,16 @@ npm install -g @angular/cli@latest
 ````
 Clone project from github
 ````
-git clone https://github.com/spring-petclinic/spring-petclinic-angular2.git
+git clone https://github.com/spring-petclinic/spring-petclinic-angular.git
 ````
 Install local project package
 ````
 npm install --save-dev @angular/cli@latest
 npm install
 ````
+
+Now project use Angular CLI v.1.0 and Angular v.4.0.
+You can see current dependencies in package.json file.
 
 ## Development server
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
