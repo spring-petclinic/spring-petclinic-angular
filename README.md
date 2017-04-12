@@ -1,4 +1,4 @@
-# Spring Petclinic Angular
+# Spring Petclinic Angular [![Build Status](https://travis-ci.org/spring-petclinic/spring-petclinic-angular.png?branch=master)](https://travis-ci.org/spring-petclinic/spring-petclinic-angular/)
 
 ####**Angular frontend for Spring Petclinic.**
 
