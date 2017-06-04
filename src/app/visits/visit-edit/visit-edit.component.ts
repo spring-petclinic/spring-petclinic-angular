@@ -63,6 +63,10 @@ export class VisitEditComponent implements OnInit {
   onSubmit(visit: Visit) {
     visit.pet = this.current_pet;
     var that = this;
+    // format output from datepicker to short string yyyy/mm/dd format, and timezone correct
+    var tzoffset = (new Date()).getTimezoneOffset() * 60000;
+    var visit_date_as_time = new Date(visit.date).getTime();
+    visit.date = new Date(visit_date_as_time - tzoffset).toISOString().substring(0, 10).replace(/-/g, '/');
     this.visitService.updateVisit(visit.id.toString(), visit).subscribe(
       get_result,
       error => this.errorMessage = <any> error);

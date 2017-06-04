@@ -36,6 +36,7 @@ import {Owner} from '../../owners/owner';
   styleUrls: ['./visit-add.component.css']
 })
 export class VisitAddComponent implements OnInit {
+
   visit: Visit;
   current_pet: Pet;
   current_owner: Owner;
@@ -67,7 +68,8 @@ export class VisitAddComponent implements OnInit {
   onSubmit(visit: Visit) {
     visit.id = null;
     var that = this;
-    console.log(visit);
+    // format output from datepicker to short string yyyy/mm/dd format
+    visit.date = new Date(visit.date).toISOString().substring(0, 10).replace(/-/g, '/');
     this.visitService.addVisit(visit).subscribe(
       new_visit => {
         this.visit = new_visit;

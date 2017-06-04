@@ -29,11 +29,13 @@ import {VisitService} from './visit.service';
 import {VisitAddComponent} from './visit-add/visit-add.component';
 import {FormsModule} from '@angular/forms';
 import {PetsRoutingModule} from '../pets/pets-routing.module';
+import { Md2Module } from 'md2';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
+    Md2Module,
     VisitsRoutingModule,
     PetsRoutingModule
   ],
