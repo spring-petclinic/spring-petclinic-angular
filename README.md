@@ -8,7 +8,7 @@ Warning: **client only**.
   
 
 ## Installation
-1. Update angular-cli to latest version (1.0 current)
+1. Update angular-cli to latest version (1.1 current)
 as described on [angular-cli github readme.md](https://github.com/angular/angular-cli#updating-angular-cli)
 
 ````
@@ -23,10 +23,11 @@ git clone https://github.com/spring-petclinic/spring-petclinic-angular.git
 Install local project package
 ````
 npm install --save-dev @angular/cli@latest
+if npm version > 5.0 delete package-lock.json file  ( bug - this file prevent correct packages install)
 npm install
 ````
 
-Now project use Angular CLI v.1.0 and Angular v.4.0.
+Now project use Angular CLI v.1.1 and Angular v.4.1.
 You can see current dependencies in package.json file.
 
 ## Development server
@@ -34,7 +35,7 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app w
 
 ## Code scaffolding
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive/pipe/service/class/module`.
+Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|module`.
 
 ## Build
 

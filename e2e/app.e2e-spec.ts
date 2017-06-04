@@ -19,15 +19,17 @@
 
 import { SpringPetclinicAngularPage } from './app.po';
 
-describe('spring-petclinic-angular App', function() {
+describe('spring-petclinic-angular App', () => {
   let page: SpringPetclinicAngularPage;
 
   beforeEach(() => {
     page = new SpringPetclinicAngularPage();
   });
 
-  it('should display message saying app works', () => {
+  it('should display app works message', done => {
     page.navigateTo();
-    expect(page.getParagraphText()).toEqual('app works!');
+    page.getParagraphText()
+      .then(msg => expect(msg).toEqual('app works!'))
+      .then(done, done.fail);
   });
 });
