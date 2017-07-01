@@ -29,11 +29,13 @@ import {VisitsModule} from '../visits/visits.module';
 import {PetEditComponent} from './pet-edit/pet-edit.component';
 import {FormsModule} from '@angular/forms';
 import {PetAddComponent} from './pet-add/pet-add.component';
+import { Md2Module } from 'md2';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
+    Md2Module,
     PetsRoutingModule,
     VisitsModule
   ],

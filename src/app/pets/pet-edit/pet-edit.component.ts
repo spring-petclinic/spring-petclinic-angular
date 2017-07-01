@@ -68,13 +68,19 @@ export class PetEditComponent implements OnInit {
 
   onSubmit(pet: Pet) {
     pet.type = this.current_type;
+    var that = this;
+    // format output from datepicker to short string yyyy/mm/dd format, and timezone correct
+    var tzoffset = (new Date()).getTimezoneOffset() * 60000;
+    var pet_date_as_time = new Date(pet.birthDate).getTime();
+    pet.birthDate = new Date(pet_date_as_time - tzoffset).toISOString().substring(0, 10).replace(/-/g, '/');
     this.petService.updatePet(pet.id.toString(), pet).subscribe(
       get_result,
       error => this.errorMessage = <any> error
     );
     function get_result(update_status) {
       if (update_status.status === 204) {
-        return console.log('update success');
+        console.log('update success');
+        that.gotoOwnerDetail(pet.owner);
       } else {
         return console.log('update failed');
       }

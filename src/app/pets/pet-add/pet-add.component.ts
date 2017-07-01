@@ -67,6 +67,8 @@ export class PetAddComponent implements OnInit {
   onSubmit(pet: Pet) {
     pet.id = null;
     pet.owner = this.current_owner;
+    // format output from datepicker to short string yyyy/mm/dd format
+    pet.birthDate = new Date(pet.birthDate).toISOString().substring(0, 10).replace(/-/g, '/');
     this.petService.addPet(pet).subscribe(
       new_pet => {
         this.pet = new_pet;
