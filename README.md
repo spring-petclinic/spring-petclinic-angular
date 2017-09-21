@@ -8,7 +8,7 @@ Warning: **client only**.
   
 
 ## Installation
-1. Update angular-cli to latest version (1.1 current)
+1. Update angular-cli to latest version (1.4.2 current)
 as described on [angular-cli github readme.md](https://github.com/angular/angular-cli#updating-angular-cli)
 
 ````
@@ -27,7 +27,7 @@ if npm version > 5.0 delete package-lock.json file  ( bug - this file prevent co
 npm install
 ````
 
-Now project use Angular CLI v.1.1 and Angular v.4.1.
+Now project use Angular CLI v.1.4.2 and Angular v.4.4.
 You can see current dependencies in package.json file.
 
 ## Development server
