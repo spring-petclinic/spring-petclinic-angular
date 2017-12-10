@@ -29,6 +29,7 @@ import {Pet} from '../../pets/pet';
 import {PetType} from '../../pettypes/pettype';
 import {Owner} from '../../owners/owner';
 
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-visit-add',
@@ -68,8 +69,11 @@ export class VisitAddComponent implements OnInit {
   onSubmit(visit: Visit) {
     visit.id = null;
     var that = this;
+
     // format output from datepicker to short string yyyy/mm/dd format
-    visit.date = new Date(visit.date).toISOString().substring(0, 10).replace(/-/g, '/');
+    visit.date = moment(visit.date).format('YYYY/MM/DD');
+
+
     this.visitService.addVisit(visit).subscribe(
       new_visit => {
         this.visit = new_visit;

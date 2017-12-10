@@ -28,6 +28,8 @@ import {PetType} from '../../pettypes/pettype';
 import {VisitService} from '../visit.service';
 import {ActivatedRoute, Router} from '@angular/router';
 
+import * as moment from 'moment';
+
 @Component({
   selector: 'app-visit-edit',
   templateUrl: './visit-edit.component.html',
@@ -53,6 +55,7 @@ export class VisitEditComponent implements OnInit {
     this.visitService.getVisitById(visitId).subscribe(
       response => {
         this.visit = response;
+
         this.current_pet = this.visit.pet;
         this.current_pet_type = this.current_pet.type;
         this.current_owner = this.current_pet.owner;
@@ -63,10 +66,10 @@ export class VisitEditComponent implements OnInit {
   onSubmit(visit: Visit) {
     visit.pet = this.current_pet;
     var that = this;
-    // format output from datepicker to short string yyyy/mm/dd format, and timezone correct
-    var tzoffset = (new Date()).getTimezoneOffset() * 60000;
-    var visit_date_as_time = new Date(visit.date).getTime();
-    visit.date = new Date(visit_date_as_time - tzoffset).toISOString().substring(0, 10).replace(/-/g, '/');
+
+    // format output from datepicker to short string yyyy/mm/dd format
+    visit.date = moment(visit.date).format('YYYY/MM/DD');
+
     this.visitService.updateVisit(visit.id.toString(), visit).subscribe(
       get_result,
       error => this.errorMessage = <any> error);

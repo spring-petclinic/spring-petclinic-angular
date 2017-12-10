@@ -37,6 +37,8 @@ import {RouterStub, ActivatedRouteStub} from '../../testing/router-stubs';
 import {Pet} from '../pet';
 import Spy = jasmine.Spy;
 import {Observable} from 'rxjs';
+import {MatDatepickerModule} from '@angular/material';
+import {MatMomentDateModule} from '@angular/material-moment-adapter';
 
 describe('PetEditComponent', () => {
   let component: PetEditComponent;
@@ -49,7 +51,7 @@ describe('PetEditComponent', () => {
     TestBed.configureTestingModule({
       declarations: [PetEditComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [FormsModule, HttpModule],
+      imports: [FormsModule, HttpModule, MatDatepickerModule, MatMomentDateModule],
       providers: [
         PetService, OwnerService, PetTypeService,
         {provide: Router, useClass: RouterStub},

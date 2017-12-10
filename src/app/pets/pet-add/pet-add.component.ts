@@ -30,6 +30,8 @@ import {PetTypeService} from '../../pettypes/pettype.service';
 import {PetService} from '../pet.service';
 import {OwnerService} from '../../owners/owner.service';
 
+import * as moment from 'moment';
+
 @Component({
   selector: 'app-pet-add',
   templateUrl: './pet-add.component.html',
@@ -68,7 +70,7 @@ export class PetAddComponent implements OnInit {
     pet.id = null;
     pet.owner = this.current_owner;
     // format output from datepicker to short string yyyy/mm/dd format
-    pet.birthDate = new Date(pet.birthDate).toISOString().substring(0, 10).replace(/-/g, '/');
+    pet.birthDate = moment(pet.birthDate).format('YYYY/MM/DD');
     this.petService.addPet(pet).subscribe(
       new_pet => {
         this.pet = new_pet;

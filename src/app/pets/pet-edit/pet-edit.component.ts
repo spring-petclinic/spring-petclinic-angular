@@ -29,6 +29,7 @@ import {Owner} from '../../owners/owner';
 import {PetType} from '../../pettypes/pettype';
 import {PetTypeService} from '../../pettypes/pettype.service';
 
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-pet-edit',
@@ -69,10 +70,9 @@ export class PetEditComponent implements OnInit {
   onSubmit(pet: Pet) {
     pet.type = this.current_type;
     var that = this;
-    // format output from datepicker to short string yyyy/mm/dd format, and timezone correct
-    var tzoffset = (new Date()).getTimezoneOffset() * 60000;
-    var pet_date_as_time = new Date(pet.birthDate).getTime();
-    pet.birthDate = new Date(pet_date_as_time - tzoffset).toISOString().substring(0, 10).replace(/-/g, '/');
+    // format output from datepicker to short string yyyy/mm/dd format
+    pet.birthDate = moment(pet.birthDate).format('YYYY/MM/DD');
+
     this.petService.updatePet(pet.id.toString(), pet).subscribe(
       get_result,
       error => this.errorMessage = <any> error

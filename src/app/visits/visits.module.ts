@@ -29,13 +29,28 @@ import {VisitService} from './visit.service';
 import {VisitAddComponent} from './visit-add/visit-add.component';
 import {FormsModule} from '@angular/forms';
 import {PetsRoutingModule} from '../pets/pets-routing.module';
-import { Md2Module } from 'md2';
+import {MatMomentDateModule, MomentDateAdapter} from '@angular/material-moment-adapter';
+import {MatDatepickerModule} from '@angular/material';
+import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
+
+export const MY_DATE_FORMATS = {
+  parse: {
+    dateInput: 'YYYY/MM/DD',
+  },
+  display: {
+    dateInput: 'YYYY/MM/DD',
+    monthYearLabel: 'MM YYYY',
+    dateA11yLabel: 'YYYY/MM/DD',
+    monthYearA11yLabel: 'MM YYYY',
+  },
+};
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
-    Md2Module,
+    MatDatepickerModule,
+    MatMomentDateModule,
     VisitsRoutingModule,
     PetsRoutingModule
   ],
@@ -49,7 +64,11 @@ import { Md2Module } from 'md2';
     VisitEditComponent,
     VisitAddComponent
   ],
-  providers: [VisitService]
+  providers: [
+    VisitService,
+    {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
+    {provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS}
+  ]
 })
 export class VisitsModule {
 }

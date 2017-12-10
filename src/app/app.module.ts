@@ -33,8 +33,7 @@ import {PetTypesModule} from './pettypes/pettypes.module';
 import {VetsModule} from './vets/vets.module';
 import {PartsModule} from './parts/parts.module';
 import {SpecialiesModule} from './specialties/specialies.module';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations'
-import { Md2Module } from 'md2';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 
 @NgModule({
@@ -52,7 +51,6 @@ import { Md2Module } from 'md2';
     VetsModule,
     SpecialiesModule,
     PartsModule,
-    Md2Module,
     BrowserAnimationsModule,
     AppRoutingModule
   ],

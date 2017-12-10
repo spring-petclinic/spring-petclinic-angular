@@ -37,6 +37,8 @@ import {Observable} from 'rxjs';
 import {Pet} from '../pet';
 import {OwnerService} from '../../owners/owner.service';
 import {PetTypeService} from '../../pettypes/pettype.service';
+import {MatMomentDateModule} from '@angular/material-moment-adapter';
+import {MatDatepickerModule} from '@angular/material';
 
 describe('PetAddComponent', () => {
   let component: PetAddComponent;
@@ -49,7 +51,7 @@ describe('PetAddComponent', () => {
     TestBed.configureTestingModule({
       declarations: [PetAddComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [FormsModule, HttpModule],
+      imports: [FormsModule, HttpModule, MatDatepickerModule, MatMomentDateModule],
       providers: [
         PetService, OwnerService, PetTypeService,
         {provide: Router, useClass: RouterStub},
