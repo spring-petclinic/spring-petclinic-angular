@@ -28,8 +28,9 @@ describe('spring-petclinic-angular App', () => {
 
   it('should display app works message', done => {
     page.navigateTo();
-    page.getParagraphText()
-      .then(msg => expect(msg).toEqual('app works!'))
-      .then(done, done.fail);
+    // page.getParagraphText()
+    //   .then(msg => expect(msg).toEqual('app works!'))
+    //   .then(done, done.fail);
+    expect(page.getParagraphText()).toEqual('app works!');
   });
 });
