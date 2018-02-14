@@ -16,8 +16,10 @@
  *
  */
 
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {Specialty} from '../specialty';
+import * as moment from "moment";
+import {SpecialtyService} from "../specialty.service";
 
 @Component({
   selector: 'app-specialty-add',
@@ -26,9 +28,11 @@ import {Specialty} from '../specialty';
 })
 export class SpecialtyAddComponent implements OnInit {
   specialty: Specialty;
+  added_success: boolean = false;
+  errorMessage: string;
+  @Output() onNew = new EventEmitter<Specialty>();
 
-
-  constructor() {
+  constructor(private specialtyService : SpecialtyService) {
     this.specialty = <Specialty>{};
   }
 
@@ -37,6 +41,16 @@ export class SpecialtyAddComponent implements OnInit {
 
   onSubmit(specialty: Specialty) {
     // TODO not completed
+    specialty.id = null;
+    this.specialtyService.addSpecialty(specialty).subscribe(
+      new_specialty => {
+        this.specialty = new_specialty;
+        this.added_success = true;
+        this.onNew.emit(this.specialty) ;
+      },
+      error => this.errorMessage = <any>error
+    );
 }
+
 
 }
