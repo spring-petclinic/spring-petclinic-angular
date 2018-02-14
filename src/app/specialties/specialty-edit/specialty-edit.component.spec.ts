@@ -23,23 +23,51 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import {By} from '@angular/platform-browser';
+import {DebugElement, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import {Specialty} from '../specialty';
 import { SpecialtyEditComponent } from './specialty-edit.component';
+import {SpecialtyService} from "../specialty.service";
+import {FormsModule} from '@angular/forms';
+import {HttpModule} from '@angular/http';
+import {Router, ActivatedRoute} from '@angular/router';
+import {RouterStub, ActivatedRouteStub} from '../../testing/router-stubs';
+import Spy = jasmine.Spy;
+import {Observable} from 'rxjs';
 
 describe('SpecialtyEditComponent', () => {
   let component: SpecialtyEditComponent;
   let fixture: ComponentFixture<SpecialtyEditComponent>;
+  let specialtyService: SpecialtyService;
+  let spy: Spy;
+  let testSpecialty: Specialty;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SpecialtyEditComponent ]
+      declarations: [SpecialtyEditComponent],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      imports: [FormsModule, HttpModule],
+      providers: [
+        SpecialtyService,
+        {provide: Router, useClass: RouterStub},
+        {provide: ActivatedRoute, useClass: ActivatedRouteStub}
+      ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(SpecialtyEditComponent);
     component = fixture.componentInstance;
+    testSpecialty = {
+      id: 1,
+      name: 'test'
+    };
+
+    specialtyService = fixture.debugElement.injector.get(SpecialtyService);
+    spy = spyOn(specialtyService, 'getSpecialtyById')
+      .and.returnValue(Observable.of(testSpecialty));
+
     fixture.detectChanges();
   });
 
