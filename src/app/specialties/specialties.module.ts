@@ -27,6 +27,7 @@ import {SpecialtyService} from './specialty.service';
 import {SpecialtyListComponent} from './specialty-list/specialty-list.component';
 import {SpecialtiesRoutingModule} from './specialties-routing.module';
 import { SpecialtyAddComponent } from './specialty-add/specialty-add.component';
+import { SpecialtyEditComponent } from './specialty-edit/specialty-edit.component';
 
 @NgModule({
   imports: [
@@ -36,12 +37,13 @@ import { SpecialtyAddComponent } from './specialty-add/specialty-add.component';
   ],
   declarations: [
     SpecialtyListComponent,
-    SpecialtyAddComponent
+    SpecialtyAddComponent,
+    SpecialtyEditComponent
   ],
   exports: [
     SpecialtyListComponent
   ],
   providers: [SpecialtyService]
 })
-export class SpecialiesModule {
+export class SpecialtiesModule {
 }

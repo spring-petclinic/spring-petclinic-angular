@@ -32,7 +32,7 @@ import {VisitsModule} from './visits/visits.module';
 import {PetTypesModule} from './pettypes/pettypes.module';
 import {VetsModule} from './vets/vets.module';
 import {PartsModule} from './parts/parts.module';
-import {SpecialiesModule} from './specialties/specialies.module';
+import {SpecialtiesModule} from './specialties/specialties.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 
@@ -49,7 +49,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     VisitsModule,
     PetTypesModule,
     VetsModule,
-    SpecialiesModule,
+    SpecialtiesModule,
     PartsModule,
     BrowserAnimationsModule,
     AppRoutingModule
