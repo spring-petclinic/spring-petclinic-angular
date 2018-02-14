@@ -1,6 +1,6 @@
 /*
  *
- *  * Copyright 2016-2017 the original author or authors.
+ *  * Copyright 2016-2018 the original author or authors.
  *  *
  *  * Licensed under the Apache License, Version 2.0 (the "License");
  *  * you may not use this file except in compliance with the License.
@@ -32,61 +32,20 @@ import {Router} from '@angular/router';
 })
 export class SpecialtyListComponent implements OnInit {
   specialties: Specialty[];
+  current_specialty: Specialty;
   errorMessage: string;
   response_status: number;
-  is_edit: boolean = false;
   is_insert: boolean = false;
-  current_state: string = 'Edit';
-
 
   constructor(private specService: SpecialtyService, private router: Router) {
     this.specialties = [];
+    this.current_specialty =<Specialty> {};
   }
 
   ngOnInit() {
-
     this.specService.getSpecialties().subscribe(
       specialties => this.specialties = specialties,
       error => this.errorMessage = <any> error);
-  }
-
-  gotoHome() {
-    this.router.navigate(['/welcome']);
-  }
-
-  addSpecialty() {
-    if (this.is_insert) {
-
-      this.is_insert = false;
-    } else {
-      this.is_insert = true;
-    }
-
-  }
-
-  editSpecialty(specialty: Specialty) {
-    if (this.is_edit) {
-      this.specService.updateSpecialty(specialty.id.toString(), specialty).subscribe(
-        (response: any) => {
-          if (response.status === 204) {
-            console.log('update success');
-            this.is_edit = false;
-            this.current_state = 'Edit';
-          } else {
-            console.log('update uncomplete, response status: ' + response.status);
-            this.is_edit = false;
-            this.current_state = 'Edit';
-          }
-        },
-        error => {
-          console.log('error catched');
-          console.log(error);
-          return this.errorMessage = <any> error;
-        });
-    } else {
-      this.is_edit = true;
-      this.current_state = 'Update';
-    }
   }
 
   deleteSpecialty(specialty: Specialty) {
@@ -100,5 +59,21 @@ export class SpecialtyListComponent implements OnInit {
       error => this.errorMessage = <any> error);
   }
 
+  onNewSpecialty(new_specialty: Specialty){
+    this.specialties.push(new_specialty);
+    this.showAddSpecialtyComponent();
+  }
+
+  showAddSpecialtyComponent() {
+    this.is_insert = !this.is_insert;
+  }
+
+  showEditSpecialtyComponent(updated_specialty: Specialty) {
+    this.router.navigate(['/specialties', updated_specialty.id.toString(), 'edit']);
+  }
+
+  gotoHome() {
+    this.router.navigate(['/welcome']);
+  }
 
 }
