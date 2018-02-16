@@ -57,7 +57,7 @@ describe('OwnerAddComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should create OwnerAddComponent', () => {
     expect(component).toBeTruthy();
   });
 });

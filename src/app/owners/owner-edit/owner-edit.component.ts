@@ -32,7 +32,7 @@ import 'rxjs/Rx';
   styleUrls: ['./owner-edit.component.css']
 })
 export class OwnerEditComponent implements OnInit {
-  public owner;
+  owner: Owner;
   errorMessage: string;
 
   constructor(private ownerService: OwnerService, private route: ActivatedRoute, private router: Router) {
@@ -46,7 +46,7 @@ export class OwnerEditComponent implements OnInit {
       error => this.errorMessage = <any> error);
   }
 
-  onSubmit(owner) {
+  onSubmit(owner: Owner) {
     var that = this;
     this.ownerService.updateOwner(owner.id.toString(), owner).subscribe(
       get_result,

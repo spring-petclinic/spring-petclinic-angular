@@ -85,7 +85,7 @@ describe('PetListComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should create PetListComponent', () => {
     expect(component).toBeTruthy();
   });
 

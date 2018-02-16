@@ -87,7 +87,7 @@ describe('PetEditComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should create PetEditComponent', () => {
     expect(component).toBeTruthy();
   });
 });

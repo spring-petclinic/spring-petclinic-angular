@@ -32,14 +32,12 @@ import {Router} from '@angular/router';
 })
 export class SpecialtyListComponent implements OnInit {
   specialties: Specialty[];
-  current_specialty: Specialty;
   errorMessage: string;
   response_status: number;
   is_insert: boolean = false;
 
   constructor(private specService: SpecialtyService, private router: Router) {
     this.specialties = [];
-    this.current_specialty =<Specialty> {};
   }
 
   ngOnInit() {

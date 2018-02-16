@@ -59,7 +59,7 @@ describe('OwnerDetailComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should create OwnerDetailComponent', () => {
     expect(component).toBeTruthy();
   });
 });

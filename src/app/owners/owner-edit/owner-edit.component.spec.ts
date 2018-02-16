@@ -60,7 +60,7 @@ describe('OwnerEditComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should create OwnerEditComponent', () => {
     expect(component).toBeTruthy();
   });
 });

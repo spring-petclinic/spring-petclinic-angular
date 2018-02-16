@@ -96,7 +96,7 @@ describe('VisitListComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should create VisitListComponent', () => {
     expect(component).toBeTruthy();
   });
 

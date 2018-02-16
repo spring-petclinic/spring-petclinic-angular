@@ -40,7 +40,6 @@ export class SpecialtyAddComponent implements OnInit {
   }
 
   onSubmit(specialty: Specialty) {
-    // TODO not completed
     specialty.id = null;
     this.specialtyService.addSpecialty(specialty).subscribe(
       new_specialty => {

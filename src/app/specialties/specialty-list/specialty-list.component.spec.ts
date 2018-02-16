@@ -28,16 +28,34 @@ import {DebugElement, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 
 import {SpecialtyListComponent} from './specialty-list.component';
 import {FormsModule} from '@angular/forms';
+import {SpecialtyService} from "../specialty.service";
+import {Specialty} from "../specialty";
+import {HttpModule} from "@angular/http";
+import {SpecialtyEditComponent} from "../specialty-edit/specialty-edit.component";
+import {ActivatedRoute, Router} from "@angular/router";
+import {ActivatedRouteStub, RouterStub} from "../../testing/router-stubs";
+import {Observable} from "rxjs/Rx";
+import Spy = jasmine.Spy;
+
 
 describe('SpecialtyListComponent', () => {
   let component: SpecialtyListComponent;
   let fixture: ComponentFixture<SpecialtyListComponent>;
+  let specialtyService: SpecialtyService;
+  let spy: Spy;
+  let testSpecialties: Specialty[];
+  let response_status: number;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [SpecialtyListComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [FormsModule]
+      imports: [FormsModule, HttpModule],
+      providers: [
+        SpecialtyService,
+        {provide: Router, useClass: RouterStub},
+        {provide: ActivatedRoute, useClass: ActivatedRouteStub}
+      ]
     })
       .compileComponents();
   }));
@@ -45,10 +63,29 @@ describe('SpecialtyListComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(SpecialtyListComponent);
     component = fixture.componentInstance;
+    testSpecialties = [{
+      id: 1,
+      name: 'test'
+    }];
+
+    specialtyService = fixture.debugElement.injector.get(SpecialtyService);
+    response_status = 204; // success delete return NO_CONTENT
+    component.specialties = testSpecialties;
+
+    spy = spyOn(specialtyService, 'deleteSpecialty')
+      .and.returnValue(Observable.of(response_status));
+
     fixture.detectChanges();
   });
 
-  // it('should create', () => {
-  //   expect(component).toBeTruthy();
-  // });
+  it('should create SpecialtyListComponent', () => {
+    expect(component).toBeTruthy();
+  });
+
+  it('should call deleteSpecialty() method', () => {
+    fixture.detectChanges();
+    component.deleteSpecialty(component.specialties[0]);
+    expect(spy.calls.any()).toBe(true, 'deleteSpecialty called');
+  });
+
 });

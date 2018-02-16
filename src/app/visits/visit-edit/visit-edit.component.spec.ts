@@ -94,7 +94,7 @@ describe('VisitEditComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should create VisitEditComponent', () => {
     expect(component).toBeTruthy();
   });
 });

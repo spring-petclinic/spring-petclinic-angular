@@ -28,7 +28,7 @@ import {DebugElement, CUSTOM_ELEMENTS_SCHEMA, Component, NO_ERRORS_SCHEMA} from 
 
 import {OwnerListComponent} from './owner-list.component';
 import {FormsModule} from '@angular/forms';
-import {Router, ActivatedRoute} from '@angular/router';
+import {Router, RouterLink, ActivatedRoute} from '@angular/router';
 import {OwnerService} from '../owner.service';
 import Spy = jasmine.Spy;
 import {Owner} from '../owner';
@@ -114,7 +114,7 @@ describe('OwnerListComponent', () => {
 
   });
 
-  it('should create', () => {
+  it('should create OwnerListComponent', () => {
     expect(component).toBeTruthy();
   });
 
