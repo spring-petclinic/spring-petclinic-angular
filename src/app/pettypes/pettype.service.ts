@@ -65,7 +65,7 @@ export class PetTypeService {
       .catch(this.handleError);
   }
 
-  deletePetType(type_id: PetType): Observable<number> {
+  deletePetType(type_id: string): Observable<number> {
     return this._http.delete(this.entity_url + '/' + type_id)
       .map((response: Response) => response.status)
       .catch(this.handleError);
