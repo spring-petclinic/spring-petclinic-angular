@@ -42,15 +42,15 @@ export class PettypeEditComponent implements OnInit {
     const pettypeId = this.route.snapshot.params['id'];
     this.pettypeService.getPetTypeById(pettypeId).subscribe(
       pettype => this.pettype = pettype,
-      error => this.errorMessage = <any>error
-    );
+      error => this.errorMessage = <any>error);
   }
 
   onSubmit(pettype: PetType){
     var that = this;
-    this.pettypeService.updatePetType(pettype.id.toString(),pettype).subscribe(
+    this.pettypeService.updatePetType(pettype.id.toString(), pettype).subscribe(
       get_result,
       error => this.errorMessage = <any> error);
+
       function get_result(update_status) {
         if (update_status.status === 204) {
           console.log('update success');

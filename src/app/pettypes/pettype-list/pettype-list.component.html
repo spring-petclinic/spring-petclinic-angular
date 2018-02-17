@@ -19,7 +19,7 @@
 <div class="container-fluid">
   <div class="container xd-container">
 
-    <h2>Specialties</h2>
+    <h2>Pet Types</h2>
     <table id="pettypes" class="table table-striped">
       <thead>
       <tr>
@@ -31,7 +31,7 @@
       <tbody>
       <tr *ngFor="let pettype of pettypes; let element_id=index">
         <td>
-          <input [id]=element_id [readonly]="!is_edit" type="text" class="form-control" [(ngModel)]="pettype.name" name="pettype_name" />
+          <input [id]=element_id [readonly]="true" type="text" class="form-control" [(ngModel)]="pettype.name" name="pettype_name" />
         </td>
         <td>
           <button class="btn btn-default" (click)="showEditPettypeComponent(pettype)">Edit</button>
