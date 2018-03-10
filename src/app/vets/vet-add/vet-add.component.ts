@@ -1,6 +1,6 @@
 /*
  *
- *  * Copyright 2016-2017 the original author or authors.
+ *  * Copyright 2016-2018 the original author or authors.
  *  *
  *  * Licensed under the Apache License, Version 2.0 (the "License");
  *  * you may not use this file except in compliance with the License.
@@ -21,6 +21,11 @@
  */
 
 import {Component, OnInit} from '@angular/core';
+import {Specialty} from '../../specialties/specialty';
+import {SpecialtyService} from 'app/specialties/specialty.service';
+import {Vet} from '../vet';
+import {Router} from '@angular/router';
+import {VetService} from '../vet.service';
 
 @Component({
   selector: 'app-vet-add',
@@ -28,11 +33,40 @@ import {Component, OnInit} from '@angular/core';
   styleUrls: ['./vet-add.component.css']
 })
 export class VetAddComponent implements OnInit {
+  vet: Vet;
+  specialties_list: Specialty[];
+  selected_specialty: Specialty;
+  errorMessage: string;
 
-  constructor() {
+  constructor(private specialtyService: SpecialtyService, private vetService: VetService, private router: Router) {
+    this.vet = <Vet>{};
+    this.selected_specialty = <Specialty>{};
+    this.specialties_list = [];
   }
 
   ngOnInit() {
+    this.specialtyService.getSpecialties().subscribe(
+      specialties => this.specialties_list = specialties,
+      error => this.errorMessage = <any>error
+    );
   }
 
+  onSubmit(vet: Vet){
+    vet.id = null;
+    vet.specialties = [];
+    if (this.selected_specialty.id !== undefined) {
+      vet.specialties.push(this.selected_specialty);
+    }
+    this.vetService.addVet(vet).subscribe(
+      new_vet => {
+        this.vet = new_vet;
+        this.gotoVetList();
+      },
+      error => this.errorMessage = <any>error
+    );
+  }
+
+  gotoVetList() {
+    this.router.navigate(['/vets']);
+  }
 }

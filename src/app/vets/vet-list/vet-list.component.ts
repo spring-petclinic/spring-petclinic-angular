@@ -23,6 +23,8 @@
 import {Component, OnInit} from '@angular/core';
 import {Vet} from '../vet';
 import {VetService} from '../vet.service';
+import {Router} from '@angular/router';
+import {Pet} from '../../pets/pet';
 
 @Component({
   selector: 'app-vet-list',
@@ -32,8 +34,9 @@ import {VetService} from '../vet.service';
 export class VetListComponent implements OnInit {
   vets: Vet[];
   errorMessage: string;
+  response_status: number;
 
-  constructor(private vetService: VetService) {
+  constructor(private vetService: VetService, private router: Router) {
     this.vets = [];
   }
 
@@ -43,12 +46,26 @@ export class VetListComponent implements OnInit {
       error => this.errorMessage = <any> error);
   }
 
+  deleteVet(vet: Vet) {
+    this.vetService.deleteVet(vet.id.toString()).subscribe(
+      response => {
+        this.response_status = response;
+        if (this.response_status === 204) {
+          this.vets = this.vets.filter(current_item => !(current_item.id === vet.id));
+        }
+      },
+      error => this.errorMessage = <any> error);
+  }
+
   gotoHome() {
-    // TODO not completed
+    this.router.navigate(['/welcome']);
   }
 
   addVet() {
-    // TODO not completed
+    this.router.navigate(['/vets/add']);
   }
 
+  editVet(vet: Vet) {
+    this.router.navigate(['/vets', vet.id, 'edit']);
+  }
 }
