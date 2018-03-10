@@ -31,7 +31,7 @@
       <tbody>
       <tr *ngFor="let specialty of specialties; let element_id=index">
         <td>
-          <input [id]=element_id [readonly]="!is_edit" type="text" class="form-control" [(ngModel)]="specialty.name" name="spec_name" />
+          <input [id]=element_id [readonly]="true" type="text" class="form-control" [(ngModel)]="specialty.name" name="spec_name" />
         </td>
         <td>
           <button class="btn btn-default" (click)="showEditSpecialtyComponent(specialty)">Edit</button>
