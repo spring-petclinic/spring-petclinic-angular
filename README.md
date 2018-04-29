@@ -86,11 +86,11 @@ ng build --prod --base-href=/petclinic/ --deploy-url=/petclinic/
 
 sudo vi /etc/httpd/conf/httpd.conf
 
-Find the <Directory /var/www/html> section and change the AllowOverride directive from None to All:
-
+Find the Directory /var/www/html> section and change the AllowOverride directive from None to All:
+```
  /etc/httpd/conf/httpd.conf
  . . .
- <Directory /var/www/html>
+  <Directory /var/www/html>
  . . .
  # 
  # AllowOverride controls what directives may be placed in .htaccess files.
@@ -101,7 +101,7 @@ Find the <Directory /var/www/html> section and change the AllowOverride directiv
  . . .
  </Directory>
  . . .
-
+```
 5. Save and exit the file and then restart Apache to apply the change:
 
 sudo systemctl restart httpd
@@ -111,7 +111,7 @@ sudo systemctl restart httpd
 sudo vi /var/www/html/petclinic/.htaccess
 
 Add the following line to the top of the file to activate the RewriteEngine, which instructs Apache to process any rules that follow:
-
+```
 RewriteEngine On  
 # If an existing asset or directory is requested go to it as it is
 RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -f [OR]  
@@ -120,7 +120,7 @@ RewriteRule ^ - [L]
 
 # If the requested resource doesn't exist, use index.html
 RewriteRule ^ index.html  
-
+```
 7. Reload Apache:
 
 sudo systemctl restart httpd
