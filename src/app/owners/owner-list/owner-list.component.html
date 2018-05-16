@@ -32,7 +32,6 @@
         </thead>
 
         <tbody>
-        <!-- <a  routerLink="/owners/{{owner.id}}" routerLinkActive="active" -->
         <tr *ngFor="let owner of owners">
           <td class="ownerFullName"><a routerLink="/owners/{{owner.id}}" routerLinkActive="active"
                                        (click)="onSelect(owner)">{{owner.firstName}} {{owner.lastName}}</a></td>

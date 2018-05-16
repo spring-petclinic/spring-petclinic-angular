@@ -24,21 +24,20 @@
 
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {By} from '@angular/platform-browser';
-import {DebugElement, CUSTOM_ELEMENTS_SCHEMA, Component, NO_ERRORS_SCHEMA} from '@angular/core';
+import {DebugElement, NO_ERRORS_SCHEMA} from '@angular/core';
 
 import {OwnerListComponent} from './owner-list.component';
 import {FormsModule} from '@angular/forms';
-import {Router, RouterLink, ActivatedRoute} from '@angular/router';
+import {ActivatedRoute} from '@angular/router';
 import {OwnerService} from '../owner.service';
 import Spy = jasmine.Spy;
 import {Owner} from '../owner';
 import {HttpModule} from '@angular/http';
 import {Observable} from 'rxjs';
 import {RouterTestingModule} from '@angular/router/testing';
-import {APP_BASE_HREF, CommonModule} from '@angular/common';
-import {WelcomeComponent} from '../../parts/welcome/welcome.component';
+import {CommonModule} from '@angular/common';
 import {PartsModule} from '../../parts/parts.module';
-import {RouterStub, ActivatedRouteStub} from '../../testing/router-stubs';
+import {ActivatedRouteStub} from '../../testing/router-stubs';
 import {OwnerDetailComponent} from '../owner-detail/owner-detail.component';
 import {OwnersModule} from '../owners.module';
 import {DummyComponent} from '../../testing/dummy.component';
@@ -80,7 +79,6 @@ describe('OwnerListComponent', () => {
           ])],
       providers: [
         OwnerService,
-        {provide: Router, useClass: RouterStub},
         {provide: ActivatedRoute, useClass: ActivatedRouteStub}
       ]
     })
@@ -108,7 +106,6 @@ describe('OwnerListComponent', () => {
     fixture = TestBed.createComponent(OwnerListComponent);
     component = fixture.componentInstance;
     ownerService = fixture.debugElement.injector.get(OwnerService);
-    // component.owners = testOwners;
     spy = spyOn(ownerService, 'getOwners')
       .and.returnValue(Observable.of(testOwners));
 
@@ -118,21 +115,20 @@ describe('OwnerListComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  // TODO  need fix - this part "routerLink="/owners/{{owner.id}}" routerLinkActive="active"" in html template cause test error
-  // it('should call ngOnInit() method', () => {
-  //   fixture.detectChanges();
-  //   expect(spy.calls.any()).toBe(true, 'getOwners called');
-  // });
+  it('should call ngOnInit() method', () => {
+    fixture.detectChanges();
+    expect(spy.calls.any()).toBe(true, 'getOwners called');
+  });
 
-  // TODO  need fix - this part "routerLink="/owners/{{owner.id}}" routerLinkActive="active"" in html template cause test error
-  // it(' should show full name after getOwners observable (async) ', async(() => {
-  //   fixture.detectChanges();
-  //   fixture.whenStable().then(() => { // wait for async getOwners
-  //     fixture.detectChanges();        // update view with name
-  //     de = fixture.debugElement.query(By.css('.ownerFullName'));
-  //     el = de.nativeElement;
-  //     expect(el.innerText).toBe((testOwner.firstName.toString() + ' ' + testOwner.lastName.toString()));
-  //   });
-  // }));
+
+  it(' should show full name after getOwners observable (async) ', async(() => {
+    fixture.detectChanges();
+    fixture.whenStable().then(() => { // wait for async getOwners
+      fixture.detectChanges();        // update view with name
+      de = fixture.debugElement.query(By.css('.ownerFullName'));
+      el = de.nativeElement;
+      expect(el.innerText).toBe((testOwner.firstName.toString() + ' ' + testOwner.lastName.toString()));
+    });
+  }));
 
 });
