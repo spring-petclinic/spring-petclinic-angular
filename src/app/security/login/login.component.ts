@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.user.username='write-client';
-    this.user.password='write-client-password1234';
+    this.user.password='write-client-password123';
 
   }
 
