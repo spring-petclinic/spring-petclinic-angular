@@ -23,17 +23,15 @@
  */
 
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-import {By} from '@angular/platform-browser';
-import {DebugElement, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA} from '@angular/core';
-
+import {CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA} from '@angular/core';
 import {OwnerEditComponent} from './owner-edit.component';
 import {FormsModule} from '@angular/forms';
-import {HttpModule} from '@angular/http';
 import {RouterTestingModule} from '@angular/router/testing';
 import {OwnerService} from '../owner.service';
 import {Router, ActivatedRoute} from '@angular/router';
 import {RouterStub, ActivatedRouteStub} from '../../testing/router-stubs';
-import {Owner} from '../owner';
+import {HttpClientModule} from '@angular/common/http';
+
 
 describe('OwnerEditComponent', () => {
   let component: OwnerEditComponent;
@@ -44,7 +42,7 @@ describe('OwnerEditComponent', () => {
       declarations: [OwnerEditComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       // schemas: [ NO_ERRORS_SCHEMA ],
-      imports: [FormsModule, HttpModule, RouterTestingModule],
+      imports: [FormsModule, HttpClientModule, RouterTestingModule],
       providers: [
         OwnerService,
         {provide: Router, useClass: RouterStub},

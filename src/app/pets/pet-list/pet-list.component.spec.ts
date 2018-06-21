@@ -24,18 +24,17 @@
  */
 
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-import {By} from '@angular/platform-browser';
-import {DebugElement, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
-
+import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import {PetListComponent} from './pet-list.component';
 import {FormsModule} from '@angular/forms';
 import {PetService} from '../pet.service';
 import {Router, ActivatedRoute} from '@angular/router';
 import {RouterStub, ActivatedRouteStub} from '../../testing/router-stubs';
-import {HttpModule} from '@angular/http';
 import {Pet} from '../pet';
 import Spy = jasmine.Spy;
-import {Observable} from 'rxjs';
+import {HttpClientModule} from '@angular/common/http';
+import {Observable} from 'rxjs/Observable';
+
 
 describe('PetListComponent', () => {
   let component: PetListComponent;
@@ -48,7 +47,7 @@ describe('PetListComponent', () => {
     TestBed.configureTestingModule({
       declarations: [PetListComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [FormsModule, HttpModule],
+      imports: [FormsModule, HttpClientModule],
       providers: [
         PetService,
         {provide: Router, useClass: RouterStub},

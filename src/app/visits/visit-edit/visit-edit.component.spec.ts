@@ -23,21 +23,21 @@
  */
 
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-import {By} from '@angular/platform-browser';
-import {DebugElement, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+
+import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 
 import {VisitEditComponent} from './visit-edit.component';
 import {FormsModule} from '@angular/forms';
-import {HttpModule} from '@angular/http';
 import {VisitService} from '../visit.service';
 import {Router, ActivatedRoute} from '@angular/router';
 import {RouterStub, ActivatedRouteStub} from '../../testing/router-stubs';
 import Spy = jasmine.Spy;
 import {Visit} from '../visit';
-import {Observable} from 'rxjs';
 import {Pet} from '../../pets/pet';
 import {MatMomentDateModule} from '@angular/material-moment-adapter';
 import {MatDatepickerModule} from '@angular/material';
+import {HttpClientModule} from '@angular/common/http';
+import {Observable} from 'rxjs/Observable';
 
 describe('VisitEditComponent', () => {
   let component: VisitEditComponent;
@@ -51,7 +51,7 @@ describe('VisitEditComponent', () => {
     TestBed.configureTestingModule({
       declarations: [VisitEditComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [FormsModule, HttpModule, MatDatepickerModule, MatMomentDateModule],
+      imports: [FormsModule, HttpClientModule, MatDatepickerModule, MatMomentDateModule],
       providers: [
         VisitService,
         {provide: Router, useClass: RouterStub},

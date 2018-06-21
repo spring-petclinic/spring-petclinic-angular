@@ -89,7 +89,7 @@ export class VetEditComponent implements OnInit {
       error => this.errorMessage = <any> error);
 
       function get_result(update_status) {
-      if (update_status.status === 204) {
+      if (update_status === 204) {
         console.log('update success');
         that.gotoVetList();
       } else {

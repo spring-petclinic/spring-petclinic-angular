@@ -23,16 +23,14 @@
  */
 
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-import {By} from '@angular/platform-browser';
-import {DebugElement, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
-
+import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import {OwnerAddComponent} from './owner-add.component';
 import {FormsModule} from '@angular/forms';
 import {RouterModule, Router} from '@angular/router';
 import {OwnerService} from '../owner.service';
-import {HttpModule} from '@angular/http';
 import {RouterTestingModule} from '@angular/router/testing';
 import {RouterStub} from '../../testing/router-stubs';
+import {HttpClientModule} from '@angular/common/http';
 
 describe('OwnerAddComponent', () => {
   let component: OwnerAddComponent;
@@ -42,7 +40,7 @@ describe('OwnerAddComponent', () => {
     TestBed.configureTestingModule({
       declarations: [OwnerAddComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [FormsModule, HttpModule, RouterTestingModule],
+      imports: [FormsModule, HttpClientModule, RouterTestingModule],
       providers: [
         OwnerService,
         {provide: Router, useClass: RouterStub}

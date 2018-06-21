@@ -21,74 +21,78 @@
  */
 
 import {Injectable} from '@angular/core';
-import {Http, Response, Headers, RequestOptions} from '@angular/http';
 import {environment} from '../../environments/environment';
-import {Observable} from 'rxjs';
 import {PetType} from './pettype';
+import {Observable} from 'rxjs/Observable';
+import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
+import {ErrorObservable} from 'rxjs/observable/ErrorObservable';
 
 @Injectable()
 export class PetTypeService {
 
   entity_url = environment.REST_API_URL + 'pettypes';
 
-  constructor(private _http: Http) {
+  constructor(private _http: HttpClient) {
   }
 
   getPetTypes(): Observable<PetType[]> {
     return this._http.get(this.entity_url)
-      .map((response: Response) => <PetType[]> response.json())
+      .map(response => <PetType[]> response)
       .catch(this.handleError);
   }
 
   getPetTypeById(type_id: string): Observable<PetType> {
     return this._http.get((this.entity_url + '/' + type_id))
-      .map((response: Response) => <PetType> response.json())
+      .map(response => <PetType> response)
       .catch(this.handleError);
   }
 
-  updatePetType(type_id: string, petType: PetType): Observable<PetType> {
+  updatePetType(type_id: string, petType: PetType): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json;charset=UTF-8'
+      }),
+      observe: 'response' as 'response'
+    };
     const body = JSON.stringify(petType);
-    const headers = new Headers({'Content-Type': ' application/json;charset=UTF-8'});
-    const options = new RequestOptions({headers: headers});
-    return this._http.put((this.entity_url + '/' + type_id), body, options)
-      .map((response: Response) => response)
+    return this._http.put((this.entity_url + '/' + type_id), body, httpOptions)
+      .map(response => response.status)
       .catch(this.handleError);
   }
 
   addPetType(petType: PetType): Observable<PetType> {
-    const headers = new Headers();
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      })
+    };
     const body = JSON.stringify(petType);
-    headers.append('Content-Type', 'application/json');
-    headers.append('Accept', 'application/json');
-    return this._http.post(this.entity_url, body, {headers})
-      .map((response: Response) => <PetType> response.json())
+    return this._http.post(this.entity_url, body, httpOptions)
+      .map(response => <PetType> response)
       .catch(this.handleError);
   }
 
-  deletePetType(type_id: string): Observable<number> {
-    return this._http.delete(this.entity_url + '/' + type_id)
-      .map((response: Response) => response.status)
+  deletePetType(type_id: string): Observable<any> {
+    return this._http.delete((this.entity_url + '/' + type_id), {observe: 'response'})
+      .map(response => response.status)
       .catch(this.handleError);
   }
 
-
-  private handleError(error: Response | any) {
-    console.log('handleError log: ');
-    let errMsg: string;
-    if (error instanceof Response) {
-      if (!(error.text() === '' )) {  // if response body not empty
-        const body = error.json() || '';
-        const err = body.error || JSON.stringify(body);
-        errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
-      } else {
-        console.log('binding errors header not empty');
-        errMsg = error.headers.get('errors').toString();
-      }
+  private handleError(error: HttpErrorResponse) {
+    if (error.error instanceof ErrorEvent) {
+      // A client-side or network error occurred. Handle it accordingly.
+      console.error('An error occurred:', error.error.message);
     } else {
-      errMsg = error.message ? error.message : error.toString();
+      // The backend returned an unsuccessful response code.
+      // The response body may contain clues as to what went wrong,
+      console.error(
+        `Backend returned code ${error.status}, ` +
+        `body was: ${error.error}`);
     }
-    console.error(errMsg);
-    return Observable.throw(errMsg);
-  }
+    // return an ErrorObservable with a user-facing error message
+    return new ErrorObservable(
+      'Something bad happened; please try again later.');
+  };
 
 }

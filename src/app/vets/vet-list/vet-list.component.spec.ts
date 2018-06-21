@@ -23,17 +23,15 @@
  */
 
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-import {By} from '@angular/platform-browser';
-import {DebugElement, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
-
+import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import {VetListComponent} from './vet-list.component';
 import {FormsModule} from '@angular/forms';
-import {HttpModule} from '@angular/http';
 import {VetService} from '../vet.service';
 import {Router, ActivatedRoute} from '@angular/router';
 import {RouterStub, ActivatedRouteStub} from '../../testing/router-stubs';
 import {Vet} from '../vet';
 import Spy = jasmine.Spy;
+import {HttpClientModule} from '@angular/common/http';
 
 describe('VetListComponent', () => {
   let component: VetListComponent;
@@ -46,7 +44,7 @@ describe('VetListComponent', () => {
     TestBed.configureTestingModule({
       declarations: [VetListComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [FormsModule, HttpModule],
+      imports: [FormsModule, HttpClientModule],
       providers: [
         VetService,
         {provide: Router, useClass: RouterStub},

@@ -32,8 +32,6 @@ import {ActivatedRoute} from '@angular/router';
 import {OwnerService} from '../owner.service';
 import Spy = jasmine.Spy;
 import {Owner} from '../owner';
-import {HttpModule} from '@angular/http';
-import {Observable} from 'rxjs';
 import {RouterTestingModule} from '@angular/router/testing';
 import {CommonModule} from '@angular/common';
 import {PartsModule} from '../../parts/parts.module';
@@ -43,6 +41,8 @@ import {OwnersModule} from '../owners.module';
 import {DummyComponent} from '../../testing/dummy.component';
 import {OwnerAddComponent} from '../owner-add/owner-add.component';
 import {OwnerEditComponent} from '../owner-edit/owner-edit.component';
+import {HttpClientModule} from '@angular/common/http';
+import {Observable} from 'rxjs/Observable';
 
 
 describe('OwnerListComponent', () => {
@@ -70,7 +70,7 @@ describe('OwnerListComponent', () => {
     TestBed.configureTestingModule({
       declarations: [DummyComponent],
       schemas: [NO_ERRORS_SCHEMA],
-      imports: [CommonModule, FormsModule, HttpModule, PartsModule, OwnersModule,
+      imports: [CommonModule, FormsModule, HttpClientModule, PartsModule, OwnersModule,
         RouterTestingModule.withRoutes(
           [{path: 'owners', component: OwnerListComponent},
             {path: 'owners/add', component: OwnerAddComponent},

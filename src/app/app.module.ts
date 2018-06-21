@@ -23,7 +23,6 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
-import {HttpModule} from '@angular/http';
 import {AppComponent} from './app.component';
 import {AppRoutingModule} from './app-routing.module';
 import {OwnersModule} from './owners/owners.module';
@@ -34,6 +33,9 @@ import {VetsModule} from './vets/vets.module';
 import {PartsModule} from './parts/parts.module';
 import {SpecialtiesModule} from './specialties/specialties.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {SecurityModule} from './security/security.module';
+import {httpInterceptorProviders} from './http-interceptors';
+import {HttpClient, HttpClientModule} from '@angular/common/http';
 
 
 @NgModule({
@@ -43,7 +45,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
   imports: [
     BrowserModule,
     FormsModule,
-    HttpModule,
+    HttpClientModule,
     OwnersModule,
     PetsModule,
     VisitsModule,
@@ -51,10 +53,11 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     VetsModule,
     SpecialtiesModule,
     PartsModule,
+    SecurityModule,
     BrowserAnimationsModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [httpInterceptorProviders, HttpClient],
   bootstrap: [AppComponent]
 })
 export class AppModule {

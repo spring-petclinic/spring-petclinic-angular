@@ -1,17 +1,15 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PettypeAddComponent } from './pettype-add.component';
-import {SpecialtyService} from "../../specialties/specialty.service";
-import {Specialty} from "../../specialties/specialty";
 import Spy = jasmine.Spy;
 import {PetTypeService} from "../pettype.service";
 import {PetType} from "../pettype";
-import {HttpModule} from "@angular/http";
 import {CUSTOM_ELEMENTS_SCHEMA} from "@angular/core";
 import {ActivatedRoute, Router} from "@angular/router";
 import {ActivatedRouteStub, RouterStub} from "../../testing/router-stubs";
 import {FormsModule} from "@angular/forms";
-import {Observable} from "rxjs/Rx";
+import {HttpClientModule} from '@angular/common/http';
+import {Observable} from 'rxjs/Observable';
 
 describe('PettypeAddComponent', () => {
   let component: PettypeAddComponent;
@@ -24,7 +22,7 @@ describe('PettypeAddComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ PettypeAddComponent ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [FormsModule, HttpModule],
+      imports: [FormsModule, HttpClientModule],
       providers: [
         PetTypeService,
         {provide: Router, useClass: RouterStub},

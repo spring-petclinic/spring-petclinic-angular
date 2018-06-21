@@ -23,17 +23,16 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import {By} from '@angular/platform-browser';
-import {DebugElement, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import {Specialty} from '../specialty';
 import { SpecialtyEditComponent } from './specialty-edit.component';
 import {SpecialtyService} from "../specialty.service";
 import {FormsModule} from '@angular/forms';
-import {HttpModule} from '@angular/http';
 import {Router, ActivatedRoute} from '@angular/router';
 import {RouterStub, ActivatedRouteStub} from '../../testing/router-stubs';
 import Spy = jasmine.Spy;
-import {Observable} from 'rxjs';
+import {HttpClientModule} from '@angular/common/http';
+import {Observable} from 'rxjs/Observable';
 
 describe('SpecialtyEditComponent', () => {
   let component: SpecialtyEditComponent;
@@ -46,7 +45,7 @@ describe('SpecialtyEditComponent', () => {
     TestBed.configureTestingModule({
       declarations: [SpecialtyEditComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [FormsModule, HttpModule],
+      imports: [FormsModule, HttpClientModule],
       providers: [
         SpecialtyService,
         {provide: Router, useClass: RouterStub},

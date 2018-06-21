@@ -24,12 +24,12 @@
 
 import {TestBed, async, inject} from '@angular/core/testing';
 import {PetTypeService} from './pettype.service';
-import {HttpModule} from '@angular/http';
+import {HttpClientModule} from '@angular/common/http';
 
 describe('PetTypeService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpModule],
+      imports: [HttpClientModule],
       providers: [PetTypeService]
     });
   });
