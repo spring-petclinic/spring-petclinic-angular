@@ -60,7 +60,7 @@ export class SpecialtyService {
     const headers = new Headers({'Content-Type': ' application/json;charset=UTF-8'});
     const options = new RequestOptions({headers: headers});
     return this._http.put((this.entity_url + '/' + spec_id), body, options)
-      .map((response: Response) => response)
+      .map((response: Response) => <Specialty> response.json())
       .catch(this.handleError);
   }
 

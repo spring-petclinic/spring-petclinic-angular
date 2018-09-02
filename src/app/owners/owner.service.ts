@@ -25,6 +25,7 @@ import {Http, Response, Headers, RequestOptions} from '@angular/http';
 import {Owner} from './owner';
 import {Observable} from 'rxjs';
 import {environment} from '../../environments/environment';
+import {map} from 'rxjs/operators';
 
 @Injectable()
 export class OwnerService {
@@ -60,7 +61,7 @@ export class OwnerService {
     const headers = new Headers({'Content-Type': ' application/json;charset=UTF-8'});
     const options = new RequestOptions({headers: headers});
     return this._http.put((this.entity_url + '/' + owner_id), body, options)
-      .map((response: Response) => response)
+      .map((response: Response) => <Owner> response.json())
       .catch(this.handleError); // TODO parse response header when error ?
   }
 
