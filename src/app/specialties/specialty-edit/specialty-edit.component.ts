@@ -46,20 +46,13 @@ export class SpecialtyEditComponent implements OnInit {
   }
 
   onSubmit(specialty: Specialty) {
-    var that = this;
     this.specialtyService.updateSpecialty(specialty.id.toString(), specialty).subscribe(
-      get_result,
-      error => this.errorMessage = <any> error);
-
-    function get_result(update_status) {
-      if (update_status.status === 204) {
+      res => {
         console.log('update success');
-        that.onBack();
-      } else {
-        return console.log('update failed');
-      }
-    }
-  }
+        this.onBack();
+      },
+      error => this.errorMessage = <any> error);
+ }
 
   onBack() {
     this.router.navigate(['/specialties']);

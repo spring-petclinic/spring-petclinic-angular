@@ -28,12 +28,19 @@ import {DebugElement, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 
 import {VetListComponent} from './vet-list.component';
 import {FormsModule} from '@angular/forms';
-import {HttpModule} from '@angular/http';
 import {VetService} from '../vet.service';
 import {Router, ActivatedRoute} from '@angular/router';
 import {RouterStub, ActivatedRouteStub} from '../../testing/router-stubs';
 import {Vet} from '../vet';
 import Spy = jasmine.Spy;
+import {of} from "rxjs/index";
+import {Observable} from "rxjs/Rx";
+
+class VetServiceStub {
+  getVets(): Observable<Vet[]> {
+    return of();
+  }
+}
 
 describe('VetListComponent', () => {
   let component: VetListComponent;
@@ -46,9 +53,9 @@ describe('VetListComponent', () => {
     TestBed.configureTestingModule({
       declarations: [VetListComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [FormsModule, HttpModule],
+      imports: [FormsModule],
       providers: [
-        VetService,
+        {provide: VetService, useClass: VetServiceStub},
         {provide: Router, useClass: RouterStub},
         {provide: ActivatedRoute, useClass: ActivatedRouteStub}
       ]

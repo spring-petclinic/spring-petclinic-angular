@@ -83,19 +83,13 @@ export class VetEditComponent implements OnInit {
   }
 
   onSubmit(vet: Vet){
-    const that = this;
     this.vetService.updateVet(vet.id.toString(), vet).subscribe(
-      get_result,
+      res => {
+        console.log('update success');
+        this.gotoVetList();
+      },
       error => this.errorMessage = <any> error);
 
-      function get_result(update_status) {
-      if (update_status.status === 204) {
-        console.log('update success');
-        that.gotoVetList();
-      } else {
-        return console.log('update failed');
-      }
-    }
   }
 
   gotoVetList() {

@@ -74,22 +74,13 @@ export class PetEditComponent implements OnInit {
     pet.birthDate = moment(pet.birthDate).format('YYYY/MM/DD');
 
     this.petService.updatePet(pet.id.toString(), pet).subscribe(
-      get_result,
+      res => this.gotoOwnerDetail(this.current_owner),
       error => this.errorMessage = <any> error
     );
-    function get_result(update_status) {
-      if (update_status.status === 204) {
-        console.log('update success');
-        that.gotoOwnerDetail(pet.owner);
-      } else {
-        return console.log('update failed');
-      }
-    }
   }
 
   gotoOwnerDetail(owner: Owner) {
     this.router.navigate(['/owners', owner.id]);
   }
-
 
 }

@@ -50,9 +50,7 @@ export class VetListComponent implements OnInit {
     this.vetService.deleteVet(vet.id.toString()).subscribe(
       response => {
         this.response_status = response;
-        if (this.response_status === 204) {
-          this.vets = this.vets.filter(current_item => !(current_item.id === vet.id));
-        }
+        this.vets = this.vets.filter(current_item => !(current_item.id === vet.id));
       },
       error => this.errorMessage = <any> error);
   }

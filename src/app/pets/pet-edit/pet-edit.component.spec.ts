@@ -28,7 +28,6 @@ import {DebugElement, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 
 import {PetEditComponent} from './pet-edit.component';
 import {FormsModule} from '@angular/forms';
-import {HttpModule} from '@angular/http';
 import {PetService} from '../pet.service';
 import {OwnerService} from '../../owners/owner.service';
 import {PetTypeService} from '../../pettypes/pettype.service';
@@ -36,9 +35,29 @@ import {Router, ActivatedRoute} from '@angular/router';
 import {RouterStub, ActivatedRouteStub} from '../../testing/router-stubs';
 import {Pet} from '../pet';
 import Spy = jasmine.Spy;
-import {Observable} from 'rxjs';
+import {Observable, of} from 'rxjs';
 import {MatDatepickerModule} from '@angular/material';
 import {MatMomentDateModule} from '@angular/material-moment-adapter';
+import {PetType} from "../../pettypes/pettype";
+
+class OwnerServiceStub {
+
+}
+
+class PetServiceStub {
+  updatePet(pet_id: string, pet: Pet): Observable<Pet> {
+    return of();
+  }
+  getPetById(pet_id: string): Observable<Pet> {
+    return of();
+  }
+}
+
+class PetTypeServiceStub {
+  getPetTypes(): Observable<PetType[]> {
+    return of();
+  }
+}
 
 describe('PetEditComponent', () => {
   let component: PetEditComponent;
@@ -51,9 +70,11 @@ describe('PetEditComponent', () => {
     TestBed.configureTestingModule({
       declarations: [PetEditComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [FormsModule, HttpModule, MatDatepickerModule, MatMomentDateModule],
+      imports: [FormsModule, MatDatepickerModule, MatMomentDateModule],
       providers: [
-        PetService, OwnerService, PetTypeService,
+        {provide: PetService, useClass: PetServiceStub},
+        {provide: OwnerService, useClass: OwnerServiceStub},
+        {provide: PetTypeService, useClass: PetTypeServiceStub},
         {provide: Router, useClass: RouterStub},
         {provide: ActivatedRoute, useClass: ActivatedRouteStub}
       ]

@@ -28,12 +28,19 @@ import {DebugElement, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA} from '@angular/c
 
 import {OwnerEditComponent} from './owner-edit.component';
 import {FormsModule} from '@angular/forms';
-import {HttpModule} from '@angular/http';
 import {RouterTestingModule} from '@angular/router/testing';
 import {OwnerService} from '../owner.service';
 import {Router, ActivatedRoute} from '@angular/router';
 import {RouterStub, ActivatedRouteStub} from '../../testing/router-stubs';
 import {Owner} from '../owner';
+import {Observable} from "rxjs/Rx";
+import {of} from "rxjs/index";
+
+class OwnserServiceStub {
+  getOwnerById(): Observable<Owner> {
+    return of( { id: 1, firstName: 'James' } as Owner )
+  }
+}
 
 describe('OwnerEditComponent', () => {
   let component: OwnerEditComponent;
@@ -44,9 +51,9 @@ describe('OwnerEditComponent', () => {
       declarations: [OwnerEditComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       // schemas: [ NO_ERRORS_SCHEMA ],
-      imports: [FormsModule, HttpModule, RouterTestingModule],
+      imports: [FormsModule, RouterTestingModule],
       providers: [
-        OwnerService,
+        {provide: OwnerService, useClass: OwnserServiceStub},
         {provide: Router, useClass: RouterStub},
         {provide: ActivatedRoute, useClass: ActivatedRouteStub}
       ]

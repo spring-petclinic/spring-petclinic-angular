@@ -28,16 +28,21 @@ import {DebugElement, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 
 import {VisitEditComponent} from './visit-edit.component';
 import {FormsModule} from '@angular/forms';
-import {HttpModule} from '@angular/http';
 import {VisitService} from '../visit.service';
 import {Router, ActivatedRoute} from '@angular/router';
 import {RouterStub, ActivatedRouteStub} from '../../testing/router-stubs';
 import Spy = jasmine.Spy;
 import {Visit} from '../visit';
-import {Observable} from 'rxjs';
+import {Observable, of} from 'rxjs';
 import {Pet} from '../../pets/pet';
 import {MatMomentDateModule} from '@angular/material-moment-adapter';
 import {MatDatepickerModule} from '@angular/material';
+
+class VisitServiceStub {
+  getVisitById(visit_id: string): Observable<Visit> {
+    return of();
+  }
+}
 
 describe('VisitEditComponent', () => {
   let component: VisitEditComponent;
@@ -51,9 +56,9 @@ describe('VisitEditComponent', () => {
     TestBed.configureTestingModule({
       declarations: [VisitEditComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [FormsModule, HttpModule, MatDatepickerModule, MatMomentDateModule],
+      imports: [FormsModule, MatDatepickerModule, MatMomentDateModule],
       providers: [
-        VisitService,
+        {provide: VisitService, useClass: VisitServiceStub},
         {provide: Router, useClass: RouterStub},
         {provide: ActivatedRoute, useClass: ActivatedRouteStub}
       ]

@@ -52,13 +52,11 @@ export class VisitListComponent implements OnInit {
     this.visitService.deleteVisit(visit.id.toString()).subscribe(
       response => {
         this.response_status = response;
-        if (this.response_status === 204) {
           console.log('delete success');
           this.visits.splice(this.visits.indexOf(visit), 1 );
           if (this.visits.length === 0) {
             this.no_visits = true;
           }
-        }
       },
       error => this.errorMessage = <any> error);
   }

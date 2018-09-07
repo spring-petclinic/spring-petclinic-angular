@@ -50,9 +50,7 @@ export class SpecialtyListComponent implements OnInit {
     this.specService.deleteSpecialty(specialty.id.toString()).subscribe(
       response => {
         this.response_status = response;
-        if (this.response_status === 204) {
-          this.specialties = this.specialties.filter(current_item => !(current_item.id === specialty.id));
-        }
+        this.specialties = this.specialties.filter(current_item => !(current_item.id === specialty.id));
       },
       error => this.errorMessage = <any> error);
   }

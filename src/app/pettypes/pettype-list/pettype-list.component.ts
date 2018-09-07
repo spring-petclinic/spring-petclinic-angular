@@ -30,9 +30,7 @@ export class PettypeListComponent implements OnInit {
     this.pettypeService.deletePetType(pettype.id.toString()).subscribe(
       response => {
         this.response_status = response;
-        if (this.response_status === 204) {
-          this.pettypes = this.pettypes.filter(current_item => !(current_item.id === pettype.id));
-        }
+        this.pettypes = this.pettypes.filter(current_item => !(current_item.id === pettype.id));
       },
       error => this.errorMessage = <any> error);
   }

@@ -30,12 +30,20 @@ import {SpecialtyListComponent} from './specialty-list.component';
 import {FormsModule} from '@angular/forms';
 import {SpecialtyService} from "../specialty.service";
 import {Specialty} from "../specialty";
-import {HttpModule} from "@angular/http";
-import {SpecialtyEditComponent} from "../specialty-edit/specialty-edit.component";
 import {ActivatedRoute, Router} from "@angular/router";
 import {ActivatedRouteStub, RouterStub} from "../../testing/router-stubs";
 import {Observable} from "rxjs/Rx";
 import Spy = jasmine.Spy;
+import {of} from "rxjs/index";
+
+class SpecialityServiceStub {
+  deleteSpecialty(spec_id: string): Observable<number> {
+    return of();
+  }
+  getSpecialties(): Observable<Specialty[]> {
+    return of();
+  }
+}
 
 
 describe('SpecialtyListComponent', () => {
@@ -50,9 +58,9 @@ describe('SpecialtyListComponent', () => {
     TestBed.configureTestingModule({
       declarations: [SpecialtyListComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [FormsModule, HttpModule],
+      imports: [FormsModule],
       providers: [
-        SpecialtyService,
+        {provide: SpecialtyService, useClass: SpecialityServiceStub},
         {provide: Router, useClass: RouterStub},
         {provide: ActivatedRoute, useClass: ActivatedRouteStub}
       ]

@@ -32,8 +32,7 @@ import {ActivatedRoute} from '@angular/router';
 import {OwnerService} from '../owner.service';
 import Spy = jasmine.Spy;
 import {Owner} from '../owner';
-import {HttpModule} from '@angular/http';
-import {Observable} from 'rxjs';
+import {Observable, of} from 'rxjs';
 import {RouterTestingModule} from '@angular/router/testing';
 import {CommonModule} from '@angular/common';
 import {PartsModule} from '../../parts/parts.module';
@@ -43,13 +42,20 @@ import {OwnersModule} from '../owners.module';
 import {DummyComponent} from '../../testing/dummy.component';
 import {OwnerAddComponent} from '../owner-add/owner-add.component';
 import {OwnerEditComponent} from '../owner-edit/owner-edit.component';
+import { HandleError } from 'app/error.service';
 
+
+class OwnerServiceStub {
+  getOwners(): Observable<Owner[]> {
+    return of();
+  }
+}
 
 describe('OwnerListComponent', () => {
 
   let component: OwnerListComponent;
   let fixture: ComponentFixture<OwnerListComponent>;
-  let ownerService: OwnerService;
+  let ownerService = new OwnerServiceStub();
   let spy: Spy;
   let de: DebugElement;
   let el: HTMLElement;
@@ -70,7 +76,7 @@ describe('OwnerListComponent', () => {
     TestBed.configureTestingModule({
       declarations: [DummyComponent],
       schemas: [NO_ERRORS_SCHEMA],
-      imports: [CommonModule, FormsModule, HttpModule, PartsModule, OwnersModule,
+      imports: [CommonModule, FormsModule, PartsModule, OwnersModule,
         RouterTestingModule.withRoutes(
           [{path: 'owners', component: OwnerListComponent},
             {path: 'owners/add', component: OwnerAddComponent},
@@ -78,7 +84,7 @@ describe('OwnerListComponent', () => {
             {path: 'owners/:id/edit', component: OwnerEditComponent}
           ])],
       providers: [
-        OwnerService,
+        {provide: OwnerService, useValue: ownerService},
         {provide: ActivatedRoute, useClass: ActivatedRouteStub}
       ]
     })

@@ -32,10 +32,15 @@ import {FormsModule} from '@angular/forms';
 import {PetService} from '../pet.service';
 import {Router, ActivatedRoute} from '@angular/router';
 import {RouterStub, ActivatedRouteStub} from '../../testing/router-stubs';
-import {HttpModule} from '@angular/http';
 import {Pet} from '../pet';
 import Spy = jasmine.Spy;
-import {Observable} from 'rxjs';
+import {Observable, of} from 'rxjs';
+
+class PetServiceStub {
+  deletePet(pet_id: string): Observable<number> {
+    return of();
+  }
+}
 
 describe('PetListComponent', () => {
   let component: PetListComponent;
@@ -48,9 +53,9 @@ describe('PetListComponent', () => {
     TestBed.configureTestingModule({
       declarations: [PetListComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [FormsModule, HttpModule],
+      imports: [FormsModule],
       providers: [
-        PetService,
+        {provide: PetService, useClass: PetServiceStub},
         {provide: Router, useClass: RouterStub},
         {provide: ActivatedRoute, useClass: ActivatedRouteStub}
       ]

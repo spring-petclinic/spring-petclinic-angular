@@ -71,16 +71,8 @@ export class VisitEditComponent implements OnInit {
     visit.date = moment(visit.date).format('YYYY/MM/DD');
 
     this.visitService.updateVisit(visit.id.toString(), visit).subscribe(
-      get_result,
+      res => this.gotoOwnerDetail(),
       error => this.errorMessage = <any> error);
-    function get_result(update_status) {
-      if (update_status.status === 204) {
-        console.log('update success');
-        that.gotoOwnerDetail();
-      } else {
-        return console.log('update failed');
-      }
-    }
 
   }
 
