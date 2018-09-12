@@ -29,11 +29,16 @@ import {Specialty} from '../specialty';
 import { SpecialtyEditComponent } from './specialty-edit.component';
 import {SpecialtyService} from "../specialty.service";
 import {FormsModule} from '@angular/forms';
-import {HttpModule} from '@angular/http';
 import {Router, ActivatedRoute} from '@angular/router';
 import {RouterStub, ActivatedRouteStub} from '../../testing/router-stubs';
 import Spy = jasmine.Spy;
-import {Observable} from 'rxjs';
+import {Observable, of} from 'rxjs';
+
+class SpecialityServiceStub {
+  getSpecialtyById(spec_id: string): Observable<Specialty> {
+    return of();
+  }
+}
 
 describe('SpecialtyEditComponent', () => {
   let component: SpecialtyEditComponent;
@@ -46,9 +51,9 @@ describe('SpecialtyEditComponent', () => {
     TestBed.configureTestingModule({
       declarations: [SpecialtyEditComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [FormsModule, HttpModule],
+      imports: [FormsModule],
       providers: [
-        SpecialtyService,
+        {provide: SpecialtyService, useClass: SpecialityServiceStub},
         {provide: Router, useClass: RouterStub},
         {provide: ActivatedRoute, useClass: ActivatedRouteStub}
       ]

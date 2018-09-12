@@ -6,12 +6,19 @@ import {Specialty} from "../../specialties/specialty";
 import Spy = jasmine.Spy;
 import {PetTypeService} from "../pettype.service";
 import {PetType} from "../pettype";
-import {HttpModule} from "@angular/http";
 import {CUSTOM_ELEMENTS_SCHEMA} from "@angular/core";
 import {ActivatedRoute, Router} from "@angular/router";
 import {ActivatedRouteStub, RouterStub} from "../../testing/router-stubs";
 import {FormsModule} from "@angular/forms";
 import {Observable} from "rxjs/Rx";
+import {of} from "rxjs/index";
+
+class PetTypeServiceStub {
+  getPetTypeById(type_id: string): Observable<PetType> {
+    return of();
+  }
+}
+
 
 describe('PettypeEditComponent', () => {
   let component: PettypeEditComponent;
@@ -24,9 +31,9 @@ describe('PettypeEditComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ PettypeEditComponent ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [FormsModule, HttpModule],
+      imports: [FormsModule],
       providers: [
-        PetTypeService,
+        {provide: PetTypeService, useClass: PetTypeServiceStub},
         {provide: Router, useClass: RouterStub},
         {provide: ActivatedRoute, useClass: ActivatedRouteStub}
       ]

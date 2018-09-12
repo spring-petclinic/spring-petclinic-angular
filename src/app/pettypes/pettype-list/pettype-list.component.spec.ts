@@ -5,13 +5,22 @@ import {Specialty} from "../../specialties/specialty";
 import Spy = jasmine.Spy;
 import {PetTypeService} from "../pettype.service";
 import {PetType} from "../pettype";
-import {HttpModule} from "@angular/http";
 import {CUSTOM_ELEMENTS_SCHEMA} from "@angular/core";
 import {ActivatedRoute, Router} from "@angular/router";
-import {SpecialtyService} from "../../specialties/specialty.service";
 import {ActivatedRouteStub, RouterStub} from "../../testing/router-stubs";
 import {FormsModule} from "@angular/forms";
 import {Observable} from "rxjs/Rx";
+import {of} from "rxjs/index";
+
+class PetTypeServiceStub {
+  deletePetType(type_id: string): Observable<number> {
+    return of();
+  }
+  getPetTypes(): Observable<PetType[]> {
+    return of();
+  }
+}
+
 
 describe('PettypeListComponent', () => {
   let component: PettypeListComponent;
@@ -25,9 +34,9 @@ describe('PettypeListComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ PettypeListComponent ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [FormsModule, HttpModule],
+      imports: [FormsModule],
       providers: [
-        PetTypeService,
+        {provide: PetTypeService, useClass: PetTypeServiceStub},
         {provide: Router, useClass: RouterStub},
         {provide: ActivatedRoute, useClass: ActivatedRouteStub}
       ]

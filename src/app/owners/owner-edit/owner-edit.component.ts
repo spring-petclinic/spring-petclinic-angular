@@ -33,7 +33,7 @@ import 'rxjs/Rx';
 })
 export class OwnerEditComponent implements OnInit {
   owner: Owner;
-  errorMessage: string;
+  errorMessage: string; // server error message
 
   constructor(private ownerService: OwnerService, private route: ActivatedRoute, private router: Router) {
     this.owner = <Owner>{};
@@ -49,28 +49,13 @@ export class OwnerEditComponent implements OnInit {
   onSubmit(owner: Owner) {
     var that = this;
     this.ownerService.updateOwner(owner.id.toString(), owner).subscribe(
-      get_result,
-      get_error
-    );
-
-    function get_error(error) {
-      console.log(error);
-      console.log('error catched');
-      return this.errorMessage = <any> error;
-    }
-
-    function get_result(update_status) {
-      console.log(update_status);
-      if (update_status.status === 204) {
-        console.log('update success');
-        that.gotoOwnerDetail(owner);
-      } else {
-        return console.log('update failed');
-      }
-    }
-  };
+      res => this.gotoOwnerDetail(owner),
+      error => this.errorMessage = <any> error
+    )
+  }
 
   gotoOwnerDetail(owner: Owner) {
+    this.errorMessage = null;
     this.router.navigate(['/owners', owner.id]);
   }
 

@@ -30,14 +30,25 @@ import {VisitAddComponent} from './visit-add.component';
 import {FormsModule} from '@angular/forms';
 import {VisitService} from '../visit.service';
 import {PetService} from '../../pets/pet.service';
-import {HttpModule} from '@angular/http';
 import {Router, ActivatedRoute} from '@angular/router';
 import {RouterStub, ActivatedRouteStub} from '../../testing/router-stubs';
 import {Pet} from '../../pets/pet';
 import Spy = jasmine.Spy;
-import {Observable} from 'rxjs';
+import {Observable, of} from 'rxjs';
 import {MatMomentDateModule} from '@angular/material-moment-adapter';
 import {MatDatepickerModule} from '@angular/material';
+
+class PetServiceStub {
+  addPet(pet: Pet): Observable<Pet> {
+    return of();
+  }
+  getPetById(pet_id: string): Observable<Pet> {
+    return of();
+  }
+}
+
+class VisitServiceStub {
+}
 
 describe('VisitAddComponent', () => {
   let component: VisitAddComponent;
@@ -51,9 +62,10 @@ describe('VisitAddComponent', () => {
     TestBed.configureTestingModule({
       declarations: [VisitAddComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [FormsModule, HttpModule, MatDatepickerModule, MatMomentDateModule],
+      imports: [FormsModule, MatDatepickerModule, MatMomentDateModule],
       providers: [
-        PetService, VisitService,
+        {provide: PetService, useClass: PetServiceStub},
+        {provide: VisitService, useCLass: VisitServiceStub},
         {provide: Router, useClass: RouterStub},
         {provide: ActivatedRoute, useClass: ActivatedRouteStub}
       ]

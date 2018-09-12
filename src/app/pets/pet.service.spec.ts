@@ -25,17 +25,19 @@
 
 import {TestBed, async, inject} from '@angular/core/testing';
 import {PetService} from './pet.service';
-import {HttpModule} from '@angular/http';
+import {HttpClientTestingModule, HttpTestingController} from "@angular/common/http/testing";
+import {HttpClient} from "@angular/common/http";
 
 describe('PetService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpModule],
+      // Import the HttpClient mocking services
+      imports: [HttpClientTestingModule],
       providers: [PetService]
     });
   });
 
-  it('should ...', inject([PetService], (service: PetService) => {
-    expect(service).toBeTruthy();
-  }));
+  it('should ...', async(inject([HttpTestingController], (petService: PetService, http: HttpClient) => {
+    expect(petService).toBeTruthy();
+  })));
 });

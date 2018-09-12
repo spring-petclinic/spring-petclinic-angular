@@ -46,19 +46,13 @@ export class PettypeEditComponent implements OnInit {
   }
 
   onSubmit(pettype: PetType){
-    var that = this;
     this.pettypeService.updatePetType(pettype.id.toString(), pettype).subscribe(
-      get_result,
+      res => {
+        console.log('update success');
+        this.onBack();
+      },
       error => this.errorMessage = <any> error);
 
-      function get_result(update_status) {
-        if (update_status.status === 204) {
-          console.log('update success');
-          that.onBack();
-        } else {
-          return console.log('update failed');
-        }
-      }
   }
 
   onBack() {

@@ -24,72 +24,56 @@ import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {Visit} from './visit';
 import {environment} from '../../environments/environment';
-import {Http, Response, Headers, RequestOptions} from '@angular/http';
+import {HandleError, HttpErrorHandler} from "../error.service";
+import {HttpClient} from "@angular/common/http";
+import {catchError} from "rxjs/internal/operators";
 
 @Injectable()
 export class VisitService {
 
   private entity_url = environment.REST_API_URL + 'visits';
 
-  constructor(private _http: Http) {
+  private handlerError: HandleError;
+
+  constructor(private http: HttpClient, private httpErrorHandler: HttpErrorHandler) {
+    this.handlerError = httpErrorHandler.createHandleError('OwnerService');
   }
 
   getVisits(): Observable<Visit[]> {
-    return this._http.get(this.entity_url)
-      .map((response: Response) => <Visit[]> response.json())
-      .catch(this.handleError);
+    return this.http.get<Visit[]>(this.entity_url)
+      .pipe(
+        catchError(this.handlerError('getVisits', []))
+      );
   }
 
   getVisitById(visit_id: string): Observable<Visit> {
-    return this._http.get(this.entity_url + '/' + visit_id)
-      .map((response: Response) => <Visit> response.json())
-      .catch(this.handleError);
+    return this.http.get<Visit>(this.entity_url + '/' + visit_id)
+      .pipe(
+        catchError(this.handlerError('getVisitById', {} as Visit))
+      );
   }
 
   addVisit(visit: Visit): Observable<Visit> {
-    const headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-    headers.append('Accept', 'application/json');
-    return this._http.post(this.entity_url, JSON.stringify(visit), {headers})
-      .map((response: Response) => <Visit> response.json())
-      .catch(this.handleError);
+    return this.http.post<Visit>(this.entity_url, visit)
+      .pipe(
+        catchError(this.handlerError('addVisit', visit))
+      );
   }
 
   updateVisit(visit_id: string, visit: Visit): Observable<Visit> {
-    const body = JSON.stringify(visit);
-    const headers = new Headers({'Content-Type': ' application/json;charset=UTF-8'});
-    const options = new RequestOptions({headers: headers});
-    return this._http.put((this.entity_url + '/' + visit_id), body, options)
-      .map((response: Response) => response)
-      .catch(this.handleError);
+    return this.http.put<Visit>(this.entity_url + '/' + visit_id, visit)
+      .pipe(
+        catchError(this.handlerError('updateVisit', visit))
+      );
   }
 
   deleteVisit(visit_id: string): Observable<number> {
-    const headers = new Headers({'Content-Type': ' application/json;charset=UTF-8'});
-    const options = new RequestOptions({headers: headers});
-    return this._http.delete((this.entity_url + '/' + visit_id), options)
-      .map((response: Response) => response.status)
-      .catch(this.handleError);
+    return this.http.delete<number>(this.entity_url + '/' + visit_id)
+      .pipe(
+        catchError(this.handlerError('deleteVisit', 0))
+      );
 
   }
 
-  private handleError(error: Response | any) {
-    console.log('handleError log: ');
-    let errMsg: string;
-    if (error instanceof Response) {
-      if (!(error.text() === '' )) {  // if response body not empty
-        const body = error.json() || '';
-        const err = body.error || JSON.stringify(body);
-        errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
-      } else {
-        console.log('binding errors header not empty');
-        errMsg = error.headers.get('errors').toString();
-      }
-    } else {
-      errMsg = error.message ? error.message : error.toString();
-    }
-    console.error(errMsg);
-    return Observable.throw(errMsg);
-  }
 
 }

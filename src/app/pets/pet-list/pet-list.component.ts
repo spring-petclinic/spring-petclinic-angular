@@ -42,9 +42,6 @@ export class PetListComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.petService.getPets().subscribe(
-    //   response => this.pets = response,
-    //   error => this.errorMessage = <any> error);
   }
 
   editPet(pet: Pet) {
@@ -54,11 +51,8 @@ export class PetListComponent implements OnInit {
   deletePet(pet: Pet) {
     this.petService.deletePet(pet.id.toString()).subscribe(
       response => {
-        this.response_status = response;
-        if (this.response_status === 204) {
-          this.delete_success = true;
-          this.pet = <Pet>{};
-        }
+        this.delete_success = true;
+        this.pet = <Pet>{};
       },
       error => this.errorMessage = <any> error);
   }

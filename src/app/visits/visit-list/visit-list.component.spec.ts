@@ -28,14 +28,19 @@ import {DebugElement, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 
 import {VisitListComponent} from './visit-list.component';
 import {FormsModule} from '@angular/forms';
-import {HttpModule} from '@angular/http';
 import {VisitService} from '../visit.service';
 import {Router, ActivatedRoute} from '@angular/router';
 import {RouterStub, ActivatedRouteStub} from '../../testing/router-stubs';
 import {Visit} from '../visit';
 import {Pet} from '../../pets/pet';
 import Spy = jasmine.Spy;
-import {Observable} from 'rxjs';
+import {Observable, of} from 'rxjs';
+
+class VisitServiceStub {
+  deleteVisit(visit_id: string): Observable<number> {
+    return of();
+  }
+}
 
 describe('VisitListComponent', () => {
   let component: VisitListComponent;
@@ -50,9 +55,9 @@ describe('VisitListComponent', () => {
     TestBed.configureTestingModule({
       declarations: [VisitListComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [FormsModule, HttpModule],
+      imports: [FormsModule],
       providers: [
-        VisitService,
+        {provide: VisitService, useClass: VisitServiceStub},
         {provide: Router, useClass: RouterStub},
         {provide: ActivatedRoute, useClass: ActivatedRouteStub}
       ]

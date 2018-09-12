@@ -2,7 +2,7 @@ sudo: required
 dist: trusty
 language: node_js
 node_js:
-  - '7.5'
+  - '10.10'
 
 addons:
 apt:
@@ -23,4 +23,4 @@ before_script:
 - npm install
 - ng build
 
-script: karma start karma.conf.js --single-run
+script: ng test --karma-config karma.conf.js --watch=false

@@ -75,6 +75,7 @@ export class PetAddComponent implements OnInit {
       new_pet => {
         this.pet = new_pet;
         this.added_success = true;
+        this.gotoOwnerDetail();
       },
       error => this.errorMessage = <any>error);
   }
