@@ -103,9 +103,9 @@
   dependencies:
     tslib "^1.9.0"
 
-"@angular/cdk@next":
-  version "7.0.0-beta.0"
-  resolved "https://registry.yarnpkg.com/@angular/cdk/-/cdk-7.0.0-beta.0.tgz#a7f376bbd03edc079712a76ea2cf786d6c1398e3"
+"@angular/cdk@6.4.7":
+  version "6.4.7"
+  resolved "https://registry.yarnpkg.com/@angular/cdk/-/cdk-6.4.7.tgz#1549b304dd412e82bd854cc55a7d5c6772ee0411"
   dependencies:
     tslib "^1.7.1"
 
@@ -173,9 +173,9 @@
   dependencies:
     tslib "^1.7.1"
 
-"@angular/material@next":
-  version "7.0.0-beta.0"
-  resolved "https://registry.yarnpkg.com/@angular/material/-/material-7.0.0-beta.0.tgz#27bedc7cc01a64b29ad2bfe8eb0e6feff38ac508"
+"@angular/material@6.4.7":
+  version "6.4.7"
+  resolved "https://registry.yarnpkg.com/@angular/material/-/material-6.4.7.tgz#3c8f2d6a6a7904d97be29e06a84ffb62a8da6c16"
   dependencies:
     tslib "^1.7.1"
   optionalDependencies:
@@ -5600,9 +5600,13 @@ run-queue@^1.0.0, run-queue@^1.0.3:
   dependencies:
     aproba "^1.1.1"
 
+rxjs-compat@^6.3.1:
+  version "6.5.2"
+  resolved "https://registry.yarnpkg.com/rxjs-compat/-/rxjs-compat-6.5.2.tgz#e469070adf6260bdad195e9d4a39f444ae28b458"
+
 rxjs@^6.0.0, rxjs@^6.3.1:
-  version "6.3.1"
-  resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-6.3.1.tgz#878a1a8c64b8a5da11dcf74b5033fe944cdafb84"
+  version "6.5.2"
+  resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-6.5.2.tgz#2e35ce815cd46d84d02a209fb4e5921e051dbec7"
   dependencies:
     tslib "^1.9.0"
 
