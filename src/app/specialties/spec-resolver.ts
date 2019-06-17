@@ -20,7 +20,7 @@ import {Injectable} from '@angular/core';
 import {Specialty} from './specialty';
 import {Resolve} from '@angular/router';
 import {SpecialtyService} from './specialty.service';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 
 /**
  * @author Vitaliy Fedoriv
