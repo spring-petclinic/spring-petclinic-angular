@@ -34,13 +34,13 @@
         <tbody>
         <tr *ngFor="let owner of owners">
           <td class="ownerFullName"><a routerLink="/owners/{{owner.id}}" routerLinkActive="active"
-                                       (click)="onSelect(owner)">{{owner.firstName}} {{owner.lastName}}</a></td>
-          <td>{{owner.address}}</td>
-          <td>{{owner.city}}</td>
-          <td>{{owner.telephone}}</td>
+                                       (click)="onSelect(owner)">{{ owner.firstName }} {{ owner.lastName }}</a></td>
+          <td>{{ owner.address }}</td>
+          <td>{{ owner.city }}</td>
+          <td>{{ owner.telephone }}</td>
           <td>
         <tr *ngFor="let pet of owner.pets">
-          {{pet.name}}
+          {{ pet.name }}
         </tr>
         </td>
         </tr>

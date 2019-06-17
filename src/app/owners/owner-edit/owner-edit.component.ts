@@ -24,7 +24,6 @@ import {Component, OnInit} from '@angular/core';
 import {OwnerService} from '../owner.service';
 import {Owner} from '../owner';
 import {ActivatedRoute, Router} from '@angular/router';
-import 'rxjs/Rx';
 
 @Component({
   selector: 'app-owner-edit',
@@ -47,18 +46,16 @@ export class OwnerEditComponent implements OnInit {
   }
 
   onSubmit(owner: Owner) {
-    var that = this;
+    const that = this;
     this.ownerService.updateOwner(owner.id.toString(), owner).subscribe(
       res => this.gotoOwnerDetail(owner),
       error => this.errorMessage = <any> error
-    )
+    );
   }
 
   gotoOwnerDetail(owner: Owner) {
     this.errorMessage = null;
     this.router.navigate(['/owners', owner.id]);
   }
-
-
 
 }

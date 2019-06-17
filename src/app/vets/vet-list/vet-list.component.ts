@@ -24,7 +24,6 @@ import {Component, OnInit} from '@angular/core';
 import {Vet} from '../vet';
 import {VetService} from '../vet.service';
 import {Router} from '@angular/router';
-import {Pet} from '../../pets/pet';
 
 @Component({
   selector: 'app-vet-list',
@@ -43,7 +42,7 @@ export class VetListComponent implements OnInit {
   ngOnInit() {
     this.vetService.getVets().subscribe(
       vets => this.vets = vets,
-      error => this.errorMessage = <any> error);
+      error => this.errorMessage = <any>error);
   }
 
   deleteVet(vet: Vet) {
@@ -52,7 +51,7 @@ export class VetListComponent implements OnInit {
         this.response_status = response;
         this.vets = this.vets.filter(current_item => !(current_item.id === vet.id));
       },
-      error => this.errorMessage = <any> error);
+      error => this.errorMessage = <any>error);
   }
 
   gotoHome() {

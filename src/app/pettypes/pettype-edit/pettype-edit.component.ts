@@ -20,10 +20,10 @@
  * @author Vitaliy Fedoriv
  */
 
-import { Component, OnInit } from '@angular/core';
-import {PetType} from "../pettype";
-import {PetTypeService} from "../pettype.service";
-import {ActivatedRoute, Router} from "@angular/router";
+import {Component, OnInit} from '@angular/core';
+import {PetType} from '../pettype';
+import {PetTypeService} from '../pettype.service';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-pettype-edit',
@@ -45,7 +45,7 @@ export class PettypeEditComponent implements OnInit {
       error => this.errorMessage = <any>error);
   }
 
-  onSubmit(pettype: PetType){
+  onSubmit(pettype: PetType) {
     this.pettypeService.updatePetType(pettype.id.toString(), pettype).subscribe(
       res => {
         console.log('update success');

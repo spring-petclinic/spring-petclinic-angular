@@ -18,8 +18,7 @@
 
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {Specialty} from '../specialty';
-import * as moment from "moment";
-import {SpecialtyService} from "../specialty.service";
+import {SpecialtyService} from '../specialty.service';
 
 @Component({
   selector: 'app-specialty-add',
@@ -28,11 +27,11 @@ import {SpecialtyService} from "../specialty.service";
 })
 export class SpecialtyAddComponent implements OnInit {
   specialty: Specialty;
-  added_success: boolean = false;
+  added_success = false;
   errorMessage: string;
-  @Output() onNew = new EventEmitter<Specialty>();
+  @Output() newSpeciality = new EventEmitter<Specialty>();
 
-  constructor(private specialtyService : SpecialtyService) {
+  constructor(private specialtyService: SpecialtyService) {
     this.specialty = <Specialty>{};
   }
 
@@ -45,7 +44,7 @@ export class SpecialtyAddComponent implements OnInit {
       new_specialty => {
         this.specialty = new_specialty;
         this.added_success = true;
-        this.onNew.emit(this.specialty) ;
+        this.newSpeciality.emit(this.specialty) ;
       },
       error => this.errorMessage = <any>error
     );

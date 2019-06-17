@@ -20,7 +20,7 @@
  * @author Vitaliy Fedoriv
  */
 
-import {Component, OnInit, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Visit} from '../visit';
 import {VisitService} from '../visit.service';
 import {Router} from '@angular/router';
@@ -34,7 +34,7 @@ export class VisitListComponent implements OnInit {
 
   @Input() visits: Visit[];
   response_status: number;
-  no_visits: boolean = false;
+  no_visits = false;
   errorMessage: string;
 
   constructor(private router: Router, private visitService: VisitService) {

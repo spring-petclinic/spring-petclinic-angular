@@ -20,7 +20,7 @@
  * @author Vitaliy Fedoriv
  */
 
-import {Routes, RouterModule} from '@angular/router';
+import {RouterModule, Routes} from '@angular/router';
 import {VetListComponent} from './vet-list/vet-list.component';
 import {VetAddComponent} from './vet-add/vet-add.component';
 import {VetEditComponent} from './vet-edit/vet-edit.component';

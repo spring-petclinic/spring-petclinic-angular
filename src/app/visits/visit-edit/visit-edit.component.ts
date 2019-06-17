@@ -40,7 +40,7 @@ export class VisitEditComponent implements OnInit {
   current_pet: Pet;
   current_owner: Owner;
   current_pet_type: PetType;
-  update_success: boolean = false;
+  update_success = false;
   errorMessage: string;
 
   constructor(private visitService: VisitService, private route: ActivatedRoute, private router: Router) {
@@ -65,7 +65,6 @@ export class VisitEditComponent implements OnInit {
 
   onSubmit(visit: Visit) {
     visit.pet = this.current_pet;
-    var that = this;
 
     // format output from datepicker to short string yyyy/mm/dd format
     visit.date = moment(visit.date).format('YYYY/MM/DD');

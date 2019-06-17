@@ -22,7 +22,7 @@
 
 import {Component, OnInit} from '@angular/core';
 import {Specialty} from '../specialty';
-import {SpecialtyService} from "../specialty.service";
+import {SpecialtyService} from '../specialty.service';
 import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({

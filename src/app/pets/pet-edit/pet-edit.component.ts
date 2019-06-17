@@ -21,10 +21,10 @@
  * @author Vitaliy Fedoriv
  */
 
-import {Component, OnInit, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Pet} from '../pet';
 import {PetService} from '../pet.service';
-import {Router, ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Owner} from '../../owners/owner';
 import {PetType} from '../../pettypes/pettype';
 import {PetTypeService} from '../../pettypes/pettype.service';
@@ -43,7 +43,8 @@ export class PetEditComponent implements OnInit {
   pet_types: PetType[];
   errorMessage: string;
 
-  constructor(private petService: PetService, private petTypeService: PetTypeService, private router: Router, private route: ActivatedRoute) {
+  constructor(private petService: PetService, private petTypeService: PetTypeService, private router: Router,
+              private route: ActivatedRoute) {
     this.pet = <Pet>{};
     this.current_owner = <Owner>{};
     this.current_type = <PetType>{};
@@ -69,7 +70,7 @@ export class PetEditComponent implements OnInit {
 
   onSubmit(pet: Pet) {
     pet.type = this.current_type;
-    var that = this;
+    const that = this;
     // format output from datepicker to short string yyyy/mm/dd format
     pet.birthDate = moment(pet.birthDate).format('YYYY/MM/DD');
 

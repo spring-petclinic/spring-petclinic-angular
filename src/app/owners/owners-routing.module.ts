@@ -21,7 +21,7 @@
  */
 
 import {NgModule} from '@angular/core';
-import {Routes, RouterModule} from '@angular/router';
+import {RouterModule, Routes} from '@angular/router';
 import {OwnerDetailComponent} from './owner-detail/owner-detail.component';
 import {OwnerListComponent} from './owner-list/owner-list.component';
 import {OwnerEditComponent} from './owner-edit/owner-edit.component';

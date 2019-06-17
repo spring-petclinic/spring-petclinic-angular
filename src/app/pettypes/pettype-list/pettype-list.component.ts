@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import {PetType} from "../pettype";
-import {Router} from "@angular/router";
-import {PetTypeService} from "../pettype.service";
-import {Specialty} from "../../specialties/specialty";
+import {Component, OnInit} from '@angular/core';
+import {PetType} from '../pettype';
+import {Router} from '@angular/router';
+import {PetTypeService} from '../pettype.service';
+import {Specialty} from '../../specialties/specialty';
 
 @Component({
   selector: 'app-pettype-list',
@@ -13,7 +13,7 @@ export class PettypeListComponent implements OnInit {
   pettypes: PetType[];
   errorMessage: string;
   response_status: number;
-  is_insert: boolean = false;
+  is_insert = false;
 
   constructor(private pettypeService: PetTypeService, private router: Router) {
     this.pettypes = <PetType[]>[];
@@ -35,7 +35,7 @@ export class PettypeListComponent implements OnInit {
       error => this.errorMessage = <any> error);
   }
 
-  onNewPettype(new_pettype: Specialty){
+  onNewPettype(new_pettype: Specialty) {
     this.pettypes.push(new_pettype);
     this.showAddPettypeComponent();
   }

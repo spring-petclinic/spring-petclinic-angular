@@ -23,18 +23,15 @@
  */
 
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-import {By} from '@angular/platform-browser';
-import {DebugElement, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 
 import {VetListComponent} from './vet-list.component';
 import {FormsModule} from '@angular/forms';
 import {VetService} from '../vet.service';
-import {Router, ActivatedRoute} from '@angular/router';
-import {RouterStub, ActivatedRouteStub} from '../../testing/router-stubs';
+import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRouteStub, RouterStub} from '../../testing/router-stubs';
 import {Vet} from '../vet';
-import Spy = jasmine.Spy;
-import {of} from "rxjs/index";
-import {Observable} from "rxjs/Rx";
+import {Observable, of} from 'rxjs/index';
 
 class VetServiceStub {
   getVets(): Observable<Vet[]> {
@@ -45,9 +42,7 @@ class VetServiceStub {
 describe('VetListComponent', () => {
   let component: VetListComponent;
   let fixture: ComponentFixture<VetListComponent>;
-  let testVet: Vet;
   let vetService: VetService;
-  let spy: Spy;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({

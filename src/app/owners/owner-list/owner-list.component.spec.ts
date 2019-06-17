@@ -30,7 +30,6 @@ import {OwnerListComponent} from './owner-list.component';
 import {FormsModule} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
 import {OwnerService} from '../owner.service';
-import Spy = jasmine.Spy;
 import {Owner} from '../owner';
 import {Observable, of} from 'rxjs';
 import {RouterTestingModule} from '@angular/router/testing';
@@ -42,7 +41,7 @@ import {OwnersModule} from '../owners.module';
 import {DummyComponent} from '../../testing/dummy.component';
 import {OwnerAddComponent} from '../owner-add/owner-add.component';
 import {OwnerEditComponent} from '../owner-edit/owner-edit.component';
-import { HandleError } from 'app/error.service';
+import Spy = jasmine.Spy;
 
 
 class OwnerServiceStub {
@@ -113,7 +112,7 @@ describe('OwnerListComponent', () => {
     component = fixture.componentInstance;
     ownerService = fixture.debugElement.injector.get(OwnerService);
     spy = spyOn(ownerService, 'getOwners')
-      .and.returnValue(Observable.of(testOwners));
+      .and.returnValue(of(testOwners));
 
   });
 

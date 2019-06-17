@@ -26,8 +26,8 @@ import {FormsModule} from '@angular/forms';
 import {SpecialtyService} from './specialty.service';
 import {SpecialtyListComponent} from './specialty-list/specialty-list.component';
 import {SpecialtiesRoutingModule} from './specialties-routing.module';
-import { SpecialtyAddComponent } from './specialty-add/specialty-add.component';
-import { SpecialtyEditComponent } from './specialty-edit/specialty-edit.component';
+import {SpecialtyAddComponent} from './specialty-add/specialty-add.component';
+import {SpecialtyEditComponent} from './specialty-edit/specialty-edit.component';
 import {SpecResolver} from './spec-resolver';
 
 @NgModule({

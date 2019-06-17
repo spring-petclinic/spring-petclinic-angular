@@ -21,11 +21,11 @@
     <td valign="top">
       <dl class="dl-horizontal">
         <dt>Name</dt>
-        <dd>{{pet.name}}</dd>
+        <dd>{{ pet.name }}</dd>
         <dt>Birth Date</dt>
-        <dd>{{pet.birthDate}}</dd>
+        <dd>{{ pet.birthDate }}</dd>
         <dt>Type</dt>
-        <dd *ngIf="!delete_success">{{pet.type.name}}</dd>
+        <dd *ngIf="!delete_success">{{ pet.type.name }}</dd>
         <button class="btn btn-default" (click)="editPet(pet)">Edit Pet</button>
         <button class="btn btn-default" (click)="deletePet(pet)">Delete Pet</button>
         <button class="btn btn-default" (click)="addVisit(pet)">Add Visit</button>

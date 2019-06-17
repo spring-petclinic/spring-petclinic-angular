@@ -24,17 +24,16 @@
  */
 
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-import {By} from '@angular/platform-browser';
-import {DebugElement, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 
 import {PetListComponent} from './pet-list.component';
 import {FormsModule} from '@angular/forms';
 import {PetService} from '../pet.service';
-import {Router, ActivatedRoute} from '@angular/router';
-import {RouterStub, ActivatedRouteStub} from '../../testing/router-stubs';
+import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRouteStub, RouterStub} from '../../testing/router-stubs';
 import {Pet} from '../pet';
-import Spy = jasmine.Spy;
 import {Observable, of} from 'rxjs';
+import Spy = jasmine.Spy;
 
 class PetServiceStub {
   deletePet(pet_id: string): Observable<number> {
@@ -85,7 +84,7 @@ describe('PetListComponent', () => {
     component.pet = inputPet;
     petService = fixture.debugElement.injector.get(PetService);
     spy = spyOn(petService, 'deletePet')
-      .and.returnValue(Observable.of(true));
+      .and.returnValue(of(true));
 
     fixture.detectChanges();
   });

@@ -23,20 +23,19 @@
  */
 
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-import {By} from '@angular/platform-browser';
-import {DebugElement, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 
 import {VisitAddComponent} from './visit-add.component';
 import {FormsModule} from '@angular/forms';
 import {VisitService} from '../visit.service';
 import {PetService} from '../../pets/pet.service';
-import {Router, ActivatedRoute} from '@angular/router';
-import {RouterStub, ActivatedRouteStub} from '../../testing/router-stubs';
+import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRouteStub, RouterStub} from '../../testing/router-stubs';
 import {Pet} from '../../pets/pet';
-import Spy = jasmine.Spy;
 import {Observable, of} from 'rxjs';
 import {MatMomentDateModule} from '@angular/material-moment-adapter';
 import {MatDatepickerModule} from '@angular/material';
+import Spy = jasmine.Spy;
 
 class PetServiceStub {
   addPet(pet: Pet): Observable<Pet> {
@@ -95,7 +94,7 @@ describe('VisitAddComponent', () => {
     petService = fixture.debugElement.injector.get(PetService);
     visitService = fixture.debugElement.injector.get(VisitService);
     spy = spyOn(petService, 'addPet')
-      .and.returnValue(Observable.of(testPet));
+      .and.returnValue(of(testPet));
 
     fixture.detectChanges();
   });

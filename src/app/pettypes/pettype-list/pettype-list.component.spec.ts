@@ -1,16 +1,14 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { PettypeListComponent } from './pettype-list.component';
-import {Specialty} from "../../specialties/specialty";
+import {PettypeListComponent} from './pettype-list.component';
+import {PetTypeService} from '../pettype.service';
+import {PetType} from '../pettype';
+import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRouteStub, RouterStub} from '../../testing/router-stubs';
+import {FormsModule} from '@angular/forms';
+import {Observable, of} from 'rxjs/index';
 import Spy = jasmine.Spy;
-import {PetTypeService} from "../pettype.service";
-import {PetType} from "../pettype";
-import {CUSTOM_ELEMENTS_SCHEMA} from "@angular/core";
-import {ActivatedRoute, Router} from "@angular/router";
-import {ActivatedRouteStub, RouterStub} from "../../testing/router-stubs";
-import {FormsModule} from "@angular/forms";
-import {Observable} from "rxjs/Rx";
-import {of} from "rxjs/index";
 
 class PetTypeServiceStub {
   deletePetType(type_id: string): Observable<number> {
@@ -58,7 +56,7 @@ describe('PettypeListComponent', () => {
     component.pettypes = testPettypes;
 
     spy = spyOn(pettypeService, 'deletePetType')
-      .and.returnValue(Observable.of(response_status));
+      .and.returnValue(of(response_status));
 
     fixture.detectChanges();
   });

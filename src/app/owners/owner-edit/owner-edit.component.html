@@ -22,7 +22,7 @@
       Edit Owner
     </h2>
     <div *ngIf="errorMessage" class="alert alert-danger">
-      {{errorMessage}}
+      {{ errorMessage }}
     </div>
     <form (ngSubmit)="onSubmit(ownerForm.value)" #ownerForm="ngForm" class="form-horizontal">
       <div class="form-group" hidden="true">

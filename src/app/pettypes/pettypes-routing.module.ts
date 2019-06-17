@@ -22,7 +22,7 @@
  */
 
 import {NgModule} from '@angular/core';
-import {Routes, RouterModule} from '@angular/router';
+import {RouterModule, Routes} from '@angular/router';
 import {PettypeListComponent} from './pettype-list/pettype-list.component';
 import {PettypeAddComponent} from './pettype-add/pettype-add.component';
 import {PettypeEditComponent} from './pettype-edit/pettype-edit.component';
