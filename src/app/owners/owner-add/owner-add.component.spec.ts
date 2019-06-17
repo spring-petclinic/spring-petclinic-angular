@@ -23,8 +23,7 @@
  */
 
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-import {By} from '@angular/platform-browser';
-import {DebugElement, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 
 import {OwnerAddComponent} from './owner-add.component';
 import {FormsModule} from '@angular/forms';
@@ -32,14 +31,13 @@ import {Router} from '@angular/router';
 import {OwnerService} from '../owner.service';
 import {RouterTestingModule} from '@angular/router/testing';
 import {RouterStub} from '../../testing/router-stubs';
-import {Owner} from "../owner";
-import {Observable} from "rxjs/Rx";
-import {of} from "rxjs/index";
+import {Owner} from '../owner';
+import {Observable, of} from 'rxjs/index';
 
 class OwnserServiceStub {
 
   addOwner(owner: Owner): Observable<Owner> {
-    return of(owner)
+    return of(owner);
   }
 }
 

@@ -34,7 +34,7 @@ export class SpecialtyListComponent implements OnInit {
   specialties: Specialty[];
   errorMessage: string;
   response_status: number;
-  is_insert: boolean = false;
+  is_insert = false;
 
   constructor(private specService: SpecialtyService, private router: Router) {
     this.specialties = [];
@@ -55,7 +55,7 @@ export class SpecialtyListComponent implements OnInit {
       error => this.errorMessage = <any> error);
   }
 
-  onNewSpecialty(new_specialty: Specialty){
+  onNewSpecialty(new_specialty: Specialty) {
     this.specialties.push(new_specialty);
     this.showAddSpecialtyComponent();
   }

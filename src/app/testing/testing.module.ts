@@ -1,7 +1,7 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { DummyComponent } from './dummy.component';
-import { RouterLinkStubDirective, RouterOutletStubComponent } from './router-stubs';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {DummyComponent} from './dummy.component';
+import {RouterLinkStubDirective, RouterOutletStubComponent} from './router-stubs';
 
 @NgModule({
   imports: [

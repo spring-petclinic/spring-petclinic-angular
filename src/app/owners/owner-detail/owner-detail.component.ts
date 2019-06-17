@@ -22,11 +22,8 @@
 
 import {Component, OnInit} from '@angular/core';
 import {OwnerService} from '../owner.service';
-import {Router, ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Owner} from '../owner';
-import 'rxjs/Rx';
-import {Pet} from '../../pets/pet';
-import {Visit} from '../../visits/visit';
 
 
 @Component({
@@ -46,7 +43,7 @@ export class OwnerDetailComponent implements OnInit {
     const ownerId = this.route.snapshot.params['id'];
     this.ownerService.getOwnerById(ownerId).subscribe(
       owner => this.owner = owner,
-      error => this.errorMessage = <any> error);
+      error => this.errorMessage = <any>error);
   }
 
   gotoOwnersList() {

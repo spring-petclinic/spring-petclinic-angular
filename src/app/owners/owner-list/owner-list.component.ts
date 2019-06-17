@@ -23,7 +23,6 @@
 import {Component, OnInit} from '@angular/core';
 import {OwnerService} from '../owner.service';
 import {Owner} from '../owner';
-import 'rxjs/Rx';
 import {Router} from '@angular/router';
 
 @Component({

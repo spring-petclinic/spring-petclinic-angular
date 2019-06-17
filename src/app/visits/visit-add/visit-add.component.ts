@@ -23,7 +23,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Visit} from '../visit';
 import {VisitService} from '../visit.service';
-import {Router, ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {PetService} from '../../pets/pet.service';
 import {Pet} from '../../pets/pet';
 import {PetType} from '../../pettypes/pettype';
@@ -42,7 +42,7 @@ export class VisitAddComponent implements OnInit {
   current_pet: Pet;
   current_owner: Owner;
   current_pet_type: PetType;
-  added_success: boolean = false;
+  added_success = false;
   errorMessage: string;
 
   constructor(private visitService: VisitService, private petService: PetService, private router: Router, private route: ActivatedRoute) {
@@ -68,7 +68,7 @@ export class VisitAddComponent implements OnInit {
 
   onSubmit(visit: Visit) {
     visit.id = null;
-    var that = this;
+    const that = this;
 
     // format output from datepicker to short string yyyy/mm/dd format
     visit.date = moment(visit.date).format('YYYY/MM/DD');

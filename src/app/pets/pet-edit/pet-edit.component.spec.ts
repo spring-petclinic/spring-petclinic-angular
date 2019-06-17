@@ -23,22 +23,21 @@
  */
 
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-import {By} from '@angular/platform-browser';
-import {DebugElement, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 
 import {PetEditComponent} from './pet-edit.component';
 import {FormsModule} from '@angular/forms';
 import {PetService} from '../pet.service';
 import {OwnerService} from '../../owners/owner.service';
 import {PetTypeService} from '../../pettypes/pettype.service';
-import {Router, ActivatedRoute} from '@angular/router';
-import {RouterStub, ActivatedRouteStub} from '../../testing/router-stubs';
+import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRouteStub, RouterStub} from '../../testing/router-stubs';
 import {Pet} from '../pet';
-import Spy = jasmine.Spy;
 import {Observable, of} from 'rxjs';
 import {MatDatepickerModule} from '@angular/material';
 import {MatMomentDateModule} from '@angular/material-moment-adapter';
-import {PetType} from "../../pettypes/pettype";
+import {PetType} from '../../pettypes/pettype';
+import Spy = jasmine.Spy;
 
 class OwnerServiceStub {
 
@@ -103,7 +102,7 @@ describe('PetEditComponent', () => {
     };
     petService = fixture.debugElement.injector.get(PetService);
     spy = spyOn(petService, 'updatePet')
-      .and.returnValue(Observable.of(testPet));
+      .and.returnValue(of(testPet));
 
     fixture.detectChanges();
   });

@@ -26,7 +26,7 @@ import {Observable} from 'rxjs';
 import {Pet} from './pet';
 import {HttpClient} from '@angular/common/http';
 import {catchError} from 'rxjs/operators';
-import {HttpErrorHandler, HandleError} from '../error.service';
+import {HandleError, HttpErrorHandler} from '../error.service';
 
 @Injectable()
 export class PetService {

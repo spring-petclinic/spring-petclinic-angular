@@ -23,22 +23,20 @@
  */
 
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-import {By} from '@angular/platform-browser';
-import {DebugElement, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 
 import {OwnerDetailComponent} from './owner-detail.component';
 import {FormsModule} from '@angular/forms';
 import {RouterTestingModule} from '@angular/router/testing';
 import {OwnerService} from '../owner.service';
-import {Router, ActivatedRoute} from '@angular/router';
-import {RouterStub, ActivatedRouteStub} from '../../testing/router-stubs';
-import {Owner} from "../owner";
-import {Observable} from "rxjs/Rx";
-import {of} from "rxjs/index";
+import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRouteStub, RouterStub} from '../../testing/router-stubs';
+import {Owner} from '../owner';
+import {Observable, of} from 'rxjs/index';
 
 class OwnserServiceStub {
   getOwnerById(): Observable<Owner> {
-    return of( { id: 1, firstName: 'James' } as Owner )
+    return of( { id: 1, firstName: 'James' } as Owner );
   }
 }
 

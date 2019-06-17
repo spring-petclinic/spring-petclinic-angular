@@ -21,7 +21,7 @@
  */
 
 
-import {Component, OnInit, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Pet} from '../pet';
 import {PetType} from '../../pettypes/pettype';
 import {Owner} from '../../owners/owner';
@@ -42,7 +42,7 @@ export class PetAddComponent implements OnInit {
   @Input() current_type: PetType;
   current_owner: Owner;
   pet_types: PetType[];
-  added_success: boolean = false;
+  added_success = false;
   errorMessage: string;
 
   constructor(private ownerService: OwnerService, private petService: PetService,

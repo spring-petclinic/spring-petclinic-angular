@@ -41,7 +41,7 @@
       </tbody>
     </table>
     <div *ngIf="is_insert">
-      <app-pettype-add (onNew)="onNewPettype($event)">...</app-pettype-add>
+      <app-pettype-add (newPetType)="onNewPettype($event)">...</app-pettype-add>
     </div>
     <div>
       <button class="btn btn-default" (click)="gotoHome()">Home</button>

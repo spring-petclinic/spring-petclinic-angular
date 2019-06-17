@@ -23,18 +23,17 @@
  */
 
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-import {By} from '@angular/platform-browser';
-import {DebugElement, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 
 import {VisitListComponent} from './visit-list.component';
 import {FormsModule} from '@angular/forms';
 import {VisitService} from '../visit.service';
-import {Router, ActivatedRoute} from '@angular/router';
-import {RouterStub, ActivatedRouteStub} from '../../testing/router-stubs';
+import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRouteStub, RouterStub} from '../../testing/router-stubs';
 import {Visit} from '../visit';
 import {Pet} from '../../pets/pet';
-import Spy = jasmine.Spy;
 import {Observable, of} from 'rxjs';
+import Spy = jasmine.Spy;
 
 class VisitServiceStub {
   deleteVisit(visit_id: string): Observable<number> {
@@ -96,7 +95,7 @@ describe('VisitListComponent', () => {
     component.visits = testVisits;
 
     spy = spyOn(visitService, 'deleteVisit')
-      .and.returnValue(Observable.of(response_status));
+      .and.returnValue(of(response_status));
 
     fixture.detectChanges();
   });

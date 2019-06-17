@@ -1,14 +1,13 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import {By} from '@angular/platform-browser';
-import {DebugElement, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import {Specialty} from '../specialty';
-import { SpecialtyAddComponent } from './specialty-add.component';
-import {SpecialtyService} from "../specialty.service";
+import {SpecialtyAddComponent} from './specialty-add.component';
+import {SpecialtyService} from '../specialty.service';
 import {FormsModule} from '@angular/forms';
-import {Router, ActivatedRoute} from '@angular/router';
-import {RouterStub, ActivatedRouteStub} from '../../testing/router-stubs';
-import Spy = jasmine.Spy;
+import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRouteStub, RouterStub} from '../../testing/router-stubs';
 import {Observable, of} from 'rxjs';
+import Spy = jasmine.Spy;
 
 class SpecialityServiceStub {
   addSpecialty(specialty: Specialty): Observable<Specialty> {
@@ -47,7 +46,7 @@ describe('SpecialtyAddComponent', () => {
 
     specialtyService = fixture.debugElement.injector.get(SpecialtyService);
     spy = spyOn(specialtyService, 'addSpecialty')
-      .and.returnValue(Observable.of(testSpecialty));
+      .and.returnValue(of(testSpecialty));
 
     fixture.detectChanges();
   });

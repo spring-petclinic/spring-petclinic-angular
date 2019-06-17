@@ -51,7 +51,7 @@ export class VetAddComponent implements OnInit {
     );
   }
 
-  onSubmit(vet: Vet){
+  onSubmit(vet: Vet) {
     vet.id = null;
     vet.specialties = [];
     if (this.selected_specialty.id !== undefined) {

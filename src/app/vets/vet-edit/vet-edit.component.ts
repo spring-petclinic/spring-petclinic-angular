@@ -82,7 +82,7 @@ export class VetEditComponent implements OnInit {
     this.initFormValues();
   }
 
-  onSubmit(vet: Vet){
+  onSubmit(vet: Vet) {
     this.vetService.updateVet(vet.id.toString(), vet).subscribe(
       res => {
         console.log('update success');

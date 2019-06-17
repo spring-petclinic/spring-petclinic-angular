@@ -24,9 +24,9 @@ import {Injectable} from '@angular/core';
 import {environment} from '../../environments/environment';
 import {Observable} from 'rxjs';
 import {PetType} from './pettype';
-import {HttpClient} from "@angular/common/http";
-import {catchError} from "rxjs/internal/operators";
-import {HandleError, HttpErrorHandler} from "../error.service";
+import {HttpClient} from '@angular/common/http';
+import {catchError} from 'rxjs/internal/operators';
+import {HandleError, HttpErrorHandler} from '../error.service';
 
 @Injectable()
 export class PetTypeService {

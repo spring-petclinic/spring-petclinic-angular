@@ -23,20 +23,19 @@
  */
 
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-import {By} from '@angular/platform-browser';
-import {DebugElement, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 
 import {VisitEditComponent} from './visit-edit.component';
 import {FormsModule} from '@angular/forms';
 import {VisitService} from '../visit.service';
-import {Router, ActivatedRoute} from '@angular/router';
-import {RouterStub, ActivatedRouteStub} from '../../testing/router-stubs';
-import Spy = jasmine.Spy;
+import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRouteStub, RouterStub} from '../../testing/router-stubs';
 import {Visit} from '../visit';
 import {Observable, of} from 'rxjs';
 import {Pet} from '../../pets/pet';
 import {MatMomentDateModule} from '@angular/material-moment-adapter';
 import {MatDatepickerModule} from '@angular/material';
+import Spy = jasmine.Spy;
 
 class VisitServiceStub {
   getVisitById(visit_id: string): Observable<Visit> {
@@ -94,7 +93,7 @@ describe('VisitEditComponent', () => {
 
     visitService = fixture.debugElement.injector.get(VisitService);
     spy = spyOn(visitService, 'getVisitById')
-      .and.returnValue(Observable.of(testVisit));
+      .and.returnValue(of(testVisit));
 
     fixture.detectChanges();
   });

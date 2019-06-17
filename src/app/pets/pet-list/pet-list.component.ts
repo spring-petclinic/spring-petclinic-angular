@@ -21,7 +21,7 @@
  * @author Vitaliy Fedoriv
  */
 
-import {Component, OnInit, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {PetService} from '../pet.service';
 import {Pet} from '../pet';
@@ -35,7 +35,7 @@ export class PetListComponent implements OnInit {
   errorMessage: string;
   @Input() pet: Pet;
   response_status: number;
-  delete_success: boolean = false;
+  delete_success = false;
 
   constructor(private router: Router, private petService: PetService) {
     this.pet = <Pet>{};

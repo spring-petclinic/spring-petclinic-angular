@@ -30,7 +30,7 @@ import {PetEditComponent} from './pet-edit/pet-edit.component';
 import {FormsModule} from '@angular/forms';
 import {PetAddComponent} from './pet-add/pet-add.component';
 
-import {MAT_MOMENT_DATE_FORMATS, MatMomentDateModule, MomentDateAdapter} from '@angular/material-moment-adapter';
+import {MatMomentDateModule, MomentDateAdapter} from '@angular/material-moment-adapter';
 import {MatDatepickerModule} from '@angular/material';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 

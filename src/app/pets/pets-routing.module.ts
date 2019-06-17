@@ -20,7 +20,7 @@
  * @author Vitaliy Fedoriv
  */
 
-import {Routes, RouterModule} from '@angular/router';
+import {RouterModule, Routes} from '@angular/router';
 import {PetListComponent} from './pet-list/pet-list.component';
 import {NgModule} from '@angular/core';
 import {VisitAddComponent} from '../visits/visit-add/visit-add.component';
