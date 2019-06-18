@@ -30,7 +30,7 @@ import {VisitAddComponent} from './visit-add/visit-add.component';
 import {FormsModule} from '@angular/forms';
 import {PetsRoutingModule} from '../pets/pets-routing.module';
 import {MatMomentDateModule, MomentDateAdapter} from '@angular/material-moment-adapter';
-import {MatDatepickerModule} from '@angular/material';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 
 export const MY_DATE_FORMATS = {

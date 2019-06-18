@@ -34,7 +34,7 @@ import {Visit} from '../visit';
 import {Observable, of} from 'rxjs';
 import {Pet} from '../../pets/pet';
 import {MatMomentDateModule} from '@angular/material-moment-adapter';
-import {MatDatepickerModule} from '@angular/material';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import Spy = jasmine.Spy;
 
 class VisitServiceStub {

@@ -34,7 +34,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {ActivatedRouteStub, RouterStub} from '../../testing/router-stubs';
 import {Pet} from '../pet';
 import {Observable, of} from 'rxjs';
-import {MatDatepickerModule} from '@angular/material';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import {MatMomentDateModule} from '@angular/material-moment-adapter';
 import {PetType} from '../../pettypes/pettype';
 import Spy = jasmine.Spy;
