@@ -1,4 +1,3 @@
-///<reference path="../../../node_modules/@angular/router/src/interfaces.d.ts"/>
 /*
  *
  *  * Copyright 2016-2018 the original author or authors.
