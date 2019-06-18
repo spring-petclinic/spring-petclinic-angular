@@ -12,7 +12,7 @@ Warning: **client only**.
   
 
 ## Installation
-1. Update angular-cli to latest version (6.1.5 current)
+1. Update angular-cli to latest version (8.0.3 current)
 as described on [angular-cli github readme.md](https://github.com/angular/angular-cli#updating-angular-cli)
 
 ````
@@ -31,8 +31,8 @@ if npm version > 5.0 delete package-lock.json file  ( bug in npm 5.0 - this file
 npm install
 ````
 
-Now project use Angular CLI v.6.1.5 and Angular v.6.1.6
-You can see current dependencies in package.json file.
+Now project use Angular CLI v.8.0.3 and Angular v.8.0.1
+You can see current dependencies in [package.json](package.json) file.
 
 ## Development server
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
