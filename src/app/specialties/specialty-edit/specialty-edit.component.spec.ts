@@ -34,7 +34,7 @@ import {Observable, of} from 'rxjs';
 import Spy = jasmine.Spy;
 
 class SpecialityServiceStub {
-  getSpecialtyById(spec_id: string): Observable<Specialty> {
+  getSpecialtyById(specId: string): Observable<Specialty> {
     return of();
   }
 }

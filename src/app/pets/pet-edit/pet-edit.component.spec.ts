@@ -44,10 +44,10 @@ class OwnerServiceStub {
 }
 
 class PetServiceStub {
-  updatePet(pet_id: string, pet: Pet): Observable<Pet> {
+  updatePet(petId: string, pet: Pet): Observable<Pet> {
     return of();
   }
-  getPetById(pet_id: string): Observable<Pet> {
+  getPetById(petId: string): Observable<Pet> {
     return of();
   }
 }

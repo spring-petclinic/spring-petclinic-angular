@@ -11,7 +11,7 @@ import {Observable, of} from 'rxjs/index';
 import Spy = jasmine.Spy;
 
 class PetTypeServiceStub {
-  getPetTypeById(type_id: string): Observable<PetType> {
+  getPetTypeById(typeId: string): Observable<PetType> {
     return of();
   }
 }

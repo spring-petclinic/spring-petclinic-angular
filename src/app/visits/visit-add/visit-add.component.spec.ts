@@ -41,7 +41,7 @@ class PetServiceStub {
   addPet(pet: Pet): Observable<Pet> {
     return of();
   }
-  getPetById(pet_id: string): Observable<Pet> {
+  getPetById(petId: string): Observable<Pet> {
     return of();
   }
 }

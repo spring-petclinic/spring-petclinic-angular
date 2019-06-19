@@ -47,7 +47,7 @@ class OwnerServiceStub {
 }
 
 class PetServiceStub {
-  getPetById(pet_id: string): Observable<Pet> {
+  getPetById(petId: string): Observable<Pet> {
     return of();
   }
 }

@@ -31,7 +31,7 @@ import {HttpClient} from '@angular/common/http';
 @Injectable()
 export class SpecialtyService {
 
-  private entity_url = environment.REST_API_URL + 'specialties';
+  private entityUrl = environment.REST_API_URL + 'specialties';
 
   private handlerError: HandleError;
 
@@ -40,35 +40,35 @@ export class SpecialtyService {
   }
 
   getSpecialties(): Observable<Specialty[]> {
-    return this.http.get<Specialty[]>(this.entity_url)
+    return this.http.get<Specialty[]>(this.entityUrl)
       .pipe(
         catchError(this.handlerError('getSpecialties', []))
       );
   }
 
-  getSpecialtyById(spec_id: string): Observable<Specialty> {
-    return this.http.get<Specialty>((this.entity_url + '/' + spec_id))
+  getSpecialtyById(specId: string): Observable<Specialty> {
+    return this.http.get<Specialty>((this.entityUrl + '/' + specId))
       .pipe(
         catchError(this.handlerError('getSpecialtyById', {} as Specialty))
       );
   }
 
   addSpecialty(specialty: Specialty): Observable<Specialty> {
-    return this.http.post<Specialty>(this.entity_url, specialty)
+    return this.http.post<Specialty>(this.entityUrl, specialty)
       .pipe(
         catchError(this.handlerError('addSpecialty', specialty))
       );
   }
 
-  updateSpecialty(spec_id: string, specialty: Specialty): Observable<Specialty> {
-    return this.http.put<Specialty>((this.entity_url + '/' + spec_id), specialty)
+  updateSpecialty(specId: string, specialty: Specialty): Observable<Specialty> {
+    return this.http.put<Specialty>((this.entityUrl + '/' + specId), specialty)
       .pipe(
         catchError(this.handlerError('updateSpecialty', specialty))
       );
   }
 
-  deleteSpecialty(spec_id: string): Observable<number> {
-    return this.http.delete<number>((this.entity_url + '/' + spec_id))
+  deleteSpecialty(specId: string): Observable<number> {
+    return this.http.delete<number>((this.entityUrl + '/' + specId))
       .pipe(
         catchError(this.handlerError('deleteSpecialty', 0))
       );

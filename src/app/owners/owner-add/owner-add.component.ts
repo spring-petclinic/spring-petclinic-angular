@@ -36,7 +36,7 @@ export class OwnerAddComponent implements OnInit {
   errorMessage: string;
 
   constructor(private ownerService: OwnerService, private router: Router) {
-    this.owner = <Owner>{};
+    this.owner = {} as Owner;
   }
 
   ngOnInit() {
@@ -45,11 +45,11 @@ export class OwnerAddComponent implements OnInit {
   onSubmit(owner: Owner) {
     owner.id = null;
     this.ownerService.addOwner(owner).subscribe(
-      new_owner => {
-        this.owner = new_owner;
+      newOwner => {
+        this.owner = newOwner;
         this.gotoOwnersList();
       },
-      error => this.errorMessage = <any>error
+      error => this.errorMessage = error as any
     );
   }
 

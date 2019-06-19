@@ -12,40 +12,40 @@ import {Specialty} from '../../specialties/specialty';
 export class PettypeListComponent implements OnInit {
   pettypes: PetType[];
   errorMessage: string;
-  response_status: number;
-  is_insert = false;
+  responseStatus: number;
+  isInsert = false;
 
   constructor(private pettypeService: PetTypeService, private router: Router) {
-    this.pettypes = <PetType[]>[];
+    this.pettypes = [] as PetType[];
   }
 
   ngOnInit() {
     this.pettypeService.getPetTypes().subscribe(
       pettypes => this.pettypes = pettypes,
-      error => this.errorMessage = <any>error
+      error => this.errorMessage = error as any
     );
   }
 
   deletePettype(pettype: PetType) {
     this.pettypeService.deletePetType(pettype.id.toString()).subscribe(
       response => {
-        this.response_status = response;
-        this.pettypes = this.pettypes.filter(current_item => !(current_item.id === pettype.id));
+        this.responseStatus = response;
+        this.pettypes = this.pettypes.filter(currentItem => !(currentItem.id === pettype.id));
       },
-      error => this.errorMessage = <any> error);
+      error => this.errorMessage = error as any);
   }
 
-  onNewPettype(new_pettype: Specialty) {
-    this.pettypes.push(new_pettype);
+  onNewPettype(newPetType: Specialty) {
+    this.pettypes.push(newPetType);
     this.showAddPettypeComponent();
   }
 
   showAddPettypeComponent() {
-    this.is_insert = !this.is_insert;
+    this.isInsert = !this.isInsert;
   }
 
-  showEditPettypeComponent(updated_pettype: PetType) {
-    this.router.navigate(['/pettypes', updated_pettype.id.toString(), 'edit']);
+  showEditPettypeComponent(updatedPetType: PetType) {
+    this.router.navigate(['/pettypes', updatedPetType.id.toString(), 'edit']);
   }
 
   gotoHome() {

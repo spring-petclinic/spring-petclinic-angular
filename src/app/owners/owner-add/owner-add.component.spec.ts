@@ -32,7 +32,7 @@ import {OwnerService} from '../owner.service';
 import {RouterTestingModule} from '@angular/router/testing';
 import {RouterStub} from '../../testing/router-stubs';
 import {Owner} from '../owner';
-import {Observable, of} from 'rxjs/index';
+import {Observable, of} from 'rxjs';
 
 class OwnserServiceStub {
 

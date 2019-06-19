@@ -33,8 +33,8 @@ import {Router} from '@angular/router';
 export class VisitListComponent implements OnInit {
 
   @Input() visits: Visit[];
-  response_status: number;
-  no_visits = false;
+  responseStatus: number;
+  noVisits = false;
   errorMessage: string;
 
   constructor(private router: Router, private visitService: VisitService) {
@@ -51,14 +51,14 @@ export class VisitListComponent implements OnInit {
   deleteVisit(visit: Visit) {
     this.visitService.deleteVisit(visit.id.toString()).subscribe(
       response => {
-        this.response_status = response;
-          console.log('delete success');
-          this.visits.splice(this.visits.indexOf(visit), 1 );
-          if (this.visits.length === 0) {
-            this.no_visits = true;
+        this.responseStatus = response;
+        console.log('delete success');
+        this.visits.splice(this.visits.indexOf(visit), 1 );
+        if (this.visits.length === 0) {
+            this.noVisits = true;
           }
       },
-      error => this.errorMessage = <any> error);
+      error => this.errorMessage = error as any);
   }
 
 }

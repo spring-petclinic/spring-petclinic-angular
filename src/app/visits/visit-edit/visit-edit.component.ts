@@ -37,46 +37,46 @@ import * as moment from 'moment';
 })
 export class VisitEditComponent implements OnInit {
   visit: Visit;
-  current_pet: Pet;
-  current_owner: Owner;
-  current_pet_type: PetType;
-  update_success = false;
+  currentPet: Pet;
+  currentOwner: Owner;
+  currentPetType: PetType;
+  updateSuccess = false;
   errorMessage: string;
 
   constructor(private visitService: VisitService, private route: ActivatedRoute, private router: Router) {
-    this.visit = <Visit>{};
-    this.current_pet = <Pet>{};
-    this.current_owner = <Owner>{};
-    this.current_pet_type = <PetType>{};
+    this.visit = {} as Visit;
+    this.currentPet = {} as Pet;
+    this.currentOwner = {} as Owner;
+    this.currentPetType = {} as PetType;
   }
 
   ngOnInit() {
-    const visitId = this.route.snapshot.params['id'];
+    const visitId = this.route.snapshot.params.id;
     this.visitService.getVisitById(visitId).subscribe(
       response => {
         this.visit = response;
 
-        this.current_pet = this.visit.pet;
-        this.current_pet_type = this.current_pet.type;
-        this.current_owner = this.current_pet.owner;
+        this.currentPet = this.visit.pet;
+        this.currentPetType = this.currentPet.type;
+        this.currentOwner = this.currentPet.owner;
       },
-      error => this.errorMessage = <any> error);
+      error => this.errorMessage = error as any);
   }
 
   onSubmit(visit: Visit) {
-    visit.pet = this.current_pet;
+    visit.pet = this.currentPet;
 
     // format output from datepicker to short string yyyy/mm/dd format
     visit.date = moment(visit.date).format('YYYY/MM/DD');
 
     this.visitService.updateVisit(visit.id.toString(), visit).subscribe(
       res => this.gotoOwnerDetail(),
-      error => this.errorMessage = <any> error);
+      error => this.errorMessage = error as any);
 
   }
 
   gotoOwnerDetail() {
-    this.router.navigate(['/owners', this.current_owner.id]);
+    this.router.navigate(['/owners', this.currentOwner.id]);
   }
 
 }

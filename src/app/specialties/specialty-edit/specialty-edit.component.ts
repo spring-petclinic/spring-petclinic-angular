@@ -35,14 +35,14 @@ export class SpecialtyEditComponent implements OnInit {
   errorMessage: string;
 
   constructor(private specialtyService: SpecialtyService, private route: ActivatedRoute, private router: Router) {
-    this.specialty = <Specialty>{};
+    this.specialty = {} as Specialty;
   }
 
   ngOnInit() {
-    const specId = this.route.snapshot.params['id'];
+    const specId = this.route.snapshot.params.id;
     this.specialtyService.getSpecialtyById(specId).subscribe(
       specialty => this.specialty = specialty,
-      error => this.errorMessage = <any> error);
+      error => this.errorMessage = error as any);
   }
 
   onSubmit(specialty: Specialty) {
@@ -51,7 +51,7 @@ export class SpecialtyEditComponent implements OnInit {
         console.log('update success');
         this.onBack();
       },
-      error => this.errorMessage = <any> error);
+      error => this.errorMessage = error as any);
  }
 
   onBack() {

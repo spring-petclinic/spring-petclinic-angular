@@ -31,44 +31,44 @@ import {HandleError, HttpErrorHandler} from '../error.service';
 @Injectable()
 export class PetService {
 
-  private entity_url = environment.REST_API_URL + 'pets';
+  private entityUrl = environment.REST_API_URL + 'pets';
 
-  private handlerError: HandleError;
+  private readonly handlerError: HandleError;
 
   constructor(private http: HttpClient, private httpErrorHandler: HttpErrorHandler) {
     this.handlerError = httpErrorHandler.createHandleError('OwnerService');
   }
 
   getPets(): Observable<Pet[]> {
-    return this.http.get<Pet[]>(this.entity_url)
+    return this.http.get<Pet[]>(this.entityUrl)
       .pipe(
         catchError(this.handlerError('getPets', []))
       );
   }
 
-  getPetById(pet_id: string): Observable<Pet> {
-    return this.http.get<Pet>(this.entity_url + '/' + pet_id)
+  getPetById(petId: string): Observable<Pet> {
+    return this.http.get<Pet>(this.entityUrl + '/' + petId)
       .pipe(
         catchError(this.handlerError('getPetById', {} as Pet))
       );
   }
 
   addPet(pet: Pet): Observable<Pet> {
-    return this.http.post<Pet>(this.entity_url, pet)
+    return this.http.post<Pet>(this.entityUrl, pet)
       .pipe(
         catchError(this.handlerError('addPet', pet))
       );
   }
 
-  updatePet(pet_id: string, pet: Pet): Observable<Pet> {
-    return this.http.put<Pet>(this.entity_url + '/' + pet_id, pet)
+  updatePet(petId: string, pet: Pet): Observable<Pet> {
+    return this.http.put<Pet>(this.entityUrl + '/' + petId, pet)
       .pipe(
         catchError(this.handlerError('updatePet', pet))
       );
   }
 
-  deletePet(pet_id: string): Observable<number> {
-    return this.http.delete<number>(this.entity_url + '/' + pet_id)
+  deletePet(petId: string): Observable<number> {
+    return this.http.delete<number>(this.entityUrl + '/' + petId)
       .pipe(
         catchError(this.handlerError('deletePet', 0))
       );

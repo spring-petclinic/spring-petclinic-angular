@@ -31,44 +31,44 @@ import {catchError} from 'rxjs/internal/operators';
 @Injectable()
 export class VisitService {
 
-  private entity_url = environment.REST_API_URL + 'visits';
+  private entityUrl = environment.REST_API_URL + 'visits';
 
-  private handlerError: HandleError;
+  private readonly handlerError: HandleError;
 
   constructor(private http: HttpClient, private httpErrorHandler: HttpErrorHandler) {
     this.handlerError = httpErrorHandler.createHandleError('OwnerService');
   }
 
   getVisits(): Observable<Visit[]> {
-    return this.http.get<Visit[]>(this.entity_url)
+    return this.http.get<Visit[]>(this.entityUrl)
       .pipe(
         catchError(this.handlerError('getVisits', []))
       );
   }
 
-  getVisitById(visit_id: string): Observable<Visit> {
-    return this.http.get<Visit>(this.entity_url + '/' + visit_id)
+  getVisitById(visitId: string): Observable<Visit> {
+    return this.http.get<Visit>(this.entityUrl + '/' + visitId)
       .pipe(
         catchError(this.handlerError('getVisitById', {} as Visit))
       );
   }
 
   addVisit(visit: Visit): Observable<Visit> {
-    return this.http.post<Visit>(this.entity_url, visit)
+    return this.http.post<Visit>(this.entityUrl, visit)
       .pipe(
         catchError(this.handlerError('addVisit', visit))
       );
   }
 
-  updateVisit(visit_id: string, visit: Visit): Observable<Visit> {
-    return this.http.put<Visit>(this.entity_url + '/' + visit_id, visit)
+  updateVisit(visitId: string, visit: Visit): Observable<Visit> {
+    return this.http.put<Visit>(this.entityUrl + '/' + visitId, visit)
       .pipe(
         catchError(this.handlerError('updateVisit', visit))
       );
   }
 
-  deleteVisit(visit_id: string): Observable<number> {
-    return this.http.delete<number>(this.entity_url + '/' + visit_id)
+  deleteVisit(visitId: string): Observable<number> {
+    return this.http.delete<number>(this.entityUrl + '/' + visitId)
       .pipe(
         catchError(this.handlerError('deleteVisit', 0))
       );

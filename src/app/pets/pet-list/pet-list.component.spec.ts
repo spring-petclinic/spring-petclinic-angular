@@ -36,7 +36,7 @@ import {Observable, of} from 'rxjs';
 import Spy = jasmine.Spy;
 
 class PetServiceStub {
-  deletePet(pet_id: string): Observable<number> {
+  deletePet(petId: string): Observable<number> {
     return of();
   }
 }

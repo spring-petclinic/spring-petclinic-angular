@@ -39,7 +39,7 @@
     "@types/jasmine": "~2.8.3",
     "@types/jasminewd2": "~2.0.2",
     "@types/node": "^6.0.106",
-    "codelyzer": "^4.3.0",
+    "codelyzer": "^5.0.0",
     "jasmine-core": "~2.8.0",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "~2.0.0",
@@ -51,7 +51,7 @@
     "protractor": "~5.1.2",
     "source-map-explorer": "^1.5.0",
     "ts-node": "~4.1.0",
-    "tslint": "~5.9.1",
+    "tslint": "~5.15.0",
     "typescript": "3.4.5"
   }
 }

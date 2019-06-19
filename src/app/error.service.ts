@@ -43,7 +43,7 @@ export class HttpErrorHandler {
    * @param operation - name of the operation that failed
    * @param result - type of a valid result
    */
-  handleError<T> (serviceName = '', operation = 'operation', result = {} as T) {
+  handleError<T>(serviceName = '', operation = 'operation', result = {} as T) {
 
     return (error: HttpErrorResponse): Observable<T> => {
 

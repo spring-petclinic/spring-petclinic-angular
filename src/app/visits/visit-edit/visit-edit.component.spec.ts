@@ -38,7 +38,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import Spy = jasmine.Spy;
 
 class VisitServiceStub {
-  getVisitById(visit_id: string): Observable<Visit> {
+  getVisitById(visitId: string): Observable<Visit> {
     return of();
   }
 }

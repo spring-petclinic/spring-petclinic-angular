@@ -46,7 +46,7 @@
           <label for="spec" class="col-sm-2 control-label">Specialties</label>
             <mat-form-field class="col-sm-10">
               <mat-select  [compareWith]="compareSpecFn" id="spec" name="specialties" formControlName="specialties" multiple>
-                <mat-option *ngFor="let specialty of spec_list" [value]="specialty">
+                <mat-option *ngFor="let specialty of specList" [value]="specialty">
                   {{ specialty.name }}
                 </mat-option>
               </mat-select>

@@ -32,7 +32,7 @@ import {OwnerService} from '../owner.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ActivatedRouteStub, RouterStub} from '../../testing/router-stubs';
 import {Owner} from '../owner';
-import {Observable, of} from 'rxjs/index';
+import {Observable, of} from 'rxjs';
 
 class OwnserServiceStub {
   getOwnerById(): Observable<Owner> {

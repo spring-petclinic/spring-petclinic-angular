@@ -33,7 +33,7 @@ import {Router} from '@angular/router';
 export class VetListComponent implements OnInit {
   vets: Vet[];
   errorMessage: string;
-  response_status: number;
+  responseStatus: number;
 
   constructor(private vetService: VetService, private router: Router) {
     this.vets = [];
@@ -42,16 +42,16 @@ export class VetListComponent implements OnInit {
   ngOnInit() {
     this.vetService.getVets().subscribe(
       vets => this.vets = vets,
-      error => this.errorMessage = <any>error);
+      error => this.errorMessage = error as any);
   }
 
   deleteVet(vet: Vet) {
     this.vetService.deleteVet(vet.id.toString()).subscribe(
       response => {
-        this.response_status = response;
-        this.vets = this.vets.filter(current_item => !(current_item.id === vet.id));
+        this.responseStatus = response;
+        this.vets = this.vets.filter(currentItem => !(currentItem.id === vet.id));
       },
-      error => this.errorMessage = <any>error);
+      error => this.errorMessage = error as any);
   }
 
   gotoHome() {

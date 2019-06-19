@@ -35,7 +35,7 @@ import {Observable, of} from 'rxjs/index';
 import Spy = jasmine.Spy;
 
 class SpecialityServiceStub {
-  deleteSpecialty(spec_id: string): Observable<number> {
+  deleteSpecialty(specId: string): Observable<number> {
     return of();
   }
   getSpecialties(): Observable<Specialty[]> {
@@ -50,7 +50,7 @@ describe('SpecialtyListComponent', () => {
   let specialtyService: SpecialtyService;
   let spy: Spy;
   let testSpecialties: Specialty[];
-  let response_status: number;
+  let responseStatus: number;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -75,11 +75,11 @@ describe('SpecialtyListComponent', () => {
     }];
 
     specialtyService = fixture.debugElement.injector.get(SpecialtyService);
-    response_status = 204; // success delete return NO_CONTENT
+    responseStatus = 204; // success delete return NO_CONTENT
     component.specialties = testSpecialties;
 
     spy = spyOn(specialtyService, 'deleteSpecialty')
-      .and.returnValue(of(response_status));
+      .and.returnValue(of(responseStatus));
 
     fixture.detectChanges();
   });

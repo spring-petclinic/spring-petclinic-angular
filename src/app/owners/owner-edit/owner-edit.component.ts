@@ -35,21 +35,21 @@ export class OwnerEditComponent implements OnInit {
   errorMessage: string; // server error message
 
   constructor(private ownerService: OwnerService, private route: ActivatedRoute, private router: Router) {
-    this.owner = <Owner>{};
+    this.owner = {} as Owner;
   }
 
   ngOnInit() {
-    const ownerId = this.route.snapshot.params['id'];
+    const ownerId = this.route.snapshot.params.id;
     this.ownerService.getOwnerById(ownerId).subscribe(
       owner => this.owner = owner,
-      error => this.errorMessage = <any> error);
+      error => this.errorMessage = error as any);
   }
 
   onSubmit(owner: Owner) {
     const that = this;
     this.ownerService.updateOwner(owner.id.toString(), owner).subscribe(
       res => this.gotoOwnerDetail(owner),
-      error => this.errorMessage = <any> error
+      error => this.errorMessage = error as any
     );
   }
 
