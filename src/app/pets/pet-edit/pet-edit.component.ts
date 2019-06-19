@@ -38,45 +38,45 @@ import * as moment from 'moment';
 })
 export class PetEditComponent implements OnInit {
   pet: Pet;
-  @Input() current_type: PetType;
-  current_owner: Owner;
-  pet_types: PetType[];
+  @Input() currentType: PetType;
+  currentOwner: Owner;
+  petTypes: PetType[];
   errorMessage: string;
 
   constructor(private petService: PetService, private petTypeService: PetTypeService, private router: Router,
               private route: ActivatedRoute) {
-    this.pet = <Pet>{};
-    this.current_owner = <Owner>{};
-    this.current_type = <PetType>{};
-    this.pet_types = [];
+    this.pet = {} as Pet;
+    this.currentOwner = {} as Owner;
+    this.currentType = {} as PetType;
+    this.petTypes = [];
   }
 
   ngOnInit() {
 
     this.petTypeService.getPetTypes().subscribe(
-      pettypes => this.pet_types = pettypes,
-      error => this.errorMessage = <any> error);
+      pettypes => this.petTypes = pettypes,
+      error => this.errorMessage = error as any);
 
-    const petId = this.route.snapshot.params['id'];
+    const petId = this.route.snapshot.params.id;
     this.petService.getPetById(petId).subscribe(
       pet => {
         this.pet = pet;
-        this.current_owner = this.pet.owner;
-        this.current_type = this.pet.type;
+        this.currentOwner = this.pet.owner;
+        this.currentType = this.pet.type;
       },
-      error => this.errorMessage = <any> error);
+      error => this.errorMessage = error as any);
 
   }
 
   onSubmit(pet: Pet) {
-    pet.type = this.current_type;
+    pet.type = this.currentType;
     const that = this;
     // format output from datepicker to short string yyyy/mm/dd format
     pet.birthDate = moment(pet.birthDate).format('YYYY/MM/DD');
 
     this.petService.updatePet(pet.id.toString(), pet).subscribe(
-      res => this.gotoOwnerDetail(this.current_owner),
-      error => this.errorMessage = <any> error
+      res => this.gotoOwnerDetail(this.currentOwner),
+      error => this.errorMessage = error as any
     );
   }
 

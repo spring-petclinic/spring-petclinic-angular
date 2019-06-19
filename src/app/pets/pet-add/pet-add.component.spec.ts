@@ -35,7 +35,7 @@ import {Pet} from '../pet';
 import {OwnerService} from '../../owners/owner.service';
 import {PetTypeService} from '../../pettypes/pettype.service';
 import {MatMomentDateModule} from '@angular/material-moment-adapter';
-import {MatDatepickerModule} from '@angular/material';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import {Owner} from '../../owners/owner';
 import {PetType} from '../../pettypes/pettype';
 import Spy = jasmine.Spy;
@@ -47,7 +47,7 @@ class OwnerServiceStub {
 }
 
 class PetServiceStub {
-  getPetById(pet_id: string): Observable<Pet> {
+  getPetById(petId: string): Observable<Pet> {
     return of();
   }
 }

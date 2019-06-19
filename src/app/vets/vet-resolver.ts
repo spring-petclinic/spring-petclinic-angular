@@ -1,4 +1,3 @@
-///<reference path="../../../node_modules/@angular/router/src/interfaces.d.ts"/>
 /*
  *
  *  * Copyright 2016-2018 the original author or authors.
@@ -18,7 +17,7 @@
  */
 
 import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from '@angular/router';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {Injectable} from '@angular/core';
 import {VetService} from './vet.service';
 import {Vet} from './vet';

@@ -34,35 +34,35 @@ import {VetService} from '../vet.service';
 })
 export class VetAddComponent implements OnInit {
   vet: Vet;
-  specialties_list: Specialty[];
-  selected_specialty: Specialty;
+  specialtiesList: Specialty[];
+  selectedSpecialty: Specialty;
   errorMessage: string;
 
   constructor(private specialtyService: SpecialtyService, private vetService: VetService, private router: Router) {
-    this.vet = <Vet>{};
-    this.selected_specialty = <Specialty>{};
-    this.specialties_list = [];
+    this.vet = {} as Vet;
+    this.selectedSpecialty = {} as Specialty;
+    this.specialtiesList = [];
   }
 
   ngOnInit() {
     this.specialtyService.getSpecialties().subscribe(
-      specialties => this.specialties_list = specialties,
-      error => this.errorMessage = <any>error
+      specialties => this.specialtiesList = specialties,
+      error => this.errorMessage = error as any
     );
   }
 
   onSubmit(vet: Vet) {
     vet.id = null;
     vet.specialties = [];
-    if (this.selected_specialty.id !== undefined) {
-      vet.specialties.push(this.selected_specialty);
+    if (this.selectedSpecialty.id !== undefined) {
+      vet.specialties.push(this.selectedSpecialty);
     }
     this.vetService.addVet(vet).subscribe(
-      new_vet => {
-        this.vet = new_vet;
+      newVet => {
+        this.vet = newVet;
         this.gotoVetList();
       },
-      error => this.errorMessage = <any>error
+      error => this.errorMessage = error as any
     );
   }
 

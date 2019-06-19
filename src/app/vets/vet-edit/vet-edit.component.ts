@@ -40,13 +40,13 @@ export class VetEditComponent implements OnInit {
   lastNameCtrl: FormControl;
   specialtiesCtrl: FormControl;
   vet: Vet;
-  spec_list: Specialty[];
+  specList: Specialty[];
   errorMessage: string;
 
   constructor(private formBuilder: FormBuilder, private specialtyService: SpecialtyService,
               private vetService: VetService, private route: ActivatedRoute, private router: Router) {
-    this.vet = <Vet>{};
-    this.spec_list = <Specialty[]>[];
+    this.vet = {} as Vet;
+    this.specList = [] as Specialty[];
     this.buildForm();
   }
 
@@ -76,9 +76,9 @@ export class VetEditComponent implements OnInit {
 
   ngOnInit() {
     // we use SpecResolver and VetResolver (get data before init component)
-    this.spec_list = this.route.snapshot.data['specs'];
-    this.vet = this.route.snapshot.data['vet'];
-    this.vet.specialties = this.route.snapshot.data['vet'].specialties;
+    this.specList = this.route.snapshot.data.specs;
+    this.vet = this.route.snapshot.data.vet;
+    this.vet.specialties = this.route.snapshot.data.vet.specialties;
     this.initFormValues();
   }
 
@@ -88,7 +88,7 @@ export class VetEditComponent implements OnInit {
         console.log('update success');
         this.gotoVetList();
       },
-      error => this.errorMessage = <any> error);
+      error => this.errorMessage = error as any);
 
   }
 

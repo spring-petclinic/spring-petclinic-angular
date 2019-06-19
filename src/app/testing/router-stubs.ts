@@ -24,7 +24,7 @@ export {ActivatedRoute, Router, RouterLink, RouterOutlet} from '@angular/router'
 import {Component, Directive, HostListener, Injectable, Input} from '@angular/core';
 import {NavigationExtras} from '@angular/router';
 // Only implements params and part of snapshot.params
-import {BehaviorSubject} from 'rxjs/BehaviorSubject';
+import {BehaviorSubject} from 'rxjs';
 
 @Directive({
   selector: '[appRouterLink]',
@@ -58,6 +58,7 @@ export class ActivatedRouteStub {
   params = this.subject.asObservable();
 
   // Test parameters
+  // tslint:disable-next-line:variable-name
   private _testParams: {};
   get testParams() {
     return this._testParams;

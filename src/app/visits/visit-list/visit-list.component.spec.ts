@@ -36,7 +36,7 @@ import {Observable, of} from 'rxjs';
 import Spy = jasmine.Spy;
 
 class VisitServiceStub {
-  deleteVisit(visit_id: string): Observable<number> {
+  deleteVisit(visitId: string): Observable<number> {
     return of();
   }
 }
@@ -48,7 +48,7 @@ describe('VisitListComponent', () => {
   let testVisits: Visit[];
   let testPet: Pet;
   let spy: Spy;
-  let response_status: number;
+  let responseStatus: number;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -91,11 +91,11 @@ describe('VisitListComponent', () => {
     }];
 
     visitService = fixture.debugElement.injector.get(VisitService);
-    response_status = 204; // success delete return NO_CONTENT
+    responseStatus = 204; // success delete return NO_CONTENT
     component.visits = testVisits;
 
     spy = spyOn(visitService, 'deleteVisit')
-      .and.returnValue(of(response_status));
+      .and.returnValue(of(responseStatus));
 
     fixture.detectChanges();
   });

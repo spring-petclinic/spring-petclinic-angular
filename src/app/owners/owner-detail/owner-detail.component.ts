@@ -36,14 +36,14 @@ export class OwnerDetailComponent implements OnInit {
   owner: Owner;
 
   constructor(private route: ActivatedRoute, private router: Router, private ownerService: OwnerService) {
-    this.owner = <Owner>{};
+    this.owner = {} as Owner;
   }
 
   ngOnInit() {
-    const ownerId = this.route.snapshot.params['id'];
+    const ownerId = this.route.snapshot.params.id;
     this.ownerService.getOwnerById(ownerId).subscribe(
       owner => this.owner = owner,
-      error => this.errorMessage = <any>error);
+      error => this.errorMessage = error as any);
   }
 
   gotoOwnersList() {

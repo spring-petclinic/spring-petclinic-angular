@@ -34,11 +34,11 @@ import {Pet} from '../pet';
 export class PetListComponent implements OnInit {
   errorMessage: string;
   @Input() pet: Pet;
-  response_status: number;
-  delete_success = false;
+  responseStatus: number;
+  deleteSuccess = false;
 
   constructor(private router: Router, private petService: PetService) {
-    this.pet = <Pet>{};
+    this.pet = {} as Pet;
   }
 
   ngOnInit() {
@@ -51,10 +51,10 @@ export class PetListComponent implements OnInit {
   deletePet(pet: Pet) {
     this.petService.deletePet(pet.id.toString()).subscribe(
       response => {
-        this.delete_success = true;
-        this.pet = <Pet>{};
+        this.deleteSuccess = true;
+        this.pet = {} as Pet;
       },
-      error => this.errorMessage = <any> error);
+      error => this.errorMessage = error as any);
   }
 
   addVisit(pet: Pet) {

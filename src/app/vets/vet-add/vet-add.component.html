@@ -45,8 +45,8 @@
         <div class="form-group ">
           <label for="specialties" class="col-sm-2 control-label">Type </label>
           <div class="col-sm-10">
-            <select id="specialties" name="specialties" class="form-control" [(ngModel)]="selected_specialty">
-              <option *ngFor="let spec of specialties_list" [ngValue]="spec">
+            <select id="specialties" name="specialties" class="form-control" [(ngModel)]="selectedSpecialty">
+              <option *ngFor="let spec of specialtiesList" [ngValue]="spec">
                 {{ spec.name }}
               </option>
             </select>

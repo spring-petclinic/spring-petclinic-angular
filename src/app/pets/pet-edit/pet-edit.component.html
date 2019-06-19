@@ -31,7 +31,7 @@
         <label for="owner" class="col-sm-2 control-label">Owner</label>
         <div class="col-sm-10">
           <input id="owner_name" name="owner_name" class="form-control" type="text"
-                 value="{{ current_owner.firstName }} {{ current_owner.lastName }}" readonly/>
+                 value="{{ currentOwner.firstName }} {{ currentOwner.lastName }}" readonly/>
         </div>
       </div>
       <br/>
@@ -52,12 +52,12 @@
           <label for="type" class="col-sm-2 control-label">Type </label>
           <div class="col-sm-10">
             <div class="col-sm-2">
-              <input id="type1" name="type1" class="form-control" type="text" value="{{ current_type.name }}" readonly/>
+              <input id="type1" name="type1" class="form-control" type="text" value="{{ currentType.name }}" readonly/>
             </div>
             <div class="col-sm-8">
-              <select id="type" name="type" class="form-control" [(ngModel)]="current_type">
-                <option *ngFor="let type of pet_types"
-                        [selected]="type.id == current_type.id ? true : null"
+              <select id="type" name="type" class="form-control" [(ngModel)]="currentType">
+                <option *ngFor="let type of petTypes"
+                        [selected]="type.id == currentType.id ? true : null"
                         [ngValue]="type">{{ type.name }}
                 </option>
               </select>

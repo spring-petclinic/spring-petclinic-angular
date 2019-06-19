@@ -11,7 +11,7 @@ import {Observable, of} from 'rxjs/index';
 import Spy = jasmine.Spy;
 
 class PetTypeServiceStub {
-  deletePetType(type_id: string): Observable<number> {
+  deletePetType(typeId: string): Observable<number> {
     return of();
   }
   getPetTypes(): Observable<PetType[]> {
@@ -26,7 +26,7 @@ describe('PettypeListComponent', () => {
   let pettypeService: PetTypeService;
   let spy: Spy;
   let testPettypes: PetType[];
-  let response_status: number;
+  let responseStatus: number;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -52,11 +52,11 @@ describe('PettypeListComponent', () => {
     }];
 
     pettypeService = fixture.debugElement.injector.get(PetTypeService);
-    response_status = 204; // success delete return NO_CONTENT
+    responseStatus = 204; // success delete return NO_CONTENT
     component.pettypes = testPettypes;
 
     spy = spyOn(pettypeService, 'deletePetType')
-      .and.returnValue(of(response_status));
+      .and.returnValue(of(responseStatus));
 
     fixture.detectChanges();
   });

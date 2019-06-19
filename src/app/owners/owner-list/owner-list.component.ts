@@ -40,7 +40,7 @@ export class OwnerListComponent implements OnInit {
   ngOnInit() {
     this.ownerService.getOwners().subscribe(
       owners => this.owners = owners,
-      error => this.errorMessage = <any> error);
+      error => this.errorMessage = error as any);
   }
 
   onSelect(owner: Owner) {

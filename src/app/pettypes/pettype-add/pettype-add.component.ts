@@ -13,7 +13,7 @@ export class PettypeAddComponent implements OnInit {
   @Output() newPetType = new EventEmitter<PetType>();
 
   constructor(private pettypeService: PetTypeService) {
-    this.pettype = <PetType>{};
+    this.pettype = {} as PetType;
   }
 
   ngOnInit() {
@@ -22,11 +22,11 @@ export class PettypeAddComponent implements OnInit {
   onSubmit(pettype: PetType) {
     pettype.id = null;
     this.pettypeService.addPetType(pettype).subscribe(
-      new_pettype => {
-        this.pettype = new_pettype;
+      newPettype => {
+        this.pettype = newPettype;
         this.newPetType.emit(this.pettype);
       },
-      error => this.errorMessage = <any>error
+      error => this.errorMessage = error as any
     );
   }
 

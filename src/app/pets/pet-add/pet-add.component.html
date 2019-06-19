@@ -30,7 +30,7 @@
         <label for="owner" class="col-sm-2 control-label">Owner</label>
         <div class="col-sm-10">
           <input id="owner_name" name="owner_name" class="form-control" type="text"
-                 value="{{ current_owner.firstName }} {{ current_owner.lastName }}" readonly/>
+                 value="{{ currentOwner.firstName }} {{ currentOwner.lastName }}" readonly/>
         </div>
       </div>
       <br/>
@@ -42,16 +42,18 @@
       </div>
       <div class="form-group ">
         <label class="col-sm-2 control-label">Birth Date</label>
-        <input matInput [matDatepicker]="birthDateDatepicker" [ngModel]="pet.birthDate | date:'yyyy-MM-dd'" name="birthDate">
-        <mat-datepicker-toggle matSuffix [for]="birthDateDatepicker"></mat-datepicker-toggle>
-        <mat-datepicker #birthDateDatepicker></mat-datepicker>
+        <div class="col-sm-10">
+          <input matInput [matDatepicker]="birthDateDatepicker" [ngModel]="pet.birthDate | date:'yyyy-MM-dd'" name="birthDate">
+          <mat-datepicker-toggle matSuffix [for]="birthDateDatepicker"></mat-datepicker-toggle>
+          <mat-datepicker #birthDateDatepicker></mat-datepicker>
+        </div>
       </div>
       <div class="control-group">
         <div class="form-group ">
           <label for="type" class="col-sm-2 control-label">Type </label>
           <div class="col-sm-10">
             <select id="type" name="type" class="form-control" [(ngModel)]="pet.type">
-              <option *ngFor="let type of pet_types"
+              <option *ngFor="let type of petTypes"
                       [ngValue]="type">{{ type.name }}
               </option>
             </select>

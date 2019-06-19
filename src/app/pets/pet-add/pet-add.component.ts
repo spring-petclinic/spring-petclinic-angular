@@ -39,49 +39,49 @@ import * as moment from 'moment';
 })
 export class PetAddComponent implements OnInit {
   pet: Pet;
-  @Input() current_type: PetType;
-  current_owner: Owner;
-  pet_types: PetType[];
-  added_success = false;
+  @Input() currentType: PetType;
+  currentOwner: Owner;
+  petTypes: PetType[];
+  addedSuccess = false;
   errorMessage: string;
 
   constructor(private ownerService: OwnerService, private petService: PetService,
               private petTypeService: PetTypeService, private router: Router, private route: ActivatedRoute) {
-    this.pet = <Pet>{};
-    this.current_owner = <Owner>{};
-    this.current_type = <PetType>{};
-    this.pet_types = [];
+    this.pet = {} as Pet;
+    this.currentOwner = {} as Owner;
+    this.currentType = {} as PetType;
+    this.petTypes = [];
   }
 
   ngOnInit() {
     this.petTypeService.getPetTypes().subscribe(
-      pettypes => this.pet_types = pettypes,
-      error => this.errorMessage = <any> error);
+      pettypes => this.petTypes = pettypes,
+      error => this.errorMessage = error as any);
 
-    const ownerId = this.route.snapshot.params['id'];
+    const ownerId = this.route.snapshot.params.id;
     this.ownerService.getOwnerById(ownerId).subscribe(
       response => {
-        this.current_owner = response;
+        this.currentOwner = response;
       },
-      error => this.errorMessage = <any> error);
+      error => this.errorMessage = error as any);
   }
 
   onSubmit(pet: Pet) {
     pet.id = null;
-    pet.owner = this.current_owner;
+    pet.owner = this.currentOwner;
     // format output from datepicker to short string yyyy/mm/dd format
     pet.birthDate = moment(pet.birthDate).format('YYYY/MM/DD');
     this.petService.addPet(pet).subscribe(
-      new_pet => {
-        this.pet = new_pet;
-        this.added_success = true;
+      newPet => {
+        this.pet = newPet;
+        this.addedSuccess = true;
         this.gotoOwnerDetail();
       },
-      error => this.errorMessage = <any>error);
+      error => this.errorMessage = error as any);
   }
 
   gotoOwnerDetail() {
-    this.router.navigate(['/owners', this.current_owner.id]);
+    this.router.navigate(['/owners', this.currentOwner.id]);
   }
 
 }

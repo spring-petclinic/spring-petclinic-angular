@@ -33,8 +33,8 @@ import {Router} from '@angular/router';
 export class SpecialtyListComponent implements OnInit {
   specialties: Specialty[];
   errorMessage: string;
-  response_status: number;
-  is_insert = false;
+  responseStatus: number;
+  isInsert = false;
 
   constructor(private specService: SpecialtyService, private router: Router) {
     this.specialties = [];
@@ -43,29 +43,29 @@ export class SpecialtyListComponent implements OnInit {
   ngOnInit() {
     this.specService.getSpecialties().subscribe(
       specialties => this.specialties = specialties,
-      error => this.errorMessage = <any> error);
+      error => this.errorMessage = error as any);
   }
 
   deleteSpecialty(specialty: Specialty) {
     this.specService.deleteSpecialty(specialty.id.toString()).subscribe(
       response => {
-        this.response_status = response;
-        this.specialties = this.specialties.filter(current_item => !(current_item.id === specialty.id));
+        this.responseStatus = response;
+        this.specialties = this.specialties.filter(currentItem => !(currentItem.id === specialty.id));
       },
-      error => this.errorMessage = <any> error);
+      error => this.errorMessage = error as any);
   }
 
-  onNewSpecialty(new_specialty: Specialty) {
-    this.specialties.push(new_specialty);
+  onNewSpecialty(newSpecialty: Specialty) {
+    this.specialties.push(newSpecialty);
     this.showAddSpecialtyComponent();
   }
 
   showAddSpecialtyComponent() {
-    this.is_insert = !this.is_insert;
+    this.isInsert = !this.isInsert;
   }
 
-  showEditSpecialtyComponent(updated_specialty: Specialty) {
-    this.router.navigate(['/specialties', updated_specialty.id.toString(), 'edit']);
+  showEditSpecialtyComponent(updatedSpecialty: Specialty) {
+    this.router.navigate(['/specialties', updatedSpecialty.id.toString(), 'edit']);
   }
 
   gotoHome() {

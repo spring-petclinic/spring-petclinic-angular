@@ -31,44 +31,44 @@ import {HandleError, HttpErrorHandler} from '../error.service';
 @Injectable()
 export class PetTypeService {
 
-  entity_url = environment.REST_API_URL + 'pettypes';
+  entityUrl = environment.REST_API_URL + 'pettypes';
 
-  private handlerError: HandleError;
+  private readonly handlerError: HandleError;
 
   constructor(private http: HttpClient, private httpErrorHandler: HttpErrorHandler) {
     this.handlerError = httpErrorHandler.createHandleError('OwnerService');
   }
 
   getPetTypes(): Observable<PetType[]> {
-    return this.http.get<PetType[]>(this.entity_url)
+    return this.http.get<PetType[]>(this.entityUrl)
       .pipe(
         catchError(this.handlerError('getPetTypes', []))
       );
   }
 
-  getPetTypeById(type_id: string): Observable<PetType> {
-    return this.http.get<PetType>((this.entity_url + '/' + type_id))
+  getPetTypeById(typeId: string): Observable<PetType> {
+    return this.http.get<PetType>((this.entityUrl + '/' + typeId))
       .pipe(
         catchError(this.handlerError('getPetTypeById', {} as PetType))
       );
   }
 
-  updatePetType(type_id: string, petType: PetType): Observable<PetType> {
-    return this.http.put<PetType>(this.entity_url + '/' + type_id, petType)
+  updatePetType(typeId: string, petType: PetType): Observable<PetType> {
+    return this.http.put<PetType>(this.entityUrl + '/' + typeId, petType)
       .pipe(
         catchError(this.handlerError('updatePetType', petType))
       );
   }
 
   addPetType(petType: PetType): Observable<PetType> {
-    return this.http.post<PetType>(this.entity_url, petType)
+    return this.http.post<PetType>(this.entityUrl, petType)
       .pipe(
         catchError(this.handlerError('addPetType', petType))
       );
   }
 
-  deletePetType(type_id: string): Observable<number> {
-    return this.http.delete<number>(this.entity_url + '/' + type_id)
+  deletePetType(typeId: string): Observable<number> {
+    return this.http.delete<number>(this.entityUrl + '/' + typeId)
       .pipe(
         catchError(this.handlerError('deletePetType', 0))
       );

@@ -32,46 +32,46 @@ import {HandleError, HttpErrorHandler} from '../error.service';
 @Injectable()
 export class OwnerService {
 
-  entity_url = environment.REST_API_URL + 'owners';
+  entityUrl = environment.REST_API_URL + 'owners';
 
-  private handlerError: HandleError;
+  private readonly handlerError: HandleError;
 
   constructor(private http: HttpClient, private httpErrorHandler: HttpErrorHandler) {
     this.handlerError = httpErrorHandler.createHandleError('OwnerService');
   }
 
   getOwners(): Observable<Owner[]> {
-    return this.http.get<Owner[]>(this.entity_url)
+    return this.http.get<Owner[]>(this.entityUrl)
       .pipe(
         catchError(this.handlerError('getOwners', []))
       );
   }
 
-  getOwnerById(owner_id: string): Observable<Owner> {
-    return this.http.get<Owner>(this.entity_url + '/' + owner_id)
+  getOwnerById(ownerId: string): Observable<Owner> {
+    return this.http.get<Owner>(this.entityUrl + '/' + ownerId)
       .pipe(
           catchError(this.handlerError('getOwnerById', {} as Owner))
       );
   }
 
   addOwner(owner: Owner): Observable<Owner> {
-    return this.http.post<Owner>(this.entity_url, owner)
+    return this.http.post<Owner>(this.entityUrl, owner)
       .pipe(
         catchError(this.handlerError('addOwner', owner))
       );
   }
 
-  updateOwner(owner_id: string, owner: Owner): Observable<{}> {
-    return this.http.put<Owner>(this.entity_url + '/' + owner_id, owner)
+  updateOwner(ownerId: string, owner: Owner): Observable<{}> {
+    return this.http.put<Owner>(this.entityUrl + '/' + ownerId, owner)
       .pipe(
         catchError(this.handlerError('updateOwner', owner))
       );
   }
 
-  deleteOwner(owner_id: string): Observable<{}> {
-    return this.http.delete<Owner>(this.entity_url + '/' + owner_id)
+  deleteOwner(ownerId: string): Observable<{}> {
+    return this.http.delete<Owner>(this.entityUrl + '/' + ownerId)
       .pipe(
-         catchError(this.handlerError('deleteOwner', [owner_id]))
+         catchError(this.handlerError('deleteOwner', [ownerId]))
       );
   }
 

@@ -27,12 +27,12 @@ import {SpecialtyService} from '../specialty.service';
 })
 export class SpecialtyAddComponent implements OnInit {
   specialty: Specialty;
-  added_success = false;
+  addedSuccess = false;
   errorMessage: string;
   @Output() newSpeciality = new EventEmitter<Specialty>();
 
   constructor(private specialtyService: SpecialtyService) {
-    this.specialty = <Specialty>{};
+    this.specialty = {} as Specialty;
   }
 
   ngOnInit() {
@@ -41,12 +41,12 @@ export class SpecialtyAddComponent implements OnInit {
   onSubmit(specialty: Specialty) {
     specialty.id = null;
     this.specialtyService.addSpecialty(specialty).subscribe(
-      new_specialty => {
-        this.specialty = new_specialty;
-        this.added_success = true;
+      newSpecialty => {
+        this.specialty = newSpecialty;
+        this.addedSuccess = true;
         this.newSpeciality.emit(this.specialty) ;
       },
-      error => this.errorMessage = <any>error
+      error => this.errorMessage = error as any
     );
 }
 
