@@ -7,8 +7,10 @@
     "start": "ng serve",
     "build": "ng build",
     "test": "ng test",
+    "create-env": "node ./create-env",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "postinstall": "npm run create-env"
   },
   "private": true,
   "dependencies": {
