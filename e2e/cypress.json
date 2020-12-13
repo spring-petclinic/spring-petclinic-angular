@@ -2,7 +2,7 @@
   "fileServerFolder": ".",
   "fixturesFolder": "./src/fixtures",
   "integrationFolder": "./src/integration",
-  "pluginsFile": "./src/plugins/index",
+  "pluginsFile": false,
   "supportFile": false,
   "video": true,
   "videosFolder": "../../dist/cypress/spring-petclinic-angular-e2e/videos",
