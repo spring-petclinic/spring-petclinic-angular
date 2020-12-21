@@ -18,7 +18,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Build Docker.test Image, that one which is used for tests
-        run:   docker build .  --file Dockerfile.tests   -t  $IMAGE_NAME:latest
+        run:  docker build --build-arg environment=dev . --file Dockerfile.tests   -t  $IMAGE_NAME:latest
       - name: Run Docker Image as Container
         run: docker run -p 8080:8080 --detach --name petclinc-frontend-container $IMAGE_NAME:latest
       - name: Run Unit-Tests (Karma)
@@ -34,7 +34,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Build Docker Image
-        run: docker build . --file Dockerfile --tag $IMAGE_NAME
+        run: docker build --build-arg environment=dev . --file Dockerfile --tag $IMAGE_NAME
 
       - name: Log into registry
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
