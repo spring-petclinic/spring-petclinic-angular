@@ -57,8 +57,6 @@ jobs:
           echo IMAGE_ID=$IMAGE_ID
           echo VERSION=$VERSION
 
-        #  docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
-        #  docker push $IMAGE_ID:$VERSION
           docker tag spring-petclinic-angular registry.heroku.com/petclinic-angular-dev/web
 
       - name: Checkout
@@ -68,11 +66,7 @@ jobs:
           HEROKU_API_KEY: ${{secrets.HEROKU_API_KEY}}
         run: heroku container:login
       - name: Push to Heroku Container registry
-    #    env:
-         # HEROKU_API_KEY: ${{secrets.HEROKU_API_KEY}}
         run: docker push  registry.heroku.com/petclinic-angular-dev/web
-
-       # heroku container:push -a ${{secrets.HEROKU_APP_NAME_DEV}} web
       - name: Release
         env:
           HEROKU_API_KEY: ${{secrets.HEROKU_API_KEY }}
