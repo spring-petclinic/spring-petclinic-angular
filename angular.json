@@ -109,9 +109,10 @@
       "projectType": "application",
       "architect": {
         "e2e": {
-          "builder": "@angular-devkit/build-angular:protractor",
+          "builder": "@nrwl/cypress:cypress",
           "options": {
-            "protractorConfig": "./protractor.conf.js",
+            "cypressConfig": "e2e/cypress.json",
+            "tsConfig": "e2e/tsconfig.e2e.json",
             "devServerTarget": "spring-petclinic-angular:serve"
           }
         },
