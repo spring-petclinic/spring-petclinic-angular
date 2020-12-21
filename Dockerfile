@@ -7,7 +7,7 @@ ADD package.json /workspace/
 RUN npm install
 
 COPY . /workspace/
-RUN $(npm bin)/ng build --$environment
+RUN $(npm bin)/ng build --configuration=$environment
 
 # COPY RUNTIME BUILD AND CONFIGURE NGINX ##
 FROM nginx:1.19.5-alpine AS runtime
