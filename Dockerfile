@@ -1,12 +1,13 @@
 # CREATE BUILD ##
 FROM node:14.15.1-alpine as build
+ARG environment
 
 WORKDIR /workspace/
 ADD package.json /workspace/
 RUN npm install
 
 COPY . /workspace/
-RUN $(npm bin)/ng build --prod
+RUN $(npm bin)/ng build --configuration=$environment
 
 # COPY RUNTIME BUILD AND CONFIGURE NGINX ##
 FROM nginx:1.19.5-alpine AS runtime

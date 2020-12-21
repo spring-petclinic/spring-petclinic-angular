@@ -22,5 +22,5 @@
 
 export const environment = {
   production: true,
-  REST_API_URL: 'https://petclinic-rest-tnpl.herokuapp.com/petclinic/api/'
+  REST_API_URL: 'https://petclinic-rest-tnpl-dev.herokuapp.com/petclinic/api/'
 };
