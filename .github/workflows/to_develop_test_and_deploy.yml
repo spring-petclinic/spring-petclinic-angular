@@ -57,7 +57,7 @@ jobs:
           echo IMAGE_ID=$IMAGE_ID
           echo VERSION=$VERSION
 
-          docker tag spring-petclinic-angular registry.heroku.com/petclinic-angular-dev/web
+          docker tag $IMAGE_NAME registry.heroku.com/petclinic-angular-dev/web
 
       - name: Checkout
         uses: actions/checkout@v2
