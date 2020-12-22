@@ -54,6 +54,17 @@ export class OwnerDetailComponent implements OnInit {
     this.router.navigate(['/owners', this.owner.id, 'edit']);
   }
 
+  deleteOwner(owner: Owner) {
+    let name = owner.firstName+" "+owner.lastName;
+    if(confirm("Are you sure to delete the owner "+name+" including all data?")) {
+      const that = this;
+      this.ownerService.deleteOwner(owner.id.toString()).subscribe(
+      res => this.gotoOwnersList(),
+      error => this.errorMessage = error as any
+    );
+    }
+  }
+
   addPet(owner: Owner) {
     this.router.navigate(['/owners', owner.id, 'pets', 'add']);
   }
