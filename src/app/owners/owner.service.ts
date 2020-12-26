@@ -47,6 +47,20 @@ export class OwnerService {
       );
   }
 
+  getOwnersBySearchTerm(searchTerm: string): Observable<Owner | Owner[] > {
+    return this.http.get<Owner>(this.entityUrl + '/search/' + searchTerm)
+      .pipe(
+          catchError(this.handlerError('getOwnerSearch', {} as Owner))
+      );
+  }
+
+  getOwnerByLastName(ownerLastName: string): Observable<Owner | Owner[] > {
+    return this.http.get<Owner>(this.entityUrl + '/*/lastname/' + ownerLastName)
+      .pipe(
+          catchError(this.handlerError('getOwnerByLastName', {} as Owner))
+      );
+  }
+
   getOwnerById(ownerId: string): Observable<Owner> {
     return this.http.get<Owner>(this.entityUrl + '/' + ownerId)
       .pipe(

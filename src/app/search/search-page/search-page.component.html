@@ -1,0 +1,10 @@
+<app-search-bar></app-search-bar>
+<ng-template [ngIf]="ownersChecked">
+    <app-owner-table></app-owner-table>
+</ng-template>
+<ng-template [ngIf]="petsChecked">
+    <app-pet-table></app-pet-table>
+</ng-template>
+<ng-template [ngIf]="visitsChecked">
+    <app-visit-table></app-visit-table>
+</ng-template>

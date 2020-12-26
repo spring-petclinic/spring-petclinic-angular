@@ -53,6 +53,13 @@ export class PetService {
       );
   }
 
+  getPetsBySearchTerm(searchTerm: string): Observable<Pet | Pet[] > {
+    return this.http.get<Pet>(this.entityUrl + '/search/' + searchTerm)
+      .pipe(
+          catchError(this.handlerError('getPetSearch', {} as Pet))
+      );
+  }
+
   addPet(pet: Pet): Observable<Pet> {
     return this.http.post<Pet>(this.entityUrl, pet)
       .pipe(
