@@ -27,5 +27,9 @@ export interface Visit {
   date: string;
   description: string;
   pet: Pet;
+  vet: number;
+  vetFirstName: string;
+  vetLastName: string;
+  vetName: string;
 
 }
