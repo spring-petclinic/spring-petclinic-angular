@@ -1,3 +1,4 @@
+import { Vet } from './../../vets/vet';
 /*
  *
  *  * Copyright 2016-2017 the original author or authors.
@@ -47,6 +48,7 @@ describe('VisitListComponent', () => {
   let visitService: VisitService;
   let testVisits: Visit[];
   let testPet: Pet;
+  let testVet: Vet;
   let spy: Spy;
   let responseStatus: number;
 
@@ -83,12 +85,26 @@ describe('VisitListComponent', () => {
       },
       visits: null
     };
+
+    testVet = {
+      id: 2,
+      firstName: 'Helen',
+      lastName: 'Leary',
+      specialties: [
+
+      ],
+    };
     testVisits =  [{
       id: 1,
       date: '2016-09-07',
       description: '',
-      pet: testPet
+      pet: testPet,
+      vet: testVet.id,
+      vetFirstName: testVet.firstName,
+      vetLastName: testVet.lastName,
+      vetName: testVet.firstName + " " +testVet.lastName
     }];
+
 
     visitService = fixture.debugElement.injector.get(VisitService);
     responseStatus = 204; // success delete return NO_CONTENT
