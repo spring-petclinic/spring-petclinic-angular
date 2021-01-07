@@ -37,6 +37,7 @@ import {Observable, of} from 'rxjs';
 import Spy = jasmine.Spy;
 import { VetService } from 'app/vets/vet.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { HttpErrorHandler } from 'app/error.service';
 
 class VisitServiceStub {
   deleteVisit(visitId: string): Observable<number> {
@@ -61,6 +62,7 @@ describe('VisitListComponent', () => {
       imports: [FormsModule, HttpClientTestingModule],
       providers: [
         VetService,
+        HttpErrorHandler,
         {provide: VisitService, useClass: VisitServiceStub},
         {provide: Router, useClass: RouterStub},
         {provide: ActivatedRoute, useClass: ActivatedRouteStub}

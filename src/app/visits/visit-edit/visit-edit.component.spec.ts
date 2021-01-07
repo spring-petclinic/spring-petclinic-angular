@@ -39,6 +39,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import Spy = jasmine.Spy;
 import { VetService } from 'app/vets/vet.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { HttpErrorHandler } from 'app/error.service';
 
 class VisitServiceStub {
   getVisitById(visitId: string): Observable<Visit> {
@@ -61,6 +62,7 @@ describe('VisitEditComponent', () => {
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       imports: [FormsModule, MatDatepickerModule, MatMomentDateModule, HttpClientTestingModule],
       providers: [VetService,
+        HttpErrorHandler,
         {provide: VisitService, useClass: VisitServiceStub},
         {provide: Router, useClass: RouterStub},
         {provide: ActivatedRoute, useClass: ActivatedRouteStub}

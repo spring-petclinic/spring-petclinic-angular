@@ -1,5 +1,6 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpErrorHandler } from 'app/error.service';
 import { VisitService } from 'app/visits/visit.service';
 import { VetService } from '../vet.service';
 
@@ -12,7 +13,7 @@ describe('VetShowVisitsComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers:[VisitService],
+      providers:[VisitService, HttpErrorHandler],
       declarations: [ VetShowVisitsComponent ]
     })
     .compileComponents();
