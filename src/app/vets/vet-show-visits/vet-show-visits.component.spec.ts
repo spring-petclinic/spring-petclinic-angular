@@ -11,7 +11,7 @@ describe('VetShowVisitsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule]
+      imports: [HttpClientTestingModule],
       providers:[VisitService],
       declarations: [ VetShowVisitsComponent ]
     })
