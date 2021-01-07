@@ -37,6 +37,7 @@ import { Vet } from './../../vets/vet';
 import {MatMomentDateModule} from '@angular/material-moment-adapter';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import Spy = jasmine.Spy;
+import { VetService } from 'app/vets/vet.service';
 
 class VisitServiceStub {
   getVisitById(visitId: string): Observable<Visit> {
@@ -58,7 +59,7 @@ describe('VisitEditComponent', () => {
       declarations: [VisitEditComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       imports: [FormsModule, MatDatepickerModule, MatMomentDateModule],
-      providers: [
+      providers: [VetService,
         {provide: VisitService, useClass: VisitServiceStub},
         {provide: Router, useClass: RouterStub},
         {provide: ActivatedRoute, useClass: ActivatedRouteStub}

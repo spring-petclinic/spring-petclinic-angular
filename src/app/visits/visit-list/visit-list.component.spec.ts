@@ -35,6 +35,7 @@ import {Visit} from '../visit';
 import {Pet} from '../../pets/pet';
 import {Observable, of} from 'rxjs';
 import Spy = jasmine.Spy;
+import { VetService } from 'app/vets/vet.service';
 
 class VisitServiceStub {
   deleteVisit(visitId: string): Observable<number> {
@@ -58,6 +59,7 @@ describe('VisitListComponent', () => {
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       imports: [FormsModule],
       providers: [
+        VetService,
         {provide: VisitService, useClass: VisitServiceStub},
         {provide: Router, useClass: RouterStub},
         {provide: ActivatedRoute, useClass: ActivatedRouteStub}

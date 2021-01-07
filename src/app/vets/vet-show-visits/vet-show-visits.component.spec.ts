@@ -1,4 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { VisitService } from 'app/visits/visit.service';
+import { VetService } from '../vet.service';
 
 import { VetShowVisitsComponent } from './vet-show-visits.component';
 
@@ -8,6 +10,7 @@ describe('VetShowVisitsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      providers:[VisitService],
       declarations: [ VetShowVisitsComponent ]
     })
     .compileComponents();
