@@ -36,6 +36,7 @@ import {Pet} from '../../pets/pet';
 import {Observable, of} from 'rxjs';
 import Spy = jasmine.Spy;
 import { VetService } from 'app/vets/vet.service';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 class VisitServiceStub {
   deleteVisit(visitId: string): Observable<number> {
@@ -57,7 +58,7 @@ describe('VisitListComponent', () => {
     TestBed.configureTestingModule({
       declarations: [VisitListComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [FormsModule],
+      imports: [FormsModule, HttpClientTestingModule],
       providers: [
         VetService,
         {provide: VisitService, useClass: VisitServiceStub},

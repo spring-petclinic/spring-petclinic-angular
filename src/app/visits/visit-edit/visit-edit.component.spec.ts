@@ -38,6 +38,7 @@ import {MatMomentDateModule} from '@angular/material-moment-adapter';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import Spy = jasmine.Spy;
 import { VetService } from 'app/vets/vet.service';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 class VisitServiceStub {
   getVisitById(visitId: string): Observable<Visit> {
@@ -58,7 +59,7 @@ describe('VisitEditComponent', () => {
     TestBed.configureTestingModule({
       declarations: [VisitEditComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [FormsModule, MatDatepickerModule, MatMomentDateModule],
+      imports: [FormsModule, MatDatepickerModule, MatMomentDateModule, HttpClientTestingModule],
       providers: [VetService,
         {provide: VisitService, useClass: VisitServiceStub},
         {provide: Router, useClass: RouterStub},
