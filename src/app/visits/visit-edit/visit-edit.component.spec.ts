@@ -33,9 +33,13 @@ import {ActivatedRouteStub, RouterStub} from '../../testing/router-stubs';
 import {Visit} from '../visit';
 import {Observable, of} from 'rxjs';
 import {Pet} from '../../pets/pet';
+import { Vet } from './../../vets/vet';
 import {MatMomentDateModule} from '@angular/material-moment-adapter';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import Spy = jasmine.Spy;
+import { VetService } from 'app/vets/vet.service';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { HttpErrorHandler } from 'app/error.service';
 
 class VisitServiceStub {
   getVisitById(visitId: string): Observable<Visit> {
@@ -49,14 +53,16 @@ describe('VisitEditComponent', () => {
   let visitService: VisitService;
   let testVisit: Visit;
   let testPet: Pet;
+  let testVet: Vet;
   let spy: Spy;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [VisitEditComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [FormsModule, MatDatepickerModule, MatMomentDateModule],
-      providers: [
+      imports: [FormsModule, MatDatepickerModule, MatMomentDateModule, HttpClientTestingModule],
+      providers: [VetService,
+        HttpErrorHandler,
         {provide: VisitService, useClass: VisitServiceStub},
         {provide: Router, useClass: RouterStub},
         {provide: ActivatedRoute, useClass: ActivatedRouteStub}
@@ -84,11 +90,28 @@ describe('VisitEditComponent', () => {
       },
       visits: null
     };
+    //  specialties: Specialty[];
+    /*specialties: {
+      id: 2,
+      name: 'radiology'
+    },*/
+    testVet = {
+      id: 2,
+      firstName: 'Helen',
+      lastName: 'Leary',
+      specialties: [
+
+      ],
+    };
     testVisit = {
       id: 1,
       date: '2016-09-07',
       description: '',
-      pet: testPet
+      pet: testPet,
+      vet: testVet.id,
+      vetFirstName: testVet.firstName,
+      vetLastName: testVet.lastName,
+      vetName: testVet.firstName + " " +testVet.lastName,
     };
 
     visitService = fixture.debugElement.injector.get(VisitService);

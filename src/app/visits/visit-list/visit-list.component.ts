@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs';
 /*
  *
  *  * Copyright 2016-2017 the original author or authors.
@@ -24,6 +25,8 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Visit} from '../visit';
 import {VisitService} from '../visit.service';
 import {Router} from '@angular/router';
+import { VetService } from './../../vets/vet.service';
+import { Vet } from './../../vets/vet';
 
 @Component({
   selector: 'app-visit-list',
@@ -36,12 +39,14 @@ export class VisitListComponent implements OnInit {
   responseStatus: number;
   noVisits = false;
   errorMessage: string;
+  pulledVisits: Observable<Visit[]>
 
-  constructor(private router: Router, private visitService: VisitService) {
+  constructor(private router: Router, private visitService: VisitService, private vetService: VetService) {
     this.visits = [];
   }
 
   ngOnInit() {
+    this.pulledVisits = this.visitService.getVisits();
   }
 
   editVisit(visit: Visit) {

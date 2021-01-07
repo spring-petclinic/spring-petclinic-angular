@@ -59,6 +59,14 @@
                    [(ngModel)]="visit.description"/>
           </div>
         </div>
+        <div class="form-group ">
+          <label class="col-sm-2 control-label">Veterinarian</label>
+          <select id="vet" name="vet"  [(ngModel)]="visit.vet" ng-model="selectedName" ng-options="vet for vet in vets">
+            <option *ngFor="let vet of vets" [ngValue]="vet" selected="vet">
+              {{ vet.firstName }} {{ vet.lastName }}
+            </option>
+          </select>
+        </div> 
 
       </div>
       <div class="form-group">

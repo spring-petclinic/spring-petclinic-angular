@@ -28,6 +28,8 @@ import {PetService} from '../../pets/pet.service';
 import {Pet} from '../../pets/pet';
 import {PetType} from '../../pettypes/pettype';
 import {Owner} from '../../owners/owner';
+import { Vet } from './../../vets/vet';
+import { VetService } from './../../vets/vet.service';
 
 import * as moment from 'moment';
 
@@ -44,12 +46,14 @@ export class VisitAddComponent implements OnInit {
   currentPetType: PetType;
   addedSuccess = false;
   errorMessage: string;
+  vets: Vet[];
 
-  constructor(private visitService: VisitService, private petService: PetService, private router: Router, private route: ActivatedRoute) {
+  constructor(private visitService: VisitService, private petService: PetService, private vetService: VetService, private router: Router, private route: ActivatedRoute) {
     this.visit = {} as Visit;
     this.currentPet = {} as Pet;
     this.currentOwner = {} as Owner;
     this.currentPetType = {} as PetType;
+    this.vets = [];
 
   }
 
@@ -64,6 +68,9 @@ export class VisitAddComponent implements OnInit {
         this.currentOwner = this.currentPet.owner;
       },
       error => this.errorMessage = error as any);
+      this.vetService.getVets().subscribe(
+        vets => this.vets = vets,
+        error => this.errorMessage = error as any);
   }
 
   onSubmit(visit: Visit) {
@@ -73,6 +80,7 @@ export class VisitAddComponent implements OnInit {
     // format output from datepicker to short string yyyy/mm/dd format
     visit.date = moment(visit.date).format('YYYY/MM/DD');
 
+    console.log(visit);
 
     this.visitService.addVisit(visit).subscribe(
       newVisit => {

@@ -1,3 +1,4 @@
+import { VetShowVisitsComponent } from './vet-show-visits/vet-show-visits.component';
 /*
  *
  *  * Copyright 2016-2017 the original author or authors.
@@ -31,7 +32,8 @@ import {SpecResolver} from '../specialties/spec-resolver';
 const vetRoutes: Routes = [
   {path: 'vets', component: VetListComponent},
   {path: 'vets/add', component: VetAddComponent},
-  {path: 'vets/:id/edit', component: VetEditComponent, resolve: {vet: VetResolver, specs: SpecResolver}}
+  {path: 'vets/:id/edit', component: VetEditComponent, resolve: {vet: VetResolver, specs: SpecResolver}},
+  {path: 'vets/visits/:id/showVisits', component: VetShowVisitsComponent, resolve: {vet: VetResolver, specs: SpecResolver}}
 ];
 
 @NgModule({

@@ -30,6 +30,7 @@ import {VetsRoutingModule} from './vets-routing.module';
 import {VetEditComponent} from './vet-edit/vet-edit.component';
 import {VetAddComponent} from './vet-add/vet-add.component';
 import {VetResolver} from './vet-resolver';
+import { VetShowVisitsComponent } from './vet-show-visits/vet-show-visits.component';
 
 @NgModule({
   imports: [
@@ -42,7 +43,8 @@ import {VetResolver} from './vet-resolver';
   declarations: [
     VetListComponent,
     VetEditComponent,
-    VetAddComponent
+    VetAddComponent,
+    VetShowVisitsComponent
   ],
   exports: [
     VetListComponent,
