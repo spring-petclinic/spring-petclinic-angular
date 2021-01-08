@@ -15,12 +15,12 @@
             <tr *ngFor="let visit of pastVisits">
                 <td>
                     {{ vet.firstName }} {{ vet.lastName }}
-                    </td>
-                <td>
-                {{ visit.date }}
                 </td>
                 <td>
-                {{ visit.description }}
+                    {{ visit.date }}
+                </td>
+                <td>
+                    {{ visit.description }}
                 </td>
             </tr>
             </tbody>
@@ -31,17 +31,20 @@
             <thead>
             <tr>
                 <th>Vet Name</th>
-                <th>Description</th>
                 <th>Date</th>
+                <th>Description</th>
             </tr>
             </thead>
             <tbody>
             <tr *ngFor="let visit of plannedVisits">
                 <td>
-                {{ visit.description }}
+                    {{ vet.firstName }} {{ vet.lastName }}
                 </td>
                 <td>
-                {{ visit.date }}
+                    {{ visit.date }}
+                </td>
+                <td>
+                    {{ visit.description }}
                 </td>
             </tr>
             </tbody>

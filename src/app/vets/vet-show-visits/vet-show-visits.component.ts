@@ -5,7 +5,6 @@ import { Observable } from 'rxjs';
 import { VisitService } from './../../visits/visit.service';
 import { Visit } from './../../visits/visit';
 import { Component, OnInit } from '@angular/core';
-import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-vet-show-visits',
@@ -17,14 +16,10 @@ export class VetShowVisitsComponent implements OnInit {
   plannedVisits: Visit[];
   pastVisits: Visit[];
   vet: Vet;
-  myDate : string;
 
   constructor(private visitService: VisitService,
               private vetService: VetService,
-              private route: ActivatedRoute,
-              private datePipe: DatePipe) {
-    this.myDate = this.datePipe.transform(this.myDate, 'yyyy-MM-dd');  
-  }
+              private route: ActivatedRoute) {}
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
