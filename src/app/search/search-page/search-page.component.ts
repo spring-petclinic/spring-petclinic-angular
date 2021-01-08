@@ -20,6 +20,20 @@ export class SearchPageComponent implements OnInit {
     return this.searchService.visitsChecked;
   }
 
+  get searchTerm(){
+    return this.searchService.searchTerm;
+  }
+
+  getStatus():number{
+    if (this.searchTerm.getValue() != '' && (this.ownersChecked || this.petsChecked || this.visitsChecked)){
+      return 0;
+    } else if (this.searchTerm.getValue() == '') {
+      return 1;
+    } else {
+      return 2;
+    }
+  }
+
   constructor(private searchService: SearchService) { }
 
   ngOnInit() {

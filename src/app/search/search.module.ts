@@ -10,11 +10,11 @@ import { SearchRoutingModule } from './search-routing.module';
 
 @NgModule({
   declarations: [
-    SearchPageComponent,
     SearchBarComponent,
+    SearchPageComponent,
     OwnerTableComponent,
     PetTableComponent,
-    VisitTableComponent
+    VisitTableComponent,
   ],
   imports: [
     CommonModule,
@@ -22,7 +22,8 @@ import { SearchRoutingModule } from './search-routing.module';
     SearchRoutingModule
   ],
   exports: [
-    SearchPageComponent
+    SearchBarComponent,
+    SearchPageComponent,
   ]
 })
 export class SearchModule { }

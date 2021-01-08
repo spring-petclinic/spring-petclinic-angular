@@ -14,6 +14,10 @@ export class OwnerTableComponent implements OnInit {
   owners: Owner[] | Owner = [];
   filteredOwners: Owner[] = [];
 
+  get ownersChecked(){
+    return this.searchService.ownersChecked; 
+  }
+
   constructor(private ownerService: OwnerService, private searchService: SearchService) {
   }
 
@@ -22,8 +26,15 @@ export class OwnerTableComponent implements OnInit {
   }
 
   updateTable(searchTerm: string):void {
+    if (!this.ownersChecked || searchTerm === "") return;
     this.owners = [];
-    this.ownerService.getOwnersBySearchTerm(searchTerm).subscribe(
+    this.ownerService.getOwnersBySearchTerm(searchTerm, false).subscribe(
+      owners => this.owners = owners,
+      error => this.errorMessage = error as any);
+  }
+
+  showAllResults():void {
+    this.ownerService.getOwnersBySearchTerm(this.searchService.searchTerm.getValue(), true).subscribe(
       owners => this.owners = owners,
       error => this.errorMessage = error as any);
   }

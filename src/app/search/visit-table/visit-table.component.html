@@ -4,7 +4,7 @@
     <ng-template [ngIf]="visits.length > 0" [ngIfElse]="noResult">
     <div class="table-responsive">
       <table class="table table-striped">
-        <thead>
+        <thead> 
         <tr>
           <th>Visit Date</th>
           <th>Description</th>
@@ -12,7 +12,6 @@
           <th>Owner</th>
         </tr>
         </thead>
-
         <tbody>
         <tr *ngFor="let visit of visits">
           <td>{{ visit.date }}</td>
@@ -23,6 +22,9 @@
         </tbody>
       </table>
     </div>
+    <ng-template [ngIf]="visits.length == 5">
+      <a role="button" (click)="showAllResults()">Currently showing 5 results. Click to list all results.</a>
+    </ng-template>
   </ng-template>
   <ng-template #noResult>
     <p>Didn't find any visits matching your search.</p>

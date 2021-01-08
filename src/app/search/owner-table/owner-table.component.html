@@ -29,6 +29,9 @@
         </tbody>
       </table>
     </div>
+    <ng-template [ngIf]="owners.length == 5">
+      <a role="button" (click)="showAllResults()">Currently showing 5 results. Click to list all results.</a>
+    </ng-template>
   </ng-template>
   <ng-template #noResult>
     <p style="margin-bottom: 20px;">Didn't find any owners matching your search.</p>

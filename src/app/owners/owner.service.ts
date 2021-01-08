@@ -47,8 +47,8 @@ export class OwnerService {
       );
   }
 
-  getOwnersBySearchTerm(searchTerm: string): Observable<Owner | Owner[] > {
-    return this.http.get<Owner>(this.entityUrl + '/search/' + searchTerm)
+  getOwnersBySearchTerm(searchTerm: string, noLimit:boolean): Observable<Owner | Owner[] > {
+    return this.http.get<Owner>(this.entityUrl + '/search/' + 'searchTerm=' + searchTerm + '&noLimit=' + noLimit)
       .pipe(
           catchError(this.handlerError('getOwnerSearch', {} as Owner))
       );

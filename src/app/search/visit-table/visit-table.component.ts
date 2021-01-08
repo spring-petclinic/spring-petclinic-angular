@@ -14,6 +14,10 @@ export class VisitTableComponent implements OnInit {
   errorMessage: string;
   visits: Visit | Visit[] = [];
 
+  get visitsChecked(){
+    return this.searchService.visitsChecked;
+  }
+
   constructor(private visitService: VisitService, private searchService: SearchService) { 
     this.visits = [];
   }
@@ -23,8 +27,15 @@ export class VisitTableComponent implements OnInit {
   }
 
   updateTable(searchTerm: string):void {
+    if (!this.visitsChecked  || searchTerm === "") return;
     this.visits = [];
-    this.visitService.getVisitsBySearchTerm(searchTerm).subscribe(
+    this.visitService.getVisitsBySearchTerm(searchTerm, false).subscribe(
+      visits => this.visits = visits,
+      error => this.errorMessage = error as any);
+  }
+
+  showAllResults():void {
+    this.visitService.getVisitsBySearchTerm(this.searchService.searchTerm.getValue(), true).subscribe(
       visits => this.visits = visits,
       error => this.errorMessage = error as any);
   }
