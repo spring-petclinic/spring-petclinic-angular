@@ -23,8 +23,8 @@ export class VetShowVisitsComponent implements OnInit {
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
-    this.visitService.getVisits().subscribe( res => this.plannedVisits = res)
-    this.visitService.getVisits().subscribe( res => this.pastVisits = res)
+    this.visitService.getPlannedVisitsByVet(id).subscribe( res => this.plannedVisits = res)
+    this.visitService.getPastVisitsByVet(id).subscribe( res => this.pastVisits = res)
     this.vetService.getVetById(id).subscribe( res => this.vet = res)  
   }
 }
