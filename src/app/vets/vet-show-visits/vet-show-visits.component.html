@@ -1,21 +1,17 @@
 <div class="container-fluid">
     <div class="container xd-container">
 
-        <h2>Visits</h2>
+        <h2>Visits for {{ vet.firstName }} {{ vet.lastName }}</h2>
         <h3>Past Visits</h3>
         <table class="vets" class="table table-striped">
             <thead>
             <tr>
-                <th>Vet Name</th>
                 <th>Date</th>
                 <th>Description</th>
             </tr>
             </thead>
             <tbody>
             <tr *ngFor="let visit of pastVisits">
-                <td>
-                    {{ vet.firstName }} {{ vet.lastName }}
-                </td>
                 <td>
                     {{ visit.date }}
                 </td>
@@ -30,16 +26,12 @@
         <table class="vets" class="table table-striped">
             <thead>
             <tr>
-                <th>Vet Name</th>
                 <th>Date</th>
                 <th>Description</th>
             </tr>
             </thead>
             <tbody>
             <tr *ngFor="let visit of plannedVisits">
-                <td>
-                    {{ vet.firstName }} {{ vet.lastName }}
-                </td>
                 <td>
                     {{ visit.date }}
                 </td>

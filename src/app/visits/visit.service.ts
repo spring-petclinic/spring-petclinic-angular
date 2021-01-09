@@ -53,14 +53,14 @@ export class VisitService {
       );
   }
 
-  getPastVisitsByVet(vetId: string){
+  getPastVisitsByVet(vetId: number){
     return this.http.get<Visit[]>(this.entityUrl)
       .pipe(
         catchError(this.handlerError('getPastVisitsByVet', []))
       );
   }
 
-  getPlannedVisitsByVet(vetId: string){
+  getPlannedVisitsByVet(vetId: number){
     return this.http.get<Visit[]>(this.entityUrl)
       .pipe(
         catchError(this.handlerError('getPlannedVisitsByVet', []))
