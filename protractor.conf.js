@@ -22,7 +22,7 @@ exports.config = {
         ,'--headless'
         ,' --single-process'
         , '--silent',
-        '--no-sandbox'
+        
         ],
     },
     useAllAngular2AppRoots: true,
