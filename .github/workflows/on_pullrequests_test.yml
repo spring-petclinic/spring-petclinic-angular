@@ -28,5 +28,11 @@ jobs:
         run: docker run -p 8080:8080 --detach --name petclinc-frontend-container $IMAGE_NAME:latest
       - name: Run Unit-Tests (Karma)
         run:  docker exec -w /spring-petclinic-angular/  petclinc-frontend-container  npm run test
+      - name: Install protractor
+        run: docker exec -w /spring-petclinic-angular/ petclinc-frontend-container npm install -g protractor
+      - name: Setup Webdriver
+        run: docker exec -w /spring-petclinic-angular/ petclinc-frontend-container webdriver-manager update
+      - name: Start Webdriver
+        run: docker exec -w /spring-petclinic-angular/ petclinc-frontend-container webdriver-manager start
       - name: Run E2E-Tests(cypress)
         run: docker exec -w /spring-petclinic-angular/ petclinc-frontend-container npm run e2e
