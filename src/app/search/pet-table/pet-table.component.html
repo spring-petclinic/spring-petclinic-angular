@@ -1,0 +1,34 @@
+<div class="container-fluid">
+  <div class="container">
+    <h2>Pets</h2>
+    <ng-template [ngIf]="pets.length > 0" [ngIfElse]="noResult">
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th>Name</th>
+          <th>Date of Birth</th>
+          <th>Type</th>
+          <th>Owner</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr *ngFor="let pet of pets">
+          <td >{{ pet.name }}</td>
+          <td>{{ pet.birthDate }}</td>
+          <td>{{ pet.type.name }}</td>
+          <td class="ownerFullName">{{ pet.owner.firstName }} {{ pet.owner.lastName }}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <ng-template [ngIf]="pets.length == 5">
+      <a role="button" (click)="showAllResults()">Currently showing 5 results. Click to list all results.</a>
+    </ng-template>
+  </ng-template>
+  <ng-template #noResult>
+    <p style="margin-bottom: 20px;">Didn't find any pets matching your search.</p>
+  </ng-template>
+  </div>
+</div>

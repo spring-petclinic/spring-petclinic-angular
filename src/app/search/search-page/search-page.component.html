@@ -1,0 +1,24 @@
+<app-search-bar></app-search-bar>
+<div [ngSwitch]="getStatus()">
+    <div *ngSwitchCase="0" id="tables">
+        <ng-template [ngIf]="ownersChecked">
+            <app-owner-table></app-owner-table>
+        </ng-template>
+        <ng-template [ngIf]="petsChecked">
+            <app-pet-table></app-pet-table>
+        </ng-template>
+        <ng-template [ngIf]="visitsChecked">
+            <app-visit-table></app-visit-table>
+        </ng-template>
+    </div>
+    <div *ngSwitchCase="1"> 
+        <div class="container">
+            Please enter a search term.
+        </div>
+    </div>
+    <div *ngSwitchCase="2"> 
+        <div class="container">
+            Please select at least one category.
+        </div>
+    </div>
+</div>

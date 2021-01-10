@@ -1,0 +1,33 @@
+<div class="container-fluid">
+  <div class="container">
+    <h2>Visits</h2>
+    <ng-template [ngIf]="visits.length > 0" [ngIfElse]="noResult">
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead> 
+        <tr>
+          <th>Visit Date</th>
+          <th>Description</th>
+          <th>Pet</th>
+          <th>Owner</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let visit of visits">
+          <td>{{ visit.date }}</td>
+          <td>{{ visit.description }}</td>
+          <td>{{ visit.pet.name }}</td>
+          <td class="ownerFullName">{{ visit.pet.owner.firstName }} {{ visit.pet.owner.lastName }}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <ng-template [ngIf]="visits.length == 5">
+      <a role="button" (click)="showAllResults()">Currently showing 5 results. Click to list all results.</a>
+    </ng-template>
+  </ng-template>
+  <ng-template #noResult>
+    <p>Didn't find any visits matching your search.</p>
+  </ng-template>
+  </div>
+</div>
