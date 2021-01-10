@@ -21,8 +21,7 @@ exports.config = {
         ,'--disable-gpu'
         ,'--headless'
         ,' --single-process'
-        , '--silent',
-        
+        , '--silent',        
         ],
     },
     useAllAngular2AppRoots: true,
