@@ -27,7 +27,7 @@ exports.config = {
     useAllAngular2AppRoots: true,
   },  
   
-  chromeDriver: './node_modules/chromedriver/bin/chromedriver',
+  chromeDriver: '/usr/bin/chromedriver',
   baseUrl: 'http://localhost:4200/',
   framework: 'jasmine',
   jasmineNodeOpts: {
