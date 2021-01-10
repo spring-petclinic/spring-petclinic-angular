@@ -46,10 +46,10 @@ export class VisitService {
       );
   }
 
-  getVisitsBySearchTerm(searchTerm: string, noLimit: boolean): Observable<Visit | Visit[] > {
-    return this.http.get<Visit>(this.entityUrl + '/search/' + 'searchTerm=' + searchTerm + '&noLimit=' + noLimit)
+  getVisitsBySearchTerm(searchTerm: string, noLimit: boolean): Observable<Visit[]> {
+    return this.http.get<Visit[]>(this.entityUrl + '/search/' + 'searchTerm=' + searchTerm + '&noLimit=' + noLimit)
       .pipe(
-          catchError(this.handlerError('getVisitSearch', {} as Visit))
+          catchError(this.handlerError('getVisitSearch', {} as Visit[]))
       );
   }
 

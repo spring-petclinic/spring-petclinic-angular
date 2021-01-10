@@ -53,10 +53,10 @@ export class PetService {
       );
   }
 
-  getPetsBySearchTerm(searchTerm: string, noLimit: boolean): Observable<Pet | Pet[] > {
-    return this.http.get<Pet>(this.entityUrl + '/search/' + 'searchTerm=' + searchTerm + '&noLimit=' + noLimit)
+  getPetsBySearchTerm(searchTerm: string, noLimit: boolean): Observable<Pet[]> {
+    return this.http.get<Pet[]>(this.entityUrl + '/search/' + 'searchTerm=' + searchTerm + '&noLimit=' + noLimit)
       .pipe(
-          catchError(this.handlerError('getPetSearch', {} as Pet))
+          catchError(this.handlerError('getPetSearch', {} as Pet[]))
       );
   }
 

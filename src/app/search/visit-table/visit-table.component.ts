@@ -12,7 +12,7 @@ export class VisitTableComponent implements OnInit {
 
 
   errorMessage: string;
-  visits: Visit | Visit[] = [];
+  visits: Visit[] = [];
 
   get visitsChecked(){
     return this.searchService.visitsChecked;
