@@ -11,7 +11,7 @@ import { SearchService } from '../search.service';
 export class OwnerTableComponent implements OnInit {
 
   errorMessage: string;
-  owners: Owner[] | Owner = [];
+  owners: Owner[] = [];
   filteredOwners: Owner[] = [];
 
   get ownersChecked(){

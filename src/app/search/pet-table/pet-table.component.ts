@@ -13,7 +13,7 @@ import { SearchService } from '../search.service';
 export class PetTableComponent implements OnInit {
 
   errorMessage: string;
-  pets: Pet[] | Pet = [];
+  pets: Pet[] = [];
 
   get petsChecked(){
     return this.searchService.petsChecked;
