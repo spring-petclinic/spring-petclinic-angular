@@ -21,13 +21,12 @@ exports.config = {
         ,'--disable-gpu'
         ,'--headless'
         ,' --single-process'
-        , '--silent',
-        , '--no-sandbox'
+        , '--silent'
         ],
     },
     useAllAngular2AppRoots: true,
   },  
-  directConnect: true,
+  
   chromeDriver: './node_modules/chromedriver/bin/chromedriver',
   baseUrl: 'http://localhost:4200/',
   framework: 'jasmine',
