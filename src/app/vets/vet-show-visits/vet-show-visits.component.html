@@ -1,4 +1,62 @@
-<div *ngFor="let visit of pastVisits">
-    {{ visit.date }}
+<div class="container-fluid">
+    <div class="container xd-container">
+
+        <h2>Visits for {{ vet.firstName }} {{ vet.lastName }}</h2>
+
+        <h3>Planned Visits</h3>
+        <table class="table table-striped vets">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Description</th>
+                    <th>Pet</th>
+                    <th>Owner</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let visit of plannedVisits">
+                    <td>
+                        {{ visit.date }}
+                    </td>
+                    <td>
+                        {{ visit.description }}
+                    </td>
+                    <td>
+                        {{ visit.pet.name }}
+                    </td>
+                    <td>
+                        {{ visit.pet.owner.firstName }} {{ visit.pet.owner.lastName }}
+                    </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <h3>Past Visits</h3>
+        <table class="table table-striped vets">
+            <thead>
+            <tr>
+                <th>Date</th>
+                <th>Description</th>
+                <th>Pet</th>
+                <th>Owner</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let visit of pastVisits">
+                <td>
+                    {{ visit.date }}
+                </td>
+                <td>
+                    {{ visit.description }}
+                </td>
+                <td>
+                    {{ visit.pet.name }}
+                </td>
+                <td>
+                    {{ visit.pet.owner.firstName }} {{ visit.pet.owner.lastName }}
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
-  

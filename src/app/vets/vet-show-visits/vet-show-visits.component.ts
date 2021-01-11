@@ -1,3 +1,6 @@
+import { VetService } from 'app/vets/vet.service';
+import { Vet } from './../vet';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { VisitService } from './../../visits/visit.service';
 import { Visit } from './../../visits/visit';
@@ -10,14 +13,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class VetShowVisitsComponent implements OnInit {
 
-  plannedVisits: Observable<Visit[]>;
-  pastVisits: Observable<Visit[]>;
+  plannedVisits: Visit[];
+  pastVisits: Visit[];
+  vet: Vet;
 
-  constructor(private visitService: VisitService) { }
+  constructor(private visitService: VisitService,
+              private vetService: VetService,
+              private route: ActivatedRoute) {}
 
   ngOnInit(): void {
-    this.plannedVisits = this.visitService.getVisits();
-    this.pastVisits = this.visitService.getVisits();
+    const vetId:number  = +this.route.snapshot.paramMap.get('id');
+    this.visitService.getPlannedVisitsByVet(vetId).subscribe( res => this.plannedVisits = res)
+    this.visitService.getPastVisitsByVet(vetId).subscribe( res => this.pastVisits = res)
+    this.vetService.getVetById(this.route.snapshot.paramMap.get('id')).subscribe( res => this.vet = res)  
   }
-
 }

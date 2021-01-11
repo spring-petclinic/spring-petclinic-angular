@@ -60,6 +60,20 @@ export class VisitService {
       );
   }
 
+  getPastVisitsByVet(vetId: number){
+    return this.http.get<Visit[]>(this.entityUrl + '/pastVisits/' + vetId)
+      .pipe(
+        catchError(this.handlerError('getPastVisitsByVet', []))
+      );
+  }
+
+  getPlannedVisitsByVet(vetId: number){
+    return this.http.get<Visit[]>(this.entityUrl + '/plannedVisits/' + vetId)
+      .pipe(
+        catchError(this.handlerError('getPlannedVisitsByVet', []))
+      );
+  }
+
   addVisit(visit: Visit): Observable<Visit> {
     return this.http.post<Visit>(this.entityUrl, visit)
       .pipe(
