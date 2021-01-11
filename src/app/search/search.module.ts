@@ -6,6 +6,7 @@ import { OwnerTableComponent } from './owner-table/owner-table.component';
 import { PetTableComponent } from './pet-table/pet-table.component';
 import { VisitTableComponent } from './visit-table/visit-table.component';
 import { SearchRoutingModule } from './search-routing.module';
+import { NgModule } from '@angular/core';
 
 @NgModule({
   declarations: [
