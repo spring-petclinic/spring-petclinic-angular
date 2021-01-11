@@ -12,7 +12,7 @@ export class SearchService {
   visitsChecked: boolean = false;
 
   updateCriteria(searchTerm: string, ownersChecked: boolean, petsChecked: boolean, visitsChecked: boolean): void {
-    this.searchTerm.next(searchTerm);
+    this.searchTerm.next(encodeURIComponent(searchTerm));
     this.ownersChecked = ownersChecked;
     this.petsChecked = petsChecked;
     this.visitsChecked = visitsChecked;

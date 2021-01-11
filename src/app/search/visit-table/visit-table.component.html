@@ -10,6 +10,7 @@
           <th>Description</th>
           <th>Pet</th>
           <th>Owner</th>
+          <th>Vet</th>
         </tr>
         </thead>
         <tbody>
@@ -17,7 +18,8 @@
           <td>{{ visit.date }}</td>
           <td>{{ visit.description }}</td>
           <td>{{ visit.pet.name }}</td>
-          <td class="ownerFullName">{{ visit.pet.owner.firstName }} {{ visit.pet.owner.lastName }}</td>
+          <td>{{ visit.pet.owner.firstName }} {{ visit.pet.owner.lastName }}</td>
+          <td>{{ visit.vet.firstName }} {{ visit.vet.lastName}}</td>
         </tr>
         </tbody>
       </table>

@@ -8,7 +8,6 @@ import { SearchService } from '../search.service';
 })
 export class SearchBarComponent implements OnInit {
 
-  illegalChar:boolean = false;
   
   constructor(private searchService: SearchService) { }
 
@@ -16,10 +15,6 @@ export class SearchBarComponent implements OnInit {
   }
 
   submitSearch(searchTerm: string, ownersChecked: boolean, petsChecked: boolean, visitsChecked: boolean): void {
-    if (searchTerm.includes('&')){
-      this.illegalChar = true;
-      return;
-    }
     this.searchService.updateCriteria(searchTerm, ownersChecked, petsChecked, visitsChecked);
   }
 }
