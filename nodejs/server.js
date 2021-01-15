@@ -9,7 +9,7 @@ http.createServer(function (req, res) {
 
   if(req.url === "/config") {
     res.setHeader('Content-type', 'application/json');
-    res.end(process.env.FOO);
+    res.end(`{"URL":"${process.env.URL}"}`);
     return;
   }
 
@@ -17,7 +17,7 @@ http.createServer(function (req, res) {
   const parsedUrl = url.parse(req.url);
 
   // extract URL path
-  let pathname = `/document-root${parsedUrl.pathname}`;
+  let pathname = `/usr/local/nodejs/document-root${parsedUrl.pathname}`;
 
   // based on the URL path, extract the file extention. e.g. .js, .doc, ...
   const ext = path.parse(pathname).ext;
