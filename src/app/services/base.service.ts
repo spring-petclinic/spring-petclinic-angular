@@ -16,7 +16,7 @@ export abstract class BaseService {
         protected http: HttpClient, 
         private httpErrorHandler: HttpErrorHandler, 
         private appConfigService: AppConfigService) {
-            this.handlerError = httpErrorHandler.createHandleError('PetTypeService');
+            this.handlerError = httpErrorHandler.createHandleError(`Service : ${this.getURI()}`);
             this.entityUrl = `${this.appConfigService.settings.URL}${API}${this.getURI()}`;
     }
 
