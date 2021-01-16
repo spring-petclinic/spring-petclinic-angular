@@ -30,7 +30,6 @@ export class AppConfigService implements OnInit {
     }
   }
 
-
   get settings() {
       console.log('*** getSettings');
       return this.configSettings;
