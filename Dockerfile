@@ -1,12 +1,12 @@
 ARG DOCKER_HUB="docker.io"
-ARG NPM_REGISTRY="https://registry.npmjs.org"
+ARG NPM_REGISTRY="http://registry.npmjs.org"
 ARG NODE_VERSION="14" 
 
 FROM node:${NODE_VERSION} as build
 
 COPY . /workspace/
 
-RUN echo "registry = \"${NPM_REGISTRY}\"" > /workspace/.npmrc  && \
+RUN echo "registry = http://registry.npmjs.org" > /workspace/.npmrc  && \
     cd /workspace/                                             && \
     npm install                                                && \
     npm run build
