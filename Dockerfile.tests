@@ -34,3 +34,6 @@ COPY --from=build /workspace/ /spring-petclinic-angular/
 
 RUN cd /spring-petclinic-angular/ && \
        npm install
+
+EXPOSE 8080
+
