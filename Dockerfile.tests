@@ -1,5 +1,5 @@
 # BUILD PROJECT ##
-FROM node:12.20.1-alpine as build
+FROM node:14.15.1-alpine as build
 ARG environment
 
 WORKDIR /workspace/
