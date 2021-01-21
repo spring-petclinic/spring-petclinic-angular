@@ -41,6 +41,7 @@ export class OwnerService {
   }
 
   getOwners(): Observable<Owner[]> {
+    // owner
     return this.http.get<Owner[]>(this.entityUrl)
       .pipe(
         catchError(this.handlerError('getOwners', []))
