@@ -37,7 +37,7 @@
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.1100.4",
     "@angular/cli": "~11.0.4",
-    "@angular/compiler-cli": "^11.0.4",
+    "@angular/compiler-cli": "11.0.4",
     "@angular/language-service": "8.0.1",
     "@ngtools/webpack": "^11.0.4",
     "@nrwl/workspace": "^11.0.0",
