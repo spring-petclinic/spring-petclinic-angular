@@ -24,7 +24,7 @@ RUN apk add --update nodejs npm
 #    apk add --no-cache bash chromium@edge nss@edge
 RUN apk update && apk add --no-cache chromium \
     chromium-chromedriver
-        
+
 # This line is to tell karma-chrome-launcher where
 # chromium was downloaded and installed to.
 ENV CHROME_BIN /usr/bin/chromium-browser
