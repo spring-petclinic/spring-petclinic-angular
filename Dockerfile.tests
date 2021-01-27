@@ -29,6 +29,10 @@ RUN apk update && apk add --no-cache chromium \
 # chromium was downloaded and installed to.
 ENV CHROME_BIN /usr/bin/chromium-browser
 
+#Install Node/npm
+apk add --update nodejs npm
+
+
 COPY  --from=build /workspace/dist/ /usr/share/nginx/html/
 COPY --from=build /workspace/ /spring-petclinic-angular/
 

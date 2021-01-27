@@ -27,7 +27,7 @@ jobs:
         run: docker run -p 8080:8080 --detach --name petclinc-frontend-container $IMAGE_NAME:latest
       - name: Run Unit-Tests (Karma)
         run: docker exec -w /spring-petclinic-angular/  petclinc-frontend-container  npm run test
-      - name: install cypress
+      - name: Install cypress
         run: docker exec -w /spring-petclinic-angular/ npm install -g cypress
-      - name: Run E2E-Tests(protractor)
+      - name: Run E2E-Tests(cypress)
         run: docker exec -w /spring-petclinic-angular/ petclinc-frontend-container npm run e2e
