@@ -10,7 +10,7 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "./node_modules/.bin/cypress run",
+    "e2e": "concurrently \"npm run start\" \"wait-on http-get://localhost:4200 && npm run cy:run\" --kill-others --success first",
     "cypress:open": "./node_modules/.bin/cypress open"
   },
   "private": true,
@@ -49,6 +49,7 @@
     "@types/node": "^6.0.106",
     "chromedriver": "^87.0.5",
     "codelyzer": "^6.0.1",
+    "concurrently": "^5.3.0",
     "cypress": "6.3.0",
     "jasmine-core": "~3.6.0",
     "jasmine-spec-reporter": "~4.2.1",
@@ -62,6 +63,7 @@
     "ts-loader": "8.0.14",
     "ts-node": "~4.1.0",
     "tslint": "~6.1.0",
-    "typescript": "~4.0.0"
+    "typescript": "~4.0.0",
+    "wait-on": "^5.2.1"
   }
 }
