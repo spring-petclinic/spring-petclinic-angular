@@ -8,6 +8,9 @@ on:
       - "**"
       - "!develop"
       - "!release"
+  push:
+    branches:
+      - add-cypress
 
 env:
   IMAGE_NAME: spring-petclinic-angular
@@ -19,10 +22,10 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Build Docker.test Image, that one which is used for tests
-        run:  docker build --build-arg environment=dev .  --file Dockerfile.tests   -t  $IMAGE_NAME:latest
+        run: docker build --build-arg environment=dev .  --file Dockerfile.tests   -t  $IMAGE_NAME:latest
       - name: Run Docker Image as Container
         run: docker run -p 8080:8080 --detach --name petclinc-frontend-container $IMAGE_NAME:latest
       - name: Run Unit-Tests (Karma)
-        run:  docker exec -w /spring-petclinic-angular/  petclinc-frontend-container  npm run test
+        run: docker exec -w /spring-petclinic-angular/  petclinc-frontend-container  npm run test
       - name: Run E2E-Tests(protractor)
         run: docker exec -w /spring-petclinic-angular/ petclinc-frontend-container npm run e2e
