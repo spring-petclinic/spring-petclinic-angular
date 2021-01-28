@@ -45,6 +45,7 @@ describe('User Story 2_2 Create visit with vet', () => {
       cy.get('#description').type('Vaccination');
       cy.get('#vet').select("James Carter");
       cy.get('[type="submit"]').click();
+      cy.wait(5000);
     });
   });
 
