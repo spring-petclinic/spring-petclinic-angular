@@ -7,10 +7,7 @@ on:
       - "*/*"
       - "**"
       - "!develop"
-      - "!release"
-  push:
-    branches:
-      - add-cypress
+      - "!release"  
 
 env:
   IMAGE_NAME: spring-petclinic-angular
