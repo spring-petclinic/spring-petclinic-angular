@@ -64,6 +64,7 @@ describe('User Story 2_2 Create visit with vet', () => {
       cy.get(':nth-child(2) > .ownerFullName > a').click();
       cy.url().should('eq', ownersUrl+ "/2");      
       cy.get('.table > :nth-child(2) > :nth-child(4) > :nth-child(2)').click();
+      
     });
   })
 });
