@@ -33,6 +33,15 @@ describe('User Story 1 Delete Owner', () => {
 
     it('Should Owner be created', () => {
         cy.wait('@getOwners').then(({request, response}) => {
+            cy.get('.ownerFullName').last().contains('Max Mustermann');
+            cy.get('.ownerFullName').last().get('a').last().click();
         });
     });
+
+    it('Should delete Owner', () => {
+        cy.get('.ownerFullName').last().get('a').last().click();
+        cy.get('.container > :nth-child(5)').click();
+        
+        cy.url().should('eq', userStoryOneUrl);
+    })
 });
