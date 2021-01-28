@@ -52,9 +52,9 @@ describe('User Story 2_2 Create visit with vet', () => {
     cy.wait('@getOwners').then(({request, response}) => {
       cy.get(':nth-child(2) > .ownerFullName > a').click();
       cy.url().should('eq', ownersUrl+ "/2");      
-      cy.get('app-visit-list > .table > :nth-child(2) > :nth-child(1)').contains('2021/01/10');
-      cy.get('app-visit-list > .table > :nth-child(2) > :nth-child(2)').contains('Vaccination');
-      cy.get('app-visit-list > .table > :nth-child(2) > :nth-child(3)').contains('James Carter');
+      cy.get('app-visit-list > .table > tr > :nth-child(1)').contains('2021/01/10');
+      cy.get('app-visit-list > .table > tr > :nth-child(2)').contains('Vaccination');
+      cy.get('app-visit-list > .table > tr > :nth-child(3)').contains('James Carter');
     });
   }); 
 
