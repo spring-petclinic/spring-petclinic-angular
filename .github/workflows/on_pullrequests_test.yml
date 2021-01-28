@@ -5,7 +5,12 @@ on:
     branches:
       - "*"
       - "*/*"
-      - "**"        
+      - "**"      
+  push:
+    branches:
+      - "!develop"
+      - "!release" 
+         
 
 env:
   IMAGE_NAME: spring-petclinic-angular
