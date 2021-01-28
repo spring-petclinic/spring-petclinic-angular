@@ -5,7 +5,11 @@ on:
     branches:
       - "*"
       - "*/*"
-      - "**"       
+      - "**"      
+  push:
+    branches:
+      - "!develop"
+      - "!release" 
          
 
 env:
