@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "cy:open": "cypress open",
-    "cy:run": "cypress run --browser electron",
+    "cy:run": "cypress run",
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
