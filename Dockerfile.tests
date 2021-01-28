@@ -17,6 +17,7 @@ FROM nginx:1.19.5-alpine AS runtime
 RUN apk update
 RUN apk add --update nodejs npm
 
+
 # Installs latest Chromium package
 
 #RUN  echo @edge http://nl.alpinelinux.org/alpine/edge/community >> /etc/apk/repositories && \
@@ -29,11 +30,10 @@ RUN apk update && apk add --no-cache chromium \
 # chromium was downloaded and installed to.
 ENV CHROME_BIN /usr/bin/chromium-browser
 
+
 COPY  --from=build /workspace/dist/ /usr/share/nginx/html/
 COPY --from=build /workspace/ /spring-petclinic-angular/
 
-RUN cd /spring-petclinic-angular/ && \
-       npm install
 
 EXPOSE 8080
 
