@@ -6,8 +6,7 @@ on:
       - "*"
       - "*/*"
       - "**"       
-      - "!develop" 
-      - "!release"      
+         
 
 env:
   IMAGE_NAME: spring-petclinic-angular
