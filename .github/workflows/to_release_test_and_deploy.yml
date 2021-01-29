@@ -4,9 +4,11 @@ on:
   push:
     branches:
       - release
-  pull_request:
-    branches:
+    tags:
+      - v*
+    pull_request:
       - release
+
 
 env:
   IMAGE_NAME: spring-petclinic-angular

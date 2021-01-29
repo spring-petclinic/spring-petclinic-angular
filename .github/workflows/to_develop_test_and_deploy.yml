@@ -1,8 +1,13 @@
 name: Petclinc frontend CI/CD for develop
 
 on:
-  push:
+  push:    
     branches:
+      - develop   
+    
+    tags:
+      - v*
+    pull_request:
       - develop
   
 env:

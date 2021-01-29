@@ -1,15 +1,13 @@
 name: Petclinc frontend CI-Tests on pullrequests
 
-on:
+on:  
   pull_request:
     branches:
       - "*"
       - "*/*"
-      - "**"      
-  push:
-    branches:
-      - "!develop"
-      - "!release" 
+      - "**"
+      - "!master"
+      - "!release"
          
 
 env:
