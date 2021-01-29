@@ -1,14 +1,14 @@
 name: Petclinc frontend CI/CD for release (production)
 
 on:
-  push:    
+  push:
     branches:
-      - release    
+      - release
     tags:
-      - v*    
+      - v*
     pull_request:
       - release
-    workflow_dispatch:
+
 
 env:
   IMAGE_NAME: spring-petclinic-angular
