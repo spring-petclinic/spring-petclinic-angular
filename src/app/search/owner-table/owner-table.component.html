@@ -13,24 +13,24 @@
             <th>Pets</th>
           </tr>
           </thead>
-
           <tbody>
           <tr *ngFor="let owner of owners">
-            <td class="ownerFullName">{{ owner.firstName }} {{ owner.lastName }}</td>
+            <td class="ownerFullName"><a routerLink="/owners/{{owner.id}}" routerLinkActive="active"
+              (click)="onSelectOwner(owner)">{{ owner.firstName }} {{ owner.lastName }}</a></td>
             <td>{{ owner.address }}</td>
             <td>{{ owner.city }}</td>
             <td>{{ owner.telephone }}</td>
             <td>
-          <tr *ngFor="let pet of owner.pets">
-            {{ pet.name }}
-          </tr>
-          </td>
+              <tr *ngFor="let pet of owner.pets">
+                {{ pet.name }}
+              </tr>
+            </td>
           </tr>
         </tbody>
       </table>
     </div>
     <ng-template [ngIf]="owners.length == 5">
-      <a role="button" (click)="showAllResults()">Currently showing 5 results. Click to list all results.</a>
+      <a id="showAllOwnersLink" role="button" (click)="showAllResults()">Currently showing 5 results. Click to list all results.</a>
     </ng-template>
   </ng-template>
   <ng-template #noResult>

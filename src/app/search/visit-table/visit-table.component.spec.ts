@@ -4,6 +4,8 @@ import { VisitTableComponent } from './visit-table.component';
 import { VisitService } from 'app/visits/visit.service';
 import {Observable, of} from 'rxjs';
 import { Visit } from 'app/visits/visit';
+import { Router } from '@angular/router';
+import { RouterStub } from 'app/testing/router-stubs';
 
 
 class VisitServiceStub {
@@ -21,6 +23,7 @@ describe('VisitTableComponent', () => {
       declarations: [ VisitTableComponent ],
       providers: [
         {provide: VisitService, useClass: VisitServiceStub},
+        {provide: Router, useClass: RouterStub},
       ]
     })
     .compileComponents();

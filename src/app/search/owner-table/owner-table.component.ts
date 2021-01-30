@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Owner } from 'app/owners/owner';
 import { OwnerService } from 'app/owners/owner.service';
 import { SearchService } from '../search.service';
@@ -18,7 +19,7 @@ export class OwnerTableComponent implements OnInit {
     return this.searchService.ownersChecked; 
   }
 
-  constructor(private ownerService: OwnerService, private searchService: SearchService) {
+  constructor(private router: Router, private ownerService: OwnerService, private searchService: SearchService) {
   }
 
   ngOnInit() {
@@ -38,4 +39,9 @@ export class OwnerTableComponent implements OnInit {
       owners => this.owners = owners,
       error => this.errorMessage = error as any);
   }
+
+  onSelectOwner(owner: Owner) {
+    this.router.navigate(['/owners', owner.id]);
+  }
+
 }

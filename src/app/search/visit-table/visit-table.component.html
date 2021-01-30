@@ -18,8 +18,10 @@
           <td>{{ visit.date }}</td>
           <td>{{ visit.description }}</td>
           <td>{{ visit.pet.name }}</td>
-          <td>{{ visit.pet.owner.firstName }} {{ visit.pet.owner.lastName }}</td>
-          <td>{{ visit.vet.firstName }} {{ visit.vet.lastName}}</td>
+          <td class="ownerFullName"><a routerLink="/owners/{{visit.pet.owner.id}}" routerLinkActive="active"
+            (click)="onSelectOwner(visit.pet.owner)">{{ visit.pet.owner.firstName }} {{ visit.pet.owner.lastName }}</a></td>
+          <td class="vetFullName"><a routerLink="/vets/{{visit.vet.id}showvisits" routerLinkActive="active"
+            (click)="onSelectVet(visit.vet)">{{ visit.vet.firstName }} {{ visit.vet.lastName }}</a></td>
         </tr>
         </tbody>
       </table>
@@ -29,7 +31,7 @@
     </ng-template>
   </ng-template>
   <ng-template #noResult>
-    <p>Didn't find any visits matching your search.</p>
+    <p id="visitTableNoResult">Didn't find any visits matching your search.</p>
   </ng-template>
   </div>
 </div>

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Owner } from 'app/owners/owner';
-import { OwnerService } from 'app/owners/owner.service';
 import { Pet } from 'app/pets/pet';
 import { PetService } from 'app/pets/pet.service';
 import { SearchService } from '../search.service';
@@ -19,7 +19,7 @@ export class PetTableComponent implements OnInit {
     return this.searchService.petsChecked;
   }
 
-  constructor(private petService: PetService, private searchService: SearchService) {
+  constructor(private router: Router, private petService: PetService, private searchService: SearchService) {
   }
 
   ngOnInit() {
@@ -38,5 +38,9 @@ export class PetTableComponent implements OnInit {
     this.petService.getPetsBySearchTerm(this.searchService.searchTerm.getValue(), true).subscribe(
       pets => this.pets = pets,
       error => this.errorMessage = error as any);
+  }
+
+  onSelectOwner(owner: Owner) {
+    this.router.navigate(['/owners', owner.id]);
   }
 }

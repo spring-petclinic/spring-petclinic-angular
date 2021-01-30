@@ -18,7 +18,8 @@
           <td >{{ pet.name }}</td>
           <td>{{ pet.birthDate }}</td>
           <td>{{ pet.type.name }}</td>
-          <td class="ownerFullName">{{ pet.owner.firstName }} {{ pet.owner.lastName }}</td>
+          <td class="ownerFullName"><a routerLink="/owners/{{pet.owner.id}}" routerLinkActive="active"
+            (click)="onSelectOwner(pet.owner)">{{ pet.owner.firstName }} {{ pet.owner.lastName }}</a></td>
         </tr>
         </tbody>
       </table>

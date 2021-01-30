@@ -4,6 +4,9 @@ import { PetTableComponent } from './pet-table.component';
 import { Observable, of } from 'rxjs';
 import { Pet } from 'app/pets/pet';
 import { PetService } from 'app/pets/pet.service';
+import { Router } from '@angular/router';
+import { RouterStub } from 'app/testing/router-stubs';
+import { RouterTestingModule } from '@angular/router/testing';
 
 class PetServiceStub {
   getPetById(): Observable<Pet> {
@@ -18,8 +21,10 @@ describe('PetTableComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ PetTableComponent ],
+      imports: [RouterTestingModule],
       providers: [
         {provide: PetService, useClass: PetServiceStub},
+        {provide: Router, useClass: RouterStub},
       ]
     })
     .compileComponents();

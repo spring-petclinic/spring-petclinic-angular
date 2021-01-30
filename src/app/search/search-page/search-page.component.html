@@ -1,5 +1,5 @@
 <app-search-bar></app-search-bar>
-<div [ngSwitch]="getStatus()">
+<div [ngSwitch]="getStatus()" id="content">
     <div *ngSwitchCase="0" id="tables">
         <ng-template [ngIf]="ownersChecked">
             <app-owner-table></app-owner-table>
@@ -13,12 +13,12 @@
     </div>
     <div *ngSwitchCase="1"> 
         <div class="container">
-            Please enter a search term.
+            <p class="searchPrompt">Please enter a search term.</p>
         </div>
     </div>
     <div *ngSwitchCase="2"> 
         <div class="container">
-            Please select at least one category.
+            <p class="searchPrompt">Please select at least one category.<p>
         </div>
     </div>
 </div>

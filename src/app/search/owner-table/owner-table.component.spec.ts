@@ -4,6 +4,9 @@ import { OwnerTableComponent } from './owner-table.component';
 import { Owner } from 'app/owners/owner';
 import { OwnerService } from 'app/owners/owner.service';
 import { Observable, of } from 'rxjs';
+import { Router } from '@angular/router';
+import { RouterStub } from 'app/testing/router-stubs';
+import { RouterTestingModule } from '@angular/router/testing';
 
 
 class OwnerServiceStub {
@@ -18,8 +21,10 @@ describe('OwnerTableComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ OwnerTableComponent ],
+      imports: [RouterTestingModule],
       providers: [
         {provide: OwnerService, useClass: OwnerServiceStub},
+        {provide: Router, useClass: RouterStub},
       ]
     })
     .compileComponents();

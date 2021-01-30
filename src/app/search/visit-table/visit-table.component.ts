@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Owner } from 'app/owners/owner';
+import { Vet } from 'app/vets/vet';
 import { Visit } from 'app/visits/visit';
 import { VisitService } from 'app/visits/visit.service';
 import { SearchService } from '../search.service';
@@ -18,7 +21,7 @@ export class VisitTableComponent implements OnInit {
     return this.searchService.visitsChecked;
   }
 
-  constructor(private visitService: VisitService, private searchService: SearchService) { 
+  constructor(private router: Router, private visitService: VisitService, private searchService: SearchService) { 
     this.visits = [];
   }
 
@@ -38,5 +41,13 @@ export class VisitTableComponent implements OnInit {
     this.visitService.getVisitsBySearchTerm(this.searchService.searchTerm.getValue(), true).subscribe(
       visits => this.visits = visits,
       error => this.errorMessage = error as any);
+  }
+
+  onSelectOwner(owner: Owner) {
+    this.router.navigate(['/owners', owner.id]);
+  }
+
+  onSelectVet(vet: Vet) {
+    this.router.navigate(['/vets/visits', vet.id, 'showVisits']);
   }
 }

@@ -1,7 +1,7 @@
 <div class="container xd-container">
   <form #form="ngForm" id="form" name="searchForm" (ngSubmit)="submitSearch(form.value.searchTerm, form.value.ownerCheckbox, form.value.petCheckbox, form.value.visitCheckbox)">
-    <input maxlength="30" name="searchTerm" type="text" ngModel>
-    <button type="submit" class="btn btn-info">Search</button>
+    <input maxlength="30" id="searchFormInput" name="searchTerm" type="text" ngModel>
+    <button type="submit" id="submitButton" class="btn btn-info">Search</button>
     <!-- <div class="form-check form-check-inline"> -->
       <input class="form-check-input" type="checkbox" id="ownerCheckbox" name="ownerCheckbox" ngModel="checked">
       <label class="form-check-label" for="ownerCheckbox">Owners</label>
