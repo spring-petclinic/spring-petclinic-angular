@@ -32,7 +32,6 @@ describe('User Story 2_2 Create visit with vet', () => {
       cy.get('.dl-horizontal > :nth-child(9)').click();
       cy.url().should('eq', 'http://localhost:4200/petclinic/pets/2/visits/add');
     });
-
   });
 
   it('Should add Visit for pet', () => {
@@ -52,7 +51,7 @@ describe('User Story 2_2 Create visit with vet', () => {
   it('Should Visit be added for pet', () => {
     cy.wait('@getOwners').then(({request, response}) => {
       cy.get(':nth-child(2) > .ownerFullName > a').click();
-      cy.url().should('eq', ownersUrl+ "/2");      
+      cy.url().should('eq', ownersUrl+ "/2");
       cy.get('app-visit-list > .table > tr > :nth-child(1)').contains('2021/01/10');
       cy.get('app-visit-list > .table > tr > :nth-child(2)').contains('Vaccination');
       cy.get('app-visit-list > .table > tr > :nth-child(3)').contains('James Carter');
@@ -64,9 +63,8 @@ describe('User Story 2_2 Create visit with vet', () => {
       cy.get(':nth-child(2) > .ownerFullName > a').click();
       cy.url().should('eq', ownersUrl+ "/2");      
       cy.get('.table > :nth-child(2) > :nth-child(4) > :nth-child(2)').click();
-      
     });
-  })
+  });
 });
 
 

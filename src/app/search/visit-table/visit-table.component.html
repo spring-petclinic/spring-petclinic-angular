@@ -16,7 +16,7 @@
         <tbody>
         <tr *ngFor="let visit of visits">
           <td>{{ visit.date }}</td>
-          <td>{{ visit.description }}</td>
+          <td class="visit-description">{{ visit.description }}</td>
           <td>{{ visit.pet.name }}</td>
           <td class="ownerFullName"><a routerLink="/owners/{{visit.pet.owner.id}}" routerLinkActive="active"
             (click)="onSelectOwner(visit.pet.owner)">{{ visit.pet.owner.firstName }} {{ visit.pet.owner.lastName }}</a></td>

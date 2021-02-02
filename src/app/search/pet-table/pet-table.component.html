@@ -15,7 +15,7 @@
 
         <tbody>
         <tr *ngFor="let pet of pets">
-          <td >{{ pet.name }}</td>
+          <td class="pet-name">{{ pet.name }}</td>
           <td>{{ pet.birthDate }}</td>
           <td>{{ pet.type.name }}</td>
           <td class="ownerFullName"><a routerLink="/owners/{{pet.owner.id}}" routerLinkActive="active"

@@ -5,11 +5,6 @@ beforeEach(() => {
 });
 
 describe('User Story 3 Search Funcitonality', () => {
-
-    it('Should be true', () => {
-        cy.url().should('eq', searchUrl);
-      });
-
     it('should find owner', ()=> {
         cy.get("#searchFormInput").type("coleman");
         cy.get("#submitButton").click();
