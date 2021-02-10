@@ -32,8 +32,9 @@
       </thead>
       <tbody>
       <tr *ngFor="let vet of vets">
-        <td>
-          {{ vet.firstName }} {{ vet.lastName }}
+        <td><a routerLink="/vets/{{vet.id}}" routerLinkActive="active"
+          (click)="onSelect(vet)">
+          {{ vet.firstName }} {{ vet.lastName }}</a>
         </td>
         <td>
           <div *ngFor="let spec of vet.specialties">

@@ -1,0 +1,39 @@
+<div class="container-fluid">
+  <div class="container xd-container">
+
+    <h2>Veterinarian Information</h2>
+
+
+    <table class="table table-striped">
+      <tr>
+        <th>Name</th>
+        <td><b>{{ vet.firstName }} {{ vet.lastName }}</b></td>
+      </tr>
+    </table>
+
+    <br/>
+    <br/>
+    <br/>
+    <h2>Visits</h2>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Description</th>
+          <th>Pet</th>
+          <th>Owner</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let visit of vet.visits">
+          <td>{{visit.date}}</td>
+          <td>{{visit.description}}</td>
+          <td>{{visit.pet.name}}</td>
+          <td><a routerLink="/owners/{{visit.pet.owner.id}}" routerLinkActive="active"
+            (click)="onSelectOwner(visit.pet.owner.id)">{{visit.pet.owner.firstName + " " + visit.pet.owner.lastName}}</a></td>
+        </tr>
+      </tbody>
+    </table>
+    <!-- <app-visit-list [visits]="vet.visits"></app-visit-list> -->
+    </div>
+</div>

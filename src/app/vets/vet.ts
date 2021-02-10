@@ -20,11 +20,13 @@
  * @author Vitaliy Fedoriv
  */
 
-import {Specialty} from '../specialties/specialty';
+import { Visit } from "app/visits/visit";
+import { Specialty } from "../specialties/specialty";
 
 export interface Vet {
   id: number;
   firstName: string;
   lastName: string;
   specialties: Specialty[];
+  visits: Visit[];
 }
