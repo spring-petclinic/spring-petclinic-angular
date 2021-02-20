@@ -18,6 +18,7 @@
 
 <div class="container-fluid">
   <div class="container xd-container">
+<<<<<<< Updated upstream
     <h2>Results</h2>
     <form action="/hms/accommodations" method="GET"> 
       <div class="row">
@@ -33,6 +34,9 @@
         </div>
       </div>
     </form>
+=======
+    <h2>Owners</h2>
+>>>>>>> Stashed changes
     <div class="table-responsive">
       <table class="table table-striped">
         <thead>
@@ -46,7 +50,11 @@
         <tr *ngFor="let owner of owners">
           <td class="ownerFullName"><a routerLink="/owners/{{owner.id}}" routerLinkActive="active"
                                        (click)="onSelect(owner)">{{ owner.firstName }} {{ owner.lastName }}</a></td>
+<<<<<<< Updated upstream
          
+=======
+          
+>>>>>>> Stashed changes
           <td>
         <tr *ngFor="let pet of owner.pets">
           {{ pet.name }}

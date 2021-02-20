@@ -29,6 +29,7 @@ import {FormsModule} from '@angular/forms';
 import {OwnerAddComponent} from './owner-add/owner-add.component';
 import {OwnerEditComponent} from './owner-edit/owner-edit.component';
 import {OwnersRoutingModule} from './owners-routing.module';
+import {OwnerSearch} from './owner-search/owner-search.component'
 import {PetsModule} from '../pets/pets.module';
 
 @NgModule({
@@ -42,7 +43,8 @@ import {PetsModule} from '../pets/pets.module';
     OwnerListComponent,
     OwnerDetailComponent,
     OwnerEditComponent,
-    OwnerAddComponent
+    OwnerAddComponent,
+    OwnerSearch
   ],
   providers: [OwnerService]
 
