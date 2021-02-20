@@ -51,4 +51,8 @@ export class OwnerListComponent implements OnInit {
     this.router.navigate(['/owners/add']);
   }
 
+  globalSearch() {
+    this.router.navigate(['owners/search'])
+  }
+
 }

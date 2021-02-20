@@ -1,56 +1,40 @@
-/*
- *
- *  * Copyright 2016-2017 the original author or authors.
- *  *
- *  * Licensed under the Apache License, Version 2.0 (the "License");
- *  * you may not use this file except in compliance with the License.
- *  * You may obtain a copy of the License at
- *  *
- *  *      http://www.apache.org/licenses/LICENSE-2.0
- *  *
- *  * Unless required by applicable law or agreed to in writing, software
- *  * distributed under the License is distributed on an "AS IS" BASIS,
- *  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  * See the License for the specific language governing permissions and
- *  * limitations under the License.
- *
- */
-
-/**
- * @author Vitaliy Fedoriv
- * @author Oscar Jr. Tsakam
- */
 
 import {Component, OnInit} from '@angular/core';
 import {OwnerService} from '../owner.service';
-import {Owner} from '../owner';
 import {Router} from '@angular/router';
 
 @Component({
-  selector: 'app-owner-list',
-  templateUrl: './owner-search-list.component.html',
-  styleUrls: ['./owner-search.component.css']
-})
-export class OwnerSearch implements OnInit {
-  errorMessage: string;
-  owners: Owner[];
-  value: string;
+    selector: 'app-owner-search',
+    templateUrl: './owner-search.component.html',
+    styleUrls: ['./owner-search.component.css']
+  })
 
-  constructor(private router: Router, private ownerService: OwnerService) {
+  export class OwnerSearchComponent implements OnInit {
+
+    value: String;
+    errorMessage: string;
+  
+    constructor(private ownerService: OwnerService, private router: Router) {
+      this.value = {} as String;
+    }
+  
+    ngOnInit() {
+    }
+  
+    onSubmit(id: String) {
+      
+      this.ownerService.getSearchOwner.subscribe(
+        newOwner => {
+          
+          this.gotoOwnersList();
+        },
+        error => this.errorMessage = error as any
+      );
+    }
+  
+    gotoOwnersList() {
+      this.router.navigate(['/owners']);
+    }
+  
   }
-
-  ngOnInit() {
-    this.ownerService.getOwners().subscribe(
-      owners => this.owners = owners,
-      error => this.errorMessage = error as any);
-  }
-
-  onSelect(owner: Owner) {
-    this.router.navigate(['/owners', owner.id]);
-  }
-
-  onSearch(value: string){
-    this.router.navigate(['/owners/search/', value]);
-  }
-
-}
+  

@@ -75,12 +75,12 @@ export class OwnerService {
       );
   }
 
-  searchOwner(value: string): Observable<{}>
-  {
-    return this.http.get<Owner[]>(this.entityUrl+'/search/' + value)
+
+  getSearchOwner(value: string): Observable<{}> {
+    return this.http.get<Owner[]>(this.entityUrl+ '/' + value)
       .pipe(
-        catchError(this.handlerError('getSearchOwner', []))
-      )
+        catchError(this.handlerError('getOwners', []))
+      );
   }
 
 
