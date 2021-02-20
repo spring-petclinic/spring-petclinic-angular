@@ -77,7 +77,7 @@ export class OwnerService {
 
   searchOwner(value: string): Observable<{}>
   {
-    return this.http.get<Owner[]>(this.entityUrl+'/' + value)
+    return this.http.get<Owner[]>(this.entityUrl+'/search/' + value)
       .pipe(
         catchError(this.handlerError('getSearchOwner', []))
       )
