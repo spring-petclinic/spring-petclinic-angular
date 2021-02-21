@@ -35,6 +35,7 @@ import {PartsModule} from './parts/parts.module';
 import {SpecialtiesModule} from './specialties/specialties.module';
 import {HttpErrorHandler} from './error.service';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { SearchModule } from './globalsearch/search.module';
 
 
 @NgModule({
@@ -45,6 +46,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     BrowserModule,
     FormsModule,
     HttpClientModule,
+    SearchModule,
     OwnersModule,
     PetsModule,
     VisitsModule,

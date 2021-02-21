@@ -74,14 +74,4 @@ export class OwnerService {
          catchError(this.handlerError('deleteOwner', [ownerId]))
       );
   }
-
-
-  getSearchOwner(value: string): Observable<{}> {
-    return this.http.get<Owner[]>(this.entityUrl+ '/' + value)
-      .pipe(
-        catchError(this.handlerError('getOwners', []))
-      );
-  }
-
-
 }

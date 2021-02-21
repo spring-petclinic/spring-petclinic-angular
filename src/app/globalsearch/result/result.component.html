@@ -18,30 +18,15 @@
 
 <div class="container-fluid">
   <div class="container xd-container">
-<<<<<<< Updated upstream
-    <h2>Results</h2>
-    <form action="/hms/accommodations" method="GET"> 
-      <div class="row">
-        <div class="col-xs-6 col-md-4">
-          <div class="input-group">
-            <input type="text" class="form-control" placeholder="Search" id="txtSearch"/>
-            <div class="input-group-btn">
-              <button class="btn btn-primary" type="submit">
-                <span class="glyphicon glyphicon-search"></span>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </form>
-=======
-    <h2>Owners</h2>
->>>>>>> Stashed changes
+    <h2>Enter value to search</h2>
     <div class="table-responsive">
       <table class="table table-striped">
         <thead>
         <tr>
           <th>Name</th>
+          <th>Address</th>
+          <th>City</th>
+          <th>Telephone</th>
           <th>Pets</th>
         </tr>
         </thead>
@@ -50,11 +35,9 @@
         <tr *ngFor="let owner of owners">
           <td class="ownerFullName"><a routerLink="/owners/{{owner.id}}" routerLinkActive="active"
                                        (click)="onSelect(owner)">{{ owner.firstName }} {{ owner.lastName }}</a></td>
-<<<<<<< Updated upstream
-         
-=======
-          
->>>>>>> Stashed changes
+          <td>{{ owner.address }}</td>
+          <td>{{ owner.city }}</td>
+          <td>{{ owner.telephone }}</td>
           <td>
         <tr *ngFor="let pet of owner.pets">
           {{ pet.name }}
@@ -63,6 +46,8 @@
         </tr>
         </tbody>
       </table>
+      <div>  
+      </div>
     </div>
   </div>
 </div>

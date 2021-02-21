@@ -21,34 +21,46 @@
  */
 
 import {Component, OnInit} from '@angular/core';
-import {OwnerService} from '../owner.service';
-import {Owner} from '../owner';
+import {OwnerService} from '../../owners/owner.service';
+import {Owner} from '../../owners/owner';
 import {Router} from '@angular/router';
+import { SearchService } from '../search.service';
 
 @Component({
-  selector: 'app-owner-list',
-  templateUrl: './owner-search-list.component.html',
-  styleUrls: ['./owner-search-list.component.css']
+  selector: 'app-owner-search',
+  templateUrl: './search.component.html',
+  styleUrls: ['./search.component.css']
 })
-export class OwnerSearch implements OnInit {
+export class SearchComponent implements OnInit {
   errorMessage: string;
   owners: Owner[];
+  value: string;
 
-  constructor(private router: Router, private ownerService: OwnerService) {
+  constructor(private router: Router, private searchService: SearchService) {
   }
 
   ngOnInit() {
-    this.ownerService.getOwners().subscribe(
-      owners => this.owners = owners,
-      error => this.errorMessage = error as any);
+  
   }
 
   onSelect(owner: Owner) {
     this.router.navigate(['/owners', owner.id]);
   }
 
-  addOwner() {
-    this.router.navigate(['/owners/add']);
+
+  globalSearch(value: string) {
+    this.router.navigate(['owners/search',value ])
+  }
+
+  onSubmit(value: string) {
+    const that = this;
+    this.searchService.getSearchOwner(value).subscribe(
+      error => this.errorMessage = error as any
+    );
+  }
+
+  gotoOwnersList() {
+    this.router.navigate(['/owners']);
   }
 
 }

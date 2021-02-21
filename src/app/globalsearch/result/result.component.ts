@@ -21,34 +21,33 @@
  */
 
 import {Component, OnInit} from '@angular/core';
-import {OwnerService} from '../owner.service';
-import {Owner} from '../owner';
+import {Owner} from '../../owners/owner';
 import {Router} from '@angular/router';
+import { SearchService } from '../search.service';
 
 @Component({
-  selector: 'app-owner-list',
-  templateUrl: './owner-list.component.html',
-  styleUrls: ['./owner-list.component.css']
+  selector: 'app-owner-result',
+  templateUrl: './result.component.html',
+  styleUrls: ['./result.component.css']
 })
-export class OwnerListComponent implements OnInit {
+export class ResultSearchComponent implements OnInit {
   errorMessage: string;
   owners: Owner[];
+  value: string;
 
-  constructor(private router: Router, private ownerService: OwnerService) {
+  constructor(private router: Router, private searchService: SearchService) {
   }
 
   ngOnInit() {
-    this.ownerService.getOwners().subscribe(
-      owners => this.owners = owners,
-      error => this.errorMessage = error as any);
+    this.value = null;
+  }
+
+  gotoSearchList(value : string) {
+    this.router.navigate(['/value', value]);
   }
 
   onSelect(owner: Owner) {
     this.router.navigate(['/owners', owner.id]);
-  }
-
-  addOwner() {
-    this.router.navigate(['/owners/add']);
   }
 
 }

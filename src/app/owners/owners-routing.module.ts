@@ -27,11 +27,7 @@ import {OwnerListComponent} from './owner-list/owner-list.component';
 import {OwnerEditComponent} from './owner-edit/owner-edit.component';
 import {OwnerAddComponent} from './owner-add/owner-add.component';
 import {PetAddComponent} from '../pets/pet-add/pet-add.component';
-<<<<<<< Updated upstream
-import {OwnerSearch} from './owner-search/owner-search-list.component'
-=======
-import {OwnerSearch} from './owner-search/owner-search.component'
->>>>>>> Stashed changes
+
 
 const ownerRoutes: Routes = [
   {path: 'owners', component: OwnerListComponent},
@@ -39,11 +35,6 @@ const ownerRoutes: Routes = [
   {path: 'owners/:id', component: OwnerDetailComponent},
   {path: 'owners/:id/edit', component: OwnerEditComponent},
   {path: 'owners/:id/pets/add', component: PetAddComponent},
-<<<<<<< Updated upstream
-  {path: 'owners/search', component: OwnerSearch}
-=======
-  {path: 'owners/search/:search', component: OwnerSearch}
->>>>>>> Stashed changes
 ];
 
 @NgModule({
