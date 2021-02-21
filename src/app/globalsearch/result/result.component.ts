@@ -22,7 +22,7 @@
 
 import {Component, OnInit} from '@angular/core';
 import {Owner} from '../../owners/owner';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import { SearchService } from '../search.service';
 
 @Component({
@@ -35,16 +35,17 @@ export class ResultSearchComponent implements OnInit {
   owners: Owner[];
   value: string;
 
-  constructor(private router: Router, private searchService: SearchService) {
+  constructor(private router: Router,private route: ActivatedRoute, private searchService: SearchService) {
   }
 
   ngOnInit() {
-    this.value = null;
+   const value = this.route.snapshot.params.value;
+   this.searchService.getSearchResult(value).subscribe(
+     owners => this.owners = owners,
+     error => this.errorMessage = error as any
+   );
   }
 
-  gotoSearchList(value : string) {
-    this.router.navigate(['/value', value]);
-  }
 
   onSelect(owner: Owner) {
     this.router.navigate(['/owners', owner.id]);

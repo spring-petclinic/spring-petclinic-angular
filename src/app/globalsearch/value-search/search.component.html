@@ -18,12 +18,20 @@
 
 <div class="container-fluid">
   <div class="container xd-container">
-    <h2>Result for search</h2>
+    <h2>Enter the value for comprehensive search</h2>
     <div class="table-responsive">
-      
-
       <div>
-        
+          <form id="search" class="form-horizontal" (ngSubmit)="onSubmit(searchForm.value)" #searchForm="ngForm">
+            <div class="form-group has-feedback">
+                <div class="form-group">
+                    <label class="col-sm-1 control-label"></label>
+                    <div class="col-sm-6">
+                      <input id="value" name="value" class="form-control" type="text" [(ngModel)]="value"/>
+                    </div>
+                    <button class="btn btn-default" type="submit">Search</button>
+                </div>
+            </div>
+          </form>
       </div>
     </div>
   </div>

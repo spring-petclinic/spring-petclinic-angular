@@ -22,10 +22,10 @@ export class SearchService{
         this.handlerError = httpErrorHandler.createHandleError('SearchService');
     }
 
-    getSearchOwner(value: string): Observable<Owner[]> {
+    getSearchResult(value: string): Observable<Owner[]> {
         return this.http.get<Owner[]>(this.entityUrl+ '/'+ value)
             .pipe(
-                catchError(this.handlerError('getSearchOwner', []))
+                catchError(this.handlerError('getSearchResult', []))
             );
     }
 }

@@ -48,19 +48,16 @@ export class SearchComponent implements OnInit {
   }
 
 
-  globalSearch(value: string) {
-    this.router.navigate(['owners/search',value ])
-  }
-
   onSubmit(value: string) {
-    const that = this;
-    this.searchService.getSearchOwner(value).subscribe(
-      error => this.errorMessage = error as any
-    );
+    this.resultSearch();
   }
 
-  gotoOwnersList() {
-    this.router.navigate(['/owners']);
+  resultSearch(){
+    this.router.navigate(['/search', this.value, 'result'])
+  }
+
+  onBack(){
+    this.router.navigate(['/welcome']);
   }
 
 }
