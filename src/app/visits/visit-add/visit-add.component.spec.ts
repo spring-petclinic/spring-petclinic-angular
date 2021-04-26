@@ -64,7 +64,7 @@ describe('VisitAddComponent', () => {
       imports: [FormsModule, MatDatepickerModule, MatMomentDateModule],
       providers: [
         {provide: PetService, useClass: PetServiceStub},
-        {provide: VisitService, useCLass: VisitServiceStub},
+        {provide: VisitService, useClass: VisitServiceStub},
         {provide: Router, useClass: RouterStub},
         {provide: ActivatedRoute, useClass: ActivatedRouteStub}
       ]
