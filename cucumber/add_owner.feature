@@ -11,8 +11,7 @@ Feature: Add New Owner
   Scenario: I pass all the field validations
     Given I provide the right inputs for all the fields
     When I complete the last input field
-    Then I expect all the fields have green checkmarks and I can click 
-    on the add owner button
+    Then I expect all the fields have green checkmarks and I can click on the add owner button
 
   Scenario: I provide an invalid first name
     Given I provide valid inputs to all fields 
@@ -23,8 +22,7 @@ Feature: Add New Owner
     Given I provide valid inputs to all fields
     When I deleted the city input 
     And when I proceed with the city field blank
-    Then I expect to see a big "x" and an error message telling me the 
-    field is required
+    Then I expect to see a big "x" and an error message telling me the field is required
    
    Scenario: I skip the last name field
     Given I type my first name in the first name field
