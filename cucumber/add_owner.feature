@@ -10,8 +10,8 @@ Feature: Add New Owner
 
   Scenario: I pass all the field validations
     Given I provide the right inputs for all the fields
-    When I complete the last input field
-    Then I expect all the fields have green checkmarks and I can click on the add owner button
+    When I click add new owner
+    Then I expect a new owner is added to the list of owners
 
   Scenario: I provide an invalid first name
     Given I provide valid inputs to all fields 
@@ -24,15 +24,8 @@ Feature: Add New Owner
     And when I proceed with the city field blank
     Then I expect to see a big "x" and an error message telling me the field is required
    
-   Scenario: I skip the last name field
-    Given I type my first name in the first name field
-    And I skip the last name input
-    And I move on to the next input
-    When I fill in the rest of the fields but the last name field
-    And I try to click add owner
-    Then I expect the add owner button to be greyed out and not clickable
-    
-   Scenario: I don't want to add a new owner anymore
+
+   Scenario: I do not want to add a new owner anymore
     Given I am on the page to add a new owner
     When I want to undo this action
     And I click on the back button
