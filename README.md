@@ -122,7 +122,7 @@ server {
 
 1. Build Angular application:
 
-ng build --prod --base-href=/petclinic/ --deploy-url=/petclinic/
+npm run build --prod --base-href=/petclinic/ --deploy-url=/petclinic/
 
 2. Create sub-directory **/petclinic** in default Apache directory **/var/www/html**
 
