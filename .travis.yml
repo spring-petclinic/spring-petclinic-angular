@@ -4,7 +4,6 @@ language: node_js
 node_js:
   - "14.16"
 
-addons:
 apt:
   sources:
     - google-chrome
@@ -18,9 +17,8 @@ before_install:
   - sh -e /etc/init.d/xvfb start
 
 before_script:
-  - npm install -g @angular/cli
   - npm install -g karma
   - npm install
-  - ng build
+  - npm run build
 
-script: ng test --karma-config karma.conf.js --watch=false
+script: npm run test --karma-config karma.conf.js --watch=false
