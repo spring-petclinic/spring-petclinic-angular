@@ -1,4 +1,7 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
+src/environments/*
+!src/environments/environment.ts
+!src/environments/environment.ts.template
 
 # compiled output
 /dist
