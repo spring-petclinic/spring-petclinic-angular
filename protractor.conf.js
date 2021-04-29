@@ -26,7 +26,7 @@ exports.config = {
   // },
   onPrepare() {
     require("ts-node").register({
-      project: "cucumber/tsconfig.cucumber.json",
+      project: "features/tsconfig.cucumber.json",
     });
     // jasmine
     //   .getEnv()
