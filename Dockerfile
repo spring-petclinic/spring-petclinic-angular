@@ -1,8 +1,7 @@
+FROM node:14.16.1-alpine3.13 AS build
+
 ARG NGINX_VERSION="1.20.0"
 ARG NODE_VERSION="14.16.1-alpine3.13"
-
-FROM node:${NODE_VERSION} AS build
-
 
 COPY . /workspace/
 
