@@ -10,7 +10,7 @@ Given("I am on the page to add a new owner", async function () {
   // http://localhost:4200/petclinic/owners
   // http://localhost:4200/petclinic/owners/add
   await browser.waitForAngularEnabled();
-  browser.get(`${appUrl}/petclinic/owners/add`);
+  return browser.get(`${appUrl}/petclinic/owners/add`);
 });
 
 When("I click on the back button", async function () {
