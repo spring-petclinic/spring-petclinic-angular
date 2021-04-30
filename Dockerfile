@@ -9,7 +9,7 @@ RUN cd /workspace/ && \
     npm install    && \
     npm run build
 
-FROM nginx:${NGINX_VERSION} AS runtime
+FROM nginx:1.20.0 AS runtime
 
 
 COPY  --from=build /workspace/dist/ /usr/share/nginx/html/
