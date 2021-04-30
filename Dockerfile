@@ -22,5 +22,3 @@ RUN chmod a+rwx /var/cache/nginx /var/run /var/log/nginx                        
 EXPOSE 8080
 
 USER nginx
-
-HEALTHCHECK     CMD     [ "service", "nginx", "status" ]
