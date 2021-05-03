@@ -1,0 +1,104 @@
+apiVersion: v1
+items:
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: null
+    labels:
+      app: spring-petclinic-angular
+      app.kubernetes.io/component: spring-petclinic-angular
+      app.kubernetes.io/instance: spring-petclinic-angular
+    name: spring-petclinic-angular
+  spec:
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: spring-petclinic-angular:latest
+    postCommit: {}
+    resources: {}
+    source:
+      git:
+        uri: https://github.com/sdstolworthy/spring-petclinic-angular.git
+      type: Git
+    strategy:
+      dockerStrategy:
+        from:
+          kind: ImageStreamTag
+          name: nginx:1.20.0
+          namespace: bsc
+      type: Docker
+    triggers:
+    - github:
+        secret: krF8UGFH-uKJgr0KJZN3
+      type: GitHub
+    - generic:
+        secret: ffw4tjC4_hlnRCgyKEdN
+      type: Generic
+    - type: ConfigChange
+    - imageChange: {}
+      type: ImageChange
+  status:
+    lastVersion: 0
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      image.openshift.io/triggers: '[{"from":{"kind":"ImageStreamTag","name":"spring-petclinic-angular:latest"},"fieldPath":"spec.template.spec.containers[?(@.name==\"spring-petclinic-angular\")].image"}]'
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: null
+    labels:
+      app: spring-petclinic-angular
+      app.kubernetes.io/component: spring-petclinic-angular
+      app.kubernetes.io/instance: spring-petclinic-angular
+    name: spring-petclinic-angular
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        deployment: spring-petclinic-angular
+    strategy: {}
+    template:
+      metadata:
+        annotations:
+          openshift.io/generated-by: OpenShiftNewApp
+        creationTimestamp: null
+        labels:
+          deployment: spring-petclinic-angular
+      spec:
+        containers:
+        - env:
+          - name: API_URL
+            value: http://test_api_url/
+          image: ' '
+          name: spring-petclinic-angular
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources: {}
+  status: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: null
+    labels:
+      app: spring-petclinic-angular
+      app.kubernetes.io/component: spring-petclinic-angular
+      app.kubernetes.io/instance: spring-petclinic-angular
+    name: spring-petclinic-angular
+  spec:
+    ports:
+    - name: 8080-tcp
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    selector:
+      deployment: spring-petclinic-angular
+  status:
+    loadBalancer: {}
+kind: List
+metadata: {}

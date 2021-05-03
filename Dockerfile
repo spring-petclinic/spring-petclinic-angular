@@ -2,12 +2,13 @@ FROM node:14.16.1-alpine3.13 AS build
 
 ARG NGINX_VERSION="1.20.0"
 ARG NODE_VERSION="14.16.1-alpine3.13"
+ENV API_URL="localhost:4200"
 
 COPY . /workspace/
 
 RUN cd /workspace/ && \
     npm install    && \
-    npm run build
+    npm run build -- --prod --configuration=production
 
 FROM nginx:1.20.0 AS runtime
 

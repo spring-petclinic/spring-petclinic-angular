@@ -6,6 +6,7 @@ const { browser } = require("protractor");
 
 BeforeAll({ timeout: 100 * 1000 }, async () => {
   console.log(browser.baseUrl);
+  await browser.waitForAngular();
   await browser.get("/");
 });
 Given("I am on the page to add a new owner", async function () {
