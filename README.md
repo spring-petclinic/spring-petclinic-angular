@@ -87,7 +87,7 @@ You can run you end to end tests locally on your machine using Selenium and Dock
 1. Start the selenium docker container
    - `podman run --name selenium -d -p 4444:4444 -v /dev/shm:/dev/shm selenium/standalone-chrome:4.0.0-beta-3-20210426`
 1. Run your end-to-end tests, using your host ip address
-   - `run e2e -- --dev-server-target="" --baseUrl http://192.168.0.21:4200`
+   - `run e2e -- --dev-server-target="" --baseUrl http://<YOUR-IP-ADDRESS>:4200`
 
 ## Documentation
 
