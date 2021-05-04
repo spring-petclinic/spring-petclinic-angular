@@ -1,11 +1,14 @@
 const chai = require("chai");
 var expect = chai.expect;
+var eventually = chai.eventually;
+// var chaiAsPromised = require('chai-as-promised');
 // import { Given } from "@cucumber/cucumber";
 const { Given, Then, When, BeforeAll } = require("@cucumber/cucumber");
 const { browser } = require("protractor");
 
 BeforeAll({ timeout: 100 * 1000 }, async () => {
   console.log(browser.baseUrl);
+  // chai.use(chaiAsPromised);
   await browser.get("/");
 });
 Given("I am on the page to add a new owner", async function () {
@@ -17,14 +20,25 @@ Given("I am on the page to add a new owner", async function () {
 
 When("I click on the back button", async function () {
   // Write code here that turns the phrase above into concrete actions
-  const backButton = element(by.cssContainingText(".btn", "Back"));
+  const backButton = await element(by.cssContainingText(".btn", "Back"));
   backButton.click();
+  //expect(backButton.click()).not.to.be.undefined;
 });
 Then(
   "I expect to go back to the page with a table of owners info",
   async function () {
     const currentUrl = await browser.getCurrentUrl();
-    expect(currentUrl).equals(`${browser.baseUrl}petclinic/owners`);
+    //console.log(browser.getCurrentUrl());
+    // expect(currentUrl).equals(`${browser.baseUrl}petclinic/owners/add`);
+
+  //   browser.wait(protractor.ExpectedConditions.urlContains('petclinic/owners'), 5000).then(function(result) {
+  //     expect(result).toEqual(true);
+  // });
+  // expect(browser.getCurrentUrl()).to.eventually
+  //     .equal(`${browser.baseUrl}petclinic/owners/add`);
+  browser.getCurrentUrl().then(function(currentUrl){
+    expect(currentUrl).to.equal(`${browser.baseUrl}petclinic/owners`);
+  })
   }
 );
 
@@ -48,7 +62,10 @@ When("I try to click on Add Owner", async function () {
 Then("I expect the Add Owner button to not be clickable", async function () {
   await browser.waitForAngularEnabled();
   // Write code here that turns the phrase above into concrete actions
-  expect(
-    element(by.cssContainingText(".btn", "Add Owner")).disabled
-  ).to.be.true;
+  // await expect(
+  //   element(by.cssContainingText(".btn", "Add Owner")).undefined
+  // ).should.eventually.equals(true);
+
+  await expect(
+    element(by.cssContainingText(".btn", "Add Owner")).getAttribute('disabled')).to.not.be.undefined;
 });

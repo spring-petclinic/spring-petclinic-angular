@@ -17,7 +17,9 @@ exports.config = {
     process.env.SELENIUM_ADDRESS ?? "http://localhost:4444/wd/hub",
   cucumberOpts: {
     require: "features/step_definitions/*.ts",
+    
   },
+  directConnect:true,
 
   // jasmineNodeOpts: {
   //   showColors: true,
