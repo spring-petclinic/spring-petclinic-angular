@@ -31,7 +31,7 @@ items:
             namespace: bsc
           buildArgs:
             - name: REST_API_URL
-              value: "https://localhost:9966/"
+              value: "http://spring-petclinic-rest/"
         type: Docker
       triggers:
         - github:
