@@ -6,6 +6,7 @@ src/environments/*
 # compiled output
 /dist
 /tmp
+/.tmp
 /out-tsc
 
 # dependencies
