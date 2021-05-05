@@ -13,13 +13,22 @@ exports.config = {
   },
   framework: "custom",
   frameworkPath: require.resolve("protractor-cucumber-framework"),
+  directConnect: true,
   seleniumAddress:
     process.env.SELENIUM_ADDRESS ?? "http://localhost:4444/wd/hub",
   cucumberOpts: {
     require: "features/step_definitions/*.ts",
-    
-  },
+
   directConnect:true,
+
+    format: "json:.tmp/results.json",
+  },
+  plugins: [
+    {
+      package: "protractor-simple-cucumber-html-reporter-plugin",
+    },
+  ],
+
 
   // jasmineNodeOpts: {
   //   showColors: true,
