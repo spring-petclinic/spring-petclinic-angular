@@ -13,17 +13,6 @@ Feature: Add New Owner
     When I click add new owner
     Then I expect a new owner is added to the list of owners
 
-  Scenario: I provide an invalid first name
-    Given I provide valid inputs to all fields
-    When I change my first name to be 1 character
-    Then I expect to see a big "x" next to first name and an error message
-
-  Scenario: I leave the city field blank
-    Given I provide valid inputs to all fields
-    When I deleted the city input
-    And when I proceed with the city field blank
-    Then I expect to see a big "x" and an error message telling me the field is required
-
 
   Scenario: I do not want to add a new owner anymore
     Given I am on the page to add a new owner
