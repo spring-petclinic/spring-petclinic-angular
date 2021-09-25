@@ -56,21 +56,31 @@ export class OwnerListComponent implements OnInit {
   searchByLastName(lastName: string)
   {
       console.log("inside search by last name starting with "+(lastName));
+      if(lastName=="")
+      {
+      this.ownerService.getOwners()
+      .subscribe(
+            (owners)=>{
+             this.owners = owners;
+            });
+      }
+      if(lastName!="")
+      {
       this.ownerService.searchOwners(lastName)
       .subscribe(
       (owners)=>{
 
        this.owners = owners;
-       document.getElementById("ownersTable").style.visibility="visible";
        console.log("this.owners "+this.owners);
 
        },
        (error) =>
        {
          this.owners=null;
-         document.getElementById("ownersTable").style.visibility="hidden";
        }
       )
+
+      }
   }
 
 

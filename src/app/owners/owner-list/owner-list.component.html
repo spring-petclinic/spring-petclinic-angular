@@ -41,7 +41,7 @@
     </form>
 
     <div *ngIf="!owners">No owners with LastName starting with "{{lastName}}"</div>
-    <div class="table-responsive" id="ownersTable">
+    <div class="table-responsive" id="ownersTable"  *ngIf="owners">
       <table class="table table-striped">
         <thead>
         <tr>
