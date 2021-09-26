@@ -44,19 +44,24 @@
 
       <div class="form-group has-feedback">
 
-        <div class="form-group ">
+        <div class="form-group has-feedback" [class.has-success]="date.dirty && date.valid" [class.has-error]="date.dirty && !date.valid">
           <label class="col-sm-2 control-label">Date</label>
           <div class="col-sm-10">
-            <input matInput [matDatepicker]="visitDateDatepicker" [ngModel]="visit.date | date:'yyyy-MM-dd'" name="date">
+            <input matInput [matDatepicker]="visitDateDatepicker" required [ngModel]="visit.date | date:'yyyy-MM-dd'" name="date" #date="ngModel">
             <mat-datepicker-toggle matSuffix [for]="visitDateDatepicker"></mat-datepicker-toggle>
             <mat-datepicker #visitDateDatepicker></mat-datepicker>
+            <span class="glyphicon form-control-feedback" [class.glyphicon-ok]="date.valid" [class.glyphicon-remove]="!date.valid" aria-hidden="true"></span>
+            <span class="help-block" *ngIf="date.dirty && date.hasError('required')">Date is required</span>
           </div>
         </div>
-        <div class="form-group ">
+        <div class="form-group has-feedback " [class.has-success]="description.dirty && description.valid" [class.has-error]="description.dirty && !description.valid">
           <label class="col-sm-2 control-label">Description</label>
           <div class="col-sm-10">
-            <input id="description" name="description" class="form-control" type="text"
-                   [(ngModel)]="visit.description"/>
+            <input id="description" name="description" class="form-control" type="text" required
+                   [(ngModel)]="visit.description" #description="ngModel"/>
+            <span class="glyphicon form-control-feedback" [class.glyphicon-ok]="description.valid" [class.glyphicon-remove]="!description.valid" aria-hidden="true"></span>
+            <span class="help-block" *ngIf="description.dirty && description.hasError('required')">Description is required</span>
+
           </div>
         </div>
 
