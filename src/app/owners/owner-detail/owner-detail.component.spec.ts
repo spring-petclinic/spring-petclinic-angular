@@ -22,27 +22,41 @@
  * @author Vitaliy Fedoriv
  */
 
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { CUSTOM_ELEMENTS_SCHEMA, DebugElement } from "@angular/core";
+import { OwnerDetailComponent } from "./owner-detail.component";
+import { FormsModule } from "@angular/forms";
+import { RouterTestingModule } from "@angular/router/testing";
+import { OwnerService } from "../owner.service";
+import { ActivatedRoute, Router } from "@angular/router";
+import { ActivatedRouteStub, RouterStub } from "../../testing/router-stubs";
+import { Owner } from "../owner";
+import { Observable, of } from "rxjs";
+import { By } from "@angular/platform-browser";
+import { ENGINE_METHOD_PKEY_ASN1_METHS } from "constants";
 
-import {OwnerDetailComponent} from './owner-detail.component';
-import {FormsModule} from '@angular/forms';
-import {RouterTestingModule} from '@angular/router/testing';
-import {OwnerService} from '../owner.service';
-import {ActivatedRoute, Router} from '@angular/router';
-import {ActivatedRouteStub, RouterStub} from '../../testing/router-stubs';
-import {Owner} from '../owner';
-import {Observable, of} from 'rxjs';
-
-class OwnserServiceStub {
-  getOwnerById(): Observable<Owner> {
-    return of( { id: 1, firstName: 'James' } as Owner );
+class OwnerServiceStub {
+  getOwnerById(ownerId: String): Observable<Owner> {
+    return of({ id: 1, firstName: "James", lastName: "Franklin" } as Owner);
   }
 }
 
-describe('OwnerDetailComponent', () => {
+describe("OwnerDetailComponent", () => {
   let component: OwnerDetailComponent;
   let fixture: ComponentFixture<OwnerDetailComponent>;
+  let ownerService = new OwnerServiceStub();
+  let de: DebugElement;
+  let el: HTMLElement;
+
+  const owner: Owner = {
+    id: 10,
+    firstName: "James",
+    lastName: "Franklin",
+    address: "110 W. Liberty St.",
+    city: "Madison",
+    telephone: "6085551023",
+    pets: null,
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -50,12 +64,11 @@ describe('OwnerDetailComponent', () => {
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       imports: [FormsModule, RouterTestingModule],
       providers: [
-        {provide: OwnerService, useClass: OwnserServiceStub},
-        {provide: Router, useClass: RouterStub},
-        {provide: ActivatedRoute, useClass: ActivatedRouteStub}
-      ]
-    })
-      .compileComponents();
+        { provide: OwnerService, useValue: ownerService },
+        { provide: Router, useClass: RouterStub },
+        { provide: ActivatedRoute, useClass: ActivatedRouteStub },
+      ],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -64,7 +77,19 @@ describe('OwnerDetailComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create OwnerDetailComponent', () => {
+  it("should create OwnerDetailComponent", () => {
     expect(component).toBeTruthy();
+  });
+  it("find owner using ownerId", () => {
+    fixture.detectChanges();
+    fixture.whenStable().then(() => {
+      // wait for async getOwners
+      fixture.detectChanges(); // update view with name
+      de = fixture.debugElement.query(By.css(".ownerFullName"));
+      el = de.nativeElement;
+      expect(el.innerText).toBe(
+        owner.firstName.toString() + " " + owner.lastName.toString()
+      );
+    });
   });
 });
