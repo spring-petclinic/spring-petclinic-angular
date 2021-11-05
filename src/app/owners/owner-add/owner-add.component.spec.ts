@@ -111,13 +111,9 @@ describe("OwnerAddComponent", () => {
         telephone: "",
         pets: [],
       };
-      let buttons = fixture.debugElement.queryAll(By.css("button")); // modify here
+      let buttons = fixture.debugElement.queryAll(By.css("button"));
       let addButton = buttons[1].nativeElement;
       addButton.click();
-      let mockRouter = {
-        navigate: jasmine.createSpy("navigate"),
-      };
-
       spyOn(router, "navigate");
       spyOn(component, "gotoOwnersList").and.callThrough();
       component.gotoOwnersList();

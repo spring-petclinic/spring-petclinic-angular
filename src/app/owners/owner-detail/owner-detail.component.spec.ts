@@ -47,6 +47,7 @@ describe("OwnerDetailComponent", () => {
   let ownerService = new OwnerServiceStub();
   let de: DebugElement;
   let el: HTMLElement;
+  let router: Router;
 
   const owner: Owner = {
     id: 10,
@@ -75,6 +76,7 @@ describe("OwnerDetailComponent", () => {
     fixture = TestBed.createComponent(OwnerDetailComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+    router = TestBed.get(Router);
   });
 
   it("should create OwnerDetailComponent", () => {
@@ -91,5 +93,25 @@ describe("OwnerDetailComponent", () => {
         owner.firstName.toString() + " " + owner.lastName.toString()
       );
     });
+  });
+
+  it("routing to owners page on click of editOwner,addPet,gotoOwnersList", () => {
+    spyOn(router, "navigate");
+    let buttons = fixture.debugElement.queryAll(By.css("button"));
+
+    let ownersListButton = buttons[0].nativeElement;
+    ownersListButton.click();
+    spyOn(component, "gotoOwnersList").and.callThrough();
+    expect(router.navigate).toHaveBeenCalledWith(["/owners"]);
+
+    let editOwnerButton = buttons[1].nativeElement;
+    editOwnerButton.click();
+    spyOn(component, "editOwner").and.callThrough();
+    expect(router.navigate).toHaveBeenCalledWith(["/owners"]);
+
+    let addNewPetButton = buttons[2].nativeElement;
+    addNewPetButton.click();
+    spyOn(component, "addPet").and.callThrough();
+    expect(router.navigate).toHaveBeenCalledWith(["/owners"]);
   });
 });
