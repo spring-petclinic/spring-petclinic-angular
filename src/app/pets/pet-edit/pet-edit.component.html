@@ -35,32 +35,45 @@
         </div>
       </div>
       <br/>
-      <div class="form-group ">
+      <div class="form-group has-feedback" [class.has-success]="name.dirty && name.valid" [class.has-error]="name.dirty &&  !name.valid">
         <label for="name" class="col-sm-2 control-label">Name</label>
         <div class="col-sm-10">
-          <input id="name" name="name" class="form-control" type="text" [(ngModel)]="pet.name"/>
+          <input id="name" name="name" class="form-control" required type="text" [(ngModel)]="pet.name" #name="ngModel"/>
+          <span class="glyphicon form-control-feedback" [class.glyphicon-ok]="name.valid" [class.glyphicon-remove]="!name.valid" aria-hidden="true"></span>
+          <span class="help-block" *ngIf="name.dirty && name.hasError('required')">Name is required</span>
+          <span class="help-block" *ngIf="name.dirty && name.hasError('minlength')">Name must be at least 2 characters long</span>
+
         </div>
       </div>
-      <div class="form-group ">
+      <div class="form-group has-feedback" [class.has-success]="birthDate.dirty && birthDate.valid" [class.has-error]="birthDate.dirty && !birthDate.valid">
         <label class="col-sm-2 control-label">Birth Date</label>
-        <input matInput [matDatepicker]="birthDateDatepicker" [ngModel]="pet.birthDate | date:'yyyy-MM-dd'" name="birthDate">
+        <div class="col-sm-10">
+        <input matInput [matDatepicker]="birthDateDatepicker"  required [ngModel]="pet.birthDate | date:'yyyy-MM-dd'" name="birthDate" #birthDate="ngModel">
         <mat-datepicker-toggle matSuffix [for]="birthDateDatepicker"></mat-datepicker-toggle>
         <mat-datepicker #birthDateDatepicker></mat-datepicker>
+          <span class="glyphicon form-control-feedback" [class.glyphicon-ok]="birthDate.valid" [class.glyphicon-remove]="!birthDate.valid" aria-hidden="true"></span>
+          <span class="glyphicon form-control-feedback" [class.glyphicon-ok]="birthDate.valid" [class.glyphicon-remove]="!birthDate.valid" aria-hidden="true"></span>
+          <span class="help-block" *ngIf="birthDate.dirty && birthDate.hasError('required')">BirthDate is required</span>
+        </div>
       </div>
       <div class="control-group">
-        <div class="form-group ">
+        <div class="form-group has-feedback" [class.has-success]="pettype.dirty && pettype.valid" [class.has-error]="pettype.dirty && !pettype.valid">
           <label for="type" class="col-sm-2 control-label">Type </label>
           <div class="col-sm-10">
             <div class="col-sm-2">
               <input id="type1" name="type1" class="form-control" type="text" value="{{ currentType.name }}" readonly/>
             </div>
             <div class="col-sm-8">
-              <select id="type" name="type" class="form-control" [(ngModel)]="currentType">
+              <select id="type" name="pettype" class="form-control" required [(ngModel)]="currentTType"  #pettype="ngModel">
                 <option *ngFor="let type of petTypes"
                         [selected]="type.id == currentType.id ? true : null"
                         [ngValue]="type">{{ type.name }}
                 </option>
               </select>
+              <span class="glyphicon form-control-feedback" [class.glyphicon-ok]="pettype.valid" [class.glyphicon-remove]="!pettype.valid" aria-hidden="true"></span>
+              <span class="help-block" *ngIf="pettype.dirty && pettype.hasError('required')">First name is required</span>
+              <span class="help-block" *ngIf="pettype.dirty && pettype.hasError('minlength')">First name must be at least 2 characters long</span>
+
             </div>
           </div>
         </div>

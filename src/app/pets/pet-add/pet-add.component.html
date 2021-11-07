@@ -34,29 +34,50 @@
         </div>
       </div>
       <br/>
-      <div class="form-group ">
-        <label for="name" class="col-sm-2 control-label">Name</label>
+
+      <div class="form-group has-feedback" [class.has-success]="petName.dirty && petName.valid"
+           [class.has-error]="petName.dirty && !petName.valid">
+        <label for="petName" class="col-sm-2 control-label">Name</label>
         <div class="col-sm-10">
-          <input id="name" name="name" class="form-control" type="text" [(ngModel)]="pet.name"/>
+          <input id="petName" name="petName" required class="form-control" type="text" [(ngModel)]="pet.name"
+                 #petName="ngModel"/>
+          <span class="glyphicon form-control-feedback" [class.glyphicon-ok]="petName.valid"
+                [class.glyphicon-remove]="!petName.valid" aria-hidden="true"></span>
+          <span class="help-block" *ngIf="petName.dirty && petName.hasError('required')">Name is required</span>
         </div>
       </div>
-      <div class="form-group ">
+
+      <div class="form-group  has-feedback" [class.has-success]="birthDate.dirty && birthDate.valid"
+           [class.has-error]="birthDate.dirty && !birthDate.valid">
         <label class="col-sm-2 control-label">Birth Date</label>
         <div class="col-sm-10">
-          <input matInput [matDatepicker]="birthDateDatepicker" [ngModel]="pet.birthDate | date:'yyyy-MM-dd'" name="birthDate">
+          <input matInput [matDatepicker]="birthDateDatepicker" required [ngModel]="pet.birthDate | date:'yyyy-MM-dd'"
+                 name="birthDate" #birthDate="ngModel">
           <mat-datepicker-toggle matSuffix [for]="birthDateDatepicker"></mat-datepicker-toggle>
           <mat-datepicker #birthDateDatepicker></mat-datepicker>
+          <span class="glyphicon form-control-feedback" [class.glyphicon-ok]="birthDate.valid"
+                [class.glyphicon-remove]="!birthDate.valid" aria-hidden="true"></span>
+          <span class="help-block"
+                *ngIf="birthDate.dirty && birthDate.hasError('required')">BirthDate is required</span>
+
         </div>
       </div>
       <div class="control-group">
-        <div class="form-group ">
+        <div class="form-group has-feedback" [class.has-success]="type.dirty && type.valid"
+             [class.has-error]="type.dirty && !type.valid">
           <label for="type" class="col-sm-2 control-label">Type </label>
           <div class="col-sm-10">
-            <select id="type" name="type" class="form-control" [(ngModel)]="pet.type">
+            <select id="type" name="type" class="form-control" required [(ngModel)]="pet.type" #type="ngModel">
               <option *ngFor="let type of petTypes"
                       [ngValue]="type">{{ type.name }}
               </option>
             </select>
+            <span class="glyphicon form-control-feedback" [class.glyphicon-ok]="type.valid"
+                  [class.glyphicon-remove]="!type.valid" aria-hidden="true"></span>
+
+            <span class="help-block"
+                  *ngIf="type.dirty && type.hasError('required')">pettype is required</span>
+
           </div>
         </div>
       </div>
