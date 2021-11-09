@@ -16,27 +16,25 @@
  *
  */
 
-
 /**
  * @author Vitaliy Fedoriv
  */
 
-import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
-import {SpecialtyListComponent} from './specialty-list/specialty-list.component';
-import {SpecialtyEditComponent} from './specialty-edit/specialty-edit.component';
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
+import { SpecialtyListComponent } from "./specialty-list/specialty-list.component";
+import { SpecialtyEditComponent } from "./specialty-edit/specialty-edit.component";
+import { SpecialtyAddComponent } from "./specialty-add/specialty-add.component";
 
 const specialtyRoutes: Routes = [
-  {path: 'specialties', component: SpecialtyListComponent},
-  // {path: 'specialties/add', component: SpecialtyAddComponent},
+  { path: "specialties", component: SpecialtyListComponent },
+  { path: "specialties/add", component: SpecialtyAddComponent },
   // {path: 'specialties/:id', component: SpecialtyDetailComponent},
-   {path: 'specialties/:id/edit', component: SpecialtyEditComponent}
+  { path: "specialties/:id/edit", component: SpecialtyEditComponent },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(specialtyRoutes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-
-export class SpecialtiesRoutingModule {
-}
+export class SpecialtiesRoutingModule {}
