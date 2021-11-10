@@ -1,0 +1,15 @@
+[33mea40ba4[m[33m ([m[1;36mHEAD -> [m[1;32mtestcases[m[33m, [m[1;31morigin/testcases[m[33m)[m HEAD@{0}: reset: moving to ea40ba4
+[33m2cf951f[m HEAD@{1}: commit: fix speciality add component
+[33mcaff967[m HEAD@{2}: commit: Test cases on owner service
+[33m76a4771[m HEAD@{3}: commit: test cases for owner edit
+[33mea40ba4[m[33m ([m[1;36mHEAD -> [m[1;32mtestcases[m[33m, [m[1;31morigin/testcases[m[33m)[m HEAD@{4}: commit: cleanup of owner add and owner detail
+[33m326a7d5[m HEAD@{5}: commit: Testing for owner detail
+[33m76294a1[m HEAD@{6}: commit: Added test cases for owner add
+[33m0c06668[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mfeature/search[m[33m, [m[1;32mangular11upgrade[m[33m)[m HEAD@{7}: checkout: moving from angular11upgrade to testcases
+[33m0c06668[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mfeature/search[m[33m, [m[1;32mangular11upgrade[m[33m)[m HEAD@{8}: checkout: moving from feature/search to angular11upgrade
+[33m0c06668[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mfeature/search[m[33m, [m[1;32mangular11upgrade[m[33m)[m HEAD@{9}: pull origin master: Fast-forward
+[33m7d79669[m[33m ([m[1;31morigin/form-validation-resolveConflict[m[33m)[m HEAD@{10}: reset: moving to HEAD
+[33m7d79669[m[33m ([m[1;31morigin/form-validation-resolveConflict[m[33m)[m HEAD@{11}: pull origin master: Fast-forward
+[33m34519dc[m[33m ([m[1;32mmaster[m[33m)[m HEAD@{12}: reset: moving to HEAD
+[33m34519dc[m[33m ([m[1;32mmaster[m[33m)[m HEAD@{13}: checkout: moving from master to feature/search
+[33m34519dc[m[33m ([m[1;32mmaster[m[33m)[m HEAD@{14}: clone: from https://github.com/simrin051/spring-petclinic-angular.git
