@@ -64,7 +64,7 @@
               <input id="type1" name="type1" class="form-control" type="text" value="{{ currentType.name }}" readonly/>
             </div>
             <div class="col-sm-8">
-              <select id="type" name="pettype" class="form-control" required [(ngModel)]="currentTType"  #pettype="ngModel">
+              <select id="type" name="pettype" class="form-control" required [(ngModel)]="currentType"  #pettype="ngModel">
                 <option *ngFor="let type of petTypes"
                         [selected]="type.id == currentType.id ? true : null"
                         [ngValue]="type">{{ type.name }}

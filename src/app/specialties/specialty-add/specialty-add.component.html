@@ -34,7 +34,7 @@
         <div class="form-group ">
           <label class="col-sm-1 control-label">Name</label>
           <div class="col-sm-6">
-            <input id="name" name="name" class="form-control" type="text" [(ngModel)]="specialty.name"/>
+            <input id="name" name="name" class="form-control" type="text" [(ngModel)]="specialty.name" #specialityName="ngModel"/>
           </div>
           <button class="btn btn-default" type="submit">Save</button>
         </div>

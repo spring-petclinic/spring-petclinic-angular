@@ -32,6 +32,7 @@ import {Router} from '@angular/router';
 })
 export class OwnerListComponent implements OnInit {
   errorMessage: string;
+  lastName: string;
   owners: Owner[];
   listOfOwnersWithLastName: Owner[];
 
