@@ -34,6 +34,8 @@ import { Owner } from "../owner";
 import { Observable, of } from "rxjs";
 import { By } from "@angular/platform-browser";
 import { ENGINE_METHOD_PKEY_ASN1_METHS } from "constants";
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 
 class OwnerServiceStub {
   getOwnerById(ownerId: String): Observable<Owner> {
@@ -59,7 +61,7 @@ describe("OwnerDetailComponent", () => {
     pets: null,
   };
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [OwnerDetailComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],

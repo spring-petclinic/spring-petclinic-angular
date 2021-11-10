@@ -32,6 +32,7 @@ import {Router} from '@angular/router';
 })
 export class OwnerListComponent implements OnInit {
   errorMessage: string;
+  lastName: string;
   owners: Owner[];
   listOfOwnersWithLastName: Owner[];
 
@@ -55,30 +56,30 @@ export class OwnerListComponent implements OnInit {
 
   searchByLastName(lastName: string)
   {
-      console.log("inside search by last name starting with "+(lastName));
-      if(lastName=="")
+      console.log('inside search by last name starting with ' + (lastName));
+      if (lastName === '')
       {
       this.ownerService.getOwners()
       .subscribe(
-            (owners)=>{
+            (owners) => {
              this.owners = owners;
             });
       }
-      if(lastName!="")
+      if (lastName !== '')
       {
       this.ownerService.searchOwners(lastName)
       .subscribe(
-      (owners)=>{
+      (owners) => {
 
        this.owners = owners;
-       console.log("this.owners "+this.owners);
+       console.log('this.owners ' + this.owners);
 
        },
        (error) =>
        {
-         this.owners=null;
+         this.owners = null;
        }
-      )
+      );
 
       }
   }

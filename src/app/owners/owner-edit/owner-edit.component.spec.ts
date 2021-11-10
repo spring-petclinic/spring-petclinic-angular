@@ -22,8 +22,11 @@
  * @author Vitaliy Fedoriv
  */
 
+
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 
 import { OwnerEditComponent } from "./owner-edit.component";
 import { FormsModule } from "@angular/forms";
@@ -46,6 +49,8 @@ describe("OwnerEditComponent", () => {
   let fixture: ComponentFixture<OwnerEditComponent>;
   let router: Router;
   beforeEach(async(() => {
+
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [OwnerEditComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
