@@ -77,9 +77,9 @@ describe('OnwerService', () => {
 
     // Inject the http, test controller, and service-under-test
     // as they will be referenced by each test.
-    httpClient = TestBed.get(HttpClient);
-    httpTestingController = TestBed.get<HttpTestingController>(HttpTestingController as Type<HttpTestingController>);
-    ownerService = TestBed.get(OwnerService);
+    httpClient = TestBed.inject(HttpClient);
+    httpTestingController = TestBed.inject<HttpTestingController>(HttpTestingController as Type<HttpTestingController>);
+    ownerService = TestBed.inject(OwnerService);
   });
 
   afterEach(() => {
@@ -93,7 +93,7 @@ describe('OnwerService', () => {
     let expectedOwners: Owner[];
 
     beforeEach(() => {
-      ownerService = TestBed.get(OwnerService);
+      ownerService = TestBed.inject(OwnerService);
       expectedOwners = [
         { id: 1, firstName: 'A' },
         { id: 2, firstName: 'B' },
