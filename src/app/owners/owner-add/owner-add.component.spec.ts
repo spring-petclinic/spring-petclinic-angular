@@ -22,20 +22,21 @@
  * @author Vitaliy Fedoriv
  */
 
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
-import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 
+ import { async, ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import {FormsModule} from '@angular/forms';
+import {Router} from '@angular/router';
+import {OwnerService} from '../owner.service';
+import {RouterTestingModule} from '@angular/router/testing';
+import {RouterStub} from '../../testing/router-stubs';
+import {Owner} from '../owner';
+import {Observable, of} from 'rxjs';
 import { OwnerAddComponent } from "./owner-add.component";
-import { FormsModule } from "@angular/forms";
-import { Router } from "@angular/router";
-import { OwnerService } from "../owner.service";
-import { RouterTestingModule } from "@angular/router/testing";
-import { RouterStub } from "../../testing/router-stubs";
-import { Owner } from "../owner";
-import { Observable, of } from "rxjs";
 import { By } from "@angular/platform-browser";
 import { OwnersRoutingModule } from "../owners-routing.module";
 import { OwnerListComponent } from "../owner-list/owner-list.component";
+
 class OwnserServiceStub {
   addOwner(owner: Owner): Observable<Owner> {
     return of(owner);
@@ -47,7 +48,7 @@ describe("OwnerAddComponent", () => {
   let fixture: ComponentFixture<OwnerAddComponent>;
   let router: Router;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [OwnerAddComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],

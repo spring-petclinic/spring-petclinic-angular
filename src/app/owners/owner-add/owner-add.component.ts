@@ -20,19 +20,18 @@
  * @author Vitaliy Fedoriv
  */
 
-import { Component, OnInit, ViewChild } from "@angular/core";
-import { OwnerService } from "../owner.service";
-import { Owner } from "../owner";
-import { Router } from "@angular/router";
-import { NgForm } from "@angular/forms";
+import {Component, OnInit} from '@angular/core';
+import {OwnerService} from '../owner.service';
+import {Owner} from '../owner';
+import {Router} from '@angular/router';
 
 @Component({
-  selector: "app-owner-add",
-  templateUrl: "./owner-add.component.html",
-  styleUrls: ["./owner-add.component.css"],
+  selector: 'app-owner-add',
+  templateUrl: './owner-add.component.html',
+  styleUrls: ['./owner-add.component.css']
 })
 export class OwnerAddComponent implements OnInit {
-  @ViewChild("ownerForm", { static: true }) ownerForm: NgForm;
+
   owner: Owner;
   errorMessage: string;
 
@@ -40,39 +39,22 @@ export class OwnerAddComponent implements OnInit {
     this.owner = {} as Owner;
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
   onSubmit(owner: Owner) {
-    console.log(
-      "Inside owner add inside onSubmit " +
-        "Owner value  address" +
-        owner.address +
-        "Owner value city" +
-        owner.city +
-        "Owner first name" +
-        owner.firstName +
-        "Owner last name" +
-        owner.lastName +
-        "Owner pets" +
-        owner.pets +
-        "Owner telephone" +
-        owner.telephone
-    );
     owner.id = null;
-
     this.ownerService.addOwner(owner).subscribe(
-      (newOwner) => {
-        console.log("Insde owner service add owner subscribe");
+      newOwner => {
         this.owner = newOwner;
         this.gotoOwnersList();
       },
-      (error) => (this.errorMessage = error as any)
+      error => this.errorMessage = error as any
     );
   }
 
   gotoOwnersList() {
-    console.log("inside goto owners list");
-    this.router.navigate(["/owners"]);
-    console.log("Navigated to /owners");
+    this.router.navigate(['/owners']);
   }
+
 }

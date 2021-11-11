@@ -74,12 +74,19 @@ describe("OwnerService", () => {
       providers: [OwnerService, HttpErrorHandler],
     });
 
+
     httpTestingController = TestBed.get(HttpTestingController);
     ownerService = TestBed.get(OwnerService);
     expectedOwners = [
       { id: 1, firstName: "A" },
       { id: 2, firstName: "B" },
     ] as Owner[];
+
+    // Inject the http, test controller, and service-under-test
+    // as they will be referenced by each test.
+    httpClient = TestBed.inject(HttpClient);
+    httpTestingController = TestBed.inject<HttpTestingController>(HttpTestingController as Type<HttpTestingController>);
+    ownerService = TestBed.inject(OwnerService);
   });
 
   afterEach(() => {
@@ -102,10 +109,16 @@ describe("OwnerService", () => {
     // OwnerService should have made one request to GET owners from expected URL
     const req = httpTestingController.expectOne(ownerService.entityUrl);
     expect(req.request.method).toEqual("GET");
-
-    // Respond with the mock owners
+   // Respond with the mock owners
     req.flush(expectedOwners);
   });
+    beforeEach(() => {
+      ownerService = TestBed.inject(OwnerService);
+      expectedOwners = [
+        { id: 1, firstName: 'A' },
+        { id: 2, firstName: 'B' },
+      ] as Owner[];
+    });
 
   it("search the owner by id", () => {
     ownerService.getOwnerById("1").subscribe((owners) => {

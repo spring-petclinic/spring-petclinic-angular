@@ -20,15 +20,15 @@
  * @author Vitaliy Fedoriv
  */
 
-import { Component, OnInit } from "@angular/core";
-import { Specialty } from "../specialty";
-import { SpecialtyService } from "../specialty.service";
-import { Router } from "@angular/router";
+import {Component, OnInit} from '@angular/core';
+import {Specialty} from '../specialty';
+import {SpecialtyService} from '../specialty.service';
+import {Router} from '@angular/router';
 
 @Component({
-  selector: "app-specialty-list",
-  templateUrl: "./specialty-list.component.html",
-  styleUrls: ["./specialty-list.component.css"],
+  selector: 'app-specialty-list',
+  templateUrl: './specialty-list.component.html',
+  styleUrls: ['./specialty-list.component.css']
 })
 export class SpecialtyListComponent implements OnInit {
   specialties: Specialty[];
@@ -42,45 +42,34 @@ export class SpecialtyListComponent implements OnInit {
 
   ngOnInit() {
     this.specService.getSpecialties().subscribe(
-      (specialties) => (this.specialties = specialties),
-      (error) => (this.errorMessage = error as any)
-    );
+      specialties => this.specialties = specialties,
+      error => this.errorMessage = error as any);
   }
 
   deleteSpecialty(specialty: Specialty) {
     this.specService.deleteSpecialty(specialty.id.toString()).subscribe(
-      (response) => {
+      response => {
         this.responseStatus = response;
-        this.specialties = this.specialties.filter(
-          (currentItem) => !(currentItem.id === specialty.id)
-        );
+        this.specialties = this.specialties.filter(currentItem => !(currentItem.id === specialty.id));
       },
-      (error) => (this.errorMessage = error as any)
-    );
+      error => this.errorMessage = error as any);
   }
 
   onNewSpecialty(newSpecialty: Specialty) {
-    console.log(
-      "inside on new specialty in speciality list " + newSpecialty.name
-    );
     this.specialties.push(newSpecialty);
     this.showAddSpecialtyComponent();
   }
 
   showAddSpecialtyComponent() {
-    console.log("Inside show Add Specialty Component");
     this.isInsert = !this.isInsert;
   }
 
   showEditSpecialtyComponent(updatedSpecialty: Specialty) {
-    this.router.navigate([
-      "/specialties",
-      updatedSpecialty.id.toString(),
-      "edit",
-    ]);
+    this.router.navigate(['/specialties', updatedSpecialty.id.toString(), 'edit']);
   }
 
   gotoHome() {
-    this.router.navigate(["/welcome"]);
+    this.router.navigate(['/welcome']);
   }
+
 }
