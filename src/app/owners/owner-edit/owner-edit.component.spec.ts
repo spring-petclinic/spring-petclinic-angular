@@ -87,4 +87,5 @@ describe("OwnerEditComponent", () => {
     updateOwnerButton.click();
     expect(component.onSubmit).toHaveBeenCalled();
   });
+  }));
 });

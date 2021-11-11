@@ -68,6 +68,7 @@ describe("OwnerService", () => {
   let httpTestingController: HttpTestingController;
   let ownerService: OwnerService;
   let expectedOwners: Owner[];
+  let httpClient: HttpClient;
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
