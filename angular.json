@@ -75,6 +75,14 @@
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
+          "configurations": {
+            "production": {
+              "sourceMap": false,
+              "codeCoverage": true,
+              "browsers": "ChromeHeadless",
+              "watch": false
+            }
+          },
           "options": {
             "main": "src/test.ts",
             "karmaConfig": "./karma.conf.js",
