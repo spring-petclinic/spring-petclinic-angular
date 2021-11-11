@@ -16,47 +16,41 @@
  *
  */
 
-import {
-  Component,
-  EventEmitter,
-  OnInit,
-  Output,
-  ViewChild,
-} from "@angular/core";
-import { NgForm } from "@angular/forms";
-import { Specialty } from "../specialty";
-import { SpecialtyService } from "../specialty.service";
+import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
+import { NgForm } from '@angular/forms';
+import {Specialty} from '../specialty';
+import {SpecialtyService} from '../specialty.service';
 
 @Component({
-  selector: "app-specialty-add",
-  templateUrl: "./specialty-add.component.html",
-  styleUrls: ["./specialty-add.component.css"],
+  selector: 'app-specialty-add',
+  templateUrl: './specialty-add.component.html',
+  styleUrls: ['./specialty-add.component.css']
 })
 export class SpecialtyAddComponent implements OnInit {
-  @ViewChild("specialityForm", { static: true }) specialityForm: NgForm;
+  @ViewChild('specialityForm', { static: true }) specialityForm: NgForm;
   speciality: Specialty;
   addedSuccess = false;
   errorMessage: string;
   @Output() newSpeciality = new EventEmitter<Specialty>();
 
   constructor(private specialtyService: SpecialtyService) {
-    this.speciality = { id: 1, name: "" } as Specialty;
+    this.speciality = { id: 1, name: '' } as Specialty;
   }
 
   ngOnInit() {
-    console.log("Inside speciality add component ");
   }
 
   onSubmit(speciality: Specialty) {
     speciality.id = null;
     this.specialtyService.addSpecialty(speciality).subscribe(
-      (newSpeciality) => {
-        console.log("onSubmit method of speciality add component");
-        this.speciality = newSpeciality;
+      newSpecialty => {
+        this.speciality = newSpecialty;
         this.addedSuccess = true;
-        this.newSpeciality.emit(this.speciality);
+        this.newSpeciality.emit(this.speciality) ;
       },
-      (error) => (this.errorMessage = error as any)
+      error => this.errorMessage = error as any
     );
-  }
+}
+
+
 }

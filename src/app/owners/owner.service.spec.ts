@@ -49,22 +49,22 @@
 import {
   HttpClientTestingModule,
   HttpTestingController,
-} from "@angular/common/http/testing";
+} from '@angular/common/http/testing';
 // Other imports
-import { TestBed } from "@angular/core/testing";
+import { TestBed } from '@angular/core/testing';
 import {
   HttpClient,
   HttpErrorResponse,
   HttpResponse,
-} from "@angular/common/http";
+} from '@angular/common/http';
 
-import { HttpErrorHandler } from "../error.service";
+import { HttpErrorHandler } from '../error.service';
 
-import { OwnerService } from "./owner.service";
-import { Owner } from "./owner";
-import { Type } from "@angular/core";
+import { OwnerService } from './owner.service';
+import { Owner } from './owner';
+import { Type } from '@angular/core';
 
-describe("OwnerService", () => {
+describe('OwnerService', () => {
   let httpTestingController: HttpTestingController;
   let ownerService: OwnerService;
   let expectedOwners: Owner[];
@@ -79,8 +79,8 @@ describe("OwnerService", () => {
     httpTestingController = TestBed.get(HttpTestingController);
     ownerService = TestBed.get(OwnerService);
     expectedOwners = [
-      { id: 1, firstName: "A" },
-      { id: 2, firstName: "B" },
+      { id: 1, firstName: 'A' },
+      { id: 2, firstName: 'B' },
     ] as Owner[];
 
     // Inject the http, test controller, and service-under-test
@@ -95,26 +95,25 @@ describe("OwnerService", () => {
     httpTestingController.verify();
   });
 
-  it("should return expected owners (called once)", () => {
+  it('should return expected owners (called once)', () => {
     ownerService
       .getOwners()
       .subscribe(
         (owners) =>
           expect(owners).toEqual(
             expectedOwners,
-            "should return expected owners"
+            'should return expected owners'
           ),
         fail
       );
 
     // OwnerService should have made one request to GET owners from expected URL
     const req = httpTestingController.expectOne(ownerService.entityUrl);
-    expect(req.request.method).toEqual("GET");
+    expect(req.request.method).toEqual('GET');
    // Respond with the mock owners
     req.flush(expectedOwners);
-    console.log("Flushed with expected owners");
   });
-    beforeEach(() => {
+  beforeEach(() => {
       ownerService = TestBed.inject(OwnerService);
       expectedOwners = [
         { id: 1, firstName: 'A' },
@@ -122,90 +121,90 @@ describe("OwnerService", () => {
       ] as Owner[];
     });
 
-  it("search the owner by id", () => {
-    ownerService.getOwnerById("1").subscribe((owners) => {
+  it('search the owner by id', () => {
+    ownerService.getOwnerById('1').subscribe((owners) => {
       expect(owners).toEqual(expectedOwners[0]);
     });
     const id = 1;
     const req = httpTestingController.expectOne(
-      ownerService.entityUrl + "/" + id
+      ownerService.entityUrl + '/' + id
     );
-    expect(req.request.method).toEqual("GET");
+    expect(req.request.method).toEqual('GET');
     req.flush(expectedOwners[0]);
   });
 
-  it("add owner", () => {
-    let owner = {
+  it('add owner', () => {
+    const owner = {
       id: 0,
-      firstName: "Mary",
-      lastName: "John",
-      address: "",
-      city: "",
-      telephone: "",
+      firstName: 'Mary',
+      lastName: 'John',
+      address: '',
+      city: '',
+      telephone: '',
       pets: [],
     };
 
     ownerService
       .addOwner(owner)
       .subscribe(
-        (data) => expect(data).toEqual(owner, "should return new owner"),
+        (data) => expect(data).toEqual(owner, 'should return new owner'),
         fail
       );
 
     const req = httpTestingController.expectOne(ownerService.entityUrl);
-    expect(req.request.method).toEqual("POST");
+    expect(req.request.method).toEqual('POST');
     expect(req.request.body).toEqual(owner);
 
-    //expect the server to return the owner after POST
+    // expect the server to return the owner after POST
     const expectedResponse = new HttpResponse({
       status: 201,
-      statusText: "Created",
+      statusText: 'Created',
       body: owner,
     });
     req.event(expectedResponse);
   });
 
-  it("updateOwner", () => {
-    let owner = {
+  it('updateOwner', () => {
+    const owner = {
       id: 1,
-      firstName: "Mary",
-      lastName: "John",
-      address: "",
-      city: "",
-      telephone: "",
+      firstName: 'Mary',
+      lastName: 'John',
+      address: '',
+      city: '',
+      telephone: '',
       pets: [],
     };
     ownerService
-      .updateOwner("1", owner)
-      .subscribe((data) => expect(data).toEqual(owner, "updated owner"), fail);
-    const req = httpTestingController.expectOne(ownerService.entityUrl + "/1");
-    expect(req.request.method).toEqual("PUT");
+      .updateOwner('1', owner)
+      .subscribe((data) => expect(data).toEqual(owner, 'updated owner'), fail);
+    const req = httpTestingController.expectOne(ownerService.entityUrl + '/1');
+    expect(req.request.method).toEqual('PUT');
     expect(req.request.body).toEqual(owner);
     const expectedResponse = new HttpResponse({
       status: 204,
-      statusText: "No Content",
+      statusText: 'No Content',
       body: owner,
     });
     req.event(expectedResponse);
   });
 
-  it("delete Owner", () => {
-    console.log("Inside Delete Owner");
-    ownerService.deleteOwner("1").subscribe();
-    const req = httpTestingController.expectOne(ownerService.entityUrl + "/1");
-    expect(req.request.method).toEqual("DELETE");
+  it('delete Owner', () => {
+    console.log('Inside Delete Owner');
+    ownerService.deleteOwner('1').subscribe();
+    const req = httpTestingController.expectOne(ownerService.entityUrl + '/1');
+    expect(req.request.method).toEqual('DELETE');
     expect(req.request.body).toEqual(null);
   });
 
-  it("search for delete Owner", () => {
-    ownerService.getOwnerById("1").subscribe((owners) => {
+  it('search for delete Owner', () => {
+    ownerService.getOwnerById('1').subscribe((owners) => {
       expect(owners).toBeUndefined();
     });
 
-    const req = httpTestingController.expectOne(ownerService.entityUrl + "/1");
-    expect(req.request.method).toEqual("GET");
+    const req = httpTestingController.expectOne(ownerService.entityUrl + '/1');
+    expect(req.request.method).toEqual('GET');
 
     // respond with a 404 and the error message in the body
-    req.flush("", { status: 404, statusText: "Not Found" });
+    req.flush('', { status: 404, statusText: 'Not Found' });
   });
 });

@@ -33,7 +33,7 @@ import { NgForm } from '@angular/forms';
 })
 export class OwnerAddComponent implements OnInit {
 
-  @ViewChild("ownerForm", { static: true }) ownerForm: NgForm;
+  @ViewChild('ownerForm', { static: true }) ownerForm: NgForm;
   owner: Owner;
   errorMessage: string;
 
