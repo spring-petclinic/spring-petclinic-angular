@@ -91,6 +91,7 @@ describe("OwnerDetailComponent", () => {
       fixture.detectChanges(); // update view with name
       de = fixture.debugElement.query(By.css(".ownerFullName"));
       el = de.nativeElement;
+      console.log("e1 inner text "+el.innerText);
       expect(el.innerText).toBe(
         owner.firstName.toString() + " " + owner.lastName.toString()
       );

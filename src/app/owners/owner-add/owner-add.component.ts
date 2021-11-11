@@ -20,10 +20,11 @@
  * @author Vitaliy Fedoriv
  */
 
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {OwnerService} from '../owner.service';
 import {Owner} from '../owner';
 import {Router} from '@angular/router';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-owner-add',
@@ -32,6 +33,7 @@ import {Router} from '@angular/router';
 })
 export class OwnerAddComponent implements OnInit {
 
+  @ViewChild("ownerForm", { static: true }) ownerForm: NgForm;
   owner: Owner;
   errorMessage: string;
 

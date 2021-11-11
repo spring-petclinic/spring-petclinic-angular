@@ -112,12 +112,13 @@ describe("OwnerService", () => {
     expect(req.request.method).toEqual("GET");
    // Respond with the mock owners
     req.flush(expectedOwners);
+    console.log("Flushed with expected owners");
   });
     beforeEach(() => {
       ownerService = TestBed.inject(OwnerService);
       expectedOwners = [
         { id: 1, firstName: 'A' },
-        { id: 2, firstName: 'B' },
+        { id: 2, firstName: 'B' }
       ] as Owner[];
     });
 
