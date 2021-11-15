@@ -16,7 +16,7 @@
  *
  */
 
-/* eslint-disable @typescript-eslint/no-unused-vars */
+/* tslint:disable:no-unused-variable */
 
 /**
  * @author Vitaliy Fedoriv

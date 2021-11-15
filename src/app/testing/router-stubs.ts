@@ -58,7 +58,7 @@ export class ActivatedRouteStub {
   params = this.subject.asObservable();
 
   // Test parameters
-  // eslint-disable-next-line @typescript-eslint/naming-convention, no-underscore-dangle, id-blacklist, id-match
+  // tslint:disable-next-line:variable-name
   private _testParams: {};
   get testParams() {
     return this._testParams;
