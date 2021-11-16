@@ -27,25 +27,25 @@ import {
   ComponentFixture,
   TestBed,
   waitForAsync,
-} from "@angular/core/testing";
-import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
-import { OwnerEditComponent } from "./owner-edit.component";
-import { FormsModule } from "@angular/forms";
-import { RouterTestingModule } from "@angular/router/testing";
-import { OwnerService } from "../owner.service";
-import { ActivatedRoute, Router } from "@angular/router";
-import { ActivatedRouteStub, RouterStub } from "../../testing/router-stubs";
-import { Owner } from "../owner";
-import { Observable, of } from "rxjs";
-import { By } from "@angular/platform-browser";
+} from '@angular/core/testing';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { OwnerEditComponent } from './owner-edit.component';
+import { FormsModule } from '@angular/forms';
+import { RouterTestingModule } from '@angular/router/testing';
+import { OwnerService } from '../owner.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRouteStub, RouterStub } from '../../testing/router-stubs';
+import { Owner } from '../owner';
+import { Observable, of } from 'rxjs';
+import { By } from '@angular/platform-browser';
 
 class OwnserServiceStub {
   getOwnerById(): Observable<Owner> {
-    return of({ id: 1, firstName: "James" } as Owner);
+    return of({ id: 1, firstName: 'James' } as Owner);
   }
 }
 
-describe("OwnerEditComponent", () => {
+describe('OwnerEditComponent', () => {
   let component: OwnerEditComponent;
   let fixture: ComponentFixture<OwnerEditComponent>;
   let router: Router;
@@ -70,25 +70,25 @@ describe("OwnerEditComponent", () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
     router = TestBed.get(Router);
-    spyOn(router, "navigate");
+    spyOn(router, 'navigate');
   });
 
-  it("should create OwnerEditComponent", () => {
+  it('should create OwnerEditComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it("back button routing", () => {
-    let buttons = fixture.debugElement.queryAll(By.css("button"));
+  it('back button routing', () => {
+    let buttons = fixture.debugElement.queryAll(By.css('button'));
     let backButton = buttons[0].nativeElement;
     backButton.click();
-    spyOn(component, "gotoOwnerDetail").and.callThrough();
-    expect(router.navigate).toHaveBeenCalledWith(["/owners", 1]);
+    spyOn(component, 'gotoOwnerDetail').and.callThrough();
+    expect(router.navigate).toHaveBeenCalledWith(['/owners', 1]);
   });
 
-  it("update owner", () => {
-    let buttons = fixture.debugElement.queryAll(By.css("button"));
+  it('update owner', () => {
+    let buttons = fixture.debugElement.queryAll(By.css('button'));
     let updateOwnerButton = buttons[1].nativeElement;
-    spyOn(component, "onSubmit");
+    spyOn(component, 'onSubmit');
     updateOwnerButton.click();
     expect(component.onSubmit).toHaveBeenCalled();
   });
