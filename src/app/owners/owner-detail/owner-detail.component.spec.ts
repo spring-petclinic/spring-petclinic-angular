@@ -22,41 +22,58 @@
  * @author Vitaliy Fedoriv
  */
 
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
+import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
+import { By } from "@angular/platform-browser";
+import { ENGINE_METHOD_PKEY_ASN1_METHS } from "constants";
+import { OwnerDetailComponent } from "./owner-detail.component";
+import { FormsModule } from "@angular/forms";
+import { RouterTestingModule } from "@angular/router/testing";
+import { OwnerService } from "../owner.service";
+import { ActivatedRoute, Router } from "@angular/router";
+import { ActivatedRouteStub, RouterStub } from "../../testing/router-stubs";
+import { Owner } from "../owner";
+import { Observable, of } from "rxjs";
 
-import {OwnerDetailComponent} from './owner-detail.component';
-import {FormsModule} from '@angular/forms';
-import {RouterTestingModule} from '@angular/router/testing';
-import {OwnerService} from '../owner.service';
-import {ActivatedRoute, Router} from '@angular/router';
-import {ActivatedRouteStub, RouterStub} from '../../testing/router-stubs';
-import {Owner} from '../owner';
-import {Observable, of} from 'rxjs';
-
-class OwnserServiceStub {
+class OwnerServiceStub {
   getOwnerById(): Observable<Owner> {
-    return of( { id: 1, firstName: 'James' } as Owner );
+    return of({ id: 1, firstName: "James" } as Owner);
   }
 }
 
-describe('OwnerDetailComponent', () => {
+describe("OwnerDetailComponent", () => {
   let component: OwnerDetailComponent;
   let fixture: ComponentFixture<OwnerDetailComponent>;
+  let ownerService = new OwnerServiceStub();
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      declarations: [OwnerDetailComponent],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [FormsModule, RouterTestingModule],
-      providers: [
-        {provide: OwnerService, useClass: OwnserServiceStub},
-        {provide: Router, useClass: RouterStub},
-        {provide: ActivatedRoute, useClass: ActivatedRouteStub}
-      ]
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [OwnerDetailComponent],
+        schemas: [CUSTOM_ELEMENTS_SCHEMA],
+        imports: [FormsModule, RouterTestingModule],
+        providers: [
+          { provide: OwnerService, useClass: OwnerServiceStub },
+          { provide: Router, useClass: RouterStub },
+          { provide: ActivatedRoute, useClass: ActivatedRouteStub },
+        ],
+      }).compileComponents();
     })
-      .compileComponents();
-  }));
+  );
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [OwnerDetailComponent],
+        schemas: [CUSTOM_ELEMENTS_SCHEMA],
+        imports: [FormsModule, RouterTestingModule],
+        providers: [
+          { provide: OwnerService, useValue: ownerService },
+          { provide: Router, useClass: RouterStub },
+          { provide: ActivatedRoute, useClass: ActivatedRouteStub },
+        ],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(OwnerDetailComponent);
@@ -64,7 +81,7 @@ describe('OwnerDetailComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create OwnerDetailComponent', () => {
+  it("should create OwnerDetailComponent", () => {
     expect(component).toBeTruthy();
   });
 });
