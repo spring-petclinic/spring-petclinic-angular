@@ -43,15 +43,17 @@ export class OwnerEditComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.ownerId = this.route.snapshot.params.id;
-    this.ownerService.getOwnerById(this.ownerId.toString()).subscribe(
+    const ownerId = this.route.snapshot.params.id;
+    this.ownerService.getOwnerById(ownerId).subscribe(
       (owner) => (this.owner = owner),
       (error) => (this.errorMessage = error as any)
     );
   }
 
   onSubmit(owner: Owner) {
-    this.ownerService.updateOwner(this.ownerId.toString(), owner).subscribe(
+    const that = this;  
+    const ownerId = this.route.snapshot.params.id;
+    this.ownerService.updateOwner(ownerId , owner).subscribe(
       (res) => this.gotoOwnerDetail(owner),
       (error) => (this.errorMessage = error as any)
     );

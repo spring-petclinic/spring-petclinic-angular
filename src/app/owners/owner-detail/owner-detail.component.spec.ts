@@ -37,7 +37,7 @@ import { Observable, of } from 'rxjs';
 
 class OwnerServiceStub {
   getOwnerById(): Observable<Owner> {
-    return of({ id: 1, firstName: 'James', lastName: "Franklin"  } as Owner);
+    return of({ id: 1, firstName: 'James', lastName: 'Franklin'  } as Owner);
   }
 }
 
@@ -79,11 +79,11 @@ describe('OwnerDetailComponent', () => {
 
   const owner: Owner = {
     id: 10,
-    firstName: "James",
-    lastName: "Franklin",
-    address: "110 W. Liberty St.",
-    city: "Madison",
-    telephone: "6085551023",
+    firstName: 'James',
+    lastName: 'Franklin',
+    address: '110 W. Liberty St.',
+    city: 'Madison',
+    telephone: '6085551023',
     pets: null,
   };
 
@@ -98,15 +98,13 @@ describe('OwnerDetailComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it("find owner using ownerId", () => {
+  it('find owner using ownerId', () => {
     fixture.detectChanges();
     fixture.whenStable().then(() => {
       // wait for async getOwners
       fixture.detectChanges(); // update view with name
-      de = fixture.debugElement.query(By.css(".ownerFullName"));
+      de = fixture.debugElement.query(By.css('.ownerFullName'));
       el = de.nativeElement;
-      console.log("e1 inner text "+el.innerText+" owner first name  "+owner.firstName+" owner last name "+owner.lastName);
-      
       expect(el.innerText).toBe(
         owner.firstName.toString() + " " + owner.lastName.toString()
       );

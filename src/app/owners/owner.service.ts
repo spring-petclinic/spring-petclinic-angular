@@ -59,6 +59,7 @@ export class OwnerService {
       .pipe(catchError(this.handlerError('addOwner', owner)));
   }
 
+
   updateOwner(ownerId: string, owner: Owner): Observable<{}> {
     return this.http
       .put<Owner>(this.entityUrl + '/' + ownerId, owner)
