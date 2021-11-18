@@ -38,6 +38,7 @@ import { ActivatedRouteStub, RouterStub } from '../../testing/router-stubs';
 import { Owner } from '../owner';
 import { Observable, of } from 'rxjs';
 import { By } from '@angular/platform-browser';
+import { OwnerListComponent } from '../owner-list/owner-list.component';
 
 class OwnserServiceStub {
   getOwnerById(): Observable<Owner> {
@@ -55,7 +56,9 @@ describe('OwnerEditComponent', () => {
         declarations: [OwnerEditComponent],
         schemas: [CUSTOM_ELEMENTS_SCHEMA],
         // schemas: [ NO_ERRORS_SCHEMA ],
-        imports: [FormsModule, RouterTestingModule],
+        imports: [FormsModule, RouterTestingModule.withRoutes([
+          { path: 'owners', component: OwnerListComponent}
+      ])],
         providers: [
           { provide: OwnerService, useClass: OwnserServiceStub },
           { provide: Router, useClass: RouterStub },
@@ -69,27 +72,29 @@ describe('OwnerEditComponent', () => {
     fixture = TestBed.createComponent(OwnerEditComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-    router = TestBed.get(Router);
-    spyOn(router, 'navigate');
+    router=TestBed.get(Router);
+    spyOn(router,"navigate");
   });
 
   it('should create OwnerEditComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('back button routing', () => {
+  it('back button routing', async() => {
     let buttons = fixture.debugElement.queryAll(By.css('button'));
-    let backButton = buttons[0].nativeElement;
-    backButton.click();
+    let backbutton = buttons[0];
+    backbutton.triggerEventHandler('click', null);
     spyOn(component, 'gotoOwnerDetail').and.callThrough();
     expect(router.navigate).toHaveBeenCalledWith(['/owners', 1]);
   });
 
-  it('update owner', () => {
+ 
+  it('update owner', async(() => {
     let buttons = fixture.debugElement.queryAll(By.css('button'));
     let updateOwnerButton = buttons[1].nativeElement;
     spyOn(component, 'onSubmit');
     updateOwnerButton.click();
     expect(component.onSubmit).toHaveBeenCalled();
-  });
+  }));
+
 });

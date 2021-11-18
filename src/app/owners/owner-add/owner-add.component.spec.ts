@@ -22,7 +22,7 @@
  * @author Vitaliy Fedoriv
  */
 
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { OwnerAddComponent } from './owner-add.component';
 import { FormsModule } from '@angular/forms';
@@ -45,7 +45,7 @@ class OwnserServiceStub {
 describe('OwnerAddComponent', () => {
   let component: OwnerAddComponent;
   let fixture: ComponentFixture<OwnerAddComponent>;
-
+  let router: Router;
   beforeEach(
     waitForAsync(() => {
       TestBed.configureTestingModule({
@@ -78,9 +78,31 @@ describe('OwnerAddComponent', () => {
     fixture = TestBed.createComponent(OwnerAddComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+    router=TestBed.get(Router);
+    spyOn(router,"navigate");
   });
 
   it('should create OwnerAddComponent', () => {
     expect(component).toBeTruthy();
   });
+
+  
+
+  it('back button routing', async() => {
+    let buttons = fixture.debugElement.queryAll(By.css('button'));
+    let backbutton = buttons[0];
+    backbutton.triggerEventHandler('click', null);
+    spyOn(component, 'gotoOwnersList').and.callThrough();
+    expect(router.navigate).toHaveBeenCalledWith(['/owners']);
+  });
+
+ 
+  it('add owner', async(() => {
+    let buttons = fixture.debugElement.queryAll(By.css('button'));
+    let addOwnerButton = buttons[1].nativeElement;
+    spyOn(component, 'onSubmit');
+    addOwnerButton.click();
+    expect(component.onSubmit).toHaveBeenCalled();
+  }));
+
 });

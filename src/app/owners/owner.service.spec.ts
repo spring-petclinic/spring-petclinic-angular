@@ -89,19 +89,12 @@ describe('OwnerService', () => {
     // Respond with the mock owners
     req.flush(expectedOwners);
   });
-  beforeEach(() => {
-    ownerService = TestBed.inject(OwnerService);
-    expectedOwners = [
-      { id: 1, firstName: 'A' },
-      { id: 2, firstName: 'B' },
-    ] as Owner[];
-  });
 
   it('search the owner by id', () => {
     ownerService.getOwnerById('1').subscribe((owners) => {
       expect(owners).toEqual(expectedOwners[0]);
     });
-    const id = 1;
+    const id = '1';
     const req = httpTestingController.expectOne(
       ownerService.entityUrl + '/' + id
     );
@@ -114,10 +107,11 @@ describe('OwnerService', () => {
       id: 0,
       firstName: 'Mary',
       lastName: 'John',
-      address: '',
-      city: '',
-      telephone: '',
-      pets: [],
+      address: '110 W. Church St.',
+      city: 'Madison',
+      telephone: '6085551023',
+      pets: []
+   
     };
 
     ownerService
@@ -143,17 +137,19 @@ describe('OwnerService', () => {
   it('updateOwner', () => {
     let owner = {
       id: 1,
-      firstName: 'Mary',
-      lastName: 'John',
-      address: '',
-      city: '',
-      telephone: '',
-      pets: [],
+      firstName: 'George',
+      lastName: 'Franklin',
+      address: '110 W. Church St.',
+      city: 'Madison',
+      telephone: '6085551023',
+      pets: []
     };
+     
     ownerService
-      .updateOwner('1', owner)
+      .updateOwner(owner.id.toString(), owner)
       .subscribe((data) => expect(data).toEqual(owner, 'updated owner'), fail);
-    const req = httpTestingController.expectOne(ownerService.entityUrl + '/1');
+    
+    const req = httpTestingController.expectOne(ownerService.entityUrl + '/'+owner.id);
     expect(req.request.method).toEqual('PUT');
     expect(req.request.body).toEqual(owner);
     const expectedResponse = new HttpResponse({
@@ -180,7 +176,9 @@ describe('OwnerService', () => {
     const req = httpTestingController.expectOne(ownerService.entityUrl + '/1');
     expect(req.request.method).toEqual('GET');
 
-    // respond with a 404 and the error message in the body
+   // respond with a 404 and the error message in the body
     req.flush('', { status: 404, statusText: 'Not Found' });
   });
+
+
 });
