@@ -39,11 +39,13 @@ import { HttpErrorHandler } from '../error.service';
 import { OwnerService } from './owner.service';
 import { Owner } from './owner';
 import { Type } from '@angular/core';
+import { defer } from 'rxjs/internal/observable/defer';
 
 describe('OwnerService', () => {
   let httpTestingController: HttpTestingController;
   let ownerService: OwnerService;
   let expectedOwners: Owner[];
+  let httpClientSpy: { get: jasmine.Spy };
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
@@ -58,6 +60,7 @@ describe('OwnerService', () => {
     ] as Owner[];
     // Inject the http, test controller, and service-under-test
     // as they will be referenced by each test.
+    httpClientSpy = jasmine.createSpyObj('HttpClient', ['get']);
     let httpClient = TestBed.inject(HttpClient);
     httpTestingController = TestBed.inject<HttpTestingController>(
       HttpTestingController as Type<HttpTestingController>
@@ -169,16 +172,28 @@ describe('OwnerService', () => {
   });
 
   it('search for delete Owner', () => {
-    ownerService.getOwnerById('1').subscribe((owners) => {
-      expect(owners).toBeUndefined();
+
+    const errorResponse = new HttpErrorResponse({
+      error: '404 error',
+      status: 404,
+      statusText: 'Not Found'
     });
 
-    const req = httpTestingController.expectOne(ownerService.entityUrl + '/1');
-    expect(req.request.method).toEqual('GET');
+    httpClientSpy.get.and.returnValue(asyncError(errorResponse));
 
-   // respond with a 404 and the error message in the body
-    req.flush('', { status: 404, statusText: 'Not Found' });
-  });
-
-
+    ownerService.getOwnerById('1').subscribe((owners) => {
+      fail('Should have failed with 404 error'),
+      (error: HttpErrorResponse) => {
+        expect(error.status).toEqual(404);
+        expect(error.error).toContain('404 error');
+      }});
+    
+      const req = httpTestingController.expectOne(
+        { method: 'GET', url:ownerService.entityUrl + '/1' });
+  
+    });
 });
+
+export function asyncError<T>(errorObject: any) {
+  return defer(() => Promise.reject(errorObject));
+}
