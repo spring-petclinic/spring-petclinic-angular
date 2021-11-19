@@ -73,7 +73,7 @@ describe('OwnerEditComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
     router=TestBed.get(Router);
-    spyOn(router,"navigate");
+    spyOn(router,'navigate');
   });
 
   it('should create OwnerEditComponent', () => {

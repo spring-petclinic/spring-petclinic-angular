@@ -106,29 +106,29 @@ describe('OwnerDetailComponent', () => {
       de = fixture.debugElement.query(By.css('.ownerFullName'));
       el = de.nativeElement;
       expect(el.innerText).toBe(
-        owner.firstName.toString() + " " + owner.lastName.toString()
+        owner.firstName.toString() + ' ' + owner.lastName.toString()
       );
     });
   });
 
-  it("routing to owners page on click of editOwner,addPet,gotoOwnersList", () => {
-    spyOn(router, "navigate");
-    let buttons = fixture.debugElement.queryAll(By.css("button"));
+  it('routing to owners page on click of editOwner,addPet,gotoOwnersList', () => {
+    spyOn(router, 'navigate');
+    let buttons = fixture.debugElement.queryAll(By.css('button'));
 
     let ownersListButton = buttons[0].nativeElement;
     ownersListButton.click();
-    spyOn(component, "gotoOwnersList").and.callThrough();
-    expect(router.navigate).toHaveBeenCalledWith(["/owners"]);
+    spyOn(component, 'gotoOwnersList').and.callThrough();
+    expect(router.navigate).toHaveBeenCalledWith(['/owners']);
 
     let editOwnerButton = buttons[1].nativeElement;
     editOwnerButton.click();
-    spyOn(component, "editOwner").and.callThrough();
-    expect(router.navigate).toHaveBeenCalledWith(["/owners"]);
+    spyOn(component, 'editOwner').and.callThrough();
+    expect(router.navigate).toHaveBeenCalledWith(['/owners']);
 
     let addNewPetButton = buttons[2].nativeElement;
     addNewPetButton.click();
-    spyOn(component, "addPet").and.callThrough();
-    expect(router.navigate).toHaveBeenCalledWith(["/owners"]);
+    spyOn(component, 'addPet').and.callThrough();
+    expect(router.navigate).toHaveBeenCalledWith(['/owners']);
   });
 
 });
