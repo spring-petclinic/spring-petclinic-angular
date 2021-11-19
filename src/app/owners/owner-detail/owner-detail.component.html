@@ -25,7 +25,7 @@
     <table class="table table-striped">
       <tr>
         <th>Name</th>
-        <td><b>{{ owner.firstName }} {{ owner.lastName }}</b></td>
+        <td><b class="ownerFullName">{{ owner.firstName }} {{ owner.lastName }}</b></td>
       </tr>
       <tr>
         <th>Address</th>
@@ -41,13 +41,13 @@
       </tr>
     </table>
 
-    <button class="btn btn-default" (click)="gotoOwnersList()">< Back</button>
+    <button class="btn btn-default" (click)="gotoOwnersList()">Back</button>
     <button class="btn btn-default" (click)="editOwner()">Edit Owner</button>
     <button class="btn btn-default" (click)="addPet(owner)">Add New Pet</button>
 
-    <br/>
-    <br/>
-    <br/>
+    <br />
+    <br />
+    <br />
     <h2>Pets and Visits</h2>
 
     <table class="table table-striped">
