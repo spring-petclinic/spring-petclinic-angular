@@ -73,8 +73,12 @@ export class OwnerService {
   }
 
   searchOwners(lastName: string): Observable<Owner[]> {
+    let url = this.entityUrl;
+    if (lastName !== undefined) {
+      url += '?lastName=' + lastName;
+    }
     return this.http
-      .get<Owner[]>(this.entityUrl + '/*/lastname/' + lastName)
+      .get<Owner[]>(url)
       .pipe(catchError(this.handlerError('searchOwners', [])));
   }
 }
