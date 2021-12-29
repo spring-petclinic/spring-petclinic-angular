@@ -26,6 +26,7 @@ import {PetType} from '../pettypes/pettype';
 
 export interface Pet {
   id: number;
+  ownerId: number;
   name: string;
   birthDate: string;
   type: PetType;

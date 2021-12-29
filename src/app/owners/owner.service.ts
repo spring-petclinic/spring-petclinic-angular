@@ -47,7 +47,7 @@ export class OwnerService {
       .pipe(catchError(this.handlerError('getOwners', [])));
   }
 
-  getOwnerById(ownerId: string): Observable<Owner> {
+  getOwnerById(ownerId: number): Observable<Owner> {
     return this.http
       .get<Owner>(this.entityUrl + '/' + ownerId)
       .pipe(catchError(this.handlerError('getOwnerById', {} as Owner)));
