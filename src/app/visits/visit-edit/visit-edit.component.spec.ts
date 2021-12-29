@@ -70,6 +70,7 @@ describe('VisitEditComponent', () => {
     component = fixture.componentInstance;
     testPet = {
       id: 1,
+      ownerId: 1,
       name: 'Leo',
       birthDate: '2010-09-07',
       type: {id: 1, name: 'cat'},

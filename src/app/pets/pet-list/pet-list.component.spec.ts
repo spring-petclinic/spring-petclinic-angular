@@ -70,6 +70,7 @@ describe('PetListComponent', () => {
       name: 'Leo',
       birthDate: '2010-09-07',
       type: { id: 1, name: 'cat' },
+      ownerId: 1,
       owner: {
         id: 1,
         firstName: 'George',
