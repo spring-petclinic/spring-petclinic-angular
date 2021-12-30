@@ -46,7 +46,7 @@ export class PetService {
       );
   }
 
-  getPetById(petId: string): Observable<Pet> {
+  getPetById(petId: number): Observable<Pet> {
     return this.http.get<Pet>(this.entityUrl + '/' + petId)
       .pipe(
         catchError(this.handlerError('getPetById', {} as Pet))
