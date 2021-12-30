@@ -70,9 +70,8 @@ export class VisitAddComponent implements OnInit {
     visit.id = null;
     const that = this;
 
-    // format output from datepicker to short string yyyy/mm/dd format
-    visit.date = moment(visit.date).format('YYYY/MM/DD');
-
+    // format output from datepicker to short string yyyy-mm-dd format (rfc3339)
+    visit.date = moment(visit.date).format('YYYY-MM-DD');
 
     this.visitService.addVisit(visit).subscribe(
       newVisit => {

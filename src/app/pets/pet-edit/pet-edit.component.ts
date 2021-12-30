@@ -78,8 +78,8 @@ export class PetEditComponent implements OnInit {
   onSubmit(pet: Pet) {
     pet.type = this.currentType;
     const that = this;
-    // format output from datepicker to short string yyyy/mm/dd format
-    pet.birthDate = moment(pet.birthDate).format('YYYY/MM/DD');
+    // format output from datepicker to short string yyyy-mm-dd format (rfc3339)
+    pet.birthDate = moment(pet.birthDate).format('YYYY-MM-DD');
 
     this.petService.updatePet(pet.id.toString(), pet).subscribe(
       res => this.gotoOwnerDetail(this.currentOwner),
