@@ -54,7 +54,10 @@ export class VisitService {
   }
 
   addVisit(visit: Visit): Observable<Visit> {
-    return this.http.post<Visit>(this.entityUrl, visit)
+    const ownerId = visit.pet.ownerId;
+    const petId = visit.pet.id;
+    const visitsUrl = environment.REST_API_URL + `owners/${ownerId}/pets/${petId}/visits`;
+    return this.http.post<Visit>(visitsUrl, visit)
       .pipe(
         catchError(this.handlerError('addVisit', visit))
       );
