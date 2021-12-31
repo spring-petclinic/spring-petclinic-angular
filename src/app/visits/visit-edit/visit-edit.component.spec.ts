@@ -36,9 +36,20 @@ import {Pet} from '../../pets/pet';
 import {MatMomentDateModule} from '@angular/material-moment-adapter';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import Spy = jasmine.Spy;
+import {OwnerService} from '../../owners/owner.service';
+import {PetService} from '../../pets/pet.service';
 
 class VisitServiceStub {
   getVisitById(visitId: string): Observable<Visit> {
+    return of();
+  }
+}
+
+class OwnerServiceStub {
+}
+
+class PetServiceStub {
+  getPetById(petId: string): Observable<Pet> {
     return of();
   }
 }
@@ -58,6 +69,8 @@ describe('VisitEditComponent', () => {
       imports: [FormsModule, MatDatepickerModule, MatMomentDateModule],
       providers: [
         {provide: VisitService, useClass: VisitServiceStub},
+        {provide: OwnerService, useClass: OwnerServiceStub},
+        {provide: PetService, useClass: PetServiceStub},
         {provide: Router, useClass: RouterStub},
         {provide: ActivatedRoute, useClass: ActivatedRouteStub}
       ]
@@ -70,6 +83,7 @@ describe('VisitEditComponent', () => {
     component = fixture.componentInstance;
     testPet = {
       id: 1,
+      ownerId: 1,
       name: 'Leo',
       birthDate: '2010-09-07',
       type: {id: 1, name: 'cat'},

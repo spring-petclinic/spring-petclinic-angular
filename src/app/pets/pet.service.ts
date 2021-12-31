@@ -46,7 +46,7 @@ export class PetService {
       );
   }
 
-  getPetById(petId: string): Observable<Pet> {
+  getPetById(petId: number): Observable<Pet> {
     return this.http.get<Pet>(this.entityUrl + '/' + petId)
       .pipe(
         catchError(this.handlerError('getPetById', {} as Pet))
@@ -54,7 +54,9 @@ export class PetService {
   }
 
   addPet(pet: Pet): Observable<Pet> {
-    return this.http.post<Pet>(this.entityUrl, pet)
+    const ownerId = pet.owner.id;
+    const ownersUrl = environment.REST_API_URL + `owners/${ownerId}/pets`;
+    return this.http.post<Pet>(ownersUrl, pet)
       .pipe(
         catchError(this.handlerError('addPet', pet))
       );

@@ -69,8 +69,8 @@ export class PetAddComponent implements OnInit {
   onSubmit(pet: Pet) {
     pet.id = null;
     pet.owner = this.currentOwner;
-    // format output from datepicker to short string yyyy/mm/dd format
-    pet.birthDate = moment(pet.birthDate).format('YYYY/MM/DD');
+    // format output from datepicker to short string yyyy-mm-dd format (rfc3339)
+    pet.birthDate = moment(pet.birthDate).format('YYYY-MM-DD');
     this.petService.addPet(pet).subscribe(
       newPet => {
         this.pet = newPet;

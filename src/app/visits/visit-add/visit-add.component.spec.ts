@@ -36,6 +36,7 @@ import {Observable, of} from 'rxjs';
 import {MatMomentDateModule} from '@angular/material-moment-adapter';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import Spy = jasmine.Spy;
+import {OwnerService} from '../../owners/owner.service';
 
 class PetServiceStub {
   addPet(pet: Pet): Observable<Pet> {
@@ -44,6 +45,9 @@ class PetServiceStub {
   getPetById(petId: string): Observable<Pet> {
     return of();
   }
+}
+
+class OwnerServiceStub {
 }
 
 class VisitServiceStub {
@@ -65,6 +69,7 @@ describe('VisitAddComponent', () => {
       providers: [
         {provide: PetService, useClass: PetServiceStub},
         {provide: VisitService, useClass: VisitServiceStub},
+        {provide: OwnerService, useClass: OwnerServiceStub},
         {provide: Router, useClass: RouterStub},
         {provide: ActivatedRoute, useClass: ActivatedRouteStub}
       ]
@@ -80,6 +85,7 @@ describe('VisitAddComponent', () => {
       name: 'Leo',
       birthDate: '2010-09-07',
       type: {id: 1, name: 'cat'},
+      ownerId: 1,
       owner: {
         id: 1,
         firstName: 'George',

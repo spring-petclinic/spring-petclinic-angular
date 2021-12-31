@@ -29,6 +29,8 @@ import {VisitService} from '../visit.service';
 import {ActivatedRoute, Router} from '@angular/router';
 
 import * as moment from 'moment';
+import {OwnerService} from '../../owners/owner.service';
+import {PetService} from '../../pets/pet.service';
 
 @Component({
   selector: 'app-visit-edit',
@@ -43,7 +45,11 @@ export class VisitEditComponent implements OnInit {
   updateSuccess = false;
   errorMessage: string;
 
-  constructor(private visitService: VisitService, private route: ActivatedRoute, private router: Router) {
+  constructor(private visitService: VisitService,
+              private petService: PetService,
+              private ownerService: OwnerService,
+              private route: ActivatedRoute,
+              private router: Router) {
     this.visit = {} as Visit;
     this.currentPet = {} as Pet;
     this.currentOwner = {} as Owner;
@@ -53,12 +59,19 @@ export class VisitEditComponent implements OnInit {
   ngOnInit() {
     const visitId = this.route.snapshot.params.id;
     this.visitService.getVisitById(visitId).subscribe(
-      response => {
-        this.visit = response;
-
-        this.currentPet = this.visit.pet;
-        this.currentPetType = this.currentPet.type;
-        this.currentOwner = this.currentPet.owner;
+      visit => {
+        this.visit = visit;
+        this.petService.getPetById(visit.petId).subscribe(
+          pet => {
+            this.currentPet = pet;
+            this.currentPetType = pet.type;
+            this.ownerService.getOwnerById(pet.ownerId).subscribe(
+              owner => {
+                this.currentOwner = owner;
+              }
+            )
+          }
+        )
       },
       error => this.errorMessage = error as any);
   }
@@ -66,8 +79,8 @@ export class VisitEditComponent implements OnInit {
   onSubmit(visit: Visit) {
     visit.pet = this.currentPet;
 
-    // format output from datepicker to short string yyyy/mm/dd format
-    visit.date = moment(visit.date).format('YYYY/MM/DD');
+    // format output from datepicker to short string yyyy-mm-dd format (rfc3339)
+    visit.date = moment(visit.date).format('YYYY-MM-DD');
 
     this.visitService.updateVisit(visit.id.toString(), visit).subscribe(
       res => this.gotoOwnerDetail(),

@@ -103,6 +103,7 @@ describe('OwnerListComponent', () => {
         name: 'Leo',
         birthDate: '2010-09-07',
         type: {id: 1, name: 'cat'},
+        ownerId: null,
         owner: null,
         visits: null
       }]

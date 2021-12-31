@@ -30,6 +30,7 @@ import {PetType} from '../../pettypes/pettype';
 import {Owner} from '../../owners/owner';
 
 import * as moment from 'moment';
+import {OwnerService} from '../../owners/owner.service';
 
 @Component({
   selector: 'app-visit-add',
@@ -45,7 +46,11 @@ export class VisitAddComponent implements OnInit {
   addedSuccess = false;
   errorMessage: string;
 
-  constructor(private visitService: VisitService, private petService: PetService, private router: Router, private route: ActivatedRoute) {
+  constructor(private visitService: VisitService,
+              private petService: PetService,
+              private ownerService: OwnerService,
+              private router: Router,
+              private route: ActivatedRoute) {
     this.visit = {} as Visit;
     this.currentPet = {} as Pet;
     this.currentOwner = {} as Owner;
@@ -57,11 +62,15 @@ export class VisitAddComponent implements OnInit {
     console.log(this.route.parent);
     const petId = this.route.snapshot.params.id;
     this.petService.getPetById(petId).subscribe(
-      response => {
-        this.currentPet = response;
+      pet => {
+        this.currentPet = pet;
         this.visit.pet = this.currentPet;
         this.currentPetType = this.currentPet.type;
-        this.currentOwner = this.currentPet.owner;
+        this.ownerService.getOwnerById(pet.ownerId).subscribe(
+          owner => {
+            this.currentOwner = owner;
+          }
+        )
       },
       error => this.errorMessage = error as any);
   }
@@ -70,9 +79,8 @@ export class VisitAddComponent implements OnInit {
     visit.id = null;
     const that = this;
 
-    // format output from datepicker to short string yyyy/mm/dd format
-    visit.date = moment(visit.date).format('YYYY/MM/DD');
-
+    // format output from datepicker to short string yyyy-mm-dd format (rfc3339)
+    visit.date = moment(visit.date).format('YYYY-MM-DD');
 
     this.visitService.addVisit(visit).subscribe(
       newVisit => {

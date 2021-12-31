@@ -94,7 +94,7 @@ describe('OwnerService', () => {
   });
 
   it('search the owner by id', () => {
-    ownerService.getOwnerById('1').subscribe((owners) => {
+    ownerService.getOwnerById(1).subscribe((owners) => {
       expect(owners).toEqual(expectedOwners[0]);
     });
     const id = '1';
@@ -114,7 +114,7 @@ describe('OwnerService', () => {
       city: 'Madison',
       telephone: '6085551023',
       pets: []
-   
+
     };
 
     ownerService
@@ -147,11 +147,11 @@ describe('OwnerService', () => {
       telephone: '6085551023',
       pets: []
     };
-     
+
     ownerService
       .updateOwner(owner.id.toString(), owner)
       .subscribe((data) => expect(data).toEqual(owner, 'updated owner'), fail);
-    
+
     const req = httpTestingController.expectOne(ownerService.entityUrl + '/'+owner.id);
     expect(req.request.method).toEqual('PUT');
     expect(req.request.body).toEqual(owner);
@@ -181,16 +181,16 @@ describe('OwnerService', () => {
 
     httpClientSpy.get.and.returnValue(asyncError(errorResponse));
 
-    ownerService.getOwnerById('1').subscribe((owners) => {
+    ownerService.getOwnerById(1).subscribe((owners) => {
       fail('Should have failed with 404 error'),
       (error: HttpErrorResponse) => {
         expect(error.status).toEqual(404);
         expect(error.error).toContain('404 error');
       }});
-    
+
       const req = httpTestingController.expectOne(
         { method: 'GET', url:ownerService.entityUrl + '/1' });
-  
+
     });
 });
 

@@ -27,5 +27,5 @@ export interface Visit {
   date: string;
   description: string;
   pet: Pet;
-
+  petId?: number;
 }

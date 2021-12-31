@@ -35,15 +35,15 @@
       </div>
       <br/>
 
-      <div class="form-group has-feedback" [class.has-success]="petName.dirty && petName.valid"
-           [class.has-error]="petName.dirty && !petName.valid">
-        <label for="petName" class="col-sm-2 control-label">Name</label>
+      <div class="form-group has-feedback" [class.has-success]="name.dirty && name.valid"
+           [class.has-error]="name.dirty && !name.valid">
+        <label for="name" class="col-sm-2 control-label">Name</label>
         <div class="col-sm-10">
-          <input id="petName" name="petName" required class="form-control" type="text" [(ngModel)]="pet.name"
-                 #petName="ngModel"/>
-          <span class="glyphicon form-control-feedback" [class.glyphicon-ok]="petName.valid"
-                [class.glyphicon-remove]="!petName.valid" aria-hidden="true"></span>
-          <span class="help-block" *ngIf="petName.dirty && petName.hasError('required')">Name is required</span>
+          <input id="name" name="name" required class="form-control" type="text" [(ngModel)]="pet.name"
+                 #name="ngModel"/>
+          <span class="glyphicon form-control-feedback" [class.glyphicon-ok]="name.valid"
+                [class.glyphicon-remove]="!name.valid" aria-hidden="true"></span>
+          <span class="help-block" *ngIf="name.dirty && name.hasError('required')">Name is required</span>
         </div>
       </div>
 

@@ -30,6 +30,7 @@ import {PetType} from '../../pettypes/pettype';
 import {PetTypeService} from '../../pettypes/pettype.service';
 
 import * as moment from 'moment';
+import {OwnerService} from '../../owners/owner.service';
 
 @Component({
   selector: 'app-pet-edit',
@@ -43,7 +44,10 @@ export class PetEditComponent implements OnInit {
   petTypes: PetType[];
   errorMessage: string;
 
-  constructor(private petService: PetService, private petTypeService: PetTypeService, private router: Router,
+  constructor(private petService: PetService,
+              private petTypeService: PetTypeService,
+              private ownerService: OwnerService,
+              private router: Router,
               private route: ActivatedRoute) {
     this.pet = {} as Pet;
     this.currentOwner = {} as Owner;
@@ -61,7 +65,10 @@ export class PetEditComponent implements OnInit {
     this.petService.getPetById(petId).subscribe(
       pet => {
         this.pet = pet;
-        this.currentOwner = this.pet.owner;
+        this.ownerService.getOwnerById(pet.ownerId).subscribe(
+          response => {
+            this.currentOwner = response;
+          });
         this.currentType = this.pet.type;
       },
       error => this.errorMessage = error as any);
@@ -71,8 +78,8 @@ export class PetEditComponent implements OnInit {
   onSubmit(pet: Pet) {
     pet.type = this.currentType;
     const that = this;
-    // format output from datepicker to short string yyyy/mm/dd format
-    pet.birthDate = moment(pet.birthDate).format('YYYY/MM/DD');
+    // format output from datepicker to short string yyyy-mm-dd format (rfc3339)
+    pet.birthDate = moment(pet.birthDate).format('YYYY-MM-DD');
 
     this.petService.updatePet(pet.id.toString(), pet).subscribe(
       res => this.gotoOwnerDetail(this.currentOwner),

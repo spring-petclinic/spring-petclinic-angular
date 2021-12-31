@@ -47,7 +47,7 @@ export class OwnerService {
       .pipe(catchError(this.handlerError('getOwners', [])));
   }
 
-  getOwnerById(ownerId: string): Observable<Owner> {
+  getOwnerById(ownerId: number): Observable<Owner> {
     return this.http
       .get<Owner>(this.entityUrl + '/' + ownerId)
       .pipe(catchError(this.handlerError('getOwnerById', {} as Owner)));
@@ -73,8 +73,12 @@ export class OwnerService {
   }
 
   searchOwners(lastName: string): Observable<Owner[]> {
+    let url = this.entityUrl;
+    if (lastName !== undefined) {
+      url += '?lastName=' + lastName;
+    }
     return this.http
-      .get<Owner[]>(this.entityUrl + '/*/lastname/' + lastName)
+      .get<Owner[]>(url)
       .pipe(catchError(this.handlerError('searchOwners', [])));
   }
 }
