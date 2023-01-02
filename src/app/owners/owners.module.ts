@@ -30,6 +30,7 @@ import {OwnerAddComponent} from './owner-add/owner-add.component';
 import {OwnerEditComponent} from './owner-edit/owner-edit.component';
 import {OwnersRoutingModule} from './owners-routing.module';
 import {PetsModule} from '../pets/pets.module';
+import {OwnerDeleteComponent} from './owner-delete/owner-delete.component';
 
 @NgModule({
   imports: [
@@ -42,6 +43,7 @@ import {PetsModule} from '../pets/pets.module';
     OwnerListComponent,
     OwnerDetailComponent,
     OwnerEditComponent,
+    OwnerDeleteComponent,
     OwnerAddComponent
   ],
   providers: [OwnerService]
