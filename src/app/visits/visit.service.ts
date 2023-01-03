@@ -78,5 +78,12 @@ export class VisitService {
 
   }
 
+  getVisitByVetId(vetId: string): Observable<Visit[]> {
+    return this.http.get<Visit[]>(this.entityUrl + '/vet/' + vetId)
+      .pipe(
+        catchError(this.handlerError('getVisitByVetId', []))
+      );
+  }
+
 
 }

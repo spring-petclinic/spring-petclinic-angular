@@ -30,15 +30,17 @@ import {VetsRoutingModule} from './vets-routing.module';
 import {VetEditComponent} from './vet-edit/vet-edit.component';
 import {VetAddComponent} from './vet-add/vet-add.component';
 import {VetResolver} from './vet-resolver';
+import {VisitsModule} from '../visits/visits.module';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MatSelectModule,
-    VetsRoutingModule
-  ],
+    imports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MatSelectModule,
+        VetsRoutingModule,
+        VisitsModule
+    ],
   declarations: [
     VetListComponent,
     VetEditComponent,
