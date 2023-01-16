@@ -21,6 +21,7 @@
  */
 
 import {Pet} from '../pets/pet';
+import {Vet} from '../vets/vet';
 
 export interface Visit {
   id: number;
@@ -28,4 +29,6 @@ export interface Visit {
   description: string;
   pet: Pet;
   petId?: number;
+  vet: Vet;
+  vetId: number;
 }

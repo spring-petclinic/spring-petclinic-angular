@@ -42,28 +42,44 @@
 
     <form id="visit" class="form-horizontal" (ngSubmit)="onSubmit(visitForm.value)" #visitForm="ngForm">
 
-      <div class="form-group" >
+      <div class="form-group">
 
-        <div class="form-group has-feedback" [class.has-success]="date.dirty && date.valid" [class.has-error]="date.dirty && !date.valid">
+        <div class="form-group has-feedback" [class.has-success]="date.dirty && date.valid"
+             [class.has-error]="date.dirty && !date.valid">
           <label class="col-sm-2 control-label">Date</label>
           <div class="col-sm-10">
-            <input matInput [matDatepicker]="visitDateDatepicker" required [ngModel]="visit.date | date:'yyyy-MM-dd'" name="date"  #date="ngModel">
+            <input matInput [matDatepicker]="visitDateDatepicker" required [ngModel]="visit.date | date:'yyyy-MM-dd'"
+                   name="date" #date="ngModel">
             <mat-datepicker-toggle matSuffix [for]="visitDateDatepicker"></mat-datepicker-toggle>
             <mat-datepicker #visitDateDatepicker></mat-datepicker>
-            <span class="glyphicon form-control-feedback" [class.glyphicon-ok]="date.valid" [class.glyphicon-remove]="!date.valid" aria-hidden="true"></span>
+            <span class="glyphicon form-control-feedback" [class.glyphicon-ok]="date.valid"
+                  [class.glyphicon-remove]="!date.valid" aria-hidden="true"></span>
             <span class="help-block" *ngIf="date.dirty && date.hasError('required')">Date is required</span>
 
           </div>
         </div>
-        <div class="form-group has-feedback " [class.has-success]="description.dirty && description.valid" [class.has-error]="description.dirty && !description.valid">
+        <div class="form-group has-feedback " [class.has-success]="description.dirty && description.valid"
+             [class.has-error]="description.dirty && !description.valid">
           <label class="col-sm-2 control-label">Description</label>
           <div class="col-sm-10">
-            <input id="description" name="description" class="form-control"  required type="text"
+            <input id="description" name="description" class="form-control" required type="text"
                    [(ngModel)]="visit.description" #description="ngModel"/>
-            <span class="glyphicon form-control-feedback" [class.glyphicon-ok]="description.valid" [class.glyphicon-remove]="!description.valid" aria-hidden="true"></span>
+            <span class="glyphicon form-control-feedback" [class.glyphicon-ok]="description.valid"
+                  [class.glyphicon-remove]="!description.valid" aria-hidden="true"></span>
             <span class="help-block" *ngIf="description.dirty && description.hasError('required')">Description is required</span>
             <span class="help-block" *ngIf="description.dirty && description.hasError('minlength')">Description must be at least 2 characters long</span>
 
+          </div>
+        </div>
+        <div class="form-group has-feedback " [class.has-success]="vetId.dirty && !errorFlag"
+             [class.has-error]="vetId.dirty && errorFlag">
+          <label class="col-sm-2 control-label">Vet</label>
+          <div class="col-sm-10">
+            <input id="vetId" name="vetId" class="form-control" required
+                   [(ngModel)]="visit.vetId" #vetId="ngModel"/>
+            <span class="glyphicon form-control-feedback" [class.glyphicon-ok]="!errorFlag && vetId.valid"
+                  [class.glyphicon-remove]="!vetId.valid" aria-hidden="true"></span>
+            <span class="help-block" *ngIf="errorFlag && vetId.dirty">Not a valid vet</span>
           </div>
         </div>
 

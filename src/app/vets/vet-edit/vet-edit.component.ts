@@ -44,6 +44,8 @@ export class VetEditComponent implements OnInit {
   vet: Vet;
   specList: Specialty[];
   visitList: Visit[];
+  oldVisits: Visit[];
+  futureVisits: Visit[];
   errorMessage: string;
 
   constructor(private formBuilder: FormBuilder, private specialtyService: SpecialtyService, private visitService: VisitService,
@@ -51,6 +53,8 @@ export class VetEditComponent implements OnInit {
     this.vet = {} as Vet;
     this.specList = [] as Specialty[];
     this.visitList = [] as Visit[];
+    this.oldVisits = [] as Visit[];
+    this.futureVisits = [] as Visit[];
     this.buildForm();
   }
 
@@ -85,11 +89,39 @@ export class VetEditComponent implements OnInit {
     this.vet.specialties = this.route.snapshot.data.vet.specialties;
     const vetId = this.vet.id.toString();
     this.visitService.getVisitByVetId(vetId).subscribe(
-      list => {this.visitList = list; console.log(list);},
+      list => {
+        this.visitList = list; console.log(list);
+        for (const visit of list) {
+          if(Date.parse(visit.date) > Date.now()) {
+            this.futureVisits.push(visit);
+          } else {
+            this.oldVisits.push(visit);
+          }
+        }
+        },
       error => this.errorMessage = error as any
     );
     this.vet.visits = this.route.snapshot.data.visitList;
+    //this.splitVisitList(this.visitList);
     this.initFormValues();
+    for (const visit of this.visitList) {
+      if(Date.parse(visit.date) > Date.now()) {
+        this.futureVisits.push(visit);
+      } else {
+        this.oldVisits.push(visit);
+      }
+    }
+  }
+
+  splitVisitList(visitList: Visit[]) {
+    for (const visit of visitList) {
+        if(Date.parse(visit.date) > Date.now()) {
+          this.futureVisits.push(visit);
+        } else {
+          this.oldVisits.push(visit);
+        }
+    }
+    this.oldVisits = visitList;
   }
 
   onSubmit(vet: Vet) {
