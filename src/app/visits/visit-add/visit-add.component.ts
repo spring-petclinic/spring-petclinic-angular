@@ -45,6 +45,7 @@ export class VisitAddComponent implements OnInit {
   currentPetType: PetType;
   addedSuccess = false;
   errorMessage: string;
+  errorFlag = false;
 
   constructor(private visitService: VisitService,
               private petService: PetService,
@@ -81,15 +82,19 @@ export class VisitAddComponent implements OnInit {
 
     // format output from datepicker to short string yyyy-mm-dd format (rfc3339)
     visit.date = moment(visit.date).format('YYYY-MM-DD');
-
+    console.log(visit.vetId);
+    console.log(visit);
     this.visitService.addVisit(visit).subscribe(
       newVisit => {
+        console.log(newVisit)
         this.visit = newVisit;
         this.addedSuccess = true;
         that.gotoOwnerDetail();
       },
-      error => this.errorMessage = error as any
-    );
+      error => {
+        this.errorMessage = error as any;
+        this.errorFlag = true;
+      });
   }
 
   gotoOwnerDetail() {

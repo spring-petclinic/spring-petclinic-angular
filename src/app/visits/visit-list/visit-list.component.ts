@@ -49,16 +49,18 @@ export class VisitListComponent implements OnInit {
   }
 
   deleteVisit(visit: Visit) {
-    this.visitService.deleteVisit(visit.id.toString()).subscribe(
-      response => {
-        this.responseStatus = response;
-        console.log('delete success');
-        this.visits.splice(this.visits.indexOf(visit), 1 );
-        if (this.visits.length === 0) {
+    if(confirm('Do you want to delete this visit?')) {
+      this.visitService.deleteVisit(visit.id.toString()).subscribe(
+        response => {
+          this.responseStatus = response;
+          console.log('delete success');
+          this.visits.splice(this.visits.indexOf(visit), 1);
+          if (this.visits.length === 0) {
             this.noVisits = true;
           }
-      },
-      error => this.errorMessage = error as any);
+        },
+        error => this.errorMessage = error as any);
+    }
   }
 
 }
