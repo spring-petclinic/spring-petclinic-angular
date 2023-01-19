@@ -35,26 +35,35 @@ import {PartsModule} from './parts/parts.module';
 import {SpecialtiesModule} from './specialties/specialties.module';
 import {HttpErrorHandler} from './error.service';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {MatInputModule} from '@angular/material/input';
+import {MatIconModule} from '@angular/material/icon';
+import {MatButtonModule} from '@angular/material/button';
+import { SearchModule } from './search/search.module';
 
 
 @NgModule({
   declarations: [
     AppComponent,
+
   ],
-  imports: [
-    BrowserModule,
-    FormsModule,
-    HttpClientModule,
-    OwnersModule,
-    PetsModule,
-    VisitsModule,
-    PetTypesModule,
-    VetsModule,
-    SpecialtiesModule,
-    PartsModule,
-    BrowserAnimationsModule,
-    AppRoutingModule
-  ],
+    imports: [
+        BrowserModule,
+        FormsModule,
+        HttpClientModule,
+        OwnersModule,
+        PetsModule,
+        VisitsModule,
+        PetTypesModule,
+        VetsModule,
+        SpecialtiesModule,
+        PartsModule,
+        BrowserAnimationsModule,
+        SearchModule,
+        AppRoutingModule,
+        MatInputModule,
+        MatIconModule,
+        MatButtonModule,
+    ],
   providers: [
     HttpErrorHandler,
   ],

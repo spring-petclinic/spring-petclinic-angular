@@ -22,7 +22,6 @@
 
 import {Specialty} from '../specialties/specialty';
 import {Visit} from '../visits/visit';
-import {Observable} from 'rxjs';
 
 export interface Vet {
   id: number;
