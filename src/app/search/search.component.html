@@ -1,9 +1,12 @@
-<form class="search-form">
+<form class="search-form" >
   <mat-form-field class="example-full-width">
     <span matPrefix> </span>
-    <input type="tel" matInput placeholder="Search" name="search">
+    <input type="tel" matInput placeholder="Search" [(ngModel)]="search" name="search" (mousedown)="resetEmpty()">
     <button matSuffix mat-button (click)="clickSearch(search)">
       <mat-icon>search</mat-icon>
     </button>
   </mat-form-field>
 </form>
+    <div *ngIf="empty"
+         class="alert alert-danger"> Please input a value.
+    </div>

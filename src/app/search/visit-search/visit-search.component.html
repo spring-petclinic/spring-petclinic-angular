@@ -21,7 +21,7 @@
   <div *ngIf="!dataSource">
     No results.
   </div>
-  <div *ngIf="dataSource.empty">
+  <div *ngIf="dataSource">
     <table id="vets" class="table table-striped">
       <thead>
       <tr>
@@ -40,7 +40,7 @@
           {{visit.description}}
         </td>
         <td>
-          <button class="btn btn-default" (click)="onSelect(visit)">Edit Vet</button>
+          <button class="btn btn-default" (click)="onSelect(visit)">Edit Visit</button>
         </td>
       </tr>
       </tbody>

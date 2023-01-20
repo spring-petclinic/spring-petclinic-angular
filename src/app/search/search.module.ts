@@ -16,6 +16,7 @@ import {PetSearchComponent} from './pet-search/pet-search.component';
 import {ResultListComponent} from './result-list/result-list.component';
 import {VetSearchComponent} from './vet-search/vet-search.component';
 import {VisitSearchComponent} from './visit-search/visit-search.component';
+import {FormsModule} from '@angular/forms';
 
 
 @NgModule({
@@ -39,7 +40,8 @@ import {VisitSearchComponent} from './visit-search/visit-search.component';
     MatButtonModule,
     MatPaginatorModule,
     MatTableModule,
-    MatSortModule
+    MatSortModule,
+    FormsModule
   ], providers: [SearchService]
 })
 export class SearchModule {

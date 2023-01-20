@@ -8,15 +8,32 @@ import {Router} from '@angular/router';
 })
 export class SearchComponent implements OnInit {
 
+  searchForm;
+  empty: boolean = false;
   ngOnInit(): void {
   }
-
-  search: string = '';
+  search: string ='';
 
   constructor(private router: Router) {
   }
 
   clickSearch(search: string) {
-    this.router.navigate(['/result',search]);
+    console.log(search);
+    if(search == '') {
+      this.empty = true;
+    }
+    if(search != ''){
+      this.empty = false;
+      this.router.navigateByUrl('/RefreshComponent', { skipLocationChange: true }).then(() => {
+        this.router.navigate(['/result'], {queryParams: {search: search}});
+      });
+      this.search = '';
+    }
   }
+
+  resetEmpty() {
+    this.empty = false;
+  }
+
+
 }

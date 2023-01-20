@@ -28,17 +28,14 @@
           <th>Name</th>
           <th>Type</th>
           <th>Birth date</th>
-          <th>to Owner</th>
         </tr>
         </thead>
 
         <tbody>
         <tr *ngFor="let pet of dataSource">
-          <td>{{ pet.name }}</td>
+          <td (click)="onSelect(pet.id)"><a routerLink="/pets/{{pet.id}}/edit" routerLinkActive="active">{{ pet.name }}</a></td>
           <td>{{ pet.type.name }}</td>
           <td>{{ pet.birthDate }}</td>
-          <td class="ownerFullName"><a routerLink="/owners/{{pet.ownerId}}" routerLinkActive="active"
-                                       (click)="onSelect(pet.ownerId)">go to Owner</a></td>
         </tbody>
       </table>
       <mat-paginator #paginator [length]="length"

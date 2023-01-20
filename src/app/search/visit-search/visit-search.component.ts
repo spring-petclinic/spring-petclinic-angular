@@ -3,6 +3,7 @@ import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import {ActivatedRoute, Router} from '@angular/router';
 import {SearchService} from '../search.service';
 import {Visit} from '../../visits/visit';
+import {environment} from '../../../environments/environment';
 
 @Component({
   selector: 'app-visit-search',
@@ -19,7 +20,7 @@ export class VisitSearchComponent implements OnInit {
   errorMessage: string;
   lastName: string;
   length: number;
-  pageSize: number = 5;
+  pageSize: number = environment.RESULT_PAGINATOR_PAGE_SIZE;
   currentPage: number = 1;
 
   dataSource;
@@ -58,7 +59,7 @@ export class VisitSearchComponent implements OnInit {
   }
 
   onSelect(visit: Visit) {
-    this.router.navigate(['/visits', visit.id]);
+    this.router.navigate(['/visits', visit.id,'edit']);
   }
 
 }

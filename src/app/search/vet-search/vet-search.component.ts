@@ -3,6 +3,7 @@ import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import {ActivatedRoute, Router} from '@angular/router';
 import {SearchService} from '../search.service';
 import {Vet} from '../../vets/vet';
+import {environment} from '../../../environments/environment';
 
 @Component({
   selector: 'app-vet-search',
@@ -19,7 +20,7 @@ export class VetSearchComponent implements OnInit {
   errorMessage: string;
   lastName: string;
   length: number;
-  pageSize: number = 5;
+  pageSize: number = environment.RESULT_PAGINATOR_PAGE_SIZE;
   currentPage: number = 1;
 
   dataSource;
@@ -58,6 +59,6 @@ export class VetSearchComponent implements OnInit {
   }
 
   onSelect(vet: Vet) {
-    this.router.navigate(['/vets', vet.id]);
+    this.router.navigate(['/vets', vet.id,'edit']);
   }
 }

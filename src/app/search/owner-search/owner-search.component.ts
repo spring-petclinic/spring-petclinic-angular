@@ -3,6 +3,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {SearchService} from '../search.service';
 import {Owner} from '../../owners/owner';
 import {MatPaginator, PageEvent} from '@angular/material/paginator';
+import {environment} from '../../../environments/environment';
 
 @Component({
   selector: 'app-owner-search',
@@ -19,7 +20,7 @@ export class OwnerSearchComponent implements OnInit {
   errorMessage: string;
   lastName: string;
   length: number;
-  pageSize: number = 5;
+  pageSize: number = environment.RESULT_PAGINATOR_PAGE_SIZE;
   currentPage: number = 1;
 
   dataSource;

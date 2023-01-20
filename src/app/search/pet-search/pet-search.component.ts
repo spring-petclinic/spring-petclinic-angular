@@ -3,6 +3,7 @@ import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import {ActivatedRoute, Router} from '@angular/router';
 import {SearchService} from '../search.service';
 import {Pet} from '../../pets/pet';
+import {environment} from '../../../environments/environment';
 
 @Component({
   selector: 'app-pet-search',
@@ -19,7 +20,7 @@ export class PetSearchComponent implements OnInit {
   errorMessage: string;
   lastName: string;
   length: number;
-  pageSize: number = 5;
+  pageSize: number = environment.RESULT_PAGINATOR_PAGE_SIZE;
   currentPage: number = 1;
 
   dataSource;
@@ -58,7 +59,7 @@ export class PetSearchComponent implements OnInit {
   }
 
   onSelect(pet: Pet) {
-    this.router.navigate(['/pets', pet.id]);
+    this.router.navigate(['/pets', pet.id, 'edit']);
   }
 
   pageEvent: PageEvent;
