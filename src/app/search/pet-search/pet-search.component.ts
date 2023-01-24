@@ -55,13 +55,15 @@ export class PetSearchComponent implements OnInit {
         this.dataSource = this.pets.slice(start, end);
       },
       error => this.errorMessage = error as any);
-
   }
 
   onSelect(pet: Pet) {
     this.router.navigate(['/pets', pet.id, 'edit']);
   }
 
+  goToOwner(ownerId: number) {
+    this.router.navigate(['/owners', ownerId]);
+  }
   pageEvent: PageEvent;
 
 }

@@ -25,9 +25,10 @@
       <table class="table table-striped">
         <thead>
         <tr>
-          <th>Name</th>
+          <th>Pet name</th>
           <th>Type</th>
           <th>Birth date</th>
+          <th>Owner</th>
         </tr>
         </thead>
 
@@ -36,6 +37,7 @@
           <td (click)="onSelect(pet.id)"><a routerLink="/pets/{{pet.id}}/edit" routerLinkActive="active">{{ pet.name }}</a></td>
           <td>{{ pet.type.name }}</td>
           <td>{{ pet.birthDate }}</td>
+          <td (click)="goToOwner(pet.ownerId)"><a routerLinkActive="active" routerLink="/owners/{{pet.ownerId}}">go to Owner</a></td>
         </tbody>
       </table>
       <mat-paginator #paginator [length]="length"
