@@ -102,7 +102,9 @@ describe('VisitEditComponent', () => {
       id: 1,
       date: '2016-09-07',
       description: '',
-      pet: testPet
+      pet: testPet,
+      vet: null,
+      vetId: 1
     };
 
     visitService = fixture.debugElement.injector.get(VisitService);

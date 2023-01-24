@@ -33,8 +33,6 @@ import { RouterStub } from '../../testing/router-stubs';
 import { Owner } from '../owner';
 import { Observable, of } from 'rxjs';
 import { By } from '@angular/platform-browser';
-import { OwnersRoutingModule } from '../owners-routing.module';
-import { OwnerListComponent } from '../owner-list/owner-list.component';
 
 class OwnserServiceStub {
   addOwner(owner: Owner): Observable<Owner> {
@@ -86,7 +84,7 @@ describe('OwnerAddComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  
+
 
   it('back button routing', async() => {
     let buttons = fixture.debugElement.queryAll(By.css('button'));
@@ -96,7 +94,7 @@ describe('OwnerAddComponent', () => {
     expect(router.navigate).toHaveBeenCalledWith(['/owners']);
   });
 
- 
+
   it('add owner', async(() => {
     let buttons = fixture.debugElement.queryAll(By.css('button'));
     let addOwnerButton = buttons[1].nativeElement;

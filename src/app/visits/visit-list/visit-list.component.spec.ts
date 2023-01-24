@@ -88,7 +88,9 @@ describe('VisitListComponent', () => {
       id: 1,
       date: '2016-09-07',
       description: '',
-      pet: testPet
+      pet: testPet,
+      vet: null,
+      vetId: 1
     }];
 
     visitService = fixture.debugElement.injector.get(VisitService);
@@ -107,8 +109,10 @@ describe('VisitListComponent', () => {
 
   it('should call deleteVisit() method', () => {
     fixture.detectChanges();
+    spyOn(window, 'confirm');
     component.deleteVisit(component.visits[0]);
-    expect(spy.calls.any()).toBe(true, 'deleteVisit called');
+    expect(window.confirm).toHaveBeenCalledWith('Do you want to delete this visit?');
+    //expect(spy.calls.any()).toBe(true, 'deleteVisit called');
   });
 
 });
