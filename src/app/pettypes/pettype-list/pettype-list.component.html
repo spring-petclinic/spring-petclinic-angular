@@ -44,8 +44,8 @@
       <app-pettype-add (newPetType)="onNewPettype($event)">...</app-pettype-add>
     </div>
     <div>
-      <button class="btn btn-default" (click)="gotoHome()">Home</button>
-      <button class="btn btn-default" (click)="showAddPettypeComponent()"> Add </button>
+      <button *ngIf="isPetTypesDataReceived" class="btn btn-default" (click)="gotoHome()">Home</button>
+      <button *ngIf="isPetTypesDataReceived" class="btn btn-default" (click)="showAddPettypeComponent()"> Add </button>
     </div>
   </div>
 </div>
