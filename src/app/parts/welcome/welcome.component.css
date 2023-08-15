@@ -15,4 +15,43 @@
  *  * limitations under the License.
  *
  */
+/* Center all HTML components */
+body, html {
+  height: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 
+.container-fluid {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.container.xd-container {
+  text-align: center;
+}
+
+.row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.col-md-12 {
+  text-align: center;
+}
+
+.img-responsive {
+  display: block;
+  margin: 0 auto;
+}
+
+.title {
+  text-align: center;
+  padding-top: 2rem;
+}
