@@ -24,6 +24,7 @@ import {Component, OnInit} from '@angular/core';
 import {OwnerService} from '../owner.service';
 import {Owner} from '../owner';
 import {Router} from '@angular/router';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-owner-list',
@@ -35,13 +36,18 @@ export class OwnerListComponent implements OnInit {
   lastName: string;
   owners: Owner[];
   listOfOwnersWithLastName: Owner[];
+  isOwnersDataReceived: boolean = false;
 
   constructor(private router: Router, private ownerService: OwnerService) {
 
   }
 
   ngOnInit() {
-    this.ownerService.getOwners().subscribe(
+    this.ownerService.getOwners().pipe(
+      finalize(() => {
+        this.isOwnersDataReceived = true;
+      })
+    ).subscribe(
       owners => this.owners = owners,
       error => this.errorMessage = error as any);
   }

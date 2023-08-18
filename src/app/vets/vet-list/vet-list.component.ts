@@ -24,6 +24,7 @@ import {Component, OnInit} from '@angular/core';
 import {Vet} from '../vet';
 import {VetService} from '../vet.service';
 import {Router} from '@angular/router';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-vet-list',
@@ -34,13 +35,18 @@ export class VetListComponent implements OnInit {
   vets: Vet[];
   errorMessage: string;
   responseStatus: number;
+  isVetDataReceived: boolean = false;
 
   constructor(private vetService: VetService, private router: Router) {
     this.vets = [];
   }
 
   ngOnInit() {
-    this.vetService.getVets().subscribe(
+    this.vetService.getVets().pipe(
+      finalize(() => {
+        this.isVetDataReceived = true;
+      })
+    ).subscribe(
       vets => this.vets = vets,
       error => this.errorMessage = error as any);
   }

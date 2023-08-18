@@ -69,7 +69,7 @@
         </tbody>
       </table>
       <div>
-        <button class="btn btn-default" (click)="addOwner()">Add Owner</button>
+        <button *ngIf="isOwnersDataReceived" class="btn btn-default" (click)="addOwner()">Add Owner</button>
       </div>
     </div>
   </div>

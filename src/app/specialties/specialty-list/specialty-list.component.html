@@ -44,8 +44,8 @@
       <app-specialty-add (newSpeciality)="onNewSpecialty($event)">...</app-specialty-add>
     </div>
     <div>
-      <button class="btn btn-default" (click)="gotoHome()">Home</button>
-      <button class="btn btn-default" (click)="showAddSpecialtyComponent()"> Add </button>
+      <button *ngIf="isSpecialitiesDataReceived" class="btn btn-default" (click)="gotoHome()">Home</button>
+      <button *ngIf="isSpecialitiesDataReceived" class="btn btn-default" (click)="showAddSpecialtyComponent()"> Add </button>
     </div>
   </div>
 </div>
