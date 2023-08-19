@@ -26,7 +26,7 @@ import {Observable} from 'rxjs';
 import {Vet} from './vet';
 import {HttpClient} from '@angular/common/http';
 import {HandleError, HttpErrorHandler} from '../error.service';
-import {catchError} from 'rxjs/internal/operators';
+import {catchError} from 'rxjs/operators';
 
 
 @Injectable()

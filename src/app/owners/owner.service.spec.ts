@@ -39,7 +39,7 @@ import { HttpErrorHandler } from '../error.service';
 import { OwnerService } from './owner.service';
 import { Owner } from './owner';
 import { Type } from '@angular/core';
-import { defer } from 'rxjs/internal/observable/defer';
+import { defer } from 'rxjs/observable/defer';
 
 describe('OwnerService', () => {
   let httpTestingController: HttpTestingController;

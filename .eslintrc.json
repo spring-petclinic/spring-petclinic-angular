@@ -34,16 +34,16 @@
             "prefix": "app",
             "style": "camelCase",
             "type": "attribute"
-          
-          }],
-          "@typescript-eslint/quotes": [
-            "error",
-            "single",
-            {
-              "allowTemplateLiterals": true
-            }
-          ],
-        "@angular-eslint/no-empty-lifecycle-method":"off"
+          }
+        ],
+        "@typescript-eslint/quotes": [
+          "error",
+          "single",
+          {
+            "allowTemplateLiterals": true
+          }
+        ],
+        "@angular-eslint/no-empty-lifecycle-method": "off"
       }
     },
     {

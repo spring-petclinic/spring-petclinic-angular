@@ -24,7 +24,7 @@ import {Injectable} from '@angular/core';
 import {environment} from '../../environments/environment';
 import {Observable} from 'rxjs';
 import {Specialty} from './specialty';
-import {catchError} from 'rxjs/internal/operators';
+import {catchError} from 'rxjs/operators';
 import {HandleError, HttpErrorHandler} from '../error.service';
 import {HttpClient} from '@angular/common/http';
 
