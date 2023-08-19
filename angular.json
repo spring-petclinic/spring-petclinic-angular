@@ -16,7 +16,10 @@
             "main": "src/main.ts",
             "tsConfig": "src/tsconfig.app.json",
             "polyfills": "src/polyfills.ts",
-            "assets": ["src/assets", "src/favicon.ico"],
+            "assets": [
+              "src/assets",
+              "src/favicon.ico"
+            ],
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.css",
               "src/styles.css"
@@ -31,7 +34,10 @@
             "buildOptimizer": false,
             "sourceMap": true,
             "optimization": false,
-            "namedChunks": true
+            "namedChunks": true,
+            "allowedCommonJsDependencies":[
+              "moment"
+            ]
           },
           "configurations": {
             "production": {
@@ -99,13 +105,19 @@
               "node_modules/bootstrap/dist/css/bootstrap.css",
               "src/styles.css"
             ],
-            "assets": ["src/assets", "src/favicon.ico"]
+            "assets": [
+              "src/assets",
+              "src/favicon.ico"
+            ]
           }
         },
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
+            ]
           }
         }
       }
@@ -125,7 +137,6 @@
       }
     }
   },
-  "defaultProject": "spring-petclinic-angular",
   "schematics": {
     "@schematics/angular:component": {
       "prefix": "app",

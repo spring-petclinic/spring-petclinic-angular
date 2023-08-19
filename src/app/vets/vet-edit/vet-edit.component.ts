@@ -26,7 +26,7 @@ import {VetService} from '../vet.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {SpecialtyService} from '../../specialties/specialty.service';
 import {Specialty} from '../../specialties/specialty';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-vet-edit',
@@ -34,16 +34,16 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
   styleUrls: ['./vet-edit.component.css']
 })
 export class VetEditComponent implements OnInit {
-  vetEditForm: FormGroup;
-  idCtrl: FormControl;
-  firstNameCtrl: FormControl;
-  lastNameCtrl: FormControl;
-  specialtiesCtrl: FormControl;
+  vetEditForm: UntypedFormGroup;
+  idCtrl: UntypedFormControl;
+  firstNameCtrl: UntypedFormControl;
+  lastNameCtrl: UntypedFormControl;
+  specialtiesCtrl: UntypedFormControl;
   vet: Vet;
   specList: Specialty[];
   errorMessage: string;
 
-  constructor(private formBuilder: FormBuilder, private specialtyService: SpecialtyService,
+  constructor(private formBuilder: UntypedFormBuilder, private specialtyService: SpecialtyService,
               private vetService: VetService, private route: ActivatedRoute, private router: Router) {
     this.vet = {} as Vet;
     this.specList = [] as Specialty[];
@@ -51,10 +51,10 @@ export class VetEditComponent implements OnInit {
   }
 
   buildForm() {
-    this.idCtrl = new FormControl(null);
-    this.firstNameCtrl = new FormControl('', [Validators.required, Validators.minLength(2)]);
-    this.lastNameCtrl = new FormControl('', [Validators.required, Validators.minLength(2)]);
-    this.specialtiesCtrl = new FormControl(null);
+    this.idCtrl = new UntypedFormControl(null);
+    this.firstNameCtrl = new UntypedFormControl('', [Validators.required, Validators.minLength(2)]);
+    this.lastNameCtrl = new UntypedFormControl('', [Validators.required, Validators.minLength(2)]);
+    this.specialtiesCtrl = new UntypedFormControl(null);
     this.vetEditForm = this.formBuilder.group({
       id: this.idCtrl,
       firstName: this.firstNameCtrl,
