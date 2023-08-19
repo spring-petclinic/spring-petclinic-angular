@@ -15,4 +15,38 @@
  *  * limitations under the License.
  *
  */
+ body {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
 
+.main-wrapper {
+  flex: 1;
+}
+
+div.navbar-header {
+  padding: inherit;
+}
+
+.content-wrapper {
+  min-height: calc(100% - 8rem);
+}
+
+.footer-wrapper {
+  background-color: #f8f9fa;
+  text-align: center;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 8rem;
+}
+
+@media screen and (max-width: 768px) {
+  .content-wrapper {
+    margin-bottom: calc(8rem - 30px);
+
+  }
+}
