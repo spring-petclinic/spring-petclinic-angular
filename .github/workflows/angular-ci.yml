@@ -29,7 +29,7 @@ jobs:
       run: npm ci
 
     - name: Build
-      run: npm run build --if-present -- --prod
+      run: npm run build --if-present -- --configuration production
 
     - name: Lint
       run: npm run lint
