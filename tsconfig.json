@@ -18,5 +18,10 @@
     ],
     "module": "es2020",
     "useDefineForClassFields": false
+  },
+  "angularCompilerOptions": {
+    "strictTemplates": true,
+    "strictInputTypes": true,
+    "strictNullInputTypes": true
   }
 }
