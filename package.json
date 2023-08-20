@@ -25,7 +25,7 @@
     "@angular/platform-browser-dynamic": "16.2.1",
     "@angular/router": "16.2.1",
     "bootstrap": "^3.3.7",
-    "core-js": "^2.5.5",
+    "core-js": "^3.32.1",
     "eslint-config-prettier": "^9.0.0",
     "jquery": "^3.3.1",
     "moment": "^2.29.4",
