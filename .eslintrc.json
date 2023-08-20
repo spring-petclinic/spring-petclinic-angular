@@ -20,6 +20,10 @@
         "plugin:@angular-eslint/template/process-inline-templates",
         "plugin:prettier/recommended"
       ],
+      "plugins": [
+        "prettier",
+        "@typescript-eslint"
+      ],
       "rules": {
         "@angular-eslint/component-selector": [
           "error",
