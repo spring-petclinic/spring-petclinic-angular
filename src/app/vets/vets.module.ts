@@ -23,7 +23,7 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {MatLegacySelectModule as MatSelectModule} from '@angular/material/legacy-select';
+import {MatSelectModule} from '@angular/material/select';
 import {VetListComponent} from './vet-list/vet-list.component';
 import {VetService} from './vet.service';
 import {VetsRoutingModule} from './vets-routing.module';
