@@ -11,13 +11,15 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "aot": true,
             "outputPath": "dist",
             "index": "src/index.html",
             "main": "src/main.ts",
             "tsConfig": "src/tsconfig.app.json",
             "polyfills": "src/polyfills.ts",
-            "assets": ["src/assets", "src/favicon.ico"],
+            "assets": [
+              "src/assets",
+              "src/favicon.ico"
+            ],
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.css",
               "src/styles.css"
@@ -26,6 +28,15 @@
               "node_modules/jquery/dist/jquery.js",
               "node_modules/tether/dist/js/tether.js",
               "node_modules/bootstrap/dist/js/bootstrap.js"
+            ],
+            "vendorChunk": true,
+            "extractLicenses": false,
+            "buildOptimizer": false,
+            "sourceMap": true,
+            "optimization": false,
+            "namedChunks": true,
+            "allowedCommonJsDependencies": [
+              "moment"
             ]
           },
           "configurations": {
@@ -40,7 +51,6 @@
               "outputHashing": "all",
               "sourceMap": false,
               "namedChunks": false,
-              "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
@@ -51,7 +61,8 @@
                 }
               ]
             }
-          }
+          },
+          "defaultConfiguration": ""
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -94,13 +105,19 @@
               "node_modules/bootstrap/dist/css/bootstrap.css",
               "src/styles.css"
             ],
-            "assets": ["src/assets", "src/favicon.ico"]
+            "assets": [
+              "src/assets",
+              "src/favicon.ico"
+            ]
           }
         },
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
+            ]
           }
         }
       }
@@ -120,7 +137,6 @@
       }
     }
   },
-  "defaultProject": "spring-petclinic-angular",
   "schematics": {
     "@schematics/angular:component": {
       "prefix": "app",
@@ -128,6 +144,12 @@
     },
     "@schematics/angular:directive": {
       "prefix": "app"
+    },
+    "@angular-eslint/schematics:application": {
+      "setParserOptionsProject": true
+    },
+    "@angular-eslint/schematics:library": {
+      "setParserOptionsProject": true
     }
   }
 }

@@ -8,7 +8,7 @@
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "target": "es2018",
+    "target": "ES2022",
     "typeRoots": [
       "node_modules/@types"
     ],
@@ -16,6 +16,12 @@
       "es2017",
       "dom"
     ],
-    "module": "es2020"
+    "module": "es2020",
+    "useDefineForClassFields": false
+  },
+  "angularCompilerOptions": {
+    "strictTemplates": true,
+    "strictInputTypes": true,
+    "strictNullInputTypes": true
   }
 }

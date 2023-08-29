@@ -26,7 +26,7 @@ import {VetService} from '../vet.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {SpecialtyService} from '../../specialties/specialty.service';
 import {Specialty} from '../../specialties/specialty';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup, FormControl, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-vet-edit',
@@ -51,7 +51,7 @@ export class VetEditComponent implements OnInit {
   }
 
   buildForm() {
-    this.idCtrl = new FormControl(null);
+this.idCtrl = new FormControl(null);
     this.firstNameCtrl = new FormControl('', [Validators.required, Validators.minLength(2)]);
     this.lastNameCtrl = new FormControl('', [Validators.required, Validators.minLength(2)]);
     this.specialtiesCtrl = new FormControl(null);
