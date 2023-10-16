@@ -18,6 +18,7 @@
           <label class="col-sm-1 control-label">Name</label>
           <div class="col-sm-6">
             <input id="name" name="name" class="form-control" type="text" [(ngModel)]="speciality.name" #specialityName="ngModel" />
+            <span class="help-block" *ngIf="specialityForm.submitted || specialityName.dirty && specialityName.hasError('required')">Name is required</span>
           </div>
           <button class="btn btn-default" type="submit">Save</button>
         </div>
