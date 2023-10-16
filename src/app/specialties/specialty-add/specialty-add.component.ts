@@ -46,7 +46,6 @@ export class SpecialtyAddComponent implements OnInit {
   ngOnInit() {}
 
   onSubmit(specialty: Specialty) {
-    specialty.id = null;
     this.specialtyService.addSpecialty(specialty).subscribe(
       (newSpecialty) => {
         this.speciality = newSpecialty;
