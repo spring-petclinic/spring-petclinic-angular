@@ -29,8 +29,7 @@
           <div class="col-sm-6">
             <input id="name" name="name" class="form-control" required type="text" [(ngModel)]="pettype.name" #name="ngModel"/>
             <span class="glyphicon form-control-feedback" [class.glyphicon-ok]="name.valid" [class.glyphicon-remove]="!name.valid" aria-hidden="true"></span>
-            <span class="help-block" *ngIf="name.dirty && name.hasError('required')">Name is required</span
->
+            <span class="help-block" *ngIf="(pettypeForm.submitted && name.hasError('required')) || (name.dirty && name.hasError('required'))">Name is required</span>
           </div>
           <button class="btn btn-default" type="submit">Save</button>
         </div>

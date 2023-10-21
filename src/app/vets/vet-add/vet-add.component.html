@@ -28,7 +28,7 @@
         <div class="col-sm-10">
           <input type="text" class="form-control" id="firstName" [(ngModel)]="vet.firstName" minlength="2" required name="firstName" #firstName="ngModel"/>
           <span class="glyphicon form-control-feedback" [class.glyphicon-ok]="firstName.valid" [class.glyphicon-remove]="!firstName.valid" aria-hidden="true"></span>
-          <span class="help-block" *ngIf="firstName.dirty && firstName.hasError('required')">First name is required</span>
+          <span class="help-block" *ngIf="(vetForm.submitted && firstName.hasError('required')) || (firstName.dirty && firstName.hasError('required'))">First name is required</span>
           <span class="help-block" *ngIf="firstName.dirty && firstName.hasError('minlength')">First name must be at least 2 characters long</span>
         </div>
       </div>
@@ -37,7 +37,7 @@
         <div class="col-sm-10">
           <input type="text" class="form-control" id="lastName" [(ngModel)]="vet.lastName" name="lastName" minlength="2" required #lastName="ngModel"/>
           <span class="glyphicon form-control-feedback" [class.glyphicon-ok]="lastName.valid" [class.glyphicon-remove]="!lastName.valid" aria-hidden="true"></span>
-          <span class="help-block" *ngIf="lastName.dirty && lastName.hasError('required')">Last name is required</span>
+          <span class="help-block" *ngIf="(vetForm.submitted && lastName.hasError('required')) || (lastName.dirty && lastName.hasError('required'))">Last name is required</span>
           <span class="help-block" *ngIf="lastName.dirty && lastName.hasError('minlength')">Last name must be at least 2 characters long</span>
         </div>
       </div>
