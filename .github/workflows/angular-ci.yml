@@ -1,38 +1,48 @@
-name: Angular CI
+name: Angular CI/CD
 
 on:
   push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+    branches:
+      - main
+
+permissions:
+  id-token: write
+  contents: read
+
+env:
+  AZURE_WEBAPP_NAME: app-delecluse-01 # Remplacez par le nom de votre application Azure Web App
+  AZURE_WEBAPP_PACKAGE_PATH: '.'   # Répertoire de build de l'application Angular
+  NODE_VERSION: '18.x'                # Version de Node.js à utiliser
 
 jobs:
-  build:
-
+  build-and-deploy:
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [16.x, 18.x, 20.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-
     steps:
-    - uses: actions/checkout@v2
+      - name: 'Checkout GitHub Action'
+        uses: actions/checkout@main
 
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v2
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
+      - uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
-    - name : Install Dependencies
-      run: npm ci
+      - name: Setup Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ env.NODE_VERSION }}
 
-    - name: Build
-      run: npm run build --if-present -- --configuration production
+      - name: Install dependencies and build Angular app
+        run: |
+          npm install
+          npm run build --prod
+        working-directory: src  # Assurez-vous de spécifier le bon répertoire si nécessaire
 
-    - name: Lint
-      run: npm run lint
+      - name: Deploy to Azure Web App
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: ${{ env.AZURE_WEBAPP_NAME }}
+          package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
 
-    - name: Test
-      run: npm run test-headless
+      - name: Azure Logout
+        run: az logout
