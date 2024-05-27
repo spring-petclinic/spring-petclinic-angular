@@ -23,5 +23,5 @@
 
 export const environment = {
   production: false,
-  REST_API_URL: 'http://app-delecluse-02.azurewebsites.net/petclinic/api/'
+  REST_API_URL: 'http://app-delecluse-docker-02.azurewebsites.net/petclinic/api/'
 };
