@@ -10,8 +10,8 @@ permissions:
   contents: read
 
 env:
-  AZURE_WEBAPP_NAME: app-delecluse-03 # Remplacez par le nom de votre application Azure Web App
-  AZURE_WEBAPP_PACKAGE_PATH: '.'   # Répertoire de build de l'application Angular
+  AZURE_WEBAPP_NAME: app-delecluse-01 # Remplacez par le nom de votre application Azure Web App
+  AZURE_WEBAPP_PACKAGE_PATH: './dist'   # Répertoire de build de l'application Angular
   NODE_VERSION: '18.x'                # Version de Node.js à utiliser
 
 jobs:
