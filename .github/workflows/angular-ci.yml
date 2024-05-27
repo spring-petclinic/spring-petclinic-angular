@@ -36,7 +36,7 @@ jobs:
         run: |
           npm install
           npm run build --prod
-        working-directory: src  # Assurez-vous de spécifier le bon répertoire si nécessaire
+        working-directory: .  # Assurez-vous de spécifier le bon répertoire si nécessaire
 
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
