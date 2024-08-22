@@ -58,11 +58,13 @@
         <div class="form-group has-feedback " [class.has-success]="description.dirty && description.valid" [class.has-error]="description.dirty && !description.valid">
           <label class="col-sm-2 control-label">Description</label>
           <div class="col-sm-10">
-            <input id="description" name="description" class="form-control"  required type="text"
+            <input id="description" name="description" class="form-control"   minlength="1" maxlength="255" required type="text"
                    [(ngModel)]="visit.description" #description="ngModel"/>
             <span class="glyphicon form-control-feedback" [class.glyphicon-ok]="description.valid" [class.glyphicon-remove]="!description.valid" aria-hidden="true"></span>
             <span class="help-block" *ngIf="description.dirty && description.hasError('required')">Description is required</span>
-            <span class="help-block" *ngIf="description.dirty && description.hasError('minlength')">Description must be at least 2 characters long</span>
+            <span class="help-block" *ngIf="description.dirty && description.hasError('minlength')">Description must be at least 1 characters long</span>
+            <span class="help-block" *ngIf="description.dirty && description.hasError('maxlength')">Description may be at most 255 characters long</span>
+
 
           </div>
         </div>

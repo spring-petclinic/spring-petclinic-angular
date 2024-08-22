@@ -57,12 +57,13 @@
         <div class="form-group has-feedback " [class.has-success]="description.dirty && description.valid" [class.has-error]="description.dirty && !description.valid">
           <label class="col-sm-2 control-label">Description</label>
           <div class="col-sm-10">
-            <input id="description" name="description" class="form-control" type="text" required
+            <input id="description" name="description" class="form-control" type="text" minlength="1" maxlength="255" required
                    [(ngModel)]="visit.description" #description="ngModel"/>
             <span class="glyphicon form-control-feedback" [class.glyphicon-ok]="description.valid" [class.glyphicon-remove]="!description.valid" aria-hidden="true"></span>
             <span class="help-block" *ngIf="description.dirty && description.hasError('required')">Description is required</span>
-
-          </div>
+             <span class="help-block" *ngIf="description.dirty && description.hasError('minlength')">Description must be at least 1 characters long</span>           <span class="help-block" *ngIf="description.dirty && description.hasError('maxlength')">Description may be at most 255 charaters long</span>
+             <span class="help-block" *ngIf="description.dirty && description.hasError('maxlength')">Description may be at most 255 characters long</span>           <span class="help-block" *ngIf="description.dirty && description.hasError('maxlength')">Description may be at most 255 charaters long</span>
+         </div>
         </div>
 
       </div>
@@ -71,7 +72,7 @@
           <input type="hidden" name="id" id="id" [(ngModel)]="visit.id"/>
           <input type="hidden" name="pet" id="pet" [(ngModel)]="visit.pet"/>
           <button class="btn btn-default" type="button" (click)="gotoOwnerDetail()">Back</button>
-          <button class="btn btn-default" type="submit">Update Visit</button>
+          <button class="btn btn-default" type="submit" [disabled]="visitForm.invalid">Update Visit</button>
         </div>
       </div>
     </form>
