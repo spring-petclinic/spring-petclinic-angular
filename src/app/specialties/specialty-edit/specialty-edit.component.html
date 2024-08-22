@@ -32,6 +32,7 @@
               <span class="help-block" *ngIf="name.dirty && name.hasError('maxlength')">Name may be only 80 characters long</span>
               <span class="help-block" *ngIf="name.dirty && name.hasError('minlength')">Name must be at least 1 characters long</span>
               <span class="help-block" *ngIf="name.dirty && name.hasError('pattern')">Name must begin with a letter or digit</span>
+              <span class="help-block" *ngIf="name.dirty && name.hasError('required')">Name is required</span>
              </div>
             <button class="btn btn-default" type="submit" [disabled]="!specialtyForm.valid">Update</button>
             <button class="btn btn-default" (click)="onBack()">Cancel</button>
