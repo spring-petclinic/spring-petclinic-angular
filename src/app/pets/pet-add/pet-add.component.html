@@ -88,7 +88,7 @@
           <div class="col-sm-offset-2 col-sm-10">
             <br/>
             <button class="btn btn-default" type="button" (click)="gotoOwnerDetail()">< Back</button>
-            <button class="btn btn-default" type="submit">Save Pet</button>
+            <button class="btn btn-default" type="submit"  [disabled]="!petForm.valid">Save Pet</button>
           </div>
         </div>
       </form>
