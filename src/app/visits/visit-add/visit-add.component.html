@@ -75,7 +75,7 @@
           <input type="hidden" name="id" id="id" [(ngModel)]="visit.id"/>
           <input type="hidden" name="pet" id="pet" [(ngModel)]="visit.pet"/>
           <button class="btn btn-default" type="button" (click)="gotoOwnerDetail()">Back</button>
-          <button class="btn btn-default" type="submit">Add Visit</button>
+          <button class="btn btn-default" type="submit" [disabled]="!visitForm.valid">Add Visit</button>
         </div>
       </div>
     </form>

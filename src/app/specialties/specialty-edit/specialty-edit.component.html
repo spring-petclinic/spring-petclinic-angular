@@ -27,7 +27,7 @@
           <div class="form-group has-feedback" [class.has-success]="name.dirty && name.valid" [class.has-error]="name.dirty && !name.valid">
             <label class="col-sm-1 control-label">Name</label>
             <div class="col-sm-6">
-              <input id="name" name="name" class="form-control" type="text"  minlength="1" maxlength="30" pattern="^[A-Za-z0-9].{0,29}$" required [(ngModel)]="specialty.name" #name="ngModel"/>
+              <input id="name" name="name" class="form-control" type="text"  minlength="1" maxlength="80" pattern="^[A-Za-z0-9].{0,79}$" required [(ngModel)]="specialty.name" #name="ngModel"/>
               <span class="glyphicon form-control-feedback" [class.glyphicon-ok]="name.valid" [class.glyphicon-remove]="!name.valid" aria-hidden="true"></span>
               <span class="help-block" *ngIf="name.dirty && name.hasError('maxlength')">Name may be only 80 characters long</span>
               <span class="help-block" *ngIf="name.dirty && name.hasError('minlength')">Name must be at least 1 characters long</span>
