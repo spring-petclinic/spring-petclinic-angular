@@ -16,78 +16,82 @@
   ~  */
   -->
 
-<div class="container-fluid">
-  <div class="container xd-container">
-    <h2>
-      Add Pet
-    </h2>
-    <form class="form-horizontal" (ngSubmit)="onSubmit(petForm.value)" #petForm="ngForm">
-      <div class="form-group" hidden="true">
-        <input type="text" hidden="true" class="form-control" id="id" [(ngModel)]="pet.id" name="id"/>
-        <input type="text" hidden="true" class="form-control" id="owner" [(ngModel)]="pet.owner" name="owner"/>
-      </div>
-      <div class="form-group">
-        <label for="owner" class="col-sm-2 control-label">Owner</label>
-        <div class="col-sm-10">
-          <input id="owner_name" name="owner_name" class="form-control" type="text"
-                 value="{{ currentOwner.firstName }} {{ currentOwner.lastName }}" readonly/>
+  <div class="container-fluid">
+    <div class="container xd-container">
+      <h2>
+        Add Pet
+      </h2>
+      <form class="form-horizontal" (ngSubmit)="onSubmit(petForm.value)" #petForm="ngForm">
+        <div class="form-group" hidden="true">
+          <input type="text" hidden="true" class="form-control" id="id" [(ngModel)]="pet.id" name="id"/>
+          <input type="text" hidden="true" class="form-control" id="owner" [(ngModel)]="pet.owner" name="owner"/>
         </div>
-      </div>
-      <br/>
-
-      <div class="form-group has-feedback" [class.has-success]="name.dirty && name.valid"
-           [class.has-error]="name.dirty && !name.valid">
-        <label for="name" class="col-sm-2 control-label">Name</label>
-        <div class="col-sm-10">
-          <input id="name" name="name" required class="form-control" type="text" [(ngModel)]="pet.name"
-                 #name="ngModel"/>
-          <span class="glyphicon form-control-feedback" [class.glyphicon-ok]="name.valid"
-                [class.glyphicon-remove]="!name.valid" aria-hidden="true"></span>
-          <span class="help-block" *ngIf="name.dirty && name.hasError('required')">Name is required</span>
-        </div>
-      </div>
-
-      <div class="form-group  has-feedback" [class.has-success]="birthDate.dirty && birthDate.valid"
-           [class.has-error]="birthDate.dirty && !birthDate.valid">
-        <label class="col-sm-2 control-label">Birth Date</label>
-        <div class="col-sm-10">
-          <input matInput [matDatepicker]="birthDateDatepicker" required [ngModel]="pet.birthDate | date:'yyyy-MM-dd'"
-                 name="birthDate" #birthDate="ngModel">
-          <mat-datepicker-toggle matSuffix [for]="birthDateDatepicker"></mat-datepicker-toggle>
-          <mat-datepicker #birthDateDatepicker></mat-datepicker>
-          <span class="glyphicon form-control-feedback" [class.glyphicon-ok]="birthDate.valid"
-                [class.glyphicon-remove]="!birthDate.valid" aria-hidden="true"></span>
-          <span class="help-block"
-                *ngIf="birthDate.dirty && birthDate.hasError('required')">BirthDate is required</span>
-
-        </div>
-      </div>
-      <div class="control-group">
-        <div class="form-group has-feedback" [class.has-success]="type.dirty && type.valid"
-             [class.has-error]="type.dirty && !type.valid">
-          <label for="type" class="col-sm-2 control-label">Type </label>
+        <div class="form-group">
+          <label for="owner" class="col-sm-2 control-label">Owner</label>
           <div class="col-sm-10">
-            <select id="type" name="type" class="form-control" required [(ngModel)]="pet.type" #type="ngModel">
-              <option *ngFor="let type of petTypes"
-                      [ngValue]="type">{{ type.name }}
-              </option>
-            </select>
-            <span class="glyphicon form-control-feedback" [class.glyphicon-ok]="type.valid"
-                  [class.glyphicon-remove]="!type.valid" aria-hidden="true"></span>
-
-            <span class="help-block"
-                  *ngIf="type.dirty && type.hasError('required')">pettype is required</span>
-
+            <input id="owner_name" name="owner_name" class="form-control" type="text"
+                   value="{{ currentOwner.firstName }} {{ currentOwner.lastName }}" readonly/>
           </div>
         </div>
-      </div>
-      <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-10">
-          <br/>
-          <button class="btn btn-default" type="button" (click)="gotoOwnerDetail()">< Back</button>
-          <button class="btn btn-default" type="submit">Save Pet</button>
+        <br/>
+  
+        <div class="form-group has-feedback" [class.has-success]="name.dirty && name.valid"
+             [class.has-error]="name.dirty && !name.valid">
+          <label for="name" class="col-sm-2 control-label">Name</label>
+          <div class="col-sm-10">
+            <input id="name" name="name" minlength="1" maxlength="30"  pattern="^[A-Za-z0-9].{0,29}$" required class="form-control" type="text" [(ngModel)]="pet.name"
+                   #name="ngModel"/>
+            <span class="glyphicon form-control-feedback" [class.glyphicon-ok]="name.valid"
+                  [class.glyphicon-remove]="!name.valid" aria-hidden="true"></span>
+            <span class="help-block" *ngIf="name.dirty && name.hasError('required')">Name is required</span>
+            <span class="help-block" *ngIf="name.dirty && name.hasError('minlength')">Name must be at least 1 character long</span>
+            <span class="help-block" *ngIf="name.dirty && name.hasError('maxlength')">Name may be at most 30 character long</span>
+            <span class="help-block" *ngIf="name.dirty && name.hasError('pattern')">Name must begin with a letter</span>
+          </div>
         </div>
-      </div>
-    </form>
+  
+        <div class="form-group  has-feedback" [class.has-success]="birthDate.dirty && birthDate.valid"
+             [class.has-error]="birthDate.dirty && !birthDate.valid">
+          <label class="col-sm-2 control-label">Birth Date</label>
+          <div class="col-sm-10">
+            <input matInput [matDatepicker]="birthDateDatepicker" required [ngModel]="pet.birthDate | date:'yyyy-MM-dd'"
+                   name="birthDate" #birthDate="ngModel">
+            <mat-datepicker-toggle matSuffix [for]="birthDateDatepicker"></mat-datepicker-toggle>
+            <mat-datepicker #birthDateDatepicker></mat-datepicker>
+            <span class="glyphicon form-control-feedback" [class.glyphicon-ok]="birthDate.valid"
+                  [class.glyphicon-remove]="!birthDate.valid" aria-hidden="true"></span>
+            <span class="help-block"
+                  *ngIf="birthDate.dirty && birthDate.hasError('required')">BirthDate is required</span>
+  
+          </div>
+        </div>
+        <div class="control-group">
+          <div class="form-group has-feedback" [class.has-success]="type.dirty && type.valid"
+               [class.has-error]="type.dirty && !type.valid">
+            <label for="type" class="col-sm-2 control-label">Type </label>
+            <div class="col-sm-10">
+              <select id="type" name="type" class="form-control" required [(ngModel)]="pet.type" #type="ngModel">
+                <option *ngFor="let type of petTypes"
+                        [ngValue]="type">{{ type.name }}
+                </option>
+              </select>
+              <span class="glyphicon form-control-feedback" [class.glyphicon-ok]="type.valid"
+                    [class.glyphicon-remove]="!type.valid" aria-hidden="true"></span>
+  
+              <span class="help-block"
+                    *ngIf="type.dirty && type.hasError('required')">pettype is required</span>
+  
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+            <br/>
+            <button class="btn btn-default" type="button" (click)="gotoOwnerDetail()">< Back</button>
+            <button class="btn btn-default" type="submit"  [disabled]="!petForm.valid">Save Pet</button>
+          </div>
+        </div>
+      </form>
+    </div>
   </div>
-</div>
+  

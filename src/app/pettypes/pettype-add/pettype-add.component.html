@@ -16,24 +16,28 @@
   ~  */
   -->
 
-<div class="container-fluid">
-  <div class="container xd-container">
-    <h2>New Pet Type</h2>
-    <form id="pettype" class="form-horizontal" (ngSubmit)="onSubmit(pettypeForm.value)" #pettypeForm="ngForm">
-      <div class="form-group" hidden="true">
-        <input type="text" hidden="true" class="form-control" id="id" [(ngModel)]="pettype.id" name="id"/>
-      </div>
-      <div class="form-group has-feedback"  [class.has-success]="name.dirty && name.valid" [class.has-error]="name.dirty &&  !name.valid">
-        <div class="form-group ">
-          <label class="col-sm-1 control-label">Name</label>
-          <div class="col-sm-6">
-            <input id="name" name="name" class="form-control" required type="text" [(ngModel)]="pettype.name" #name="ngModel"/>
-            <span class="glyphicon form-control-feedback" [class.glyphicon-ok]="name.valid" [class.glyphicon-remove]="!name.valid" aria-hidden="true"></span>
-            <span class="help-block" *ngIf="(pettypeForm.submitted && name.hasError('required')) || (name.dirty && name.hasError('required'))">Name is required</span>
-          </div>
-          <button class="btn btn-default" type="submit">Save</button>
+  <div class="container-fluid">
+    <div class="container xd-container">
+      <h2>New Pet Type</h2>
+      <form id="pettype" class="form-horizontal" (ngSubmit)="onSubmit(pettypeForm.value)" #pettypeForm="ngForm">
+        <div class="form-group" hidden="true">
+          <input type="text" hidden="true" class="form-control" id="id" [(ngModel)]="pettype.id" name="id"/>
         </div>
-      </div>
-    </form>
+        <div class="form-group has-feedback"  [class.has-success]="name.dirty && name.valid" [class.has-error]="name.dirty &&  !name.valid">
+          <div class="form-group ">
+            <label class="col-sm-1 control-label">Name</label>
+            <div class="col-sm-6">
+              <input id="name" name="name" class="form-control" minlength="1" maxlength="80" pattern="^[A-Za-z0-9].{0,79}$" required type="text" [(ngModel)]="pettype.name" #name="ngModel"/>
+              <span class="glyphicon form-control-feedback" [class.glyphicon-ok]="name.valid" [class.glyphicon-remove]="!name.valid" aria-hidden="true"></span>
+              <span class="help-block" *ngIf="name.dirty && name.hasError('maxlength')">Name may be only 80 characters long</span>
+              <span class="help-block" *ngIf="name.dirty && name.hasError('minlength')">Name may be at least 1 characters long</span>
+              <span class="help-block" *ngIf="name.dirty && name.hasError('pattern')">Name must begin with a letter or digit</span>
+               <span class="help-block" *ngIf="(pettypeForm.submitted && name.hasError('required')) || (name.dirty && name.hasError('required'))">Name is required</span>
+            </div>
+            <button class="btn btn-default" type="submit" [disabled]="!pettypeForm.valid">Save</button>
+          </div>
+        </div>
+      </form>
+    </div>
   </div>
-</div>
+  
