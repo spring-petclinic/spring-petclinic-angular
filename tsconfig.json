@@ -17,7 +17,10 @@
       "dom"
     ],
     "module": "es2020",
-    "useDefineForClassFields": false
+    "useDefineForClassFields": false,
+    "paths": {
+      "@badeball/cypress-cucumber-preprocessor/*": ["./node_modules/@badeball/cypress-cucumber-preprocessor/dist/bundler-utils/*"]
+    }
   },
   "angularCompilerOptions": {
     "strictTemplates": true,

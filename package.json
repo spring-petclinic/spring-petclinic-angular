@@ -9,7 +9,12 @@
     "test": "ng test",
     "test-headless": "ng test --no-watch --no-progress --browsers=ChromeHeadlessCI",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "clean:angularcache": "rimraf .angular/cache",
+    "confirmation": " cypress run -e TAGS='@Bug' --headless -- browser electron --spec 'e2e/cypress/e2e/*.feature'",
+    "full-regression": "cypress run --headless -- browser electron --spec 'e2e/cypress/e2e/*.feature'",
+    "confirmation-test": "concurrently  \"npm run clean:angularcache && npm run start\" \"wait-on http://localhost:4200 && npm run confirmation\" --kill-others --success first",
+    "full-regression-test": "concurrently  \"npm run clean:angularcache && npm run start\" \"wait-on http://localhost:4200 && npm run full-regression\" --kill-others --success first"
   },
   "private": true,
   "dependencies": {
@@ -40,15 +45,19 @@
     "@angular-eslint/eslint-plugin-template": "^16.1.0",
     "@angular-eslint/schematics": "16.1.0",
     "@angular-eslint/template-parser": "^16.1.0",
-    "@angular/cli": "16.2.0",
+    "@angular/cli": "^16.1.0",
     "@angular/compiler-cli": "16.2.1",
     "@angular/language-service": "16.2.1",
+    "@badeball/cypress-cucumber-preprocessor": "^20.1.2",
+    "@bahmutov/cypress-esbuild-preprocessor": "^2.2.2",
     "@types/jasmine": "~3.6.0",
     "@types/jasminewd2": "~2.0.2",
     "@types/node": "^12.11.1",
     "@typescript-eslint/eslint-plugin": "^6.4.0",
     "@typescript-eslint/parser": "^6.4.0",
     "codelyzer": "^6.0.0",
+    "concurrently": "^8.2.2",
+    "cypress": "^12.14.0",
     "eslint": "^8.39.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.0",
@@ -61,8 +70,24 @@
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "^1.5.0",
     "protractor": "~7.0.0",
+    "rimraf": "^6.0.1",
     "source-map-explorer": "^1.5.0",
     "ts-node": "~4.1.0",
-    "typescript": "4.9.5"
+    "typescript": "4.9.5",
+    "wait-on": "^8.0.0"
+  },
+  "cypress-cucumber-preprocessor": {
+    "stepDefinitions": [
+      "e2e/cypress/e2e/**/[filepath].js",
+      "e2e/cypress/support/step_definitions/**/*.js"
+    ],
+    "html": {
+      "enabled": true,
+      "output": "e2e/cypress/reports/html/cucumber-report.html"
+    },
+    "messages": {
+      "enabled": true,
+      "output": "e2e/cypress/reports/ndjson/cucumber-report.ndjson"
+    }
   }
 }

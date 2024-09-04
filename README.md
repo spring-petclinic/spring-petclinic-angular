@@ -164,8 +164,18 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 
 ## Running end-to-end tests
 
+### Protractor (deprecated)
 Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
 Before running the tests make sure you are serving the app via `ng serve`.
+
+### Cypress
+
+Run `npm full-regression-test` to run the end-to-end test via [Cypress](http://www.cypress.io/).
+The app will be started by the test script, but you need to make sure, that the back end rest server is running.
+
+For further information see the [test documentation](e2e/cypress/docs/README.md).
+
+                 
 
 ## Further help
 

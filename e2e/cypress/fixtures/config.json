@@ -1,0 +1,4 @@
+{
+    "baseURL":"http://localhost:4200/petclinic/",
+    "restURL":"http://localhost:9966/petclinic/api/"
+}
