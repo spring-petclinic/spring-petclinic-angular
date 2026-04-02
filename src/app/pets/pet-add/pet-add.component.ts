@@ -44,6 +44,8 @@ export class PetAddComponent implements OnInit {
   petTypes: PetType[];
   addedSuccess = false;
   errorMessage: string;
+  maxDate=new Date();
+  
 
   constructor(private ownerService: OwnerService, private petService: PetService,
               private petTypeService: PetTypeService, private router: Router, private route: ActivatedRoute) {
