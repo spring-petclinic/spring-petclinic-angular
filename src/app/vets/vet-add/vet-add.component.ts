@@ -29,6 +29,7 @@ import {VetService} from '../vet.service';
 
 @Component({
   selector: 'app-vet-add',
+  standalone: false,
   templateUrl: './vet-add.component.html',
   styleUrls: ['./vet-add.component.css']
 })

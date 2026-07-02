@@ -28,6 +28,7 @@ import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-specialty-list',
+  standalone: false,
   templateUrl: './specialty-list.component.html',
   styleUrls: ['./specialty-list.component.css']
 })

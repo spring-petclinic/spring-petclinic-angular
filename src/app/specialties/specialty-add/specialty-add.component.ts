@@ -29,6 +29,7 @@ import { SpecialtyService } from '../specialty.service';
 
 @Component({
   selector: 'app-specialty-add',
+  standalone: false,
   templateUrl: './specialty-add.component.html',
   styleUrls: ['./specialty-add.component.css'],
 })

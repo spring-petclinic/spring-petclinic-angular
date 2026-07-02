@@ -23,7 +23,6 @@
  */
 
 import {
-  async,
   ComponentFixture,
   TestBed,
   waitForAsync,
@@ -72,7 +71,7 @@ describe('OwnerEditComponent', () => {
     fixture = TestBed.createComponent(OwnerEditComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-    router=TestBed.get(Router);
+    router=TestBed.inject(Router);
     spyOn(router,'navigate');
   });
 
@@ -89,7 +88,7 @@ describe('OwnerEditComponent', () => {
   });
 
  
-  it('update owner', async(() => {
+  it('update owner', waitForAsync(() => {
     let buttons = fixture.debugElement.queryAll(By.css('button'));
     let updateOwnerButton = buttons[1].nativeElement;
     spyOn(component, 'onSubmit');

@@ -1,12 +1,12 @@
-# Spring Petclinic Angular 
+# Spring Petclinic Angular
 
 [![Build Status](https://github.com/spring-petclinic/spring-petclinic-angular/actions/workflows/angular-ci.yml/badge.svg)](https://github.com/spring-petclinic/spring-petclinic-angular/actions/workflows/angular-ci.yml)
 
 ## Angular frontend for Spring Petclinic
 
-Warning: **client only**. 
-  Use REST API from backend [spring-petclinic-rest project](https://github.com/spring-petclinic/spring-petclinic-rest)
-  You need start backend server before start frontend application.
+Warning: **client only**.
+Use the REST API from the backend [spring-petclinic-rest project](https://github.com/spring-petclinic/spring-petclinic-rest).
+Start the backend server before using workflows that call the API. The frontend expects the Spring Petclinic REST API at `http://localhost:9966/petclinic/api/`.
 
 ## Screenshot
 
@@ -15,39 +15,26 @@ Warning: **client only**.
 
 ## Installation
 
-1. Update angular-cli to latest version (8.0.3 current)
-as described on [angular-cli github readme.md](https://github.com/angular/angular-cli#updating-angular-cli)
+Use Node.js 24.x and npm. The project uses Angular 22 and keeps the Angular CLI as a local dev dependency.
 
-````
-npm uninstall -g angular-cli @angular/cli
-npm cache clean
-npm install -g @angular/cli@latest
-````
-Clone project from github
-````
-git clone https://github.com/spring-petclinic/spring-petclinic-angular.git
-````
-Install local project package
-````
-npm install --save-dev @angular/cli@latest
-if npm version > 5.0 delete package-lock.json file  ( bug in npm 5.0 - this file prevent correct packages install)
-npm install
-````
+```
+nvm use
+npm ci
+```
 
-Now project use Angular CLI v.8.0.3 and Angular v.8.0.1
-You can see current dependencies in [package.json](package.json) file.
+For a fresh dependency resolution during maintenance, run `npm install` and commit the regenerated `package-lock.json`.
 
 ## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Run `npm start` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
 ## Code scaffolding
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|module`.
+Run `npm run ng -- generate component component-name` to generate a new component. You can also use `npm run ng -- generate directive|pipe|service|class|module`.
 
 ## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+Run `npm run build` to build the project. The build artifacts will be stored in the `dist/` directory. Use `npm run build -- --configuration production` for a production build.
 
 You can also build the application in a dedicated docker image using the provided `Dockerfile` as follows:
 
@@ -160,13 +147,16 @@ sudo systemctl restart httpd
 
 ## Running unit tests
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Run `npm test` to execute the unit tests via [Karma](https://karma-runner.github.io). Run `npm run test-headless` for a single Chrome Headless pass.
 
 ## Running end-to-end tests
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-Before running the tests make sure you are serving the app via `ng serve`.
+Run `npm run e2e` to execute the end-to-end tests via [Playwright](https://playwright.dev/). The Playwright config starts the Angular dev server automatically. Install Playwright browsers first with `npx playwright install --with-deps`.
+
+## Linting
+
+Run `npm run lint` to lint TypeScript and Angular templates with Angular ESLint.
 
 ## Further help
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+To get more help on the Angular CLI use `npm run ng -- help` or visit the [Angular CLI documentation](https://angular.dev/tools/cli).

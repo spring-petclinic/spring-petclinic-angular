@@ -13,14 +13,14 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [16.x, 18.x, 20.x]
+        node-version: [24.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v5
 
     - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v2
+      uses: actions/setup-node@v5
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
@@ -36,3 +36,9 @@ jobs:
 
     - name: Test
       run: npm run test-headless
+
+    - name: Install Playwright browsers
+      run: npx playwright install --with-deps
+
+    - name: E2E
+      run: npm run e2e

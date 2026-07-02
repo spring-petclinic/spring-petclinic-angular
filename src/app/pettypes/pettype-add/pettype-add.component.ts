@@ -4,6 +4,7 @@ import {PetTypeService} from '../pettype.service';
 
 @Component({
   selector: 'app-pettype-add',
+  standalone: false,
   templateUrl: './pettype-add.component.html',
   styleUrls: ['./pettype-add.component.css']
 })
