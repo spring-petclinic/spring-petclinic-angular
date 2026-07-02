@@ -31,7 +31,7 @@ import {SpecialtyService} from '../specialty.service';
 import {Specialty} from '../specialty';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ActivatedRouteStub, RouterStub} from '../../testing/router-stubs';
-import {Observable, of} from 'rxjs/index';
+import {Observable, of} from 'rxjs';
 import Spy = jasmine.Spy;
 
 class SpecialityServiceStub {

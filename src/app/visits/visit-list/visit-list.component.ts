@@ -27,6 +27,7 @@ import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-visit-list',
+  standalone: false,
   templateUrl: './visit-list.component.html',
   styleUrls: ['./visit-list.component.css']
 })

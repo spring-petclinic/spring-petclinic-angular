@@ -7,6 +7,7 @@ import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-pettype-list',
+  standalone: false,
   templateUrl: './pettype-list.component.html',
   styleUrls: ['./pettype-list.component.css']
 })

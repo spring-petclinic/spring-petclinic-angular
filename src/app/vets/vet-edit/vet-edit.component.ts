@@ -30,6 +30,7 @@ import {FormBuilder, FormGroup, FormControl, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-vet-edit',
+  standalone: false,
   templateUrl: './vet-edit.component.html',
   styleUrls: ['./vet-edit.component.css']
 })

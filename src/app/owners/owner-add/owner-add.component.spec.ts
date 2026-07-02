@@ -22,7 +22,7 @@
  * @author Vitaliy Fedoriv
  */
 
-import { async, ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { OwnerAddComponent } from './owner-add.component';
 import { FormsModule } from '@angular/forms';
@@ -78,7 +78,7 @@ describe('OwnerAddComponent', () => {
     fixture = TestBed.createComponent(OwnerAddComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-    router=TestBed.get(Router);
+    router=TestBed.inject(Router);
     spyOn(router,'navigate');
   });
 
@@ -97,7 +97,7 @@ describe('OwnerAddComponent', () => {
   });
 
  
-  it('add owner', async(() => {
+  it('add owner', waitForAsync(() => {
     let buttons = fixture.debugElement.queryAll(By.css('button'));
     let addOwnerButton = buttons[1].nativeElement;
     spyOn(component, 'onSubmit');

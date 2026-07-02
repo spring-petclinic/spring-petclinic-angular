@@ -28,6 +28,7 @@ import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-vet-list',
+  standalone: false,
   templateUrl: './vet-list.component.html',
   styleUrls: ['./vet-list.component.css']
 })

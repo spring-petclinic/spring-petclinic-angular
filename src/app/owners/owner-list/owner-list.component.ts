@@ -28,6 +28,7 @@ import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-owner-list',
+  standalone: false,
   templateUrl: './owner-list.component.html',
   styleUrls: ['./owner-list.component.css']
 })

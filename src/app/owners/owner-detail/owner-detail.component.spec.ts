@@ -91,7 +91,7 @@ describe('OwnerDetailComponent', () => {
     fixture = TestBed.createComponent(OwnerDetailComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-    router = TestBed.get(Router);
+    router = TestBed.inject(Router);
   });
 
   it('should create OwnerDetailComponent', () => {

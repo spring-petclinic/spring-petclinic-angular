@@ -3,9 +3,14 @@
   "compilerOptions": {
     "outDir": "./dist/out-tsc",
     "baseUrl": "src",
+    "ignoreDeprecations": "6.0",
     "sourceMap": true,
     "declaration": false,
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
+    "strict": false,
+    "strictNullChecks": false,
+    "strictPropertyInitialization": false,
+    "noUncheckedSideEffectImports": false,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "target": "ES2022",
@@ -16,7 +21,7 @@
       "es2017",
       "dom"
     ],
-    "module": "es2020",
+    "module": "preserve",
     "useDefineForClassFields": false
   },
   "angularCompilerOptions": {
