@@ -51,7 +51,7 @@
               [(ngModel)]="owner.firstName"
               minlength="1"
               maxlength="30" 
-              pattern="^[a-zA-Z]*$"
+              pattern="^[a-zA-Zа-яА-Я]*$"
               required
               name="firstName"
               #firstName="ngModel"
@@ -99,7 +99,7 @@
               name="lastName"
               minlength="1"
               maxlength="30" 
-              pattern="^[a-zA-Z]*$"
+              pattern="^[a-zA-Zа-яА-Я]*$"
               required
               #lastName="ngModel"
             />
