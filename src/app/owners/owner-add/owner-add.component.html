@@ -30,7 +30,7 @@
         <div class="form-group has-feedback" [class.has-success]="firstName.dirty && firstName.valid" [class.has-error]="firstName.dirty &&  !firstName.valid">
           <label for="firstName" class="col-sm-2 control-label">First Name</label>
           <div class="col-sm-10">
-            <input type="text" class="form-control" id="firstName" [(ngModel)]="owner.firstName" minlength="1" maxlength="30" pattern="^[a-zA-Z]*$" required name="firstName" #firstName="ngModel"/>
+            <input type="text" class="form-control" id="firstName" [(ngModel)]="owner.firstName" minlength="1" maxlength="30" pattern="^[a-zA-Zа-яА-Я]*$" required name="firstName" #firstName="ngModel"/>
             <span class="glyphicon form-control-feedback" [class.glyphicon-ok]="firstName.valid" [class.glyphicon-remove]="!firstName.valid" aria-hidden="true"></span>
             <span class="help-block" *ngIf="firstName.dirty && firstName.hasError('required')">First name is required</span>
             <span class="help-block" *ngIf="firstName.dirty && firstName.hasError('minlength')">First name must be at least 1 characters long</span>
@@ -41,7 +41,7 @@
         <div class="form-group has-feedback" [class.has-success]="lastName.dirty && lastName.valid" [class.has-error]="lastName.dirty && !lastName.valid">
           <label for="lastName" class="col-sm-2 control-label">Last Name</label>
           <div class="col-sm-10">
-            <input type="text" class="form-control" id="lastName" [(ngModel)]="owner.lastName" name="lastName" minlength="1" maxlength="30" pattern="^[a-zA-Z]*$" required #lastName="ngModel"/>
+            <input type="text" class="form-control" id="lastName" [(ngModel)]="owner.lastName" name="lastName" minlength="1" maxlength="30" pattern="^[a-zA-Zа-яА-Я]*$" required #lastName="ngModel"/>
             <span class="glyphicon form-control-feedback" [class.glyphicon-ok]="lastName.valid" [class.glyphicon-remove]="!lastName.valid" aria-hidden="true"></span>
             <span class="help-block" *ngIf="lastName.dirty && lastName.hasError('required')">Last name is required</span>
             <span class="help-block" *ngIf="lastName.dirty && lastName.hasError('minlength')">Last name must be at least 1 characters long</span>
