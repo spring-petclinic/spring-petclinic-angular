@@ -1,3 +1,4 @@
+import type { Mock } from 'vitest';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { Specialty } from '../specialty';
@@ -7,67 +8,48 @@ import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ActivatedRouteStub, RouterStub } from '../../testing/router-stubs';
 import { Observable, of } from 'rxjs';
-import Spy = jasmine.Spy;
+type Spy = Mock;
 
 class SpecialityServiceStub {
-  addSpecialty(specialty: Specialty): Observable<Specialty> {
-    return of();
-  }
+    addSpecialty(specialty: Specialty): Observable<Specialty> {
+        return of();
+    }
 }
 
 describe('SpecialtyAddComponent', () => {
-  let component: SpecialtyAddComponent;
-  let fixture: ComponentFixture<SpecialtyAddComponent>;
-  let specialtyService: SpecialtyService;
-  let spy: Spy;
-  let testSpecialty: Specialty;
+    let component: SpecialtyAddComponent;
+    let fixture: ComponentFixture<SpecialtyAddComponent>;
+    let specialtyService: SpecialtyService;
+    let spy: Spy;
+    let testSpecialty: Specialty;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [SpecialtyAddComponent],
-        schemas: [CUSTOM_ELEMENTS_SCHEMA],
-        imports: [FormsModule],
-        providers: [
-          { provide: SpecialtyService, useClass: SpecialityServiceStub },
-          { provide: Router, useClass: RouterStub },
-          { provide: ActivatedRoute, useClass: ActivatedRouteStub },
-        ],
-      }).compileComponents();
-    })
-  );
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [SpecialtyAddComponent],
-        schemas: [CUSTOM_ELEMENTS_SCHEMA],
-        imports: [FormsModule],
-        providers: [
-          { provide: SpecialtyService, useClass: SpecialityServiceStub },
-          { provide: Router, useClass: RouterStub },
-          { provide: ActivatedRoute, useClass: ActivatedRouteStub },
-        ],
-      }).compileComponents();
-    })
-  );
+    beforeEach(waitForAsync(() => {
+        TestBed.configureTestingModule({
+            declarations: [SpecialtyAddComponent],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA],
+            imports: [FormsModule],
+            providers: [
+                { provide: SpecialtyService, useClass: SpecialityServiceStub },
+                { provide: Router, useClass: RouterStub },
+                { provide: ActivatedRoute, useClass: ActivatedRouteStub },
+            ],
+        }).compileComponents();
+    }));
+    beforeEach(() => {
+        fixture = TestBed.createComponent(SpecialtyAddComponent);
+        component = fixture.componentInstance;
+        testSpecialty = {
+            id: 1,
+            name: 'test',
+        };
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(SpecialtyAddComponent);
-    component = fixture.componentInstance;
-    testSpecialty = {
-      id: 1,
-      name: 'test',
-    };
+        specialtyService = fixture.debugElement.injector.get(SpecialtyService);
+        spy = vi.spyOn(specialtyService, 'addSpecialty').mockReturnValue(of(testSpecialty));
 
-    specialtyService = fixture.debugElement.injector.get(SpecialtyService);
-    spy = spyOn(specialtyService, 'addSpecialty').and.returnValue(
-      of(testSpecialty)
-    );
+        fixture.detectChanges();
+    });
 
-    fixture.detectChanges();
-  });
-
-  it('should create SpecialtyAddComponent', () => {
-    expect(component).toBeTruthy();
-  });
+    it('should create SpecialtyAddComponent', () => {
+        expect(component).toBeTruthy();
+    });
 });
