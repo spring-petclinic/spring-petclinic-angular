@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, inject, OnInit} from '@angular/core';
 import {PetType} from '../pettype';
 import {Router} from '@angular/router';
 import {PetTypeService} from '../pettype.service';
@@ -12,6 +12,8 @@ import { finalize } from 'rxjs/operators';
   styleUrls: ['./pettype-list.component.css']
 })
 export class PettypeListComponent implements OnInit {
+  private readonly changeDetectorRef = inject(ChangeDetectorRef);
+
   pettypes: PetType[];
   errorMessage: string;
   responseStatus: number;
@@ -26,6 +28,7 @@ export class PettypeListComponent implements OnInit {
     this.pettypeService.getPetTypes().pipe(
       finalize(() => {
         this.isPetTypesDataReceived = true;
+        this.changeDetectorRef.markForCheck();
       })
     ).subscribe(
       pettypes => this.pettypes = pettypes,
@@ -34,7 +37,9 @@ export class PettypeListComponent implements OnInit {
   }
 
   deletePettype(pettype: PetType) {
-    this.pettypeService.deletePetType(pettype.id.toString()).subscribe(
+    this.pettypeService.deletePetType(pettype.id.toString()).pipe(
+      finalize(() => this.changeDetectorRef.markForCheck())
+    ).subscribe(
       response => {
         this.responseStatus = response;
         this.pettypes = this.pettypes.filter(currentItem => !(currentItem.id === pettype.id));
