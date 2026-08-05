@@ -41,14 +41,14 @@
           </div>
         </td>
         <td>
-          <button class="btn btn-default" (click)="editVet(vet)">Edit Vet</button>
-          <button class="btn btn-default" (click)="deleteVet(vet)">Delete Vet</button>
+          <button class="btn btn-secondary" (click)="editVet(vet)">Edit Vet</button>
+          <button class="btn btn-secondary" (click)="deleteVet(vet)">Delete Vet</button>
         </td>
       </tr>
       </tbody>
     </table>
     <div>
-      <button *ngIf="isVetDataReceived" class="btn btn-default" (click)="gotoHome()">Home</button>
-      <button *ngIf="isVetDataReceived" class="btn btn-default" (click)="addVet()">Add Vet</button>
+      <button *ngIf="isVetDataReceived" class="btn btn-secondary" (click)="gotoHome()">Home</button>
+      <button *ngIf="isVetDataReceived" class="btn btn-secondary" (click)="addVet()">Add Vet</button>
     </div>
   </div>

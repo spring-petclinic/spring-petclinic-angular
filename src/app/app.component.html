@@ -1,89 +1,113 @@
 <!--
-  ~ /*
-  ~  * Copyright 2016-2017 the original author or authors.
-  ~  *
-  ~  * Licensed under the Apache License, Version 2.0 (the "License");
-  ~  * you may not use this file except in compliance with the License.
-  ~  * You may obtain a copy of the License at
-  ~  *
-  ~  *      http://www.apache.org/licenses/LICENSE-2.0
-  ~  *
-  ~  * Unless required by applicable law or agreed to in writing, software
-  ~  * distributed under the License is distributed on an "AS IS" BASIS,
-  ~  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  ~  * See the License for the specific language governing permissions and
-  ~  * limitations under the License.
-  ~  */
-  -->
+  Copyright 2016-2017 the original author or authors.
+  Licensed under the Apache License, Version 2.0.
+-->
 
-<div class="container-fluid main-wrapper">
-  <nav class="navbar navbar-default " role="navigation">
-  <div class="container-fluid">
-  <div class="navbar-header">
-    <a class="navbar-brand" href="#"><span></span></a>
-  </div>
+<div class="container-fluid main-wrapper px-0">
+  <nav class="navbar navbar-expand-lg navbar-petclinic w-100" aria-label="Main navigation">
+    <div class="container-fluid">
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#petclinicNavbar"
+        aria-controls="petclinicNavbar"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-  <ul class="nav navbar-nav">
-    <li>
-      <a routerLink="welcome" title="home page">
-        <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
-        <span> Home</span>
-      </a>
-    </li>
+      <a class="navbar-brand" routerLink="/welcome" aria-label="Spring Petclinic home"><span></span></a>
 
-    <li class="dropdown">
-      <a class="dropdown-toggle" data-toggle="dropdown" role="button"
-          aria-haspopup="true" aria-expanded="false">
-          <span class="glyphicon glyphicon-user" aria-hidden="true"></span> Owners<span class="caret"></span>
-      </a>
-      <ul class="dropdown-menu">
-        <li><a routerLink="/owners"><span class="glyphicon glyphicon-search"
-                                          aria-hidden="true"></span><span> Search</span></a></li>
-        <li><a routerLink="/owners/add"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span><span> Add New</span></a>
-        </li>
-      </ul>
-    </li>
-    <li class="dropdown">
-      <a class="dropdown-toggle" data-toggle="dropdown" role="button"
-          aria-haspopup="true" aria-expanded="false">
-          <span class="glyphicon glyphicon-education" aria-hidden="true"></span> Veterinarians<span class="caret"></span>
-      </a>
-      <ul class="dropdown-menu">
-        <li><a routerLink="/vets"><span class="glyphicon glyphicon-search" aria-hidden="true"></span><span> All</span></a>
-        </li>
-        <li><a routerLink="/vets/add"><span class="glyphicon glyphicon-plus"
-                                            aria-hidden="true"></span><span> Add New</span></a></li>
-      </ul>
-    </li>
-    <li>
-      <a routerLink="/pettypes" routerLinkActive="active" title="pettypes">
-        <span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
-        <span> Pet Types</span>
-      </a>
-    </li>
-    <li>
-      <a routerLink="/specialties" routerLinkActive="active" title="specialties">
-        <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
-        <span> Specialties</span>
-      </a>
-    </li>
-  </ul>
+      <div id="petclinicNavbar" class="collapse navbar-collapse">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/welcome" routerLinkActive="active" title="home page">
+              <i class="bi bi-house-fill" aria-hidden="true"></i>
+              <span> Home</span>
+            </a>
+          </li>
 
-  </div>
+          <li class="nav-item dropdown" routerLinkActive="active">
+            <button
+              class="nav-link dropdown-toggle"
+              type="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              <i class="bi bi-person-fill" aria-hidden="true"></i>
+              Owners
+            </button>
+            <ul class="dropdown-menu">
+              <li>
+                <a class="dropdown-item" routerLink="/owners">
+                  <i class="bi bi-search" aria-hidden="true"></i>
+                  <span> Search</span>
+                </a>
+              </li>
+              <li>
+                <a class="dropdown-item" routerLink="/owners/add">
+                  <i class="bi bi-plus-lg" aria-hidden="true"></i>
+                  <span> Add New</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          <li class="nav-item dropdown" routerLinkActive="active">
+            <button
+              class="nav-link dropdown-toggle"
+              type="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              <i class="bi bi-mortarboard-fill" aria-hidden="true"></i>
+              Veterinarians
+            </button>
+            <ul class="dropdown-menu">
+              <li>
+                <a class="dropdown-item" routerLink="/vets">
+                  <i class="bi bi-search" aria-hidden="true"></i>
+                  <span> All</span>
+                </a>
+              </li>
+              <li>
+                <a class="dropdown-item" routerLink="/vets/add">
+                  <i class="bi bi-plus-lg" aria-hidden="true"></i>
+                  <span> Add New</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/pettypes" routerLinkActive="active" title="pettypes">
+              <i class="bi bi-heart-fill" aria-hidden="true"></i>
+              <span> Pet Types</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/specialties" routerLinkActive="active" title="specialties">
+              <i class="bi bi-list-ul" aria-hidden="true"></i>
+              <span> Specialties</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
   </nav>
 </div>
 
-<div class="content-wrapper">
+<main class="content-wrapper">
   <router-outlet></router-outlet>
-</div>
+</main>
 
-<br/>
-<br/>
-<div class="container footer-wrapper">
-  <div class="row">
-    <div class="col-12 text-center"><img src="./assets/images/angular.png"
-                                         alt="Angular" height="80" width="80"/>
-      <img src="./assets/images/spring-pivotal-logo.png"
-           alt="Sponsored by Pivotal"/></div>
+<footer class="container-fluid footer-wrapper">
+  <div class="row h-100 align-items-center">
+    <div class="col-12 text-center">
+      <img src="./assets/images/angular.png" alt="Angular" height="80" width="80" />
+      <img src="./assets/images/spring-pivotal-logo.png" alt="Sponsored by Pivotal" />
+    </div>
   </div>
-</div>
+</footer>
