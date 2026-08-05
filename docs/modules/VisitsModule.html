@@ -8,22 +8,95 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
-	      <link rel="stylesheet" href="../styles/style.css">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
     </head>
     <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
 
-        <div class="navbar navbar-default navbar-fixed-top visible-xs">
-            <a href="../" class="navbar-brand">spring-petclinic-angular documentation</a>
-            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">spring-petclinic-angular documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
         </div>
 
         <div class="xs-menu menu" id="mobile-menu">
-                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+                <div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search">
+    <button type="button"
+        class="search-input-clear"
+        aria-label="Clear search"
+        data-search-input-clear>&times;</button>
+</div>
+            <compodoc-menu></compodoc-menu>
         </div>
 
         <div class="container-fluid main">
            <div class="row main">
-               <div class="hidden-xs menu">
+               <div class="d-none d-md-block menu">
                    <compodoc-menu mode="normal"></compodoc-menu>
                </div>
                <!-- START CONTENT -->
@@ -32,175 +105,184 @@
 
 
 
+
+
+
+
 <ol class="breadcrumb">
-    <li>Modules</li>
-    <li>VisitsModule</li>
+    <li class="breadcrumb-item">Modules</li>
+    <li class="breadcrumb-item" >VisitsModule</li>
 </ol>
+
+<div class="io-file io-file-path" data-compodoc="entity-file-path">
+    <span class="icon ion-ios-document" aria-hidden="true"></span>
+    <code>src/app/visits/visits.module.ts</code>
+</div>
 
 <div class="text-center module-graph-container">
     <div id="module-graph-svg">
         <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<!-- Generated by graphviz version 2.40.1 (20161225.0304)
+<!-- Generated by graphviz version 2.47.0 (20210316.0004)
  -->
 <!-- Title: dependencies Pages: 1 -->
 <svg width="936pt" height="284pt"
  viewBox="0.00 0.00 936.00 284.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 <g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 280)">
 <title>dependencies</title>
-<polygon fill="#ffffff" stroke="transparent" points="-4,4 -4,-280 932,-280 932,4 -4,4"/>
-<text text-anchor="start" x="443.0091" y="-42.4" font-family="sans-serif" font-weight="bold" font-size="14.00" fill="#000000">Legend</text>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-280 932,-280 932,4 -4,4"/>
+<text text-anchor="start" x="443.01" y="-42.4" font-family="Times-12" font-weight="bold" font-size="14.00">Legend</text>
 <polygon fill="#ffffb3" stroke="transparent" points="230,-10 230,-30 250,-30 250,-10 230,-10"/>
-<text text-anchor="start" x="253.629" y="-15.4" font-family="sans-serif" font-size="14.00" fill="#000000"> &#160;Declarations</text>
+<text text-anchor="start" x="253.63" y="-15.4" font-family="Times-12" font-size="14.00"> &#160;Declarations</text>
 <polygon fill="#8dd3c7" stroke="transparent" points="343,-10 343,-30 363,-30 363,-10 343,-10"/>
-<text text-anchor="start" x="366.7251" y="-15.4" font-family="sans-serif" font-size="14.00" fill="#000000"> &#160;Module</text>
+<text text-anchor="start" x="366.73" y="-15.4" font-family="Times-12" font-size="14.00"> &#160;Module</text>
 <polygon fill="#80b1d3" stroke="transparent" points="429,-10 429,-30 449,-30 449,-10 429,-10"/>
-<text text-anchor="start" x="452.7812" y="-15.4" font-family="sans-serif" font-size="14.00" fill="#000000"> &#160;Bootstrap</text>
+<text text-anchor="start" x="452.78" y="-15.4" font-family="Times-12" font-size="14.00"> &#160;Bootstrap</text>
 <polygon fill="#fdb462" stroke="transparent" points="526,-10 526,-30 546,-30 546,-10 526,-10"/>
-<text text-anchor="start" x="549.6732" y="-15.4" font-family="sans-serif" font-size="14.00" fill="#000000"> &#160;Providers</text>
+<text text-anchor="start" x="549.67" y="-15.4" font-family="Times-12" font-size="14.00"> &#160;Providers</text>
 <polygon fill="#fb8072" stroke="transparent" points="622,-10 622,-30 642,-30 642,-10 622,-10"/>
-<text text-anchor="start" x="645.7258" y="-15.4" font-family="sans-serif" font-size="14.00" fill="#000000"> &#160;Exports</text>
+<text text-anchor="start" x="645.73" y="-15.4" font-family="Times-12" font-size="14.00"> &#160;Exports</text>
 <g id="clust1" class="cluster">
 <title>cluster_VisitsModule</title>
-<polygon fill="none" stroke="#000000" stroke-dasharray="1,5" points="8,-70 8,-268 920,-268 920,-70 8,-70"/>
+<polygon fill="none" stroke="black" stroke-dasharray="1,5" points="8,-70 8,-268 920,-268 920,-70 8,-70"/>
 </g>
 <g id="clust2" class="cluster">
 <title>cluster_VisitsModule_declarations</title>
-<polygon fill="none" stroke="#000000" points="466,-78 466,-130 912,-130 912,-78 466,-78"/>
-</g>
-<g id="clust6" class="cluster">
-<title>cluster_VisitsModule_imports</title>
-<polygon fill="none" stroke="#000000" points="158,-78 158,-130 458,-130 458,-78 158,-78"/>
-</g>
-<g id="clust7" class="cluster">
-<title>cluster_VisitsModule_exports</title>
-<polygon fill="none" stroke="#000000" points="234,-208 234,-260 692,-260 692,-208 234,-208"/>
+<polygon fill="none" stroke="black" points="466,-78 466,-130 912,-130 912,-78 466,-78"/>
 </g>
 <g id="clust9" class="cluster">
 <title>cluster_VisitsModule_providers</title>
-<polygon fill="none" stroke="#000000" points="16,-78 16,-130 150,-130 150,-78 16,-78"/>
+<polygon fill="none" stroke="black" points="324,-78 324,-130 458,-130 458,-78 324,-78"/>
+</g>
+<g id="clust6" class="cluster">
+<title>cluster_VisitsModule_imports</title>
+<polygon fill="none" stroke="black" points="16,-78 16,-130 316,-130 316,-78 16,-78"/>
+</g>
+<g id="clust7" class="cluster">
+<title>cluster_VisitsModule_exports</title>
+<polygon fill="none" stroke="black" points="237,-208 237,-260 695,-260 695,-208 237,-208"/>
 </g>
 <!-- VisitAddComponent -->
-<g id="node1" class="node">
+<g id="node1" class="node"><a xlink:href="../components/VisitAddComponent.html" href="../components/VisitAddComponent.html" target="_top">
 <title>VisitAddComponent</title>
-<polygon fill="#ffffb3" stroke="#000000" points="904.1624,-122 771.8376,-122 771.8376,-86 904.1624,-86 904.1624,-122"/>
-<text text-anchor="middle" x="838" y="-99.8" font-family="Times,serif" font-size="14.00" fill="#000000">VisitAddComponent</text>
-</g>
+<polygon fill="#ffffb3" stroke="black" points="904.16,-122 771.84,-122 771.84,-86 904.16,-86 904.16,-122"/>
+<text text-anchor="middle" x="838" y="-99.8" font-family="Times,serif" font-size="14.00">VisitAddComponent</text>
+</a></g>
 <!-- VisitsModule -->
-<g id="node4" class="node">
+<g id="node4" class="node"><a xlink:href="../modules/VisitsModule.html" href="../modules/VisitsModule.html" target="_top">
 <title>VisitsModule</title>
-<polygon fill="#8dd3c7" stroke="#000000" points="508.2177,-187 505.2177,-191 484.2177,-191 481.2177,-187 415.7823,-187 415.7823,-151 508.2177,-151 508.2177,-187"/>
-<text text-anchor="middle" x="462" y="-164.8" font-family="Times,serif" font-size="14.00" fill="#000000">VisitsModule</text>
-</g>
+<polygon fill="#8dd3c7" stroke="black" points="511.22,-187 508.22,-191 487.22,-191 484.22,-187 418.78,-187 418.78,-151 511.22,-151 511.22,-187"/>
+<text text-anchor="middle" x="465" y="-164.8" font-family="Times,serif" font-size="14.00">VisitsModule</text>
+</a></g>
 <!-- VisitAddComponent&#45;&gt;VisitsModule -->
 <g id="edge1" class="edge">
 <title>VisitAddComponent&#45;&gt;VisitsModule</title>
-<path fill="none" stroke="#000000" d="M838,-122.1061C838,-141.3391 838,-169 838,-169 838,-169 518.4821,-169 518.4821,-169"/>
-<polygon fill="#000000" stroke="#000000" points="518.4821,-165.5001 508.4821,-169 518.4821,-172.5001 518.4821,-165.5001"/>
+<path fill="none" stroke="black" d="M838,-122.11C838,-141.34 838,-169 838,-169 838,-169 521.11,-169 521.11,-169"/>
+<polygon fill="black" stroke="black" points="521.11,-165.5 511.11,-169 521.11,-172.5 521.11,-165.5"/>
 </g>
 <!-- VisitEditComponent -->
-<g id="node2" class="node">
+<g id="node2" class="node"><a xlink:href="../components/VisitEditComponent.html" href="../components/VisitEditComponent.html" target="_top">
 <title>VisitEditComponent</title>
-<polygon fill="#ffffb3" stroke="#000000" points="753.8892,-122 622.1108,-122 622.1108,-86 753.8892,-86 753.8892,-122"/>
-<text text-anchor="middle" x="688" y="-99.8" font-family="Times,serif" font-size="14.00" fill="#000000">VisitEditComponent</text>
-</g>
+<polygon fill="#ffffb3" stroke="black" points="753.89,-122 622.11,-122 622.11,-86 753.89,-86 753.89,-122"/>
+<text text-anchor="middle" x="688" y="-99.8" font-family="Times,serif" font-size="14.00">VisitEditComponent</text>
+</a></g>
 <!-- VisitEditComponent&#45;&gt;VisitsModule -->
 <g id="edge2" class="edge">
 <title>VisitEditComponent&#45;&gt;VisitsModule</title>
-<path fill="none" stroke="#000000" d="M653.0682,-122.027C653.0682,-138.3976 653.0682,-160 653.0682,-160 653.0682,-160 518.2523,-160 518.2523,-160"/>
-<polygon fill="#000000" stroke="#000000" points="518.2523,-156.5001 508.2523,-160 518.2522,-163.5001 518.2523,-156.5001"/>
+<path fill="none" stroke="black" d="M654.57,-122.03C654.57,-138.4 654.57,-160 654.57,-160 654.57,-160 521.37,-160 521.37,-160"/>
+<polygon fill="black" stroke="black" points="521.37,-156.5 511.37,-160 521.37,-163.5 521.37,-156.5"/>
 </g>
 <!-- VisitListComponent -->
-<g id="node3" class="node">
+<g id="node3" class="node"><a xlink:href="../components/VisitListComponent.html" href="../components/VisitListComponent.html" target="_top">
 <title>VisitListComponent</title>
-<polygon fill="#ffffb3" stroke="#000000" points="604.3342,-122 473.6658,-122 473.6658,-86 604.3342,-86 604.3342,-122"/>
-<text text-anchor="middle" x="539" y="-99.8" font-family="Times,serif" font-size="14.00" fill="#000000">VisitListComponent</text>
-</g>
+<polygon fill="#ffffb3" stroke="black" points="604.33,-122 473.67,-122 473.67,-86 604.33,-86 604.33,-122"/>
+<text text-anchor="middle" x="539" y="-99.8" font-family="Times,serif" font-size="14.00">VisitListComponent</text>
+</a></g>
 <!-- VisitListComponent&#45;&gt;VisitsModule -->
 <g id="edge3" class="edge">
 <title>VisitListComponent&#45;&gt;VisitsModule</title>
-<path fill="none" stroke="#000000" d="M490.9709,-122.1061C490.9709,-122.1061 490.9709,-140.991 490.9709,-140.991"/>
-<polygon fill="#000000" stroke="#000000" points="487.471,-140.9909 490.9709,-150.991 494.471,-140.991 487.471,-140.9909"/>
+<path fill="none" stroke="black" d="M492.47,-122.11C492.47,-122.11 492.47,-140.99 492.47,-140.99"/>
+<polygon fill="black" stroke="black" points="488.97,-140.99 492.47,-150.99 495.97,-140.99 488.97,-140.99"/>
 </g>
 <!-- VisitAddComponent  -->
-<g id="node7" class="node">
+<g id="node7" class="node"><a xlink:href="../components/VisitAddComponent.html" href="../components/VisitAddComponent.html" target="_top">
 <title>VisitAddComponent </title>
-<polygon fill="#fb8072" stroke="#000000" points="684.1621,-252 547.8379,-252 547.8379,-216 684.1621,-216 684.1621,-252"/>
-<text text-anchor="middle" x="616" y="-229.8" font-family="Times,serif" font-size="14.00" fill="#000000">VisitAddComponent </text>
-</g>
+<polygon fill="#fb8072" stroke="black" points="687.16,-252 550.84,-252 550.84,-216 687.16,-216 687.16,-252"/>
+<text text-anchor="middle" x="619" y="-229.8" font-family="Times,serif" font-size="14.00">VisitAddComponent </text>
+</a></g>
 <!-- VisitsModule&#45;&gt;VisitAddComponent  -->
 <g id="edge6" class="edge">
 <title>VisitsModule&#45;&gt;VisitAddComponent </title>
-<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M508.3856,-178C539.959,-178 576.043,-178 576.043,-178 576.043,-178 576.043,-205.973 576.043,-205.973"/>
-<polygon fill="#000000" stroke="#000000" points="572.543,-205.973 576.043,-215.973 579.543,-205.973 572.543,-205.973"/>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M511.43,-178C542.43,-178 577.54,-178 577.54,-178 577.54,-178 577.54,-205.97 577.54,-205.97"/>
+<polygon fill="black" stroke="black" points="574.04,-205.97 577.54,-215.97 581.04,-205.97 574.04,-205.97"/>
 </g>
 <!-- VisitEditComponent  -->
-<g id="node8" class="node">
+<g id="node8" class="node"><a xlink:href="../components/VisitEditComponent.html" href="../components/VisitEditComponent.html" target="_top">
 <title>VisitEditComponent </title>
-<polygon fill="#fb8072" stroke="#000000" points="529.8898,-252 394.1102,-252 394.1102,-216 529.8898,-216 529.8898,-252"/>
-<text text-anchor="middle" x="462" y="-229.8" font-family="Times,serif" font-size="14.00" fill="#000000">VisitEditComponent </text>
-</g>
+<polygon fill="#fb8072" stroke="black" points="532.89,-252 397.11,-252 397.11,-216 532.89,-216 532.89,-252"/>
+<text text-anchor="middle" x="465" y="-229.8" font-family="Times,serif" font-size="14.00">VisitEditComponent </text>
+</a></g>
 <!-- VisitsModule&#45;&gt;VisitEditComponent  -->
 <g id="edge7" class="edge">
 <title>VisitsModule&#45;&gt;VisitEditComponent </title>
-<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M462,-187.1061C462,-187.1061 462,-205.991 462,-205.991"/>
-<polygon fill="#000000" stroke="#000000" points="458.5001,-205.9909 462,-215.991 465.5001,-205.991 458.5001,-205.9909"/>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M465,-187.11C465,-187.11 465,-205.99 465,-205.99"/>
+<polygon fill="black" stroke="black" points="461.5,-205.99 465,-215.99 468.5,-205.99 461.5,-205.99"/>
 </g>
 <!-- VisitListComponent  -->
-<g id="node9" class="node">
+<g id="node9" class="node"><a xlink:href="../components/VisitListComponent.html" href="../components/VisitListComponent.html" target="_top">
 <title>VisitListComponent </title>
-<polygon fill="#fb8072" stroke="#000000" points="375.8339,-252 242.1661,-252 242.1661,-216 375.8339,-216 375.8339,-252"/>
-<text text-anchor="middle" x="309" y="-229.8" font-family="Times,serif" font-size="14.00" fill="#000000">VisitListComponent </text>
-</g>
+<polygon fill="#fb8072" stroke="black" points="378.83,-252 245.17,-252 245.17,-216 378.83,-216 378.83,-252"/>
+<text text-anchor="middle" x="312" y="-229.8" font-family="Times,serif" font-size="14.00">VisitListComponent </text>
+</a></g>
 <!-- VisitsModule&#45;&gt;VisitListComponent  -->
 <g id="edge8" class="edge">
 <title>VisitsModule&#45;&gt;VisitListComponent </title>
-<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M415.6955,-178C384.4776,-178 348.9584,-178 348.9584,-178 348.9584,-178 348.9584,-205.973 348.9584,-205.973"/>
-<polygon fill="#000000" stroke="#000000" points="345.4585,-205.973 348.9584,-215.973 352.4585,-205.973 345.4585,-205.973"/>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M418.59,-178C388.77,-178 355.57,-178 355.57,-178 355.57,-178 355.57,-205.97 355.57,-205.97"/>
+<polygon fill="black" stroke="black" points="352.07,-205.97 355.57,-215.97 359.07,-205.97 352.07,-205.97"/>
 </g>
 <!-- PetsRoutingModule -->
-<g id="node5" class="node">
+<g id="node5" class="node"><a xlink:href="../modules/PetsRoutingModule.html" href="../modules/PetsRoutingModule.html" target="_top">
 <title>PetsRoutingModule</title>
-<polygon fill="#8dd3c7" stroke="#000000" points="450,-122 447,-126 426,-126 423,-122 322,-122 322,-86 450,-86 450,-122"/>
-<text text-anchor="middle" x="386" y="-99.8" font-family="Times,serif" font-size="14.00" fill="#000000">PetsRoutingModule</text>
-</g>
+<polygon fill="#8dd3c7" stroke="black" points="308,-122 305,-126 284,-126 281,-122 180,-122 180,-86 308,-86 308,-122"/>
+<text text-anchor="middle" x="244" y="-99.8" font-family="Times,serif" font-size="14.00">PetsRoutingModule</text>
+</a></g>
 <!-- PetsRoutingModule&#45;&gt;VisitsModule -->
 <g id="edge4" class="edge">
 <title>PetsRoutingModule&#45;&gt;VisitsModule</title>
-<path fill="none" stroke="#000000" d="M432.9457,-122.1061C432.9457,-122.1061 432.9457,-140.991 432.9457,-140.991"/>
-<polygon fill="#000000" stroke="#000000" points="429.4457,-140.9909 432.9457,-150.991 436.4457,-140.991 429.4457,-140.9909"/>
+<path fill="none" stroke="black" d="M276.54,-122.03C276.54,-138.4 276.54,-160 276.54,-160 276.54,-160 408.41,-160 408.41,-160"/>
+<polygon fill="black" stroke="black" points="408.41,-163.5 418.41,-160 408.41,-156.5 408.41,-163.5"/>
 </g>
 <!-- VisitsRoutingModule -->
-<g id="node6" class="node">
+<g id="node6" class="node"><a xlink:href="../modules/VisitsRoutingModule.html" href="../modules/VisitsRoutingModule.html" target="_top">
 <title>VisitsRoutingModule</title>
-<polygon fill="#8dd3c7" stroke="#000000" points="303.8356,-122 300.8356,-126 279.8356,-126 276.8356,-122 166.1644,-122 166.1644,-86 303.8356,-86 303.8356,-122"/>
-<text text-anchor="middle" x="235" y="-99.8" font-family="Times,serif" font-size="14.00" fill="#000000">VisitsRoutingModule</text>
-</g>
+<polygon fill="#8dd3c7" stroke="black" points="161.84,-122 158.84,-126 137.84,-126 134.84,-122 24.16,-122 24.16,-86 161.84,-86 161.84,-122"/>
+<text text-anchor="middle" x="93" y="-99.8" font-family="Times,serif" font-size="14.00">VisitsRoutingModule</text>
+</a></g>
 <!-- VisitsRoutingModule&#45;&gt;VisitsModule -->
 <g id="edge5" class="edge">
 <title>VisitsRoutingModule&#45;&gt;VisitsModule</title>
-<path fill="none" stroke="#000000" d="M272.8754,-122.027C272.8754,-138.3976 272.8754,-160 272.8754,-160 272.8754,-160 405.7349,-160 405.7349,-160"/>
-<polygon fill="#000000" stroke="#000000" points="405.7349,-163.5001 415.7349,-160 405.7349,-156.5001 405.7349,-163.5001"/>
+<path fill="none" stroke="black" d="M93,-122.11C93,-141.34 93,-169 93,-169 93,-169 408.64,-169 408.64,-169"/>
+<polygon fill="black" stroke="black" points="408.64,-172.5 418.64,-169 408.64,-165.5 408.64,-172.5"/>
 </g>
 <!-- VisitService -->
-<g id="node10" class="node">
+<g id="node10" class="node"><a xlink:href="../injectables/VisitService.html" href="../injectables/VisitService.html" target="_top">
 <title>VisitService</title>
-<ellipse fill="#fdb462" stroke="#000000" cx="83" cy="-104" rx="58.5405" ry="18"/>
-<text text-anchor="middle" x="83" y="-99.8" font-family="Times,serif" font-size="14.00" fill="#000000">VisitService</text>
-</g>
+<ellipse fill="#fdb462" stroke="black" cx="391" cy="-104" rx="58.54" ry="18"/>
+<text text-anchor="middle" x="391" y="-99.8" font-family="Times,serif" font-size="14.00">VisitService</text>
+</a></g>
 <!-- VisitService&#45;&gt;VisitsModule -->
 <g id="edge9" class="edge">
 <title>VisitService&#45;&gt;VisitsModule</title>
-<path fill="none" stroke="#000000" d="M83,-122.1061C83,-141.3391 83,-169 83,-169 83,-169 405.5272,-169 405.5272,-169"/>
-<polygon fill="#000000" stroke="#000000" points="405.5272,-172.5001 415.5272,-169 405.5271,-165.5001 405.5272,-172.5001"/>
+<path fill="none" stroke="black" d="M434.33,-116.23C434.33,-116.23 434.33,-140.68 434.33,-140.68"/>
+<polygon fill="black" stroke="black" points="430.83,-140.68 434.33,-150.68 437.83,-140.68 430.83,-140.68"/>
 </g>
 </g>
 </svg>
 
     </div>
     <i id="fullscreen" class="icon ion-ios-resize module-graph-fullscreen-btn" aria-hidden="true"></i>
-    <div class="btn-group">
+    <div class="btn-group size-buttons">
         <button id="zoom-in" class="btn btn-default btn-sm">Zoom in</button>
         <button id="reset" class="btn btn-default btn-sm">Reset</button>
         <button id="zoom-out" class="btn btn-default btn-sm">Zoom out</button>
@@ -210,23 +292,23 @@
 <script src="../js/svg-pan-zoom.controls.js"></script>
 
 <ul class="nav nav-tabs" role="tablist">
-    <li  class="active" >
-        <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+    <li class="nav-item">
+        <a href="#info" 
+            class="nav-link"
+            class="nav-link active"
+            role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
     </li>
-    <li >
-        <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+    <li class="nav-item">
+        <a href="#source" 
+            class="nav-link"
+            
+            role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
     </li>
 </ul>
 
 <div class="tab-content">
-    <div class="tab-pane fade active in" id="c-info">
+    <div class="tab-pane fade active in" id="info">
 
-        <p class="comment">
-            <h3>File</h3>
-        </p>
-        <p class="comment">
-            <code>src/app/visits/visits.module.ts</code>
-        </p>
 
 
 
@@ -234,7 +316,7 @@
         <div class="container-fluid module">
             <div class="row">
                 <div class="col-sm-3">
-                    <h3>Declarations<a href="https://angular.io/api/core/NgModule#declarations" target="_blank"
+                    <h3>Declarations<a href="https://angular.io/api/core/NgModule#declarations" target="_blank" rel="noopener noreferrer"
                             title="Official documentation about module declarations"><span class="icon ion-ios-information-circle-outline"></span></a></h3>
                     <ul class="list-group">
                         <li class="list-group-item">
@@ -249,7 +331,7 @@
                     </ul>
                 </div>
                 <div class="col-sm-3">
-                    <h3>Providers<a href="https://angular.io/api/core/NgModule#providers" target="_blank"
+                    <h3>Providers<a href="https://angular.io/api/core/NgModule#providers" target="_blank" rel="noopener noreferrer"
                             title="Official documentation about module providers"><span class="icon ion-ios-information-circle-outline"></a></h3>
                     <ul class="list-group">
                         <li class="list-group-item">
@@ -258,7 +340,8 @@
                     </ul>
                 </div>
                 <div class="col-sm-3">
-                    <h3>Imports<a href="https://angular.io/api/core/NgModule#imports" target="_blank" title="Official documentation about module imports"><span
+                    <h3>Imports<a href="https://angular.io/api/core/NgModule#imports" target="_blank" rel="noopener noreferrer"
+                            title="Official documentation about module imports"><span
                                 class="icon ion-ios-information-circle-outline"></a></h3>
                     <ul class="list-group">
                         <li class="list-group-item">
@@ -270,7 +353,8 @@
                     </ul>
                 </div>
                 <div class="col-sm-3">
-                    <h3>Exports<a href="https://angular.io/api/core/NgModule#exports" target="_blank" title="Official documentation about module exports"><span
+                    <h3>Exports<a href="https://angular.io/api/core/NgModule#exports" target="_blank" rel="noopener noreferrer"
+                            title="Official documentation about module exports"><span
                                 class="icon ion-ios-information-circle-outline"></a></h3>
                     <ul class="list-group">
                         <li class="list-group-item">
@@ -287,11 +371,53 @@
             </div>
         </div>
 
+                <section data-compodoc="block-relationships">
+            <h3>Relationships</h3>
+
+            <div class="row pt-3">
+                <div class="col-sm-6">
+                    <h4>Used by</h4>
+                        <ul class="list-unstyled relationships-list">
+                                <li>
+                                            <code><a href="../modules/AppModule.html" target="_self" >AppModule</a></code>
+                                </li>
+                                <li>
+                                            <code><a href="../modules/PetsModule.html" target="_self" >PetsModule</a></code>
+                                </li>
+                        </ul>
+                </div>
+
+                <div class="col-sm-6">
+                    <h4>Depends on</h4>
+                        <ul class="list-unstyled relationships-list">
+                                <li>
+                                            <code><a href="../modules/PetsRoutingModule.html" target="_self" >PetsRoutingModule</a></code>
+                                </li>
+                                <li>
+                                            <code><a href="../modules/VisitsRoutingModule.html" target="_self" >VisitsRoutingModule</a></code>
+                                </li>
+                                <li>
+                                            <code><a href="../components/VisitAddComponent.html" target="_self" >VisitAddComponent</a></code>
+                                </li>
+                                <li>
+                                            <code><a href="../components/VisitEditComponent.html" target="_self" >VisitEditComponent</a></code>
+                                </li>
+                                <li>
+                                            <code><a href="../components/VisitListComponent.html" target="_self" >VisitListComponent</a></code>
+                                </li>
+                                <li>
+                                            <code><a href="../injectables/VisitService.html" target="_self" >VisitService</a></code>
+                                </li>
+                        </ul>
+                </div>
+            </div>
+        </section>
+
 
     </div>
 
 
-    <div class="tab-pane fade  tab-source-code" id="c-source">
+    <div class="tab-pane fade  tab-source-code" id="source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">/*
  *
  *  * Copyright 2016-2017 the original author or authors.
@@ -379,14 +505,17 @@ export class VisitsModule {
 
 
 
-                   
+
+
+
+
 
 
 
 
                    </div><div class="search-results">
     <div class="has-results">
-        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
         <ul class="search-results-list"></ul>
     </div>
     <div class="no-results">
@@ -398,16 +527,56 @@ export class VisitsModule {
            </div>
        </div>
 
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'module';
             var COMPODOC_CURRENT_PAGE_URL = 'VisitsModule.html';
+            var MAX_SEARCH_RESULTS = 15;
        </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var updateDarkModeSwitchOffset = function () {
+                    var content = document.querySelector('.content');
+                    var scrollbarWidth = 0;
+
+                    if (content) {
+                         scrollbarWidth = Math.max(0, content.offsetWidth - content.clientWidth);
+                    }
+
+                    document.documentElement.style.setProperty(
+                         '--content-scrollbar-width',
+                         scrollbarWidth + 'px'
+                    );
+               };
+
+               updateDarkModeSwitchOffset();
+               requestAnimationFrame(updateDarkModeSwitchOffset);
+               window.addEventListener('resize', updateDarkModeSwitchOffset);
+
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
 
        <script src="../js/libs/custom-elements.min.js"></script>
        <script src="../js/libs/lit-html.js"></script>
-       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
-       <script src="../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+
        <script src="../js/menu-wc.js" defer></script>
 
        <script src="../js/libs/bootstrap-native.js"></script>
@@ -415,7 +584,6 @@ export class VisitsModule {
        <script src="../js/libs/es6-shim.min.js"></script>
        <script src="../js/libs/EventDispatcher.js"></script>
        <script src="../js/libs/promise.min.js"></script>
-       <script src="../js/libs/zepto.min.js"></script>
 
        <script src="../js/compodoc.js"></script>
 

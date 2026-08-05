@@ -8,22 +8,95 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
-	      <link rel="stylesheet" href="../styles/style.css">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
     </head>
     <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
 
-        <div class="navbar navbar-default navbar-fixed-top visible-xs">
-            <a href="../" class="navbar-brand">spring-petclinic-angular documentation</a>
-            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">spring-petclinic-angular documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
         </div>
 
         <div class="xs-menu menu" id="mobile-menu">
-                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+                <div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search">
+    <button type="button"
+        class="search-input-clear"
+        aria-label="Clear search"
+        data-search-input-clear>&times;</button>
+</div>
+            <compodoc-menu></compodoc-menu>
         </div>
 
         <div class="container-fluid main">
            <div class="row main">
-               <div class="hidden-xs menu">
+               <div class="d-none d-md-block menu">
                    <compodoc-menu mode="normal"></compodoc-menu>
                </div>
                <!-- START CONTENT -->
@@ -32,139 +105,148 @@
 
 
 
+
+
+
+
 <ol class="breadcrumb">
-    <li>Modules</li>
-    <li>PetTypesModule</li>
+    <li class="breadcrumb-item">Modules</li>
+    <li class="breadcrumb-item" >PetTypesModule</li>
 </ol>
+
+<div class="io-file io-file-path" data-compodoc="entity-file-path">
+    <span class="icon ion-ios-document" aria-hidden="true"></span>
+    <code>src/app/pettypes/pettypes.module.ts</code>
+</div>
 
 <div class="text-center module-graph-container">
     <div id="module-graph-svg">
         <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<!-- Generated by graphviz version 2.40.1 (20161225.0304)
+<!-- Generated by graphviz version 2.47.0 (20210316.0004)
  -->
 <!-- Title: dependencies Pages: 1 -->
 <svg width="876pt" height="284pt"
  viewBox="0.00 0.00 876.00 284.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 <g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 280)">
 <title>dependencies</title>
-<polygon fill="#ffffff" stroke="transparent" points="-4,4 -4,-280 872,-280 872,4 -4,4"/>
-<text text-anchor="start" x="413.0091" y="-42.4" font-family="sans-serif" font-weight="bold" font-size="14.00" fill="#000000">Legend</text>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-280 872,-280 872,4 -4,4"/>
+<text text-anchor="start" x="413.01" y="-42.4" font-family="Times-12" font-weight="bold" font-size="14.00">Legend</text>
 <polygon fill="#ffffb3" stroke="transparent" points="200,-10 200,-30 220,-30 220,-10 200,-10"/>
-<text text-anchor="start" x="223.629" y="-15.4" font-family="sans-serif" font-size="14.00" fill="#000000"> &#160;Declarations</text>
+<text text-anchor="start" x="223.63" y="-15.4" font-family="Times-12" font-size="14.00"> &#160;Declarations</text>
 <polygon fill="#8dd3c7" stroke="transparent" points="313,-10 313,-30 333,-30 333,-10 313,-10"/>
-<text text-anchor="start" x="336.7251" y="-15.4" font-family="sans-serif" font-size="14.00" fill="#000000"> &#160;Module</text>
+<text text-anchor="start" x="336.73" y="-15.4" font-family="Times-12" font-size="14.00"> &#160;Module</text>
 <polygon fill="#80b1d3" stroke="transparent" points="399,-10 399,-30 419,-30 419,-10 399,-10"/>
-<text text-anchor="start" x="422.7812" y="-15.4" font-family="sans-serif" font-size="14.00" fill="#000000"> &#160;Bootstrap</text>
+<text text-anchor="start" x="422.78" y="-15.4" font-family="Times-12" font-size="14.00"> &#160;Bootstrap</text>
 <polygon fill="#fdb462" stroke="transparent" points="496,-10 496,-30 516,-30 516,-10 496,-10"/>
-<text text-anchor="start" x="519.6732" y="-15.4" font-family="sans-serif" font-size="14.00" fill="#000000"> &#160;Providers</text>
+<text text-anchor="start" x="519.67" y="-15.4" font-family="Times-12" font-size="14.00"> &#160;Providers</text>
 <polygon fill="#fb8072" stroke="transparent" points="592,-10 592,-30 612,-30 612,-10 592,-10"/>
-<text text-anchor="start" x="615.7258" y="-15.4" font-family="sans-serif" font-size="14.00" fill="#000000"> &#160;Exports</text>
+<text text-anchor="start" x="615.73" y="-15.4" font-family="Times-12" font-size="14.00"> &#160;Exports</text>
 <g id="clust1" class="cluster">
 <title>cluster_PetTypesModule</title>
-<polygon fill="none" stroke="#000000" stroke-dasharray="1,5" points="8,-70 8,-268 860,-268 860,-70 8,-70"/>
+<polygon fill="none" stroke="black" stroke-dasharray="1,5" points="8,-70 8,-268 860,-268 860,-70 8,-70"/>
 </g>
 <g id="clust2" class="cluster">
 <title>cluster_PetTypesModule_declarations</title>
-<polygon fill="none" stroke="#000000" points="360,-78 360,-130 852,-130 852,-78 360,-78"/>
+<polygon fill="none" stroke="black" points="360,-78 360,-130 852,-130 852,-78 360,-78"/>
 </g>
 <g id="clust6" class="cluster">
 <title>cluster_PetTypesModule_imports</title>
-<polygon fill="none" stroke="#000000" points="184,-78 184,-130 352,-130 352,-78 184,-78"/>
+<polygon fill="none" stroke="black" points="184,-78 184,-130 352,-130 352,-78 184,-78"/>
 </g>
 <g id="clust7" class="cluster">
 <title>cluster_PetTypesModule_exports</title>
-<polygon fill="none" stroke="#000000" points="359,-208 359,-260 523,-260 523,-208 359,-208"/>
+<polygon fill="none" stroke="black" points="359,-208 359,-260 523,-260 523,-208 359,-208"/>
 </g>
 <g id="clust9" class="cluster">
 <title>cluster_PetTypesModule_providers</title>
-<polygon fill="none" stroke="#000000" points="16,-78 16,-130 176,-130 176,-78 16,-78"/>
+<polygon fill="none" stroke="black" points="16,-78 16,-130 176,-130 176,-78 16,-78"/>
 </g>
 <!-- PettypeAddComponent -->
-<g id="node1" class="node">
+<g id="node1" class="node"><a xlink:href="../components/PettypeAddComponent.html" href="../components/PettypeAddComponent.html" target="_top">
 <title>PettypeAddComponent</title>
-<polygon fill="#ffffb3" stroke="#000000" points="843.9326,-122 696.0674,-122 696.0674,-86 843.9326,-86 843.9326,-122"/>
-<text text-anchor="middle" x="770" y="-99.8" font-family="Times,serif" font-size="14.00" fill="#000000">PettypeAddComponent</text>
-</g>
+<polygon fill="#ffffb3" stroke="black" points="843.93,-122 696.07,-122 696.07,-86 843.93,-86 843.93,-122"/>
+<text text-anchor="middle" x="770" y="-99.8" font-family="Times,serif" font-size="14.00">PettypeAddComponent</text>
+</a></g>
 <!-- PetTypesModule -->
-<g id="node4" class="node">
+<g id="node4" class="node"><a xlink:href="../modules/PetTypesModule.html" href="../modules/PetTypesModule.html" target="_top">
 <title>PetTypesModule</title>
-<polygon fill="#8dd3c7" stroke="#000000" points="496.6499,-187 493.6499,-191 472.6499,-191 469.6499,-187 385.3501,-187 385.3501,-151 496.6499,-151 496.6499,-187"/>
-<text text-anchor="middle" x="441" y="-164.8" font-family="Times,serif" font-size="14.00" fill="#000000">PetTypesModule</text>
-</g>
+<polygon fill="#8dd3c7" stroke="black" points="496.65,-187 493.65,-191 472.65,-191 469.65,-187 385.35,-187 385.35,-151 496.65,-151 496.65,-187"/>
+<text text-anchor="middle" x="441" y="-164.8" font-family="Times,serif" font-size="14.00">PetTypesModule</text>
+</a></g>
 <!-- PettypeAddComponent&#45;&gt;PetTypesModule -->
 <g id="edge1" class="edge">
 <title>PettypeAddComponent&#45;&gt;PetTypesModule</title>
-<path fill="none" stroke="#000000" d="M770,-122.2843C770,-143.3211 770,-175 770,-175 770,-175 506.8104,-175 506.8104,-175"/>
-<polygon fill="#000000" stroke="#000000" points="506.8104,-171.5001 496.8104,-175 506.8103,-178.5001 506.8104,-171.5001"/>
+<path fill="none" stroke="black" d="M770,-122.28C770,-143.32 770,-175 770,-175 770,-175 506.81,-175 506.81,-175"/>
+<polygon fill="black" stroke="black" points="506.81,-171.5 496.81,-175 506.81,-178.5 506.81,-171.5"/>
 </g>
 <!-- PettypeEditComponent -->
-<g id="node2" class="node">
+<g id="node2" class="node"><a xlink:href="../components/PettypeEditComponent.html" href="../components/PettypeEditComponent.html" target="_top">
 <title>PettypeEditComponent</title>
-<polygon fill="#ffffb3" stroke="#000000" points="678.1596,-122 531.8404,-122 531.8404,-86 678.1596,-86 678.1596,-122"/>
-<text text-anchor="middle" x="605" y="-99.8" font-family="Times,serif" font-size="14.00" fill="#000000">PettypeEditComponent</text>
-</g>
+<polygon fill="#ffffb3" stroke="black" points="678.16,-122 531.84,-122 531.84,-86 678.16,-86 678.16,-122"/>
+<text text-anchor="middle" x="605" y="-99.8" font-family="Times,serif" font-size="14.00">PettypeEditComponent</text>
+</a></g>
 <!-- PettypeEditComponent&#45;&gt;PetTypesModule -->
 <g id="edge2" class="edge">
 <title>PettypeEditComponent&#45;&gt;PetTypesModule</title>
-<path fill="none" stroke="#000000" d="M605,-122.0225C605,-139.3734 605,-163 605,-163 605,-163 506.9808,-163 506.9808,-163"/>
-<polygon fill="#000000" stroke="#000000" points="506.9808,-159.5001 496.9808,-163 506.9808,-166.5001 506.9808,-159.5001"/>
+<path fill="none" stroke="black" d="M605,-122.02C605,-139.37 605,-163 605,-163 605,-163 506.98,-163 506.98,-163"/>
+<polygon fill="black" stroke="black" points="506.98,-159.5 496.98,-163 506.98,-166.5 506.98,-159.5"/>
 </g>
 <!-- PettypeListComponent -->
-<g id="node3" class="node">
+<g id="node3" class="node"><a xlink:href="../components/PettypeListComponent.html" href="../components/PettypeListComponent.html" target="_top">
 <title>PettypeListComponent</title>
-<polygon fill="#ffffb3" stroke="#000000" points="513.6038,-122 368.3962,-122 368.3962,-86 513.6038,-86 513.6038,-122"/>
-<text text-anchor="middle" x="441" y="-99.8" font-family="Times,serif" font-size="14.00" fill="#000000">PettypeListComponent</text>
-</g>
+<polygon fill="#ffffb3" stroke="black" points="513.6,-122 368.4,-122 368.4,-86 513.6,-86 513.6,-122"/>
+<text text-anchor="middle" x="441" y="-99.8" font-family="Times,serif" font-size="14.00">PettypeListComponent</text>
+</a></g>
 <!-- PettypeListComponent&#45;&gt;PetTypesModule -->
 <g id="edge3" class="edge">
 <title>PettypeListComponent&#45;&gt;PetTypesModule</title>
-<path fill="none" stroke="#000000" d="M441,-122.1061C441,-122.1061 441,-140.991 441,-140.991"/>
-<polygon fill="#000000" stroke="#000000" points="437.5001,-140.9909 441,-150.991 444.5001,-140.991 437.5001,-140.9909"/>
+<path fill="none" stroke="black" d="M441,-122.11C441,-122.11 441,-140.99 441,-140.99"/>
+<polygon fill="black" stroke="black" points="437.5,-140.99 441,-150.99 444.5,-140.99 437.5,-140.99"/>
 </g>
 <!-- PettypeListComponent  -->
-<g id="node6" class="node">
+<g id="node6" class="node"><a xlink:href="../components/PettypeListComponent.html" href="../components/PettypeListComponent.html" target="_top">
 <title>PettypeListComponent </title>
-<polygon fill="#fb8072" stroke="#000000" points="515.1043,-252 366.8957,-252 366.8957,-216 515.1043,-216 515.1043,-252"/>
-<text text-anchor="middle" x="441" y="-229.8" font-family="Times,serif" font-size="14.00" fill="#000000">PettypeListComponent </text>
-</g>
+<polygon fill="#fb8072" stroke="black" points="515.1,-252 366.9,-252 366.9,-216 515.1,-216 515.1,-252"/>
+<text text-anchor="middle" x="441" y="-229.8" font-family="Times,serif" font-size="14.00">PettypeListComponent </text>
+</a></g>
 <!-- PetTypesModule&#45;&gt;PettypeListComponent  -->
 <g id="edge5" class="edge">
 <title>PetTypesModule&#45;&gt;PettypeListComponent </title>
-<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M441,-187.1061C441,-187.1061 441,-205.991 441,-205.991"/>
-<polygon fill="#000000" stroke="#000000" points="437.5001,-205.9909 441,-215.991 444.5001,-205.991 437.5001,-205.9909"/>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M441,-187.11C441,-187.11 441,-205.99 441,-205.99"/>
+<polygon fill="black" stroke="black" points="437.5,-205.99 441,-215.99 444.5,-205.99 437.5,-205.99"/>
 </g>
 <!-- PettypesRoutingModule -->
-<g id="node5" class="node">
+<g id="node5" class="node"><a xlink:href="../modules/PettypesRoutingModule.html" href="../modules/PettypesRoutingModule.html" target="_top">
 <title>PettypesRoutingModule</title>
-<polygon fill="#8dd3c7" stroke="#000000" points="344.1052,-122 341.1052,-126 320.1052,-126 317.1052,-122 191.8948,-122 191.8948,-86 344.1052,-86 344.1052,-122"/>
-<text text-anchor="middle" x="268" y="-99.8" font-family="Times,serif" font-size="14.00" fill="#000000">PettypesRoutingModule</text>
-</g>
+<polygon fill="#8dd3c7" stroke="black" points="344.11,-122 341.11,-126 320.11,-126 317.11,-122 191.89,-122 191.89,-86 344.11,-86 344.11,-122"/>
+<text text-anchor="middle" x="268" y="-99.8" font-family="Times,serif" font-size="14.00">PettypesRoutingModule</text>
+</a></g>
 <!-- PettypesRoutingModule&#45;&gt;PetTypesModule -->
 <g id="edge4" class="edge">
 <title>PettypesRoutingModule&#45;&gt;PetTypesModule</title>
-<path fill="none" stroke="#000000" d="M268,-122.0225C268,-139.3734 268,-163 268,-163 268,-163 375.3094,-163 375.3094,-163"/>
-<polygon fill="#000000" stroke="#000000" points="375.3095,-166.5001 385.3094,-163 375.3094,-159.5001 375.3095,-166.5001"/>
+<path fill="none" stroke="black" d="M268,-122.02C268,-139.37 268,-163 268,-163 268,-163 375.31,-163 375.31,-163"/>
+<polygon fill="black" stroke="black" points="375.31,-166.5 385.31,-163 375.31,-159.5 375.31,-166.5"/>
 </g>
 <!-- PetTypeService -->
-<g id="node7" class="node">
+<g id="node7" class="node"><a xlink:href="../injectables/PetTypeService.html" href="../injectables/PetTypeService.html" target="_top">
 <title>PetTypeService</title>
-<ellipse fill="#fdb462" stroke="#000000" cx="96" cy="-104" rx="72.3477" ry="18"/>
-<text text-anchor="middle" x="96" y="-99.8" font-family="Times,serif" font-size="14.00" fill="#000000">PetTypeService</text>
-</g>
+<ellipse fill="#fdb462" stroke="black" cx="96" cy="-104" rx="72.35" ry="18"/>
+<text text-anchor="middle" x="96" y="-99.8" font-family="Times,serif" font-size="14.00">PetTypeService</text>
+</a></g>
 <!-- PetTypeService&#45;&gt;PetTypesModule -->
 <g id="edge6" class="edge">
 <title>PetTypeService&#45;&gt;PetTypesModule</title>
-<path fill="none" stroke="#000000" d="M96,-122.2843C96,-143.3211 96,-175 96,-175 96,-175 375.1864,-175 375.1864,-175"/>
-<polygon fill="#000000" stroke="#000000" points="375.1864,-178.5001 385.1864,-175 375.1863,-171.5001 375.1864,-178.5001"/>
+<path fill="none" stroke="black" d="M96,-122.28C96,-143.32 96,-175 96,-175 96,-175 375.19,-175 375.19,-175"/>
+<polygon fill="black" stroke="black" points="375.19,-178.5 385.19,-175 375.19,-171.5 375.19,-178.5"/>
 </g>
 </g>
 </svg>
 
     </div>
     <i id="fullscreen" class="icon ion-ios-resize module-graph-fullscreen-btn" aria-hidden="true"></i>
-    <div class="btn-group">
+    <div class="btn-group size-buttons">
         <button id="zoom-in" class="btn btn-default btn-sm">Zoom in</button>
         <button id="reset" class="btn btn-default btn-sm">Reset</button>
         <button id="zoom-out" class="btn btn-default btn-sm">Zoom out</button>
@@ -174,23 +256,23 @@
 <script src="../js/svg-pan-zoom.controls.js"></script>
 
 <ul class="nav nav-tabs" role="tablist">
-    <li  class="active" >
-        <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+    <li class="nav-item">
+        <a href="#info" 
+            class="nav-link"
+            class="nav-link active"
+            role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
     </li>
-    <li >
-        <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+    <li class="nav-item">
+        <a href="#source" 
+            class="nav-link"
+            
+            role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
     </li>
 </ul>
 
 <div class="tab-content">
-    <div class="tab-pane fade active in" id="c-info">
+    <div class="tab-pane fade active in" id="info">
 
-        <p class="comment">
-            <h3>File</h3>
-        </p>
-        <p class="comment">
-            <code>src/app/pettypes/pettypes.module.ts</code>
-        </p>
 
 
 
@@ -198,7 +280,7 @@
         <div class="container-fluid module">
             <div class="row">
                 <div class="col-sm-3">
-                    <h3>Declarations<a href="https://angular.io/api/core/NgModule#declarations" target="_blank"
+                    <h3>Declarations<a href="https://angular.io/api/core/NgModule#declarations" target="_blank" rel="noopener noreferrer"
                             title="Official documentation about module declarations"><span class="icon ion-ios-information-circle-outline"></span></a></h3>
                     <ul class="list-group">
                         <li class="list-group-item">
@@ -213,7 +295,7 @@
                     </ul>
                 </div>
                 <div class="col-sm-3">
-                    <h3>Providers<a href="https://angular.io/api/core/NgModule#providers" target="_blank"
+                    <h3>Providers<a href="https://angular.io/api/core/NgModule#providers" target="_blank" rel="noopener noreferrer"
                             title="Official documentation about module providers"><span class="icon ion-ios-information-circle-outline"></a></h3>
                     <ul class="list-group">
                         <li class="list-group-item">
@@ -222,7 +304,8 @@
                     </ul>
                 </div>
                 <div class="col-sm-3">
-                    <h3>Imports<a href="https://angular.io/api/core/NgModule#imports" target="_blank" title="Official documentation about module imports"><span
+                    <h3>Imports<a href="https://angular.io/api/core/NgModule#imports" target="_blank" rel="noopener noreferrer"
+                            title="Official documentation about module imports"><span
                                 class="icon ion-ios-information-circle-outline"></a></h3>
                     <ul class="list-group">
                         <li class="list-group-item">
@@ -231,7 +314,8 @@
                     </ul>
                 </div>
                 <div class="col-sm-3">
-                    <h3>Exports<a href="https://angular.io/api/core/NgModule#exports" target="_blank" title="Official documentation about module exports"><span
+                    <h3>Exports<a href="https://angular.io/api/core/NgModule#exports" target="_blank" rel="noopener noreferrer"
+                            title="Official documentation about module exports"><span
                                 class="icon ion-ios-information-circle-outline"></a></h3>
                     <ul class="list-group">
                         <li class="list-group-item">
@@ -242,11 +326,47 @@
             </div>
         </div>
 
+                <section data-compodoc="block-relationships">
+            <h3>Relationships</h3>
+
+            <div class="row pt-3">
+                <div class="col-sm-6">
+                    <h4>Used by</h4>
+                        <ul class="list-unstyled relationships-list">
+                                <li>
+                                            <code><a href="../modules/AppModule.html" target="_self" >AppModule</a></code>
+                                </li>
+                        </ul>
+                </div>
+
+                <div class="col-sm-6">
+                    <h4>Depends on</h4>
+                        <ul class="list-unstyled relationships-list">
+                                <li>
+                                            <code><a href="../modules/PettypesRoutingModule.html" target="_self" >PettypesRoutingModule</a></code>
+                                </li>
+                                <li>
+                                            <code><a href="../components/PettypeListComponent.html" target="_self" >PettypeListComponent</a></code>
+                                </li>
+                                <li>
+                                            <code><a href="../components/PettypeAddComponent.html" target="_self" >PettypeAddComponent</a></code>
+                                </li>
+                                <li>
+                                            <code><a href="../components/PettypeEditComponent.html" target="_self" >PettypeEditComponent</a></code>
+                                </li>
+                                <li>
+                                            <code><a href="../injectables/PetTypeService.html" target="_self" >PetTypeService</a></code>
+                                </li>
+                        </ul>
+                </div>
+            </div>
+        </section>
+
 
     </div>
 
 
-    <div class="tab-pane fade  tab-source-code" id="c-source">
+    <div class="tab-pane fade  tab-source-code" id="source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">/*
  *
  *  * Copyright 2016-2017 the original author or authors.
@@ -308,14 +428,17 @@ export class PetTypesModule {
 
 
 
-                   
+
+
+
+
 
 
 
 
                    </div><div class="search-results">
     <div class="has-results">
-        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
         <ul class="search-results-list"></ul>
     </div>
     <div class="no-results">
@@ -327,16 +450,56 @@ export class PetTypesModule {
            </div>
        </div>
 
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'module';
             var COMPODOC_CURRENT_PAGE_URL = 'PetTypesModule.html';
+            var MAX_SEARCH_RESULTS = 15;
        </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var updateDarkModeSwitchOffset = function () {
+                    var content = document.querySelector('.content');
+                    var scrollbarWidth = 0;
+
+                    if (content) {
+                         scrollbarWidth = Math.max(0, content.offsetWidth - content.clientWidth);
+                    }
+
+                    document.documentElement.style.setProperty(
+                         '--content-scrollbar-width',
+                         scrollbarWidth + 'px'
+                    );
+               };
+
+               updateDarkModeSwitchOffset();
+               requestAnimationFrame(updateDarkModeSwitchOffset);
+               window.addEventListener('resize', updateDarkModeSwitchOffset);
+
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
 
        <script src="../js/libs/custom-elements.min.js"></script>
        <script src="../js/libs/lit-html.js"></script>
-       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
-       <script src="../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+
        <script src="../js/menu-wc.js" defer></script>
 
        <script src="../js/libs/bootstrap-native.js"></script>
@@ -344,7 +507,6 @@ export class PetTypesModule {
        <script src="../js/libs/es6-shim.min.js"></script>
        <script src="../js/libs/EventDispatcher.js"></script>
        <script src="../js/libs/promise.min.js"></script>
-       <script src="../js/libs/zepto.min.js"></script>
 
        <script src="../js/compodoc.js"></script>
 

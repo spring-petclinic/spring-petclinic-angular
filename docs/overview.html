@@ -8,22 +8,95 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link rel="icon" type="image/x-icon" href="./images/favicon.ico">
-	      <link rel="stylesheet" href="./styles/style.css">
+	   <link rel="stylesheet" href="./styles/style.css">
+        <link rel="stylesheet" href="./styles/dark.css">
     </head>
     <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
 
-        <div class="navbar navbar-default navbar-fixed-top visible-xs">
-            <a href="./" class="navbar-brand">spring-petclinic-angular documentation</a>
-            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="./" class="navbar-brand">spring-petclinic-angular documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
         </div>
 
         <div class="xs-menu menu" id="mobile-menu">
-                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+                <div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search">
+    <button type="button"
+        class="search-input-clear"
+        aria-label="Clear search"
+        data-search-input-clear>&times;</button>
+</div>
+            <compodoc-menu></compodoc-menu>
         </div>
 
         <div class="container-fluid main">
            <div class="row main">
-               <div class="hidden-xs menu">
+               <div class="d-none d-md-block menu">
                    <compodoc-menu mode="normal"></compodoc-menu>
                </div>
                <!-- START CONTENT -->
@@ -31,8 +104,12 @@
                    <div class="content-data">
 
 
+
+
+
+
 <ol class="breadcrumb">
-    <li>Overview</li>
+    <li class="breadcrumb-item">Overview</li>
 </ol>
   
 <div class="text-center module-graph-container">
@@ -40,951 +117,925 @@
         <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<!-- Generated by graphviz version 2.40.1 (20161225.0304)
+<!-- Generated by graphviz version 2.47.0 (20210316.0004)
  -->
 <!-- Title: dependencies Pages: 1 -->
-<svg width="5105pt" height="504pt"
- viewBox="0.00 0.00 5105.00 504.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg width="4845pt" height="504pt"
+ viewBox="0.00 0.00 4845.00 504.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 <g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 500)">
 <title>dependencies</title>
-<polygon fill="#ffffff" stroke="transparent" points="-4,4 -4,-500 5101,-500 5101,4 -4,4"/>
-<text text-anchor="start" x="2527.5091" y="-42.4" font-family="sans-serif" font-weight="bold" font-size="14.00" fill="#000000">Legend</text>
-<polygon fill="#ffffb3" stroke="transparent" points="2314.5,-10 2314.5,-30 2334.5,-30 2334.5,-10 2314.5,-10"/>
-<text text-anchor="start" x="2338.129" y="-15.4" font-family="sans-serif" font-size="14.00" fill="#000000"> &#160;Declarations</text>
-<polygon fill="#8dd3c7" stroke="transparent" points="2427.5,-10 2427.5,-30 2447.5,-30 2447.5,-10 2427.5,-10"/>
-<text text-anchor="start" x="2451.2251" y="-15.4" font-family="sans-serif" font-size="14.00" fill="#000000"> &#160;Module</text>
-<polygon fill="#80b1d3" stroke="transparent" points="2513.5,-10 2513.5,-30 2533.5,-30 2533.5,-10 2513.5,-10"/>
-<text text-anchor="start" x="2537.2812" y="-15.4" font-family="sans-serif" font-size="14.00" fill="#000000"> &#160;Bootstrap</text>
-<polygon fill="#fdb462" stroke="transparent" points="2610.5,-10 2610.5,-30 2630.5,-30 2630.5,-10 2610.5,-10"/>
-<text text-anchor="start" x="2634.1732" y="-15.4" font-family="sans-serif" font-size="14.00" fill="#000000"> &#160;Providers</text>
-<polygon fill="#fb8072" stroke="transparent" points="2706.5,-10 2706.5,-30 2726.5,-30 2726.5,-10 2706.5,-10"/>
-<text text-anchor="start" x="2730.2258" y="-15.4" font-family="sans-serif" font-size="14.00" fill="#000000"> &#160;Exports</text>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-500 4841,-500 4841,4 -4,4"/>
+<text text-anchor="start" x="2397.51" y="-42.4" font-family="Times-12" font-weight="bold" font-size="14.00">Legend</text>
+<polygon fill="#ffffb3" stroke="transparent" points="2184.5,-10 2184.5,-30 2204.5,-30 2204.5,-10 2184.5,-10"/>
+<text text-anchor="start" x="2208.13" y="-15.4" font-family="Times-12" font-size="14.00"> &#160;Declarations</text>
+<polygon fill="#8dd3c7" stroke="transparent" points="2297.5,-10 2297.5,-30 2317.5,-30 2317.5,-10 2297.5,-10"/>
+<text text-anchor="start" x="2321.23" y="-15.4" font-family="Times-12" font-size="14.00"> &#160;Module</text>
+<polygon fill="#80b1d3" stroke="transparent" points="2383.5,-10 2383.5,-30 2403.5,-30 2403.5,-10 2383.5,-10"/>
+<text text-anchor="start" x="2407.28" y="-15.4" font-family="Times-12" font-size="14.00"> &#160;Bootstrap</text>
+<polygon fill="#fdb462" stroke="transparent" points="2480.5,-10 2480.5,-30 2500.5,-30 2500.5,-10 2480.5,-10"/>
+<text text-anchor="start" x="2504.17" y="-15.4" font-family="Times-12" font-size="14.00"> &#160;Providers</text>
+<polygon fill="#fb8072" stroke="transparent" points="2576.5,-10 2576.5,-30 2596.5,-30 2596.5,-10 2576.5,-10"/>
+<text text-anchor="start" x="2600.23" y="-15.4" font-family="Times-12" font-size="14.00"> &#160;Exports</text>
 <g id="clust1" class="cluster">
 <title>cluster_AppModule</title>
-<polygon fill="none" stroke="#000000" stroke-dasharray="1,5" points="1761,-146 1761,-488 2823,-488 2823,-146 1761,-146"/>
+<polygon fill="none" stroke="black" stroke-dasharray="1,5" points="1897,-146 1897,-488 2959,-488 2959,-146 1897,-146"/>
 </g>
 <g id="clust2" class="cluster">
 <title>cluster_AppModule_declarations</title>
-<polygon fill="none" stroke="#000000" points="2693,-298 2693,-350 2815,-350 2815,-298 2693,-298"/>
+<polygon fill="none" stroke="black" points="2829,-298 2829,-350 2951,-350 2951,-298 2829,-298"/>
 </g>
 <g id="clust4" class="cluster">
 <title>cluster_AppModule_imports</title>
-<polygon fill="none" stroke="#000000" points="1953,-154 1953,-350 2685,-350 2685,-154 1953,-154"/>
+<polygon fill="none" stroke="black" points="2089,-154 2089,-350 2821,-350 2821,-154 2089,-154"/>
 </g>
 <g id="clust6" class="cluster">
 <title>cluster_AppModule_bootstrap</title>
-<polygon fill="none" stroke="#000000" points="2435,-428 2435,-480 2559,-480 2559,-428 2435,-428"/>
+<polygon fill="none" stroke="black" points="2571,-428 2571,-480 2695,-480 2695,-428 2571,-428"/>
 </g>
 <g id="clust7" class="cluster">
 <title>cluster_AppModule_providers</title>
-<polygon fill="none" stroke="#000000" points="1769,-298 1769,-350 1945,-350 1945,-298 1769,-298"/>
+<polygon fill="none" stroke="black" points="1905,-298 1905,-350 2081,-350 2081,-298 1905,-298"/>
 </g>
 <g id="clust14" class="cluster">
 <title>cluster_OwnersModule</title>
-<polygon fill="none" stroke="#000000" stroke-dasharray="1,5" points="3538,-222 3538,-290 4534,-290 4534,-222 3538,-222"/>
+<polygon fill="none" stroke="black" stroke-dasharray="1,5" points="3674,-222 3674,-290 4670,-290 4670,-222 3674,-222"/>
 </g>
 <g id="clust15" class="cluster">
 <title>cluster_OwnersModule_declarations</title>
-<polygon fill="none" stroke="#000000" points="3874,-230 3874,-282 4526,-282 4526,-230 3874,-230"/>
+<polygon fill="none" stroke="black" points="4010,-230 4010,-282 4662,-282 4662,-230 4010,-230"/>
 </g>
 <g id="clust20" class="cluster">
 <title>cluster_OwnersModule_imports</title>
-<polygon fill="none" stroke="#000000" points="3702,-230 3702,-282 3866,-282 3866,-230 3702,-230"/>
+<polygon fill="none" stroke="black" points="3838,-230 3838,-282 4002,-282 4002,-230 3838,-230"/>
 </g>
 <g id="clust23" class="cluster">
 <title>cluster_OwnersModule_providers</title>
-<polygon fill="none" stroke="#000000" points="3546,-230 3546,-282 3694,-282 3694,-230 3546,-230"/>
+<polygon fill="none" stroke="black" points="3682,-230 3682,-282 3830,-282 3830,-230 3682,-230"/>
 </g>
 <g id="clust30" class="cluster">
 <title>cluster_PartsModule</title>
-<polygon fill="none" stroke="#000000" stroke-dasharray="1,5" points="2831,-222 2831,-290 3530,-290 3530,-222 2831,-222"/>
+<polygon fill="none" stroke="black" stroke-dasharray="1,5" points="2967,-222 2967,-290 3666,-290 3666,-222 2967,-222"/>
 </g>
 <g id="clust31" class="cluster">
 <title>cluster_PartsModule_declarations</title>
-<polygon fill="none" stroke="#000000" points="3188,-230 3188,-282 3522,-282 3522,-230 3188,-230"/>
+<polygon fill="none" stroke="black" points="3324,-230 3324,-282 3658,-282 3658,-230 3324,-230"/>
 </g>
 <g id="clust35" class="cluster">
 <title>cluster_PartsModule_exports</title>
-<polygon fill="none" stroke="#000000" points="2839,-230 2839,-282 3180,-282 3180,-230 2839,-230"/>
+<polygon fill="none" stroke="black" points="2975,-230 2975,-282 3316,-282 3316,-230 2975,-230"/>
 </g>
 <g id="clust38" class="cluster">
 <title>cluster_PetsModule</title>
-<polygon fill="none" stroke="#000000" stroke-dasharray="1,5" points="602,-146 602,-214 1753,-214 1753,-146 602,-146"/>
+<polygon fill="none" stroke="black" stroke-dasharray="1,5" points="738,-146 738,-214 1889,-214 1889,-146 738,-146"/>
 </g>
 <g id="clust39" class="cluster">
 <title>cluster_PetsModule_declarations</title>
-<polygon fill="none" stroke="#000000" points="1326,-154 1326,-206 1745,-206 1745,-154 1326,-154"/>
+<polygon fill="none" stroke="black" points="1462,-154 1462,-206 1881,-206 1881,-154 1462,-154"/>
 </g>
 <g id="clust43" class="cluster">
 <title>cluster_PetsModule_imports</title>
-<polygon fill="none" stroke="#000000" points="1174,-154 1174,-206 1318,-206 1318,-154 1174,-154"/>
+<polygon fill="none" stroke="black" points="1310,-154 1310,-206 1454,-206 1454,-154 1310,-154"/>
 </g>
 <g id="clust44" class="cluster">
 <title>cluster_PetsModule_exports</title>
-<polygon fill="none" stroke="#000000" points="738,-154 738,-206 1166,-206 1166,-154 738,-154"/>
+<polygon fill="none" stroke="black" points="874,-154 874,-206 1302,-206 1302,-154 874,-154"/>
 </g>
 <g id="clust46" class="cluster">
 <title>cluster_PetsModule_providers</title>
-<polygon fill="none" stroke="#000000" points="610,-154 610,-206 730,-206 730,-154 610,-154"/>
+<polygon fill="none" stroke="black" points="746,-154 746,-206 866,-206 866,-154 746,-154"/>
 </g>
 <g id="clust53" class="cluster">
 <title>cluster_PetTypesModule</title>
-<polygon fill="none" stroke="#000000" stroke-dasharray="1,5" points="8,-70 8,-138 1032,-138 1032,-70 8,-70"/>
+<polygon fill="none" stroke="black" stroke-dasharray="1,5" points="8,-70 8,-138 1032,-138 1032,-70 8,-70"/>
 </g>
 <g id="clust54" class="cluster">
 <title>cluster_PetTypesModule_declarations</title>
-<polygon fill="none" stroke="#000000" points="532,-78 532,-130 1024,-130 1024,-78 532,-78"/>
+<polygon fill="none" stroke="black" points="532,-78 532,-130 1024,-130 1024,-78 532,-78"/>
 </g>
 <g id="clust58" class="cluster">
 <title>cluster_PetTypesModule_imports</title>
-<polygon fill="none" stroke="#000000" points="356,-78 356,-130 524,-130 524,-78 356,-78"/>
+<polygon fill="none" stroke="black" points="356,-78 356,-130 524,-130 524,-78 356,-78"/>
 </g>
 <g id="clust59" class="cluster">
 <title>cluster_PetTypesModule_exports</title>
-<polygon fill="none" stroke="#000000" points="184,-78 184,-130 348,-130 348,-78 184,-78"/>
+<polygon fill="none" stroke="black" points="184,-78 184,-130 348,-130 348,-78 184,-78"/>
 </g>
 <g id="clust61" class="cluster">
 <title>cluster_PetTypesModule_providers</title>
-<polygon fill="none" stroke="#000000" points="16,-78 16,-130 176,-130 176,-78 16,-78"/>
+<polygon fill="none" stroke="black" points="16,-78 16,-130 176,-130 176,-78 16,-78"/>
 </g>
 <g id="clust68" class="cluster">
 <title>cluster_SpecialtiesModule</title>
-<polygon fill="none" stroke="#000000" stroke-dasharray="1,5" points="1040,-70 1040,-138 2126,-138 2126,-70 1040,-70"/>
+<polygon fill="none" stroke="black" stroke-dasharray="1,5" points="1040,-70 1040,-138 2272,-138 2272,-70 1040,-70"/>
 </g>
 <g id="clust69" class="cluster">
 <title>cluster_SpecialtiesModule_declarations</title>
-<polygon fill="none" stroke="#000000" points="1596,-78 1596,-130 2118,-130 2118,-78 1596,-78"/>
+<polygon fill="none" stroke="black" points="1742,-78 1742,-130 2264,-130 2264,-78 1742,-78"/>
 </g>
 <g id="clust73" class="cluster">
 <title>cluster_SpecialtiesModule_imports</title>
-<polygon fill="none" stroke="#000000" points="1406,-78 1406,-130 1588,-130 1588,-78 1406,-78"/>
+<polygon fill="none" stroke="black" points="1552,-78 1552,-130 1734,-130 1734,-78 1552,-78"/>
 </g>
 <g id="clust74" class="cluster">
 <title>cluster_SpecialtiesModule_exports</title>
-<polygon fill="none" stroke="#000000" points="1224,-78 1224,-130 1398,-130 1398,-78 1224,-78"/>
+<polygon fill="none" stroke="black" points="1370,-78 1370,-130 1544,-130 1544,-78 1370,-78"/>
 </g>
 <g id="clust76" class="cluster">
 <title>cluster_SpecialtiesModule_providers</title>
-<polygon fill="none" stroke="#000000" points="1048,-78 1048,-130 1216,-130 1216,-78 1048,-78"/>
+<polygon fill="none" stroke="black" points="1048,-78 1048,-130 1362,-130 1362,-78 1048,-78"/>
 </g>
 <g id="clust83" class="cluster">
-<title>cluster_TestingModule</title>
-<polygon fill="none" stroke="#000000" stroke-dasharray="1,5" points="4555,-70 4555,-206 5089,-206 5089,-70 4555,-70"/>
+<title>cluster_VetsModule</title>
+<polygon fill="none" stroke="black" stroke-dasharray="1,5" points="2280,-70 2280,-138 3589,-138 3589,-70 2280,-70"/>
 </g>
 <g id="clust84" class="cluster">
-<title>cluster_TestingModule_declarations</title>
-<polygon fill="none" stroke="#000000" points="4563,-78 4563,-130 5081,-130 5081,-78 4563,-78"/>
-</g>
-<g id="clust92" class="cluster">
-<title>cluster_VetsModule</title>
-<polygon fill="none" stroke="#000000" stroke-dasharray="1,5" points="2134,-70 2134,-138 3307,-138 3307,-70 2134,-70"/>
-</g>
-<g id="clust93" class="cluster">
 <title>cluster_VetsModule_declarations</title>
-<polygon fill="none" stroke="#000000" points="2873,-78 2873,-130 3299,-130 3299,-78 2873,-78"/>
+<polygon fill="none" stroke="black" points="3155,-78 3155,-130 3581,-130 3581,-78 3155,-78"/>
 </g>
-<g id="clust97" class="cluster">
+<g id="clust88" class="cluster">
 <title>cluster_VetsModule_imports</title>
-<polygon fill="none" stroke="#000000" points="2719,-78 2719,-130 2865,-130 2865,-78 2719,-78"/>
+<polygon fill="none" stroke="black" points="3001,-78 3001,-130 3147,-130 3147,-78 3001,-78"/>
+</g>
+<g id="clust89" class="cluster">
+<title>cluster_VetsModule_exports</title>
+<polygon fill="none" stroke="black" points="2556,-78 2556,-130 2993,-130 2993,-78 2556,-78"/>
+</g>
+<g id="clust91" class="cluster">
+<title>cluster_VetsModule_providers</title>
+<polygon fill="none" stroke="black" points="2288,-78 2288,-130 2548,-130 2548,-78 2288,-78"/>
 </g>
 <g id="clust98" class="cluster">
-<title>cluster_VetsModule_exports</title>
-<polygon fill="none" stroke="#000000" points="2274,-78 2274,-130 2711,-130 2711,-78 2274,-78"/>
-</g>
-<g id="clust100" class="cluster">
-<title>cluster_VetsModule_providers</title>
-<polygon fill="none" stroke="#000000" points="2142,-78 2142,-130 2266,-130 2266,-78 2142,-78"/>
-</g>
-<g id="clust107" class="cluster">
 <title>cluster_VisitsModule</title>
-<polygon fill="none" stroke="#000000" stroke-dasharray="1,5" points="3315,-70 3315,-138 4547,-138 4547,-70 3315,-70"/>
+<polygon fill="none" stroke="black" stroke-dasharray="1,5" points="3597,-70 3597,-138 4829,-138 4829,-70 3597,-70"/>
 </g>
-<g id="clust108" class="cluster">
+<g id="clust99" class="cluster">
 <title>cluster_VisitsModule_declarations</title>
-<polygon fill="none" stroke="#000000" points="4093,-78 4093,-130 4539,-130 4539,-78 4093,-78"/>
+<polygon fill="none" stroke="black" points="4375,-78 4375,-130 4821,-130 4821,-78 4375,-78"/>
 </g>
-<g id="clust112" class="cluster">
+<g id="clust103" class="cluster">
 <title>cluster_VisitsModule_imports</title>
-<polygon fill="none" stroke="#000000" points="3931,-78 3931,-130 4085,-130 4085,-78 3931,-78"/>
+<polygon fill="none" stroke="black" points="4213,-78 4213,-130 4367,-130 4367,-78 4213,-78"/>
 </g>
-<g id="clust113" class="cluster">
+<g id="clust104" class="cluster">
 <title>cluster_VisitsModule_exports</title>
-<polygon fill="none" stroke="#000000" points="3465,-78 3465,-130 3923,-130 3923,-78 3465,-78"/>
+<polygon fill="none" stroke="black" points="3747,-78 3747,-130 4205,-130 4205,-78 3747,-78"/>
 </g>
-<g id="clust115" class="cluster">
+<g id="clust106" class="cluster">
 <title>cluster_VisitsModule_providers</title>
-<polygon fill="none" stroke="#000000" points="3323,-78 3323,-130 3457,-130 3457,-78 3323,-78"/>
+<polygon fill="none" stroke="black" points="3605,-78 3605,-130 3739,-130 3739,-78 3605,-78"/>
 </g>
 <!-- AppComponent -->
-<g id="node1" class="node">
+<g id="node1" class="node"><a xlink:href="./components/AppComponent.html" href="./components/AppComponent.html" target="_top">
 <title>AppComponent</title>
-<polygon fill="#ffffb3" stroke="#000000" points="2806.9399,-342 2701.0601,-342 2701.0601,-306 2806.9399,-306 2806.9399,-342"/>
-<text text-anchor="middle" x="2754" y="-319.8" font-family="Times,serif" font-size="14.00" fill="#000000">AppComponent</text>
-</g>
+<polygon fill="#ffffb3" stroke="black" points="2942.94,-342 2837.06,-342 2837.06,-306 2942.94,-306 2942.94,-342"/>
+<text text-anchor="middle" x="2890" y="-319.8" font-family="Times,serif" font-size="14.00">AppComponent</text>
+</a></g>
 <!-- AppModule -->
-<g id="node2" class="node">
+<g id="node2" class="node"><a xlink:href="./modules/AppModule.html" href="./modules/AppModule.html" target="_top">
 <title>AppModule</title>
-<polygon fill="#8dd3c7" stroke="#000000" points="2538.6571,-407 2535.6571,-411 2514.6571,-411 2511.6571,-407 2455.3429,-407 2455.3429,-371 2538.6571,-371 2538.6571,-407"/>
-<text text-anchor="middle" x="2497" y="-384.8" font-family="Times,serif" font-size="14.00" fill="#000000">AppModule</text>
-</g>
+<polygon fill="#8dd3c7" stroke="black" points="2674.66,-407 2671.66,-411 2650.66,-411 2647.66,-407 2591.34,-407 2591.34,-371 2674.66,-371 2674.66,-407"/>
+<text text-anchor="middle" x="2633" y="-384.8" font-family="Times,serif" font-size="14.00">AppModule</text>
+</a></g>
 <!-- AppComponent&#45;&gt;AppModule -->
 <g id="edge1" class="edge">
 <title>AppComponent&#45;&gt;AppModule</title>
-<path fill="none" stroke="#000000" d="M2701.1976,-318C2633.2476,-318 2523.844,-318 2523.844,-318 2523.844,-318 2523.844,-360.7157 2523.844,-360.7157"/>
-<polygon fill="#000000" stroke="#000000" points="2520.3441,-360.7157 2523.844,-370.7157 2527.3441,-360.7158 2520.3441,-360.7157"/>
+<path fill="none" stroke="black" d="M2837.2,-318C2769.25,-318 2659.84,-318 2659.84,-318 2659.84,-318 2659.84,-360.72 2659.84,-360.72"/>
+<polygon fill="black" stroke="black" points="2656.34,-360.72 2659.84,-370.72 2663.34,-360.72 2656.34,-360.72"/>
 </g>
 <!-- AppComponent  -->
-<g id="node11" class="node">
+<g id="node11" class="node"><a xlink:href="./components/AppComponent.html" href="./components/AppComponent.html" target="_top">
 <title>AppComponent </title>
-<polygon fill="#80b1d3" stroke="#000000" points="2551.439,-472 2442.561,-472 2442.561,-436 2551.439,-436 2551.439,-472"/>
-<text text-anchor="middle" x="2497" y="-449.8" font-family="Times,serif" font-size="14.00" fill="#000000">AppComponent </text>
-</g>
+<polygon fill="#80b1d3" stroke="black" points="2687.44,-472 2578.56,-472 2578.56,-436 2687.44,-436 2687.44,-472"/>
+<text text-anchor="middle" x="2633" y="-449.8" font-family="Times,serif" font-size="14.00">AppComponent </text>
+</a></g>
 <!-- AppModule&#45;&gt;AppComponent  -->
 <g id="edge10" class="edge">
 <title>AppModule&#45;&gt;AppComponent </title>
-<path fill="none" stroke="#000000" stroke-dasharray="1,5" d="M2497,-407.1061C2497,-407.1061 2497,-425.991 2497,-425.991"/>
-<polygon fill="#000000" stroke="#000000" points="2493.5001,-425.9909 2497,-435.991 2500.5001,-425.991 2493.5001,-425.9909"/>
+<path fill="none" stroke="black" stroke-dasharray="1,5" d="M2633,-407.11C2633,-407.11 2633,-425.99 2633,-425.99"/>
+<polygon fill="black" stroke="black" points="2629.5,-425.99 2633,-435.99 2636.5,-425.99 2629.5,-425.99"/>
 </g>
 <!-- AppRoutingModule -->
-<g id="node3" class="node">
+<g id="node3" class="node"><a xlink:href="./modules/AppRoutingModule.html" href="./modules/AppRoutingModule.html" target="_top">
 <title>AppRoutingModule</title>
-<polygon fill="#8dd3c7" stroke="#000000" points="2089.2744,-198 2086.2744,-202 2065.2744,-202 2062.2744,-198 1960.7256,-198 1960.7256,-162 2089.2744,-162 2089.2744,-198"/>
-<text text-anchor="middle" x="2025" y="-175.8" font-family="Times,serif" font-size="14.00" fill="#000000">AppRoutingModule</text>
-</g>
+<polygon fill="#8dd3c7" stroke="black" points="2225.27,-198 2222.27,-202 2201.27,-202 2198.27,-198 2096.73,-198 2096.73,-162 2225.27,-162 2225.27,-198"/>
+<text text-anchor="middle" x="2161" y="-175.8" font-family="Times,serif" font-size="14.00">AppRoutingModule</text>
+</a></g>
 <!-- AppRoutingModule&#45;&gt;AppModule -->
 <g id="edge2" class="edge">
 <title>AppRoutingModule&#45;&gt;AppModule</title>
-<path fill="none" stroke="#000000" d="M2066.4141,-198.1818C2066.4141,-249.0302 2066.4141,-389 2066.4141,-389 2066.4141,-389 2445.3224,-389 2445.3224,-389"/>
-<polygon fill="#000000" stroke="#000000" points="2445.3224,-392.5001 2455.3224,-389 2445.3223,-385.5001 2445.3224,-392.5001"/>
+<path fill="none" stroke="black" d="M2202.41,-198.18C2202.41,-249.03 2202.41,-389 2202.41,-389 2202.41,-389 2581.32,-389 2581.32,-389"/>
+<polygon fill="black" stroke="black" points="2581.32,-392.5 2591.32,-389 2581.32,-385.5 2581.32,-392.5"/>
 </g>
 <!-- OwnersModule -->
-<g id="node4" class="node">
+<g id="node4" class="node"><a xlink:href="./modules/OwnersModule.html" href="./modules/OwnersModule.html" target="_top">
 <title>OwnersModule</title>
-<polygon fill="#8dd3c7" stroke="#000000" points="2447.5828,-342 2444.5828,-346 2423.5828,-346 2420.5828,-342 2344.4172,-342 2344.4172,-306 2447.5828,-306 2447.5828,-342"/>
-<text text-anchor="middle" x="2396" y="-319.8" font-family="Times,serif" font-size="14.00" fill="#000000">OwnersModule</text>
-</g>
+<polygon fill="#8dd3c7" stroke="black" points="2583.58,-342 2580.58,-346 2559.58,-346 2556.58,-342 2480.42,-342 2480.42,-306 2583.58,-306 2583.58,-342"/>
+<text text-anchor="middle" x="2532" y="-319.8" font-family="Times,serif" font-size="14.00">OwnersModule</text>
+</a></g>
 <!-- OwnersModule&#45;&gt;AppModule -->
 <g id="edge3" class="edge">
 <title>OwnersModule&#45;&gt;AppModule</title>
-<path fill="none" stroke="#000000" d="M2447.7531,-330C2458.5339,-330 2466.6992,-330 2466.6992,-330 2466.6992,-330 2466.6992,-360.9775 2466.6992,-360.9775"/>
-<polygon fill="#000000" stroke="#000000" points="2463.1993,-360.9774 2466.6992,-370.9775 2470.1993,-360.9775 2463.1993,-360.9774"/>
+<path fill="none" stroke="black" d="M2583.75,-330C2594.53,-330 2602.7,-330 2602.7,-330 2602.7,-330 2602.7,-360.98 2602.7,-360.98"/>
+<polygon fill="black" stroke="black" points="2599.2,-360.98 2602.7,-370.98 2606.2,-360.98 2599.2,-360.98"/>
 </g>
 <!-- PartsModule -->
-<g id="node5" class="node">
+<g id="node5" class="node"><a xlink:href="./modules/PartsModule.html" href="./modules/PartsModule.html" target="_top">
 <title>PartsModule</title>
-<polygon fill="#8dd3c7" stroke="#000000" points="2676.544,-198 2673.544,-202 2652.544,-202 2649.544,-198 2589.456,-198 2589.456,-162 2676.544,-162 2676.544,-198"/>
-<text text-anchor="middle" x="2633" y="-175.8" font-family="Times,serif" font-size="14.00" fill="#000000">PartsModule</text>
-</g>
+<polygon fill="#8dd3c7" stroke="black" points="2812.54,-198 2809.54,-202 2788.54,-202 2785.54,-198 2725.46,-198 2725.46,-162 2812.54,-162 2812.54,-198"/>
+<text text-anchor="middle" x="2769" y="-175.8" font-family="Times,serif" font-size="14.00">PartsModule</text>
+</a></g>
 <!-- PartsModule&#45;&gt;AppModule -->
 <g id="edge4" class="edge">
 <title>PartsModule&#45;&gt;AppModule</title>
-<path fill="none" stroke="#000000" d="M2633,-198.1818C2633,-249.0302 2633,-389 2633,-389 2633,-389 2548.9142,-389 2548.9142,-389"/>
-<polygon fill="#000000" stroke="#000000" points="2548.9142,-385.5001 2538.9142,-389 2548.9142,-392.5001 2548.9142,-385.5001"/>
+<path fill="none" stroke="black" d="M2769,-198.18C2769,-249.03 2769,-389 2769,-389 2769,-389 2684.91,-389 2684.91,-389"/>
+<polygon fill="black" stroke="black" points="2684.91,-385.5 2674.91,-389 2684.91,-392.5 2684.91,-385.5"/>
 </g>
 <!-- PageNotFoundComponent  -->
-<g id="node21" class="node">
+<g id="node21" class="node"><a xlink:href="./components/PageNotFoundComponent.html" href="./components/PageNotFoundComponent.html" target="_top">
 <title>PageNotFoundComponent </title>
-<polygon fill="#fb8072" stroke="#000000" points="3015.3241,-274 2846.6759,-274 2846.6759,-238 3015.3241,-238 3015.3241,-274"/>
-<text text-anchor="middle" x="2931" y="-251.8" font-family="Times,serif" font-size="14.00" fill="#000000">PageNotFoundComponent </text>
-</g>
+<polygon fill="#fb8072" stroke="black" points="3151.32,-274 2982.68,-274 2982.68,-238 3151.32,-238 3151.32,-274"/>
+<text text-anchor="middle" x="3067" y="-251.8" font-family="Times,serif" font-size="14.00">PageNotFoundComponent </text>
+</a></g>
 <!-- PartsModule&#45;&gt;PageNotFoundComponent  -->
 <g id="edge21" class="edge">
 <title>PartsModule&#45;&gt;PageNotFoundComponent </title>
-<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M2676.7666,-186C2740.6399,-186 2851.875,-186 2851.875,-186 2851.875,-186 2851.875,-227.9733 2851.875,-227.9733"/>
-<polygon fill="#000000" stroke="#000000" points="2848.3751,-227.9732 2851.875,-237.9733 2855.3751,-227.9733 2848.3751,-227.9732"/>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M2812.63,-191C2878.75,-191 2996.71,-191 2996.71,-191 2996.71,-191 2996.71,-227.89 2996.71,-227.89"/>
+<polygon fill="black" stroke="black" points="2993.21,-227.89 2996.71,-237.89 3000.21,-227.89 2993.21,-227.89"/>
 </g>
 <!-- WelcomeComponent  -->
-<g id="node22" class="node">
+<g id="node22" class="node"><a xlink:href="./components/WelcomeComponent.html" href="./components/WelcomeComponent.html" target="_top">
 <title>WelcomeComponent </title>
-<polygon fill="#fb8072" stroke="#000000" points="3172.4728,-274 3033.5272,-274 3033.5272,-238 3172.4728,-238 3172.4728,-274"/>
-<text text-anchor="middle" x="3103" y="-251.8" font-family="Times,serif" font-size="14.00" fill="#000000">WelcomeComponent </text>
-</g>
+<polygon fill="#fb8072" stroke="black" points="3308.47,-274 3169.53,-274 3169.53,-238 3308.47,-238 3308.47,-274"/>
+<text text-anchor="middle" x="3239" y="-251.8" font-family="Times,serif" font-size="14.00">WelcomeComponent </text>
+</a></g>
 <!-- PartsModule&#45;&gt;WelcomeComponent  -->
 <g id="edge22" class="edge">
 <title>PartsModule&#45;&gt;WelcomeComponent </title>
-<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M2676.8768,-180C2791.4107,-180 3090.6015,-180 3090.6015,-180 3090.6015,-180 3090.6015,-227.9891 3090.6015,-227.9891"/>
-<polygon fill="#000000" stroke="#000000" points="3087.1016,-227.989 3090.6015,-237.9891 3094.1016,-227.9891 3087.1016,-227.989"/>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M2812.75,-184C2930.92,-184 3247.7,-184 3247.7,-184 3247.7,-184 3247.7,-227.83 3247.7,-227.83"/>
+<polygon fill="black" stroke="black" points="3244.2,-227.83 3247.7,-237.83 3251.2,-227.83 3244.2,-227.83"/>
 </g>
 <!-- PetTypesModule -->
-<g id="node6" class="node">
+<g id="node6" class="node"><a xlink:href="./modules/PetTypesModule.html" href="./modules/PetTypesModule.html" target="_top">
 <title>PetTypesModule</title>
-<polygon fill="#8dd3c7" stroke="#000000" points="2218.6499,-198 2215.6499,-202 2194.6499,-202 2191.6499,-198 2107.3501,-198 2107.3501,-162 2218.6499,-162 2218.6499,-198"/>
-<text text-anchor="middle" x="2163" y="-175.8" font-family="Times,serif" font-size="14.00" fill="#000000">PetTypesModule</text>
-</g>
+<polygon fill="#8dd3c7" stroke="black" points="2354.65,-198 2351.65,-202 2330.65,-202 2327.65,-198 2243.35,-198 2243.35,-162 2354.65,-162 2354.65,-198"/>
+<text text-anchor="middle" x="2299" y="-175.8" font-family="Times,serif" font-size="14.00">PetTypesModule</text>
+</a></g>
 <!-- PetTypesModule&#45;&gt;AppModule -->
 <g id="edge5" class="edge">
 <title>PetTypesModule&#45;&gt;AppModule</title>
-<path fill="none" stroke="#000000" d="M2163,-198.0149C2163,-247.6966 2163,-383 2163,-383 2163,-383 2445.0369,-383 2445.0369,-383"/>
-<polygon fill="#000000" stroke="#000000" points="2445.0369,-386.5001 2455.0369,-383 2445.0368,-379.5001 2445.0369,-386.5001"/>
+<path fill="none" stroke="black" d="M2299,-198.01C2299,-247.7 2299,-383 2299,-383 2299,-383 2581.04,-383 2581.04,-383"/>
+<polygon fill="black" stroke="black" points="2581.04,-386.5 2591.04,-383 2581.04,-379.5 2581.04,-386.5"/>
 </g>
 <!-- PettypeListComponent  -->
-<g id="node35" class="node">
+<g id="node35" class="node"><a xlink:href="./components/PettypeListComponent.html" href="./components/PettypeListComponent.html" target="_top">
 <title>PettypeListComponent </title>
-<polygon fill="#fb8072" stroke="#000000" points="340.1043,-122 191.8957,-122 191.8957,-86 340.1043,-86 340.1043,-122"/>
-<text text-anchor="middle" x="266" y="-99.8" font-family="Times,serif" font-size="14.00" fill="#000000">PettypeListComponent </text>
-</g>
+<polygon fill="#fb8072" stroke="black" points="340.1,-122 191.9,-122 191.9,-86 340.1,-86 340.1,-122"/>
+<text text-anchor="middle" x="266" y="-99.8" font-family="Times,serif" font-size="14.00">PettypeListComponent </text>
+</a></g>
 <!-- PetTypesModule&#45;&gt;PettypeListComponent  -->
 <g id="edge36" class="edge">
 <title>PetTypesModule&#45;&gt;PettypeListComponent </title>
-<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M2121.2823,-161.8457C2121.2823,-160.7031 2121.2823,-160 2121.2823,-160 2121.2823,-160 266,-160 266,-160 266,-160 266,-132.027 266,-132.027"/>
-<polygon fill="#000000" stroke="#000000" points="269.5001,-132.027 266,-122.027 262.5001,-132.027 269.5001,-132.027"/>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M2267.28,-161.85C2267.28,-160.7 2267.28,-160 2267.28,-160 2267.28,-160 266,-160 266,-160 266,-160 266,-132.03 266,-132.03"/>
+<polygon fill="black" stroke="black" points="269.5,-132.03 266,-122.03 262.5,-132.03 269.5,-132.03"/>
 </g>
 <!-- PetsModule -->
-<g id="node7" class="node">
+<g id="node7" class="node"><a xlink:href="./modules/PetsModule.html" href="./modules/PetsModule.html" target="_top">
 <title>PetsModule</title>
-<polygon fill="#8dd3c7" stroke="#000000" points="2043.3823,-274 2040.3823,-278 2019.3823,-278 2016.3823,-274 1960.6177,-274 1960.6177,-238 2043.3823,-238 2043.3823,-274"/>
-<text text-anchor="middle" x="2002" y="-251.8" font-family="Times,serif" font-size="14.00" fill="#000000">PetsModule</text>
-</g>
+<polygon fill="#8dd3c7" stroke="black" points="2179.38,-274 2176.38,-278 2155.38,-278 2152.38,-274 2096.62,-274 2096.62,-238 2179.38,-238 2179.38,-274"/>
+<text text-anchor="middle" x="2138" y="-251.8" font-family="Times,serif" font-size="14.00">PetsModule</text>
+</a></g>
 <!-- PetsModule&#45;&gt;AppModule -->
 <g id="edge6" class="edge">
 <title>PetsModule&#45;&gt;AppModule</title>
-<path fill="none" stroke="#000000" d="M2043.7799,-256C2159.0012,-256 2472.7952,-256 2472.7952,-256 2472.7952,-256 2472.7952,-360.7858 2472.7952,-360.7858"/>
-<polygon fill="#000000" stroke="#000000" points="2469.2953,-360.7858 2472.7952,-370.7858 2476.2953,-360.7858 2469.2953,-360.7858"/>
+<path fill="none" stroke="black" d="M2179.78,-256C2295,-256 2608.8,-256 2608.8,-256 2608.8,-256 2608.8,-360.79 2608.8,-360.79"/>
+<polygon fill="black" stroke="black" points="2605.3,-360.79 2608.8,-370.79 2612.3,-360.79 2605.3,-360.79"/>
 </g>
 <!-- PetsModule&#45;&gt;OwnersModule -->
 <g id="edge17" class="edge">
 <title>PetsModule&#45;&gt;OwnersModule</title>
-<path fill="none" stroke="#000000" d="M2043.7244,-265C2136.3015,-265 2350.7788,-265 2350.7788,-265 2350.7788,-265 2350.7788,-295.9775 2350.7788,-295.9775"/>
-<polygon fill="#000000" stroke="#000000" points="2347.2788,-295.9774 2350.7788,-305.9775 2354.2788,-295.9775 2347.2788,-295.9774"/>
+<path fill="none" stroke="black" d="M2179.72,-265C2272.3,-265 2486.78,-265 2486.78,-265 2486.78,-265 2486.78,-295.98 2486.78,-295.98"/>
+<polygon fill="black" stroke="black" points="2483.28,-295.98 2486.78,-305.98 2490.28,-295.98 2483.28,-295.98"/>
 </g>
 <!-- PetAddComponent  -->
-<g id="node27" class="node">
+<g id="node27" class="node"><a xlink:href="./components/PetAddComponent.html" href="./components/PetAddComponent.html" target="_top">
 <title>PetAddComponent </title>
-<polygon fill="#fb8072" stroke="#000000" points="1158.3269,-198 1031.6731,-198 1031.6731,-162 1158.3269,-162 1158.3269,-198"/>
-<text text-anchor="middle" x="1095" y="-175.8" font-family="Times,serif" font-size="14.00" fill="#000000">PetAddComponent </text>
-</g>
+<polygon fill="#fb8072" stroke="black" points="1294.33,-198 1167.67,-198 1167.67,-162 1294.33,-162 1294.33,-198"/>
+<text text-anchor="middle" x="1231" y="-175.8" font-family="Times,serif" font-size="14.00">PetAddComponent </text>
+</a></g>
 <!-- PetsModule&#45;&gt;PetAddComponent  -->
 <g id="edge28" class="edge">
 <title>PetsModule&#45;&gt;PetAddComponent </title>
-<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1960.3724,-258C1782.4642,-258 1095,-258 1095,-258 1095,-258 1095,-208.0908 1095,-208.0908"/>
-<polygon fill="#000000" stroke="#000000" points="1098.5001,-208.0908 1095,-198.0908 1091.5001,-208.0909 1098.5001,-208.0908"/>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M2096.37,-258C1918.46,-258 1231,-258 1231,-258 1231,-258 1231,-208.09 1231,-208.09"/>
+<polygon fill="black" stroke="black" points="1234.5,-208.09 1231,-198.09 1227.5,-208.09 1234.5,-208.09"/>
 </g>
 <!-- PetEditComponent  -->
-<g id="node28" class="node">
+<g id="node28" class="node"><a xlink:href="./components/PetEditComponent.html" href="./components/PetEditComponent.html" target="_top">
 <title>PetEditComponent </title>
-<polygon fill="#fb8072" stroke="#000000" points="1014.054,-198 887.946,-198 887.946,-162 1014.054,-162 1014.054,-198"/>
-<text text-anchor="middle" x="951" y="-175.8" font-family="Times,serif" font-size="14.00" fill="#000000">PetEditComponent </text>
-</g>
+<polygon fill="#fb8072" stroke="black" points="1150.05,-198 1023.95,-198 1023.95,-162 1150.05,-162 1150.05,-198"/>
+<text text-anchor="middle" x="1087" y="-175.8" font-family="Times,serif" font-size="14.00">PetEditComponent </text>
+</a></g>
 <!-- PetsModule&#45;&gt;PetEditComponent  -->
 <g id="edge29" class="edge">
 <title>PetsModule&#45;&gt;PetEditComponent </title>
-<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1960.4758,-262C1765.581,-262 951,-262 951,-262 951,-262 951,-208.1985 951,-208.1985"/>
-<polygon fill="#000000" stroke="#000000" points="954.5001,-208.1984 951,-198.1985 947.5001,-208.1985 954.5001,-208.1984"/>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M2096.48,-262C1901.58,-262 1087,-262 1087,-262 1087,-262 1087,-208.2 1087,-208.2"/>
+<polygon fill="black" stroke="black" points="1090.5,-208.2 1087,-198.2 1083.5,-208.2 1090.5,-208.2"/>
 </g>
 <!-- PetListComponent  -->
-<g id="node29" class="node">
+<g id="node29" class="node"><a xlink:href="./components/PetListComponent.html" href="./components/PetListComponent.html" target="_top">
 <title>PetListComponent </title>
-<polygon fill="#fb8072" stroke="#000000" points="870.4996,-198 745.5004,-198 745.5004,-162 870.4996,-162 870.4996,-198"/>
-<text text-anchor="middle" x="808" y="-175.8" font-family="Times,serif" font-size="14.00" fill="#000000">PetListComponent </text>
-</g>
+<polygon fill="#fb8072" stroke="black" points="1006.5,-198 881.5,-198 881.5,-162 1006.5,-162 1006.5,-198"/>
+<text text-anchor="middle" x="944" y="-175.8" font-family="Times,serif" font-size="14.00">PetListComponent </text>
+</a></g>
 <!-- PetsModule&#45;&gt;PetListComponent  -->
 <g id="edge30" class="edge">
 <title>PetsModule&#45;&gt;PetListComponent </title>
-<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1960.5531,-266C1749.9109,-266 808,-266 808,-266 808,-266 808,-208.2384 808,-208.2384"/>
-<polygon fill="#000000" stroke="#000000" points="811.5001,-208.2384 808,-198.2384 804.5001,-208.2384 811.5001,-208.2384"/>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M2096.55,-266C1885.91,-266 944,-266 944,-266 944,-266 944,-208.24 944,-208.24"/>
+<polygon fill="black" stroke="black" points="947.5,-208.24 944,-198.24 940.5,-208.24 947.5,-208.24"/>
 </g>
 <!-- SpecialtiesModule -->
-<g id="node8" class="node">
+<g id="node8" class="node"><a xlink:href="./modules/SpecialtiesModule.html" href="./modules/SpecialtiesModule.html" target="_top">
 <title>SpecialtiesModule</title>
-<polygon fill="#8dd3c7" stroke="#000000" points="2357.198,-198 2354.198,-202 2333.198,-202 2330.198,-198 2236.802,-198 2236.802,-162 2357.198,-162 2357.198,-198"/>
-<text text-anchor="middle" x="2297" y="-175.8" font-family="Times,serif" font-size="14.00" fill="#000000">SpecialtiesModule</text>
-</g>
+<polygon fill="#8dd3c7" stroke="black" points="2493.2,-198 2490.2,-202 2469.2,-202 2466.2,-198 2372.8,-198 2372.8,-162 2493.2,-162 2493.2,-198"/>
+<text text-anchor="middle" x="2433" y="-175.8" font-family="Times,serif" font-size="14.00">SpecialtiesModule</text>
+</a></g>
 <!-- SpecialtiesModule&#45;&gt;AppModule -->
 <g id="edge7" class="edge">
 <title>SpecialtiesModule&#45;&gt;AppModule</title>
-<path fill="none" stroke="#000000" d="M2290.6799,-198.1802C2290.6799,-246.9492 2290.6799,-377 2290.6799,-377 2290.6799,-377 2445.248,-377 2445.248,-377"/>
-<polygon fill="#000000" stroke="#000000" points="2445.2481,-380.5001 2455.248,-377 2445.248,-373.5001 2445.2481,-380.5001"/>
+<path fill="none" stroke="black" d="M2426.68,-198.18C2426.68,-246.95 2426.68,-377 2426.68,-377 2426.68,-377 2581.25,-377 2581.25,-377"/>
+<polygon fill="black" stroke="black" points="2581.25,-380.5 2591.25,-377 2581.25,-373.5 2581.25,-380.5"/>
 </g>
 <!-- SpecialtyListComponent  -->
-<g id="node41" class="node">
+<g id="node41" class="node"><a xlink:href="./components/SpecialtyListComponent.html" href="./components/SpecialtyListComponent.html" target="_top">
 <title>SpecialtyListComponent </title>
-<polygon fill="#fb8072" stroke="#000000" points="1390.2093,-122 1231.7907,-122 1231.7907,-86 1390.2093,-86 1390.2093,-122"/>
-<text text-anchor="middle" x="1311" y="-99.8" font-family="Times,serif" font-size="14.00" fill="#000000">SpecialtyListComponent </text>
-</g>
+<polygon fill="#fb8072" stroke="black" points="1536.21,-122 1377.79,-122 1377.79,-86 1536.21,-86 1536.21,-122"/>
+<text text-anchor="middle" x="1457" y="-99.8" font-family="Times,serif" font-size="14.00">SpecialtyListComponent </text>
+</a></g>
 <!-- SpecialtiesModule&#45;&gt;SpecialtyListComponent  -->
 <g id="edge42" class="edge">
 <title>SpecialtiesModule&#45;&gt;SpecialtyListComponent </title>
-<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M2242.1592,-161.7985C2242.1592,-155.972 2242.1592,-151 2242.1592,-151 2242.1592,-151 1361.9276,-151 1361.9276,-151 1361.9276,-151 1361.9276,-132.037 1361.9276,-132.037"/>
-<polygon fill="#000000" stroke="#000000" points="1365.4277,-132.037 1361.9276,-122.037 1358.4277,-132.037 1365.4277,-132.037"/>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M2383.25,-161.86C2383.25,-155.54 2383.25,-150 2383.25,-150 2383.25,-150 1502.93,-150 1502.93,-150 1502.93,-150 1502.93,-132.18 1502.93,-132.18"/>
+<polygon fill="black" stroke="black" points="1506.43,-132.18 1502.93,-122.18 1499.43,-132.18 1506.43,-132.18"/>
 </g>
 <!-- VetsModule -->
-<g id="node9" class="node">
+<g id="node9" class="node"><a xlink:href="./modules/VetsModule.html" href="./modules/VetsModule.html" target="_top">
 <title>VetsModule</title>
-<polygon fill="#8dd3c7" stroke="#000000" points="2460.7065,-198 2457.7065,-202 2436.7065,-202 2433.7065,-198 2375.2935,-198 2375.2935,-162 2460.7065,-162 2460.7065,-198"/>
-<text text-anchor="middle" x="2418" y="-175.8" font-family="Times,serif" font-size="14.00" fill="#000000">VetsModule</text>
-</g>
+<polygon fill="#8dd3c7" stroke="black" points="2596.71,-198 2593.71,-202 2572.71,-202 2569.71,-198 2511.29,-198 2511.29,-162 2596.71,-162 2596.71,-198"/>
+<text text-anchor="middle" x="2554" y="-175.8" font-family="Times,serif" font-size="14.00">VetsModule</text>
+</a></g>
 <!-- VetsModule&#45;&gt;AppModule -->
 <g id="edge8" class="edge">
 <title>VetsModule&#45;&gt;AppModule</title>
-<path fill="none" stroke="#000000" d="M2451.3566,-198.0854C2451.3566,-250.8666 2451.3566,-401 2451.3566,-401 2451.3566,-401 2451.7458,-401 2451.7458,-401"/>
-<polygon fill="#000000" stroke="#000000" points="2445.2482,-404.5003 2455.2481,-401 2445.248,-397.5003 2445.2482,-404.5003"/>
+<path fill="none" stroke="black" d="M2587.36,-198.09C2587.36,-250.87 2587.36,-401 2587.36,-401 2587.36,-401 2587.75,-401 2587.75,-401"/>
+<polygon fill="black" stroke="black" points="2581.25,-404.5 2591.25,-401 2581.25,-397.5 2581.25,-404.5"/>
 </g>
 <!-- VetAddComponent  -->
-<g id="node51" class="node">
+<g id="node48" class="node"><a xlink:href="./components/VetAddComponent.html" href="./components/VetAddComponent.html" target="_top">
 <title>VetAddComponent </title>
-<polygon fill="#fb8072" stroke="#000000" points="2702.6509,-122 2573.3491,-122 2573.3491,-86 2702.6509,-86 2702.6509,-122"/>
-<text text-anchor="middle" x="2638" y="-99.8" font-family="Times,serif" font-size="14.00" fill="#000000">VetAddComponent </text>
-</g>
+<polygon fill="#fb8072" stroke="black" points="2984.65,-122 2855.35,-122 2855.35,-86 2984.65,-86 2984.65,-122"/>
+<text text-anchor="middle" x="2920" y="-99.8" font-family="Times,serif" font-size="14.00">VetAddComponent </text>
+</a></g>
 <!-- VetsModule&#45;&gt;VetAddComponent  -->
-<g id="edge51" class="edge">
+<g id="edge49" class="edge">
 <title>VetsModule&#45;&gt;VetAddComponent </title>
-<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M2455.7757,-161.9909C2455.7757,-145.9506 2455.7757,-125 2455.7757,-125 2455.7757,-125 2581.3266,-125 2581.3266,-125 2581.3266,-125 2581.3266,-124.708 2581.3266,-124.708"/>
-<polygon fill="#000000" stroke="#000000" points="2584.827,-132.0799 2581.3266,-122.08 2577.827,-132.0802 2584.827,-132.0799"/>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M2592.48,-161.72C2592.48,-146.05 2592.48,-126 2592.48,-126 2592.48,-126 2899.07,-126 2899.07,-126 2899.07,-126 2899.07,-125.62 2899.07,-125.62"/>
+<polygon fill="black" stroke="black" points="2902.57,-132.17 2899.07,-122.17 2895.57,-132.17 2902.57,-132.17"/>
 </g>
 <!-- VetEditComponent  -->
-<g id="node52" class="node">
+<g id="node49" class="node"><a xlink:href="./components/VetEditComponent.html" href="./components/VetEditComponent.html" target="_top">
 <title>VetEditComponent </title>
-<polygon fill="#fb8072" stroke="#000000" points="2555.3786,-122 2426.6214,-122 2426.6214,-86 2555.3786,-86 2555.3786,-122"/>
-<text text-anchor="middle" x="2491" y="-99.8" font-family="Times,serif" font-size="14.00" fill="#000000">VetEditComponent </text>
-</g>
+<polygon fill="#fb8072" stroke="black" points="2837.38,-122 2708.62,-122 2708.62,-86 2837.38,-86 2837.38,-122"/>
+<text text-anchor="middle" x="2773" y="-99.8" font-family="Times,serif" font-size="14.00">VetEditComponent </text>
+</a></g>
 <!-- VetsModule&#45;&gt;VetEditComponent  -->
-<g id="edge52" class="edge">
+<g id="edge50" class="edge">
 <title>VetsModule&#45;&gt;VetEditComponent </title>
-<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M2431.6384,-161.9891C2431.6384,-161.9891 2431.6384,-132.145 2431.6384,-132.145"/>
-<polygon fill="#000000" stroke="#000000" points="2435.1385,-132.145 2431.6384,-122.145 2428.1385,-132.1451 2435.1385,-132.145"/>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M2588.35,-161.99C2588.35,-145.95 2588.35,-125 2588.35,-125 2588.35,-125 2717.02,-125 2717.02,-125 2717.02,-125 2717.02,-124.71 2717.02,-124.71"/>
+<polygon fill="black" stroke="black" points="2720.52,-132.08 2717.02,-122.08 2713.52,-132.08 2720.52,-132.08"/>
 </g>
 <!-- VetListComponent  -->
-<g id="node53" class="node">
+<g id="node50" class="node"><a xlink:href="./components/VetListComponent.html" href="./components/VetListComponent.html" target="_top">
 <title>VetListComponent </title>
-<polygon fill="#fb8072" stroke="#000000" points="2408.3227,-122 2281.6773,-122 2281.6773,-86 2408.3227,-86 2408.3227,-122"/>
-<text text-anchor="middle" x="2345" y="-99.8" font-family="Times,serif" font-size="14.00" fill="#000000">VetListComponent </text>
-</g>
+<polygon fill="#fb8072" stroke="black" points="2690.32,-122 2563.68,-122 2563.68,-86 2690.32,-86 2690.32,-122"/>
+<text text-anchor="middle" x="2627" y="-99.8" font-family="Times,serif" font-size="14.00">VetListComponent </text>
+</a></g>
 <!-- VetsModule&#45;&gt;VetListComponent  -->
-<g id="edge53" class="edge">
+<g id="edge51" class="edge">
 <title>VetsModule&#45;&gt;VetListComponent </title>
-<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M2397.4065,-161.9891C2397.4065,-161.9891 2397.4065,-132.145 2397.4065,-132.145"/>
-<polygon fill="#000000" stroke="#000000" points="2400.9066,-132.145 2397.4065,-122.145 2393.9066,-132.1451 2400.9066,-132.145"/>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M2567.72,-161.99C2567.72,-161.99 2567.72,-132.15 2567.72,-132.15"/>
+<polygon fill="black" stroke="black" points="2571.22,-132.15 2567.72,-122.15 2564.22,-132.15 2571.22,-132.15"/>
 </g>
 <!-- VisitsModule -->
-<g id="node10" class="node">
+<g id="node10" class="node"><a xlink:href="./modules/VisitsModule.html" href="./modules/VisitsModule.html" target="_top">
 <title>VisitsModule</title>
-<polygon fill="#8dd3c7" stroke="#000000" points="2571.2177,-198 2568.2177,-202 2547.2177,-202 2544.2177,-198 2478.7823,-198 2478.7823,-162 2571.2177,-162 2571.2177,-198"/>
-<text text-anchor="middle" x="2525" y="-175.8" font-family="Times,serif" font-size="14.00" fill="#000000">VisitsModule</text>
-</g>
+<polygon fill="#8dd3c7" stroke="black" points="2707.22,-198 2704.22,-202 2683.22,-202 2680.22,-198 2614.78,-198 2614.78,-162 2707.22,-162 2707.22,-198"/>
+<text text-anchor="middle" x="2661" y="-175.8" font-family="Times,serif" font-size="14.00">VisitsModule</text>
+</a></g>
 <!-- VisitsModule&#45;&gt;AppModule -->
 <g id="edge9" class="edge">
 <title>VisitsModule&#45;&gt;AppModule</title>
-<path fill="none" stroke="#000000" d="M2508.8598,-198.1818C2508.8598,-198.1818 2508.8598,-360.7114 2508.8598,-360.7114"/>
-<polygon fill="#000000" stroke="#000000" points="2505.3598,-360.7114 2508.8598,-370.7114 2512.3598,-360.7115 2505.3598,-360.7114"/>
+<path fill="none" stroke="black" d="M2644.86,-198.18C2644.86,-198.18 2644.86,-360.71 2644.86,-360.71"/>
+<polygon fill="black" stroke="black" points="2641.36,-360.71 2644.86,-370.71 2648.36,-360.71 2641.36,-360.71"/>
 </g>
 <!-- VisitsModule&#45;&gt;PetsModule -->
 <g id="edge27" class="edge">
 <title>VisitsModule&#45;&gt;PetsModule</title>
-<path fill="none" stroke="#000000" d="M2493.8755,-198.308C2493.8755,-218.1455 2493.8755,-247 2493.8755,-247 2493.8755,-247 2053.5131,-247 2053.5131,-247"/>
-<polygon fill="#000000" stroke="#000000" points="2053.5131,-243.5001 2043.5131,-247 2053.5131,-250.5001 2053.5131,-243.5001"/>
+<path fill="none" stroke="black" d="M2629.88,-198.31C2629.88,-218.15 2629.88,-247 2629.88,-247 2629.88,-247 2189.51,-247 2189.51,-247"/>
+<polygon fill="black" stroke="black" points="2189.51,-243.5 2179.51,-247 2189.51,-250.5 2189.51,-243.5"/>
 </g>
 <!-- VisitAddComponent  -->
-<g id="node59" class="node">
+<g id="node57" class="node"><a xlink:href="./components/VisitAddComponent.html" href="./components/VisitAddComponent.html" target="_top">
 <title>VisitAddComponent </title>
-<polygon fill="#fb8072" stroke="#000000" points="3915.1621,-122 3778.8379,-122 3778.8379,-86 3915.1621,-86 3915.1621,-122"/>
-<text text-anchor="middle" x="3847" y="-99.8" font-family="Times,serif" font-size="14.00" fill="#000000">VisitAddComponent </text>
-</g>
+<polygon fill="#fb8072" stroke="black" points="4197.16,-122 4060.84,-122 4060.84,-86 4197.16,-86 4197.16,-122"/>
+<text text-anchor="middle" x="4129" y="-99.8" font-family="Times,serif" font-size="14.00">VisitAddComponent </text>
+</a></g>
 <!-- VisitsModule&#45;&gt;VisitAddComponent  -->
-<g id="edge60" class="edge">
+<g id="edge59" class="edge">
 <title>VisitsModule&#45;&gt;VisitAddComponent </title>
-<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M2545.6518,-161.8196C2545.6518,-148.9618 2545.6518,-134 2545.6518,-134 2545.6518,-134 3818.5097,-134 3818.5097,-134 3818.5097,-134 3818.5097,-132.1432 3818.5097,-132.1432"/>
-<polygon fill="#000000" stroke="#000000" points="3822.0097,-132.1432 3818.5097,-122.1432 3815.0097,-132.1432 3822.0097,-132.1432"/>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M2682.02,-161.85C2682.02,-149.73 2682.02,-136 2682.02,-136 2682.02,-136 4110.26,-136 4110.26,-136 4110.26,-136 4110.26,-132.24 4110.26,-132.24"/>
+<polygon fill="black" stroke="black" points="4113.76,-132.24 4110.26,-122.24 4106.76,-132.24 4113.76,-132.24"/>
 </g>
 <!-- VisitEditComponent  -->
-<g id="node60" class="node">
+<g id="node58" class="node"><a xlink:href="./components/VisitEditComponent.html" href="./components/VisitEditComponent.html" target="_top">
 <title>VisitEditComponent </title>
-<polygon fill="#fb8072" stroke="#000000" points="3760.8898,-122 3625.1102,-122 3625.1102,-86 3760.8898,-86 3760.8898,-122"/>
-<text text-anchor="middle" x="3693" y="-99.8" font-family="Times,serif" font-size="14.00" fill="#000000">VisitEditComponent </text>
-</g>
+<polygon fill="#fb8072" stroke="black" points="4042.89,-122 3907.11,-122 3907.11,-86 4042.89,-86 4042.89,-122"/>
+<text text-anchor="middle" x="3975" y="-99.8" font-family="Times,serif" font-size="14.00">VisitEditComponent </text>
+</a></g>
 <!-- VisitsModule&#45;&gt;VisitEditComponent  -->
-<g id="edge61" class="edge">
+<g id="edge60" class="edge">
 <title>VisitsModule&#45;&gt;VisitEditComponent </title>
-<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M2536.1146,-161.8533C2536.1146,-148.2605 2536.1146,-132 2536.1146,-132 2536.1146,-132 3655.785,-132 3655.785,-132 3655.785,-132 3655.785,-131.0207 3655.785,-131.0207"/>
-<polygon fill="#000000" stroke="#000000" points="3659.2851,-132.2069 3655.785,-122.207 3652.2851,-132.207 3659.2851,-132.2069"/>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M2673.63,-161.82C2673.63,-148.96 2673.63,-134 2673.63,-134 2673.63,-134 3950.7,-134 3950.7,-134 3950.7,-134 3950.7,-132.14 3950.7,-132.14"/>
+<polygon fill="black" stroke="black" points="3954.2,-132.14 3950.7,-122.14 3947.2,-132.14 3954.2,-132.14"/>
 </g>
 <!-- VisitListComponent  -->
-<g id="node61" class="node">
+<g id="node59" class="node"><a xlink:href="./components/VisitListComponent.html" href="./components/VisitListComponent.html" target="_top">
 <title>VisitListComponent </title>
-<polygon fill="#fb8072" stroke="#000000" points="3606.8339,-122 3473.1661,-122 3473.1661,-86 3606.8339,-86 3606.8339,-122"/>
-<text text-anchor="middle" x="3540" y="-99.8" font-family="Times,serif" font-size="14.00" fill="#000000">VisitListComponent </text>
-</g>
+<polygon fill="#fb8072" stroke="black" points="3888.83,-122 3755.17,-122 3755.17,-86 3888.83,-86 3888.83,-122"/>
+<text text-anchor="middle" x="3822" y="-99.8" font-family="Times,serif" font-size="14.00">VisitListComponent </text>
+</a></g>
 <!-- VisitsModule&#45;&gt;VisitListComponent  -->
-<g id="edge62" class="edge">
+<g id="edge61" class="edge">
 <title>VisitsModule&#45;&gt;VisitListComponent </title>
-<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M2560.4956,-161.8903C2560.4956,-152.103 2560.4956,-142 2560.4956,-142 2560.4956,-142 3493.7846,-142 3493.7846,-142 3493.7846,-142 3493.7846,-132.1097 3493.7846,-132.1097"/>
-<polygon fill="#000000" stroke="#000000" points="3497.2846,-132.1096 3493.7846,-122.1097 3490.2846,-132.1097 3497.2846,-132.1096"/>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M2665.24,-161.96C2665.24,-148.71 2665.24,-133 2665.24,-133 2665.24,-133 3788.67,-133 3788.67,-133 3788.67,-133 3788.67,-131.92 3788.67,-131.92"/>
+<polygon fill="black" stroke="black" points="3792.17,-132.2 3788.67,-122.2 3785.17,-132.2 3792.17,-132.2"/>
 </g>
 <!-- HttpErrorHandler -->
-<g id="node12" class="node">
+<g id="node12" class="node"><a xlink:href="./injectables/HttpErrorHandler.html" href="./injectables/HttpErrorHandler.html" target="_top">
 <title>HttpErrorHandler</title>
-<ellipse fill="#fdb462" stroke="#000000" cx="1857" cy="-324" rx="79.8527" ry="18"/>
-<text text-anchor="middle" x="1857" y="-319.8" font-family="Times,serif" font-size="14.00" fill="#000000">HttpErrorHandler</text>
-</g>
+<ellipse fill="#fdb462" stroke="black" cx="1993" cy="-324" rx="79.85" ry="18"/>
+<text text-anchor="middle" x="1993" y="-319.8" font-family="Times,serif" font-size="14.00">HttpErrorHandler</text>
+</a></g>
 <!-- HttpErrorHandler&#45;&gt;AppModule -->
 <g id="edge11" class="edge">
 <title>HttpErrorHandler&#45;&gt;AppModule</title>
-<path fill="none" stroke="#000000" d="M1857,-342.2843C1857,-363.3211 1857,-395 1857,-395 1857,-395 2445.0078,-395 2445.0078,-395"/>
-<polygon fill="#000000" stroke="#000000" points="2445.0078,-398.5001 2455.0078,-395 2445.0078,-391.5001 2445.0078,-398.5001"/>
+<path fill="none" stroke="black" d="M1993,-342.28C1993,-363.32 1993,-395 1993,-395 1993,-395 2581.01,-395 2581.01,-395"/>
+<polygon fill="black" stroke="black" points="2581.01,-398.5 2591.01,-395 2581.01,-391.5 2581.01,-398.5"/>
 </g>
 <!-- OwnerAddComponent -->
-<g id="node13" class="node">
+<g id="node13" class="node"><a xlink:href="./components/OwnerAddComponent.html" href="./components/OwnerAddComponent.html" target="_top">
 <title>OwnerAddComponent</title>
-<polygon fill="#ffffb3" stroke="#000000" points="4517.5282,-274 4374.4718,-274 4374.4718,-238 4517.5282,-238 4517.5282,-274"/>
-<text text-anchor="middle" x="4446" y="-251.8" font-family="Times,serif" font-size="14.00" fill="#000000">OwnerAddComponent</text>
-</g>
+<polygon fill="#ffffb3" stroke="black" points="4653.53,-274 4510.47,-274 4510.47,-238 4653.53,-238 4653.53,-274"/>
+<text text-anchor="middle" x="4582" y="-251.8" font-family="Times,serif" font-size="14.00">OwnerAddComponent</text>
+</a></g>
 <!-- OwnerAddComponent&#45;&gt;OwnersModule -->
 <g id="edge12" class="edge">
 <title>OwnerAddComponent&#45;&gt;OwnersModule</title>
-<path fill="none" stroke="#000000" d="M4446,-274.1804C4446,-287.0382 4446,-302 4446,-302 4446,-302 2437.235,-302 2437.235,-302 2437.235,-302 2437.235,-302.3832 2437.235,-302.3832"/>
-<polygon fill="#000000" stroke="#000000" points="2433.7353,-295.832 2437.235,-305.8321 2440.7353,-295.8322 2433.7353,-295.832"/>
+<path fill="none" stroke="black" d="M4582,-274.18C4582,-287.04 4582,-302 4582,-302 4582,-302 2573.24,-302 2573.24,-302 2573.24,-302 2573.24,-302.38 2573.24,-302.38"/>
+<polygon fill="black" stroke="black" points="2569.74,-295.83 2573.24,-305.83 2576.74,-295.83 2569.74,-295.83"/>
 </g>
 <!-- OwnerDetailComponent -->
-<g id="node14" class="node">
+<g id="node14" class="node"><a xlink:href="./components/OwnerDetailComponent.html" href="./components/OwnerDetailComponent.html" target="_top">
 <title>OwnerDetailComponent</title>
-<polygon fill="#ffffb3" stroke="#000000" points="4355.6288,-274 4202.3712,-274 4202.3712,-238 4355.6288,-238 4355.6288,-274"/>
-<text text-anchor="middle" x="4279" y="-251.8" font-family="Times,serif" font-size="14.00" fill="#000000">OwnerDetailComponent</text>
-</g>
+<polygon fill="#ffffb3" stroke="black" points="4491.63,-274 4338.37,-274 4338.37,-238 4491.63,-238 4491.63,-274"/>
+<text text-anchor="middle" x="4415" y="-251.8" font-family="Times,serif" font-size="14.00">OwnerDetailComponent</text>
+</a></g>
 <!-- OwnerDetailComponent&#45;&gt;OwnersModule -->
 <g id="edge13" class="edge">
 <title>OwnerDetailComponent&#45;&gt;OwnersModule</title>
-<path fill="none" stroke="#000000" d="M4279,-274.1025C4279,-285.0859 4279,-297 4279,-297 4279,-297 2426.9287,-297 2426.9287,-297 2426.9287,-297 2426.9287,-297.8841 2426.9287,-297.8841"/>
-<polygon fill="#000000" stroke="#000000" points="2423.4288,-295.8408 2426.9287,-305.8408 2430.4288,-295.8409 2423.4288,-295.8408"/>
+<path fill="none" stroke="black" d="M4415,-274.1C4415,-285.09 4415,-297 4415,-297 4415,-297 2562.93,-297 2562.93,-297 2562.93,-297 2562.93,-297.88 2562.93,-297.88"/>
+<polygon fill="black" stroke="black" points="2559.43,-295.84 2562.93,-305.84 2566.43,-295.84 2559.43,-295.84"/>
 </g>
 <!-- OwnerEditComponent -->
-<g id="node15" class="node">
+<g id="node15" class="node"><a xlink:href="./components/OwnerEditComponent.html" href="./components/OwnerEditComponent.html" target="_top">
 <title>OwnerEditComponent</title>
-<polygon fill="#ffffb3" stroke="#000000" points="4184.2548,-274 4041.7452,-274 4041.7452,-238 4184.2548,-238 4184.2548,-274"/>
-<text text-anchor="middle" x="4113" y="-251.8" font-family="Times,serif" font-size="14.00" fill="#000000">OwnerEditComponent</text>
-</g>
+<polygon fill="#ffffb3" stroke="black" points="4320.25,-274 4177.75,-274 4177.75,-238 4320.25,-238 4320.25,-274"/>
+<text text-anchor="middle" x="4249" y="-251.8" font-family="Times,serif" font-size="14.00">OwnerEditComponent</text>
+</a></g>
 <!-- OwnerEditComponent&#45;&gt;OwnersModule -->
 <g id="edge14" class="edge">
 <title>OwnerEditComponent&#45;&gt;OwnersModule</title>
-<path fill="none" stroke="#000000" d="M4113,-274.0664C4113,-283.4587 4113,-293 4113,-293 4113,-293 2416.6223,-293 2416.6223,-293 2416.6223,-293 2416.6223,-295.9672 2416.6223,-295.9672"/>
-<polygon fill="#000000" stroke="#000000" points="2413.1224,-295.9671 2416.6223,-305.9672 2420.1224,-295.9672 2413.1224,-295.9671"/>
+<path fill="none" stroke="black" d="M4249,-274.07C4249,-283.46 4249,-293 4249,-293 4249,-293 2552.62,-293 2552.62,-293 2552.62,-293 2552.62,-295.97 2552.62,-295.97"/>
+<polygon fill="black" stroke="black" points="2549.12,-295.97 2552.62,-305.97 2556.12,-295.97 2549.12,-295.97"/>
 </g>
 <!-- OwnerListComponent -->
-<g id="node16" class="node">
+<g id="node16" class="node"><a xlink:href="./components/OwnerListComponent.html" href="./components/OwnerListComponent.html" target="_top">
 <title>OwnerListComponent</title>
-<polygon fill="#ffffb3" stroke="#000000" points="4023.6993,-274 3882.3007,-274 3882.3007,-238 4023.6993,-238 4023.6993,-274"/>
-<text text-anchor="middle" x="3953" y="-251.8" font-family="Times,serif" font-size="14.00" fill="#000000">OwnerListComponent</text>
-</g>
+<polygon fill="#ffffb3" stroke="black" points="4159.7,-274 4018.3,-274 4018.3,-238 4159.7,-238 4159.7,-274"/>
+<text text-anchor="middle" x="4089" y="-251.8" font-family="Times,serif" font-size="14.00">OwnerListComponent</text>
+</a></g>
 <!-- OwnerListComponent&#45;&gt;OwnersModule -->
 <g id="edge15" class="edge">
 <title>OwnerListComponent&#45;&gt;OwnersModule</title>
-<path fill="none" stroke="#000000" d="M3953,-274.2434C3953,-281.4297 3953,-288 3953,-288 3953,-288 2406.316,-288 2406.316,-288 2406.316,-288 2406.316,-295.5782 2406.316,-295.5782"/>
-<polygon fill="#000000" stroke="#000000" points="2402.8161,-295.5781 2406.316,-305.5782 2409.8161,-295.5782 2402.8161,-295.5781"/>
+<path fill="none" stroke="black" d="M4089,-274.24C4089,-281.43 4089,-288 4089,-288 4089,-288 2542.32,-288 2542.32,-288 2542.32,-288 2542.32,-295.58 2542.32,-295.58"/>
+<polygon fill="black" stroke="black" points="2538.82,-295.58 2542.32,-305.58 2545.82,-295.58 2538.82,-295.58"/>
 </g>
 <!-- OwnersRoutingModule -->
-<g id="node17" class="node">
+<g id="node17" class="node"><a xlink:href="./modules/OwnersRoutingModule.html" href="./modules/OwnersRoutingModule.html" target="_top">
 <title>OwnersRoutingModule</title>
-<polygon fill="#8dd3c7" stroke="#000000" points="3858.2007,-274 3855.2007,-278 3834.2007,-278 3831.2007,-274 3709.7993,-274 3709.7993,-238 3858.2007,-238 3858.2007,-274"/>
-<text text-anchor="middle" x="3784" y="-251.8" font-family="Times,serif" font-size="14.00" fill="#000000">OwnersRoutingModule</text>
-</g>
+<polygon fill="#8dd3c7" stroke="black" points="3994.2,-274 3991.2,-278 3970.2,-278 3967.2,-274 3845.8,-274 3845.8,-238 3994.2,-238 3994.2,-274"/>
+<text text-anchor="middle" x="3920" y="-251.8" font-family="Times,serif" font-size="14.00">OwnersRoutingModule</text>
+</a></g>
 <!-- OwnersRoutingModule&#45;&gt;OwnersModule -->
 <g id="edge16" class="edge">
 <title>OwnersRoutingModule&#45;&gt;OwnersModule</title>
-<path fill="none" stroke="#000000" d="M3784,-274.207C3784,-279.5549 3784,-284 3784,-284 3784,-284 2396.0096,-284 2396.0096,-284 2396.0096,-284 2396.0096,-295.8726 2396.0096,-295.8726"/>
-<polygon fill="#000000" stroke="#000000" points="2392.5097,-295.8725 2396.0096,-305.8726 2399.5097,-295.8726 2392.5097,-295.8725"/>
+<path fill="none" stroke="black" d="M3920,-274.21C3920,-279.55 3920,-284 3920,-284 3920,-284 2532.01,-284 2532.01,-284 2532.01,-284 2532.01,-295.87 2532.01,-295.87"/>
+<polygon fill="black" stroke="black" points="2528.51,-295.87 2532.01,-305.87 2535.51,-295.87 2528.51,-295.87"/>
 </g>
 <!-- OwnerService -->
-<g id="node18" class="node">
+<g id="node18" class="node"><a xlink:href="./injectables/OwnerService.html" href="./injectables/OwnerService.html" target="_top">
 <title>OwnerService</title>
-<ellipse fill="#fdb462" stroke="#000000" cx="3620" cy="-256" rx="66.03" ry="18"/>
-<text text-anchor="middle" x="3620" y="-251.8" font-family="Times,serif" font-size="14.00" fill="#000000">OwnerService</text>
-</g>
+<ellipse fill="#fdb462" stroke="black" cx="3756" cy="-256" rx="66.03" ry="18"/>
+<text text-anchor="middle" x="3756" y="-251.8" font-family="Times,serif" font-size="14.00">OwnerService</text>
+</a></g>
 <!-- OwnerService&#45;&gt;OwnersModule -->
 <g id="edge18" class="edge">
 <title>OwnerService&#45;&gt;OwnersModule</title>
-<path fill="none" stroke="#000000" d="M3620,-274.1223C3620,-276.9729 3620,-279 3620,-279 3620,-279 2385.7033,-279 2385.7033,-279 2385.7033,-279 2385.7033,-295.9561 2385.7033,-295.9561"/>
-<polygon fill="#000000" stroke="#000000" points="2382.2034,-295.956 2385.7033,-305.9561 2389.2034,-295.9561 2382.2034,-295.956"/>
+<path fill="none" stroke="black" d="M3756,-274.12C3756,-276.97 3756,-279 3756,-279 3756,-279 2521.7,-279 2521.7,-279 2521.7,-279 2521.7,-295.96 2521.7,-295.96"/>
+<polygon fill="black" stroke="black" points="2518.2,-295.96 2521.7,-305.96 2525.2,-295.96 2518.2,-295.96"/>
 </g>
 <!-- PageNotFoundComponent -->
-<g id="node19" class="node">
+<g id="node19" class="node"><a xlink:href="./components/PageNotFoundComponent.html" href="./components/PageNotFoundComponent.html" target="_top">
 <title>PageNotFoundComponent</title>
-<polygon fill="#ffffb3" stroke="#000000" points="3361.8243,-274 3196.1757,-274 3196.1757,-238 3361.8243,-238 3361.8243,-274"/>
-<text text-anchor="middle" x="3279" y="-251.8" font-family="Times,serif" font-size="14.00" fill="#000000">PageNotFoundComponent</text>
-</g>
+<polygon fill="#ffffb3" stroke="black" points="3497.82,-274 3332.18,-274 3332.18,-238 3497.82,-238 3497.82,-274"/>
+<text text-anchor="middle" x="3415" y="-251.8" font-family="Times,serif" font-size="14.00">PageNotFoundComponent</text>
+</a></g>
 <!-- PageNotFoundComponent&#45;&gt;PartsModule -->
 <g id="edge19" class="edge">
 <title>PageNotFoundComponent&#45;&gt;PartsModule</title>
-<path fill="none" stroke="#000000" d="M3243.5817,-237.8015C3243.5817,-213.6437 3243.5817,-174 3243.5817,-174 3243.5817,-174 2686.9115,-174 2686.9115,-174"/>
-<polygon fill="#000000" stroke="#000000" points="2686.9116,-170.5001 2676.9115,-174 2686.9115,-177.5001 2686.9116,-170.5001"/>
+<path fill="none" stroke="black" d="M3380.89,-237.68C3380.89,-214.34 3380.89,-177 3380.89,-177 3380.89,-177 2823.01,-177 2823.01,-177"/>
+<polygon fill="black" stroke="black" points="2823.01,-173.5 2813.01,-177 2823.01,-180.5 2823.01,-173.5"/>
 </g>
 <!-- WelcomeComponent -->
-<g id="node20" class="node">
+<g id="node20" class="node"><a xlink:href="./components/WelcomeComponent.html" href="./components/WelcomeComponent.html" target="_top">
 <title>WelcomeComponent</title>
-<polygon fill="#ffffb3" stroke="#000000" points="3514.472,-274 3379.528,-274 3379.528,-238 3514.472,-238 3514.472,-274"/>
-<text text-anchor="middle" x="3447" y="-251.8" font-family="Times,serif" font-size="14.00" fill="#000000">WelcomeComponent</text>
-</g>
+<polygon fill="#ffffb3" stroke="black" points="3650.47,-274 3515.53,-274 3515.53,-238 3650.47,-238 3650.47,-274"/>
+<text text-anchor="middle" x="3583" y="-251.8" font-family="Times,serif" font-size="14.00">WelcomeComponent</text>
+</a></g>
 <!-- WelcomeComponent&#45;&gt;PartsModule -->
 <g id="edge20" class="edge">
 <title>WelcomeComponent&#45;&gt;PartsModule</title>
-<path fill="none" stroke="#000000" d="M3414.1419,-237.7663C3414.1419,-211.9906 3414.1419,-168 3414.1419,-168 3414.1419,-168 2686.6714,-168 2686.6714,-168"/>
-<polygon fill="#000000" stroke="#000000" points="2686.6714,-164.5001 2676.6714,-168 2686.6714,-171.5001 2686.6714,-164.5001"/>
+<path fill="none" stroke="black" d="M3544.17,-237.76C3544.17,-212.52 3544.17,-170 3544.17,-170 3544.17,-170 2822.62,-170 2822.62,-170"/>
+<polygon fill="black" stroke="black" points="2822.62,-166.5 2812.62,-170 2822.62,-173.5 2822.62,-166.5"/>
 </g>
 <!-- PetAddComponent -->
-<g id="node23" class="node">
+<g id="node23" class="node"><a xlink:href="./components/PetAddComponent.html" href="./components/PetAddComponent.html" target="_top">
 <title>PetAddComponent</title>
-<polygon fill="#ffffb3" stroke="#000000" points="1736.8272,-198 1613.1728,-198 1613.1728,-162 1736.8272,-162 1736.8272,-198"/>
-<text text-anchor="middle" x="1675" y="-175.8" font-family="Times,serif" font-size="14.00" fill="#000000">PetAddComponent</text>
-</g>
+<polygon fill="#ffffb3" stroke="black" points="1872.83,-198 1749.17,-198 1749.17,-162 1872.83,-162 1872.83,-198"/>
+<text text-anchor="middle" x="1811" y="-175.8" font-family="Times,serif" font-size="14.00">PetAddComponent</text>
+</a></g>
 <!-- PetAddComponent&#45;&gt;PetsModule -->
 <g id="edge23" class="edge">
 <title>PetAddComponent&#45;&gt;PetsModule</title>
-<path fill="none" stroke="#000000" d="M1675,-198.2667C1675,-216.5552 1675,-242 1675,-242 1675,-242 1950.5852,-242 1950.5852,-242"/>
-<polygon fill="#000000" stroke="#000000" points="1950.5853,-245.5001 1960.5852,-242 1950.5852,-238.5001 1950.5853,-245.5001"/>
+<path fill="none" stroke="black" d="M1811,-198.27C1811,-216.56 1811,-242 1811,-242 1811,-242 2086.59,-242 2086.59,-242"/>
+<polygon fill="black" stroke="black" points="2086.59,-245.5 2096.59,-242 2086.59,-238.5 2086.59,-245.5"/>
 </g>
 <!-- PetEditComponent -->
-<g id="node24" class="node">
+<g id="node24" class="node"><a xlink:href="./components/PetEditComponent.html" href="./components/PetEditComponent.html" target="_top">
 <title>PetEditComponent</title>
-<polygon fill="#ffffb3" stroke="#000000" points="1595.0548,-198 1472.9452,-198 1472.9452,-162 1595.0548,-162 1595.0548,-198"/>
-<text text-anchor="middle" x="1534" y="-175.8" font-family="Times,serif" font-size="14.00" fill="#000000">PetEditComponent</text>
-</g>
+<polygon fill="#ffffb3" stroke="black" points="1731.05,-198 1608.95,-198 1608.95,-162 1731.05,-162 1731.05,-198"/>
+<text text-anchor="middle" x="1670" y="-175.8" font-family="Times,serif" font-size="14.00">PetEditComponent</text>
+</a></g>
 <!-- PetEditComponent&#45;&gt;PetsModule -->
 <g id="edge24" class="edge">
 <title>PetEditComponent&#45;&gt;PetsModule</title>
-<path fill="none" stroke="#000000" d="M1534,-198.0348C1534,-217.5762 1534,-246 1534,-246 1534,-246 1950.4681,-246 1950.4681,-246"/>
-<polygon fill="#000000" stroke="#000000" points="1950.4682,-249.5001 1960.4681,-246 1950.4681,-242.5001 1950.4682,-249.5001"/>
+<path fill="none" stroke="black" d="M1670,-198.03C1670,-217.58 1670,-246 1670,-246 1670,-246 2086.47,-246 2086.47,-246"/>
+<polygon fill="black" stroke="black" points="2086.47,-249.5 2096.47,-246 2086.47,-242.5 2086.47,-249.5"/>
 </g>
 <!-- PetListComponent -->
-<g id="node25" class="node">
+<g id="node25" class="node"><a xlink:href="./components/PetListComponent.html" href="./components/PetListComponent.html" target="_top">
 <title>PetListComponent</title>
-<polygon fill="#ffffb3" stroke="#000000" points="1454.4986,-198 1333.5014,-198 1333.5014,-162 1454.4986,-162 1454.4986,-198"/>
-<text text-anchor="middle" x="1394" y="-175.8" font-family="Times,serif" font-size="14.00" fill="#000000">PetListComponent</text>
-</g>
+<polygon fill="#ffffb3" stroke="black" points="1590.5,-198 1469.5,-198 1469.5,-162 1590.5,-162 1590.5,-198"/>
+<text text-anchor="middle" x="1530" y="-175.8" font-family="Times,serif" font-size="14.00">PetListComponent</text>
+</a></g>
 <!-- PetListComponent&#45;&gt;PetsModule -->
 <g id="edge25" class="edge">
 <title>PetListComponent&#45;&gt;PetsModule</title>
-<path fill="none" stroke="#000000" d="M1394,-198.0267C1394,-218.7672 1394,-250 1394,-250 1394,-250 1950.2097,-250 1950.2097,-250"/>
-<polygon fill="#000000" stroke="#000000" points="1950.2097,-253.5001 1960.2097,-250 1950.2097,-246.5001 1950.2097,-253.5001"/>
+<path fill="none" stroke="black" d="M1530,-198.03C1530,-218.77 1530,-250 1530,-250 1530,-250 2086.21,-250 2086.21,-250"/>
+<polygon fill="black" stroke="black" points="2086.21,-253.5 2096.21,-250 2086.21,-246.5 2086.21,-253.5"/>
 </g>
 <!-- PetsRoutingModule -->
-<g id="node26" class="node">
+<g id="node26" class="node"><a xlink:href="./modules/PetsRoutingModule.html" href="./modules/PetsRoutingModule.html" target="_top">
 <title>PetsRoutingModule</title>
-<polygon fill="#8dd3c7" stroke="#000000" points="1310,-198 1307,-202 1286,-202 1283,-198 1182,-198 1182,-162 1310,-162 1310,-198"/>
-<text text-anchor="middle" x="1246" y="-175.8" font-family="Times,serif" font-size="14.00" fill="#000000">PetsRoutingModule</text>
-</g>
+<polygon fill="#8dd3c7" stroke="black" points="1446,-198 1443,-202 1422,-202 1419,-198 1318,-198 1318,-162 1446,-162 1446,-198"/>
+<text text-anchor="middle" x="1382" y="-175.8" font-family="Times,serif" font-size="14.00">PetsRoutingModule</text>
+</a></g>
 <!-- PetsRoutingModule&#45;&gt;PetsModule -->
 <g id="edge26" class="edge">
 <title>PetsRoutingModule&#45;&gt;PetsModule</title>
-<path fill="none" stroke="#000000" d="M1246,-198.2921C1246,-220.2057 1246,-254 1246,-254 1246,-254 1950.5477,-254 1950.5477,-254"/>
-<polygon fill="#000000" stroke="#000000" points="1950.5477,-257.5001 1960.5477,-254 1950.5476,-250.5001 1950.5477,-257.5001"/>
+<path fill="none" stroke="black" d="M1382,-198.29C1382,-220.21 1382,-254 1382,-254 1382,-254 2086.55,-254 2086.55,-254"/>
+<polygon fill="black" stroke="black" points="2086.55,-257.5 2096.55,-254 2086.55,-250.5 2086.55,-257.5"/>
 </g>
 <!-- PetsRoutingModule&#45;&gt;VisitsModule -->
-<g id="edge58" class="edge">
+<g id="edge57" class="edge">
 <title>PetsRoutingModule&#45;&gt;VisitsModule</title>
-<path fill="none" stroke="#000000" d="M1270.8228,-161.973C1270.8228,-145.6024 1270.8228,-124 1270.8228,-124 1270.8228,-124 2488.4285,-124 2488.4285,-124 2488.4285,-124 2488.4285,-151.973 2488.4285,-151.973"/>
-<polygon fill="#000000" stroke="#000000" points="2484.9286,-151.973 2488.4285,-161.973 2491.9286,-151.973 2484.9286,-151.973"/>
+<path fill="none" stroke="black" d="M1411.82,-161.97C1411.82,-145.6 1411.82,-124 1411.82,-124 1411.82,-124 2623.28,-124 2623.28,-124 2623.28,-124 2623.28,-151.97 2623.28,-151.97"/>
+<polygon fill="black" stroke="black" points="2619.78,-151.97 2623.28,-161.97 2626.78,-151.97 2619.78,-151.97"/>
 </g>
 <!-- PetService -->
-<g id="node30" class="node">
+<g id="node30" class="node"><a xlink:href="./injectables/PetService.html" href="./injectables/PetService.html" target="_top">
 <title>PetService</title>
-<ellipse fill="#fdb462" stroke="#000000" cx="670" cy="-180" rx="52.1617" ry="18"/>
-<text text-anchor="middle" x="670" y="-175.8" font-family="Times,serif" font-size="14.00" fill="#000000">PetService</text>
-</g>
+<ellipse fill="#fdb462" stroke="black" cx="806" cy="-180" rx="52.16" ry="18"/>
+<text text-anchor="middle" x="806" y="-175.8" font-family="Times,serif" font-size="14.00">PetService</text>
+</a></g>
 <!-- PetService&#45;&gt;PetsModule -->
 <g id="edge31" class="edge">
 <title>PetService&#45;&gt;PetsModule</title>
-<path fill="none" stroke="#000000" d="M670,-198.2128C670,-224.5111 670,-270 670,-270 670,-270 1950.3063,-270 1950.3063,-270"/>
-<polygon fill="#000000" stroke="#000000" points="1950.3064,-273.5001 1960.3063,-270 1950.3063,-266.5001 1950.3064,-273.5001"/>
+<path fill="none" stroke="black" d="M806,-198.21C806,-224.51 806,-270 806,-270 806,-270 2086.31,-270 2086.31,-270"/>
+<polygon fill="black" stroke="black" points="2086.31,-273.5 2096.31,-270 2086.31,-266.5 2086.31,-273.5"/>
 </g>
 <!-- PettypeAddComponent -->
-<g id="node31" class="node">
+<g id="node31" class="node"><a xlink:href="./components/PettypeAddComponent.html" href="./components/PettypeAddComponent.html" target="_top">
 <title>PettypeAddComponent</title>
-<polygon fill="#ffffb3" stroke="#000000" points="1015.9326,-122 868.0674,-122 868.0674,-86 1015.9326,-86 1015.9326,-122"/>
-<text text-anchor="middle" x="942" y="-99.8" font-family="Times,serif" font-size="14.00" fill="#000000">PettypeAddComponent</text>
-</g>
+<polygon fill="#ffffb3" stroke="black" points="1015.93,-122 868.07,-122 868.07,-86 1015.93,-86 1015.93,-122"/>
+<text text-anchor="middle" x="942" y="-99.8" font-family="Times,serif" font-size="14.00">PettypeAddComponent</text>
+</a></g>
 <!-- PettypeAddComponent&#45;&gt;PetTypesModule -->
 <g id="edge32" class="edge">
 <title>PettypeAddComponent&#45;&gt;PetTypesModule</title>
-<path fill="none" stroke="#000000" d="M951,-122.0511C951,-136.373 951,-154 951,-154 951,-154 2144.3096,-154 2144.3096,-154 2144.3096,-154 2144.3096,-154.7942 2144.3096,-154.7942"/>
-<polygon fill="#000000" stroke="#000000" points="2140.8097,-151.9421 2144.3096,-161.9421 2147.8097,-151.9422 2140.8097,-151.9421"/>
+<path fill="none" stroke="black" d="M1010.98,-122.05C1010.98,-136.37 1010.98,-154 1010.98,-154 1010.98,-154 2290.31,-154 2290.31,-154 2290.31,-154 2290.31,-154.79 2290.31,-154.79"/>
+<polygon fill="black" stroke="black" points="2286.81,-151.94 2290.31,-161.94 2293.81,-151.94 2286.81,-151.94"/>
 </g>
 <!-- PettypeEditComponent -->
-<g id="node32" class="node">
+<g id="node32" class="node"><a xlink:href="./components/PettypeEditComponent.html" href="./components/PettypeEditComponent.html" target="_top">
 <title>PettypeEditComponent</title>
-<polygon fill="#ffffb3" stroke="#000000" points="850.1596,-122 703.8404,-122 703.8404,-86 850.1596,-86 850.1596,-122"/>
-<text text-anchor="middle" x="777" y="-99.8" font-family="Times,serif" font-size="14.00" fill="#000000">PettypeEditComponent</text>
-</g>
+<polygon fill="#ffffb3" stroke="black" points="850.16,-122 703.84,-122 703.84,-86 850.16,-86 850.16,-122"/>
+<text text-anchor="middle" x="777" y="-99.8" font-family="Times,serif" font-size="14.00">PettypeEditComponent</text>
+</a></g>
 <!-- PettypeEditComponent&#45;&gt;PetTypesModule -->
 <g id="edge33" class="edge">
 <title>PettypeEditComponent&#45;&gt;PetTypesModule</title>
-<path fill="none" stroke="#000000" d="M798.0402,-122.1243C798.0402,-136.7832 798.0402,-155 798.0402,-155 798.0402,-155 2138.5527,-155 2138.5527,-155 2138.5527,-155 2138.5527,-155.6831 2138.5527,-155.6831"/>
-<polygon fill="#000000" stroke="#000000" points="2135.0529,-151.8313 2138.5527,-161.8314 2142.0529,-151.8314 2135.0529,-151.8313"/>
+<path fill="none" stroke="black" d="M802,-122.19C802,-137.18 802,-156 802,-156 802,-156 2284.55,-156 2284.55,-156 2284.55,-156 2284.55,-156.58 2284.55,-156.58"/>
+<polygon fill="black" stroke="black" points="2281.05,-151.81 2284.55,-161.81 2288.05,-151.81 2281.05,-151.81"/>
 </g>
 <!-- PettypeListComponent -->
-<g id="node33" class="node">
+<g id="node33" class="node"><a xlink:href="./components/PettypeListComponent.html" href="./components/PettypeListComponent.html" target="_top">
 <title>PettypeListComponent</title>
-<polygon fill="#ffffb3" stroke="#000000" points="685.6038,-122 540.3962,-122 540.3962,-86 685.6038,-86 685.6038,-122"/>
-<text text-anchor="middle" x="613" y="-99.8" font-family="Times,serif" font-size="14.00" fill="#000000">PettypeListComponent</text>
-</g>
+<polygon fill="#ffffb3" stroke="black" points="685.6,-122 540.4,-122 540.4,-86 685.6,-86 685.6,-122"/>
+<text text-anchor="middle" x="613" y="-99.8" font-family="Times,serif" font-size="14.00">PettypeListComponent</text>
+</a></g>
 <!-- PettypeListComponent&#45;&gt;PetTypesModule -->
 <g id="edge34" class="edge">
 <title>PettypeListComponent&#45;&gt;PetTypesModule</title>
-<path fill="none" stroke="#000000" d="M651.6107,-122.2396C651.6107,-137.5706 651.6107,-157 651.6107,-157 651.6107,-157 2132.7959,-157 2132.7959,-157 2132.7959,-157 2132.7959,-157.4878 2132.7959,-157.4878"/>
-<polygon fill="#000000" stroke="#000000" points="2129.2961,-151.8776 2132.7959,-161.8777 2136.2961,-151.8778 2129.2961,-151.8776"/>
+<path fill="none" stroke="black" d="M613,-122.24C613,-137.57 613,-157 613,-157 613,-157 2278.8,-157 2278.8,-157 2278.8,-157 2278.8,-157.49 2278.8,-157.49"/>
+<polygon fill="black" stroke="black" points="2275.3,-151.88 2278.8,-161.88 2282.3,-151.88 2275.3,-151.88"/>
 </g>
 <!-- PettypesRoutingModule -->
-<g id="node34" class="node">
+<g id="node34" class="node"><a xlink:href="./modules/PettypesRoutingModule.html" href="./modules/PettypesRoutingModule.html" target="_top">
 <title>PettypesRoutingModule</title>
-<polygon fill="#8dd3c7" stroke="#000000" points="516.1052,-122 513.1052,-126 492.1052,-126 489.1052,-122 363.8948,-122 363.8948,-86 516.1052,-86 516.1052,-122"/>
-<text text-anchor="middle" x="440" y="-99.8" font-family="Times,serif" font-size="14.00" fill="#000000">PettypesRoutingModule</text>
-</g>
+<polygon fill="#8dd3c7" stroke="black" points="516.11,-122 513.11,-126 492.11,-126 489.11,-122 363.89,-122 363.89,-86 516.11,-86 516.11,-122"/>
+<text text-anchor="middle" x="440" y="-99.8" font-family="Times,serif" font-size="14.00">PettypesRoutingModule</text>
+</a></g>
 <!-- PettypesRoutingModule&#45;&gt;PetTypesModule -->
 <g id="edge35" class="edge">
 <title>PettypesRoutingModule&#45;&gt;PetTypesModule</title>
-<path fill="none" stroke="#000000" d="M440,-122.2819C440,-137.9478 440,-158 440,-158 440,-158 2127.0391,-158 2127.0391,-158 2127.0391,-158 2127.0391,-158.3832 2127.0391,-158.3832"/>
-<polygon fill="#000000" stroke="#000000" points="2123.5394,-151.832 2127.0391,-161.8321 2130.5394,-151.8322 2123.5394,-151.832"/>
+<path fill="none" stroke="black" d="M440,-122.28C440,-137.95 440,-158 440,-158 440,-158 2273.04,-158 2273.04,-158 2273.04,-158 2273.04,-158.38 2273.04,-158.38"/>
+<polygon fill="black" stroke="black" points="2269.54,-151.83 2273.04,-161.83 2276.54,-151.83 2269.54,-151.83"/>
 </g>
 <!-- PetTypeService -->
-<g id="node36" class="node">
+<g id="node36" class="node"><a xlink:href="./injectables/PetTypeService.html" href="./injectables/PetTypeService.html" target="_top">
 <title>PetTypeService</title>
-<ellipse fill="#fdb462" stroke="#000000" cx="96" cy="-104" rx="72.3477" ry="18"/>
-<text text-anchor="middle" x="96" y="-99.8" font-family="Times,serif" font-size="14.00" fill="#000000">PetTypeService</text>
-</g>
+<ellipse fill="#fdb462" stroke="black" cx="96" cy="-104" rx="72.35" ry="18"/>
+<text text-anchor="middle" x="96" y="-99.8" font-family="Times,serif" font-size="14.00">PetTypeService</text>
+</a></g>
 <!-- PetTypeService&#45;&gt;PetTypesModule -->
 <g id="edge37" class="edge">
 <title>PetTypeService&#45;&gt;PetTypesModule</title>
-<path fill="none" stroke="#000000" d="M96,-122.0352C96,-138.7344 96,-161 96,-161 96,-161 2115.5254,-161 2115.5254,-161 2115.5254,-161 2115.5254,-161.0816 2115.5254,-161.0816"/>
-<polygon fill="#000000" stroke="#000000" points="2112.0268,-151.8159 2115.5254,-161.8164 2119.0268,-151.8169 2112.0268,-151.8159"/>
+<path fill="none" stroke="black" d="M96,-122.04C96,-138.73 96,-161 96,-161 96,-161 2261.53,-161 2261.53,-161 2261.53,-161 2261.53,-161.08 2261.53,-161.08"/>
+<polygon fill="black" stroke="black" points="2258.03,-151.82 2261.53,-161.82 2265.03,-151.82 2258.03,-151.82"/>
 </g>
 <!-- SpecialtyAddComponent -->
-<g id="node37" class="node">
+<g id="node37" class="node"><a xlink:href="./components/SpecialtyAddComponent.html" href="./components/SpecialtyAddComponent.html" target="_top">
 <title>SpecialtyAddComponent</title>
-<polygon fill="#ffffb3" stroke="#000000" points="2109.5379,-122 1952.4621,-122 1952.4621,-86 2109.5379,-86 2109.5379,-122"/>
-<text text-anchor="middle" x="2031" y="-99.8" font-family="Times,serif" font-size="14.00" fill="#000000">SpecialtyAddComponent</text>
-</g>
+<polygon fill="#ffffb3" stroke="black" points="2255.54,-122 2098.46,-122 2098.46,-86 2255.54,-86 2255.54,-122"/>
+<text text-anchor="middle" x="2177" y="-99.8" font-family="Times,serif" font-size="14.00">SpecialtyAddComponent</text>
+</a></g>
 <!-- SpecialtyAddComponent&#45;&gt;SpecialtiesModule -->
 <g id="edge38" class="edge">
 <title>SpecialtyAddComponent&#45;&gt;SpecialtiesModule</title>
-<path fill="none" stroke="#000000" d="M2098.2812,-122.1025C2098.2812,-133.0859 2098.2812,-145 2098.2812,-145 2098.2812,-145 2252.6755,-145 2252.6755,-145 2252.6755,-145 2252.6755,-151.68 2252.6755,-151.68"/>
-<polygon fill="#000000" stroke="#000000" points="2249.1756,-151.6799 2252.6755,-161.68 2256.1756,-151.68 2249.1756,-151.6799"/>
+<path fill="none" stroke="black" d="M2249.47,-122.1C2249.47,-133.09 2249.47,-145 2249.47,-145 2249.47,-145 2397.04,-145 2397.04,-145 2397.04,-145 2397.04,-151.68 2397.04,-151.68"/>
+<polygon fill="black" stroke="black" points="2393.54,-151.68 2397.04,-161.68 2400.54,-151.68 2393.54,-151.68"/>
 </g>
 <!-- SpecialtyEditComponent -->
-<g id="node38" class="node">
+<g id="node38" class="node"><a xlink:href="./components/SpecialtyEditComponent.html" href="./components/SpecialtyEditComponent.html" target="_top">
 <title>SpecialtyEditComponent</title>
-<polygon fill="#ffffb3" stroke="#000000" points="1934.2646,-122 1777.7354,-122 1777.7354,-86 1934.2646,-86 1934.2646,-122"/>
-<text text-anchor="middle" x="1856" y="-99.8" font-family="Times,serif" font-size="14.00" fill="#000000">SpecialtyEditComponent</text>
-</g>
+<polygon fill="#ffffb3" stroke="black" points="2080.26,-122 1923.74,-122 1923.74,-86 2080.26,-86 2080.26,-122"/>
+<text text-anchor="middle" x="2002" y="-99.8" font-family="Times,serif" font-size="14.00">SpecialtyEditComponent</text>
+</a></g>
 <!-- SpecialtyEditComponent&#45;&gt;SpecialtiesModule -->
 <g id="edge39" class="edge">
 <title>SpecialtyEditComponent&#45;&gt;SpecialtiesModule</title>
-<path fill="none" stroke="#000000" d="M1856,-122.4854C1856,-134.1399 1856,-147 1856,-147 1856,-147 2250.0464,-147 2250.0464,-147 2250.0464,-147 2250.0464,-151.9551 2250.0464,-151.9551"/>
-<polygon fill="#000000" stroke="#000000" points="2246.5465,-151.9551 2250.0464,-161.9551 2253.5465,-151.9552 2246.5465,-151.9551"/>
+<path fill="none" stroke="black" d="M2076.53,-122.06C2076.53,-133.44 2076.53,-146 2076.53,-146 2076.53,-146 2393.59,-146 2393.59,-146 2393.59,-146 2393.59,-151.81 2393.59,-151.81"/>
+<polygon fill="black" stroke="black" points="2390.09,-151.81 2393.59,-161.81 2397.09,-151.81 2390.09,-151.81"/>
 </g>
 <!-- SpecialtyListComponent -->
-<g id="node39" class="node">
+<g id="node39" class="node"><a xlink:href="./components/SpecialtyListComponent.html" href="./components/SpecialtyListComponent.html" target="_top">
 <title>SpecialtyListComponent</title>
-<polygon fill="#ffffb3" stroke="#000000" points="1759.7091,-122 1604.2909,-122 1604.2909,-86 1759.7091,-86 1759.7091,-122"/>
-<text text-anchor="middle" x="1682" y="-99.8" font-family="Times,serif" font-size="14.00" fill="#000000">SpecialtyListComponent</text>
-</g>
+<polygon fill="#ffffb3" stroke="black" points="1905.71,-122 1750.29,-122 1750.29,-86 1905.71,-86 1905.71,-122"/>
+<text text-anchor="middle" x="1828" y="-99.8" font-family="Times,serif" font-size="14.00">SpecialtyListComponent</text>
+</a></g>
 <!-- SpecialtyListComponent&#45;&gt;SpecialtiesModule -->
 <g id="edge40" class="edge">
 <title>SpecialtyListComponent&#45;&gt;SpecialtiesModule</title>
-<path fill="none" stroke="#000000" d="M1748.134,-122.1505C1748.134,-134.2708 1748.134,-148 1748.134,-148 1748.134,-148 2247.4174,-148 2247.4174,-148 2247.4174,-148 2247.4174,-151.7566 2247.4174,-151.7566"/>
-<polygon fill="#000000" stroke="#000000" points="2243.9175,-151.7566 2247.4174,-161.7566 2250.9175,-151.7566 2243.9175,-151.7566"/>
+<path fill="none" stroke="black" d="M1889.13,-122.15C1889.13,-134.27 1889.13,-148 1889.13,-148 1889.13,-148 2390.14,-148 2390.14,-148 2390.14,-148 2390.14,-151.76 2390.14,-151.76"/>
+<polygon fill="black" stroke="black" points="2386.64,-151.76 2390.14,-161.76 2393.64,-151.76 2386.64,-151.76"/>
 </g>
 <!-- SpecialtiesRoutingModule -->
-<g id="node40" class="node">
+<g id="node40" class="node"><a xlink:href="./modules/SpecialtiesRoutingModule.html" href="./modules/SpecialtiesRoutingModule.html" target="_top">
 <title>SpecialtiesRoutingModule</title>
-<polygon fill="#8dd3c7" stroke="#000000" points="1579.8159,-122 1576.8159,-126 1555.8159,-126 1552.8159,-122 1414.1841,-122 1414.1841,-86 1579.8159,-86 1579.8159,-122"/>
-<text text-anchor="middle" x="1497" y="-99.8" font-family="Times,serif" font-size="14.00" fill="#000000">SpecialtiesRoutingModule</text>
-</g>
+<polygon fill="#8dd3c7" stroke="black" points="1725.82,-122 1722.82,-126 1701.82,-126 1698.82,-122 1560.18,-122 1560.18,-86 1725.82,-86 1725.82,-122"/>
+<text text-anchor="middle" x="1643" y="-99.8" font-family="Times,serif" font-size="14.00">SpecialtiesRoutingModule</text>
+</a></g>
 <!-- SpecialtiesRoutingModule&#45;&gt;SpecialtiesModule -->
 <g id="edge41" class="edge">
 <title>SpecialtiesRoutingModule&#45;&gt;SpecialtiesModule</title>
-<path fill="none" stroke="#000000" d="M1526.1904,-122.1804C1526.1904,-135.0382 1526.1904,-150 1526.1904,-150 1526.1904,-150 2244.7883,-150 2244.7883,-150 2244.7883,-150 2244.7883,-151.8568 2244.7883,-151.8568"/>
-<polygon fill="#000000" stroke="#000000" points="2241.2884,-151.8568 2244.7883,-161.8568 2248.2884,-151.8568 2241.2884,-151.8568"/>
+<path fill="none" stroke="black" d="M1667.19,-122.04C1667.19,-134.56 1667.19,-149 1667.19,-149 1667.19,-149 2386.69,-149 2386.69,-149 2386.69,-149 2386.69,-151.97 2386.69,-151.97"/>
+<polygon fill="black" stroke="black" points="2383.19,-151.97 2386.69,-161.97 2390.19,-151.97 2383.19,-151.97"/>
+</g>
+<!-- SpecResolver -->
+<g id="node42" class="node"><a xlink:href="./injectables/SpecResolver.html" href="./injectables/SpecResolver.html" target="_top">
+<title>SpecResolver</title>
+<ellipse fill="#fdb462" stroke="black" cx="1290" cy="-104" rx="64.26" ry="18"/>
+<text text-anchor="middle" x="1290" y="-99.8" font-family="Times,serif" font-size="14.00">SpecResolver</text>
+</a></g>
+<!-- SpecResolver&#45;&gt;SpecialtiesModule -->
+<g id="edge43" class="edge">
+<title>SpecResolver&#45;&gt;SpecialtiesModule</title>
+<path fill="none" stroke="black" d="M1336.07,-116.61C1336.07,-130.83 1336.07,-152 1336.07,-152 1336.07,-152 2379.8,-152 2379.8,-152 2379.8,-152 2379.8,-152.98 2379.8,-152.98"/>
+<polygon fill="black" stroke="black" points="2376.3,-151.79 2379.8,-161.79 2383.3,-151.79 2376.3,-151.79"/>
 </g>
 <!-- SpecialtyService -->
-<g id="node42" class="node">
+<g id="node43" class="node"><a xlink:href="./injectables/SpecialtyService.html" href="./injectables/SpecialtyService.html" target="_top">
 <title>SpecialtyService</title>
-<ellipse fill="#fdb462" stroke="#000000" cx="1132" cy="-104" rx="75.8566" ry="18"/>
-<text text-anchor="middle" x="1132" y="-99.8" font-family="Times,serif" font-size="14.00" fill="#000000">SpecialtyService</text>
-</g>
+<ellipse fill="#fdb462" stroke="black" cx="1132" cy="-104" rx="75.86" ry="18"/>
+<text text-anchor="middle" x="1132" y="-99.8" font-family="Times,serif" font-size="14.00">SpecialtyService</text>
+</a></g>
 <!-- SpecialtyService&#45;&gt;SpecialtiesModule -->
-<g id="edge43" class="edge">
-<title>SpecialtyService&#45;&gt;SpecialtiesModule</title>
-<path fill="none" stroke="#000000" d="M1194.9641,-114.1796C1194.9641,-128.2695 1194.9641,-152 1194.9641,-152 1194.9641,-152 2239.5302,-152 2239.5302,-152 2239.5302,-152 2239.5302,-152.9793 2239.5302,-152.9793"/>
-<polygon fill="#000000" stroke="#000000" points="2236.0303,-151.793 2239.5302,-161.793 2243.0303,-151.7931 2236.0303,-151.793"/>
-</g>
-<!-- DummyComponent -->
-<g id="node43" class="node">
-<title>DummyComponent</title>
-<polygon fill="#ffffb3" stroke="#000000" points="5072.7204,-122 4945.2796,-122 4945.2796,-86 5072.7204,-86 5072.7204,-122"/>
-<text text-anchor="middle" x="5009" y="-99.8" font-family="Times,serif" font-size="14.00" fill="#000000">DummyComponent</text>
-</g>
-<!-- TestingModule -->
-<g id="node46" class="node">
-<title>TestingModule</title>
-<polygon fill="#8dd3c7" stroke="#000000" points="4898.5438,-198 4895.5438,-202 4874.5438,-202 4871.5438,-198 4797.4562,-198 4797.4562,-162 4898.5438,-162 4898.5438,-198"/>
-<text text-anchor="middle" x="4848" y="-175.8" font-family="Times,serif" font-size="14.00" fill="#000000">TestingModule</text>
-</g>
-<!-- DummyComponent&#45;&gt;TestingModule -->
 <g id="edge44" class="edge">
-<title>DummyComponent&#45;&gt;TestingModule</title>
-<path fill="none" stroke="#000000" d="M5009,-122.0109C5009,-144.4852 5009,-180 5009,-180 5009,-180 4908.9414,-180 4908.9414,-180"/>
-<polygon fill="#000000" stroke="#000000" points="4908.9414,-176.5001 4898.9414,-180 4908.9414,-183.5001 4908.9414,-176.5001"/>
-</g>
-<!-- RouterLinkStubDirective -->
-<g id="node44" class="node">
-<title>RouterLinkStubDirective</title>
-<polygon fill="#ffffb3" stroke="#000000" points="4927.3019,-122 4768.6981,-122 4768.6981,-86 4927.3019,-86 4927.3019,-122"/>
-<text text-anchor="middle" x="4848" y="-99.8" font-family="Times,serif" font-size="14.00" fill="#000000">RouterLinkStubDirective</text>
-</g>
-<!-- RouterLinkStubDirective&#45;&gt;TestingModule -->
-<g id="edge45" class="edge">
-<title>RouterLinkStubDirective&#45;&gt;TestingModule</title>
-<path fill="none" stroke="#000000" d="M4848,-122.0109C4848,-122.0109 4848,-151.855 4848,-151.855"/>
-<polygon fill="#000000" stroke="#000000" points="4844.5001,-151.8549 4848,-161.855 4851.5001,-151.855 4844.5001,-151.8549"/>
-</g>
-<!-- RouterOutletStubComponent -->
-<g id="node45" class="node">
-<title>RouterOutletStubComponent</title>
-<polygon fill="#ffffb3" stroke="#000000" points="4751.101,-122 4570.899,-122 4570.899,-86 4751.101,-86 4751.101,-122"/>
-<text text-anchor="middle" x="4661" y="-99.8" font-family="Times,serif" font-size="14.00" fill="#000000">RouterOutletStubComponent</text>
-</g>
-<!-- RouterOutletStubComponent&#45;&gt;TestingModule -->
-<g id="edge46" class="edge">
-<title>RouterOutletStubComponent&#45;&gt;TestingModule</title>
-<path fill="none" stroke="#000000" d="M4661,-122.2337C4661,-148.0094 4661,-192 4661,-192 4661,-192 4787.3951,-192 4787.3951,-192"/>
-<polygon fill="#000000" stroke="#000000" points="4787.3951,-195.5001 4797.3951,-192 4787.3951,-188.5001 4787.3951,-195.5001"/>
+<title>SpecialtyService&#45;&gt;SpecialtiesModule</title>
+<path fill="none" stroke="black" d="M1187.76,-116.36C1187.76,-130.88 1187.76,-153 1187.76,-153 1187.76,-153 2376.35,-153 2376.35,-153 2376.35,-153 2376.35,-153.88 2376.35,-153.88"/>
+<polygon fill="black" stroke="black" points="2372.85,-151.84 2376.35,-161.84 2379.85,-151.84 2372.85,-151.84"/>
 </g>
 <!-- VetAddComponent -->
-<g id="node47" class="node">
+<g id="node44" class="node"><a xlink:href="./components/VetAddComponent.html" href="./components/VetAddComponent.html" target="_top">
 <title>VetAddComponent</title>
-<polygon fill="#ffffb3" stroke="#000000" points="3290.6513,-122 3165.3487,-122 3165.3487,-86 3290.6513,-86 3290.6513,-122"/>
-<text text-anchor="middle" x="3228" y="-99.8" font-family="Times,serif" font-size="14.00" fill="#000000">VetAddComponent</text>
-</g>
+<polygon fill="#ffffb3" stroke="black" points="3572.65,-122 3447.35,-122 3447.35,-86 3572.65,-86 3572.65,-122"/>
+<text text-anchor="middle" x="3510" y="-99.8" font-family="Times,serif" font-size="14.00">VetAddComponent</text>
+</a></g>
 <!-- VetAddComponent&#45;&gt;VetsModule -->
-<g id="edge47" class="edge">
+<g id="edge45" class="edge">
 <title>VetAddComponent&#45;&gt;VetsModule</title>
-<path fill="none" stroke="#000000" d="M3168.7053,-122.1592C3168.7053,-127.0433 3168.7053,-131 3168.7053,-131 3168.7053,-131 2450.9482,-131 2450.9482,-131 2450.9482,-131 2450.9482,-151.7542 2450.9482,-151.7542"/>
-<polygon fill="#000000" stroke="#000000" points="2447.4483,-151.7542 2450.9482,-161.7542 2454.4483,-151.7542 2447.4483,-151.7542"/>
+<path fill="none" stroke="black" d="M3472.42,-122.21C3472.42,-127.55 3472.42,-132 3472.42,-132 3472.42,-132 2584.22,-132 2584.22,-132 2584.22,-132 2584.22,-151.85 2584.22,-151.85"/>
+<polygon fill="black" stroke="black" points="2580.72,-151.85 2584.22,-161.85 2587.72,-151.85 2580.72,-151.85"/>
 </g>
 <!-- VetEditComponent -->
-<g id="node48" class="node">
+<g id="node45" class="node"><a xlink:href="./components/VetEditComponent.html" href="./components/VetEditComponent.html" target="_top">
 <title>VetEditComponent</title>
-<polygon fill="#ffffb3" stroke="#000000" points="3147.3781,-122 3022.6219,-122 3022.6219,-86 3147.3781,-86 3147.3781,-122"/>
-<text text-anchor="middle" x="3085" y="-99.8" font-family="Times,serif" font-size="14.00" fill="#000000">VetEditComponent</text>
-</g>
+<polygon fill="#ffffb3" stroke="black" points="3429.38,-122 3304.62,-122 3304.62,-86 3429.38,-86 3429.38,-122"/>
+<text text-anchor="middle" x="3367" y="-99.8" font-family="Times,serif" font-size="14.00">VetEditComponent</text>
+</a></g>
 <!-- VetEditComponent&#45;&gt;VetsModule -->
-<g id="edge48" class="edge">
+<g id="edge46" class="edge">
 <title>VetEditComponent&#45;&gt;VetsModule</title>
-<path fill="none" stroke="#000000" d="M3028.1625,-122.0579C3028.1625,-126.4945 3028.1625,-130 3028.1625,-130 3028.1625,-130 2446.1208,-130 2446.1208,-130 2446.1208,-130 2446.1208,-151.9489 2446.1208,-151.9489"/>
-<polygon fill="#000000" stroke="#000000" points="2442.6209,-151.9488 2446.1208,-161.9489 2449.6209,-151.9489 2442.6209,-151.9488"/>
+<path fill="none" stroke="black" d="M3320.29,-122.06C3320.29,-126.49 3320.29,-130 3320.29,-130 3320.29,-130 2580.1,-130 2580.1,-130 2580.1,-130 2580.1,-151.95 2580.1,-151.95"/>
+<polygon fill="black" stroke="black" points="2576.6,-151.95 2580.1,-161.95 2583.6,-151.95 2576.6,-151.95"/>
 </g>
 <!-- VetListComponent -->
-<g id="node49" class="node">
+<g id="node46" class="node"><a xlink:href="./components/VetListComponent.html" href="./components/VetListComponent.html" target="_top">
 <title>VetListComponent</title>
-<polygon fill="#ffffb3" stroke="#000000" points="3004.823,-122 2881.177,-122 2881.177,-86 3004.823,-86 3004.823,-122"/>
-<text text-anchor="middle" x="2943" y="-99.8" font-family="Times,serif" font-size="14.00" fill="#000000">VetListComponent</text>
-</g>
+<polygon fill="#ffffb3" stroke="black" points="3286.82,-122 3163.18,-122 3163.18,-86 3286.82,-86 3286.82,-122"/>
+<text text-anchor="middle" x="3225" y="-99.8" font-family="Times,serif" font-size="14.00">VetListComponent</text>
+</a></g>
 <!-- VetListComponent&#45;&gt;VetsModule -->
-<g id="edge49" class="edge">
+<g id="edge47" class="edge">
 <title>VetListComponent&#45;&gt;VetsModule</title>
-<path fill="none" stroke="#000000" d="M2943,-122.1903C2943,-125.5376 2943,-128 2943,-128 2943,-128 2441.2933,-128 2441.2933,-128 2441.2933,-128 2441.2933,-151.8129 2441.2933,-151.8129"/>
-<polygon fill="#000000" stroke="#000000" points="2437.7934,-151.8129 2441.2933,-161.8129 2444.7934,-151.813 2437.7934,-151.8129"/>
+<path fill="none" stroke="black" d="M3208.73,-122.17C3208.73,-126.05 3208.73,-129 3208.73,-129 3208.73,-129 2575.97,-129 2575.97,-129 2575.97,-129 2575.97,-151.88 2575.97,-151.88"/>
+<polygon fill="black" stroke="black" points="2572.47,-151.88 2575.97,-161.88 2579.47,-151.88 2572.47,-151.88"/>
 </g>
 <!-- VetsRoutingModule -->
-<g id="node50" class="node">
+<g id="node47" class="node"><a xlink:href="./modules/VetsRoutingModule.html" href="./modules/VetsRoutingModule.html" target="_top">
 <title>VetsRoutingModule</title>
-<polygon fill="#8dd3c7" stroke="#000000" points="2857.3244,-122 2854.3244,-126 2833.3244,-126 2830.3244,-122 2726.6756,-122 2726.6756,-86 2857.3244,-86 2857.3244,-122"/>
-<text text-anchor="middle" x="2792" y="-99.8" font-family="Times,serif" font-size="14.00" fill="#000000">VetsRoutingModule</text>
-</g>
+<polygon fill="#8dd3c7" stroke="black" points="3139.32,-122 3136.32,-126 3115.32,-126 3112.32,-122 3008.68,-122 3008.68,-86 3139.32,-86 3139.32,-122"/>
+<text text-anchor="middle" x="3074" y="-99.8" font-family="Times,serif" font-size="14.00">VetsRoutingModule</text>
+</a></g>
 <!-- VetsRoutingModule&#45;&gt;VetsModule -->
-<g id="edge50" class="edge">
+<g id="edge48" class="edge">
 <title>VetsRoutingModule&#45;&gt;VetsModule</title>
-<path fill="none" stroke="#000000" d="M2766.7788,-122.1223C2766.7788,-124.9729 2766.7788,-127 2766.7788,-127 2766.7788,-127 2436.4659,-127 2436.4659,-127 2436.4659,-127 2436.4659,-151.7604 2436.4659,-151.7604"/>
-<polygon fill="#000000" stroke="#000000" points="2432.966,-151.7604 2436.4659,-161.7604 2439.966,-151.7604 2432.966,-151.7604"/>
+<path fill="none" stroke="black" d="M3074,-122.19C3074,-125.54 3074,-128 3074,-128 3074,-128 2571.84,-128 2571.84,-128 2571.84,-128 2571.84,-151.81 2571.84,-151.81"/>
+<polygon fill="black" stroke="black" points="2568.34,-151.81 2571.84,-161.81 2575.34,-151.81 2568.34,-151.81"/>
+</g>
+<!-- VetResolver -->
+<g id="node51" class="node"><a xlink:href="./injectables/VetResolver.html" href="./injectables/VetResolver.html" target="_top">
+<title>VetResolver</title>
+<ellipse fill="#fdb462" stroke="black" cx="2481" cy="-104" rx="59.11" ry="18"/>
+<text text-anchor="middle" x="2481" y="-99.8" font-family="Times,serif" font-size="14.00">VetResolver</text>
+</a></g>
+<!-- VetResolver&#45;&gt;VetsModule -->
+<g id="edge52" class="edge">
+<title>VetResolver&#45;&gt;VetsModule</title>
+<path fill="none" stroke="black" d="M2530.67,-113.94C2530.67,-113.94 2530.67,-151.91 2530.67,-151.91"/>
+<polygon fill="black" stroke="black" points="2527.17,-151.91 2530.67,-161.91 2534.17,-151.91 2527.17,-151.91"/>
 </g>
 <!-- VetService -->
-<g id="node54" class="node">
+<g id="node52" class="node"><a xlink:href="./injectables/VetService.html" href="./injectables/VetService.html" target="_top">
 <title>VetService</title>
-<ellipse fill="#fdb462" stroke="#000000" cx="2204" cy="-104" rx="53.8673" ry="18"/>
-<text text-anchor="middle" x="2204" y="-99.8" font-family="Times,serif" font-size="14.00" fill="#000000">VetService</text>
-</g>
+<ellipse fill="#fdb462" stroke="black" cx="2350" cy="-104" rx="53.87" ry="18"/>
+<text text-anchor="middle" x="2350" y="-99.8" font-family="Times,serif" font-size="14.00">VetService</text>
+</a></g>
 <!-- VetService&#45;&gt;VetsModule -->
-<g id="edge54" class="edge">
+<g id="edge53" class="edge">
 <title>VetService&#45;&gt;VetsModule</title>
-<path fill="none" stroke="#000000" d="M2255.3046,-109.5618C2255.3046,-120.5527 2255.3046,-144 2255.3046,-144 2255.3046,-144 2386.4017,-144 2386.4017,-144 2386.4017,-144 2386.4017,-151.5782 2386.4017,-151.5782"/>
-<polygon fill="#000000" stroke="#000000" points="2382.9018,-151.5781 2386.4017,-161.5782 2389.9018,-151.5782 2382.9018,-151.5781"/>
+<path fill="none" stroke="black" d="M2400.49,-110.61C2400.49,-121.97 2400.49,-144 2400.49,-144 2400.49,-144 2521.03,-144 2521.03,-144 2521.03,-144 2521.03,-151.58 2521.03,-151.58"/>
+<polygon fill="black" stroke="black" points="2517.53,-151.58 2521.03,-161.58 2524.53,-151.58 2517.53,-151.58"/>
 </g>
 <!-- VisitAddComponent -->
-<g id="node55" class="node">
+<g id="node53" class="node"><a xlink:href="./components/VisitAddComponent.html" href="./components/VisitAddComponent.html" target="_top">
 <title>VisitAddComponent</title>
-<polygon fill="#ffffb3" stroke="#000000" points="4531.1624,-122 4398.8376,-122 4398.8376,-86 4531.1624,-86 4531.1624,-122"/>
-<text text-anchor="middle" x="4465" y="-99.8" font-family="Times,serif" font-size="14.00" fill="#000000">VisitAddComponent</text>
-</g>
+<polygon fill="#ffffb3" stroke="black" points="4813.16,-122 4680.84,-122 4680.84,-86 4813.16,-86 4813.16,-122"/>
+<text text-anchor="middle" x="4747" y="-99.8" font-family="Times,serif" font-size="14.00">VisitAddComponent</text>
+</a></g>
 <!-- VisitAddComponent&#45;&gt;VisitsModule -->
-<g id="edge55" class="edge">
+<g id="edge54" class="edge">
 <title>VisitAddComponent&#45;&gt;VisitsModule</title>
-<path fill="none" stroke="#000000" d="M4458.2164,-122.4218C4458.2164,-131.2791 4458.2164,-140 4458.2164,-140 4458.2164,-140 2526.5774,-140 2526.5774,-140 2526.5774,-140 2526.5774,-151.8726 2526.5774,-151.8726"/>
-<polygon fill="#000000" stroke="#000000" points="2523.0775,-151.8725 2526.5774,-161.8726 2530.0775,-151.8726 2523.0775,-151.8725"/>
+<path fill="none" stroke="black" d="M4747,-122.07C4747,-131.46 4747,-141 4747,-141 4747,-141 2656.85,-141 2656.85,-141 2656.85,-141 2656.85,-151.87 2656.85,-151.87"/>
+<polygon fill="black" stroke="black" points="2653.35,-151.87 2656.85,-161.87 2660.35,-151.87 2653.35,-151.87"/>
 </g>
 <!-- VisitEditComponent -->
-<g id="node56" class="node">
+<g id="node54" class="node"><a xlink:href="./components/VisitEditComponent.html" href="./components/VisitEditComponent.html" target="_top">
 <title>VisitEditComponent</title>
-<polygon fill="#ffffb3" stroke="#000000" points="4380.8892,-122 4249.1108,-122 4249.1108,-86 4380.8892,-86 4380.8892,-122"/>
-<text text-anchor="middle" x="4315" y="-99.8" font-family="Times,serif" font-size="14.00" fill="#000000">VisitEditComponent</text>
-</g>
+<polygon fill="#ffffb3" stroke="black" points="4662.89,-122 4531.11,-122 4531.11,-86 4662.89,-86 4662.89,-122"/>
+<text text-anchor="middle" x="4597" y="-99.8" font-family="Times,serif" font-size="14.00">VisitEditComponent</text>
+</a></g>
 <!-- VisitEditComponent&#45;&gt;VisitsModule -->
-<g id="edge56" class="edge">
+<g id="edge55" class="edge">
 <title>VisitEditComponent&#45;&gt;VisitsModule</title>
-<path fill="none" stroke="#000000" d="M4302.4348,-122.1944C4302.4348,-130.2782 4302.4348,-138 4302.4348,-138 4302.4348,-138 2517.0401,-138 2517.0401,-138 2517.0401,-138 2517.0401,-151.9445 2517.0401,-151.9445"/>
-<polygon fill="#000000" stroke="#000000" points="2513.5402,-151.9444 2517.0401,-161.9445 2520.5402,-151.9445 2513.5402,-151.9444"/>
+<path fill="none" stroke="black" d="M4592.41,-122.42C4592.41,-131.28 4592.41,-140 4592.41,-140 4592.41,-140 2648.46,-140 2648.46,-140 2648.46,-140 2648.46,-151.87 2648.46,-151.87"/>
+<polygon fill="black" stroke="black" points="2644.96,-151.87 2648.46,-161.87 2651.96,-151.87 2644.96,-151.87"/>
 </g>
 <!-- VisitListComponent -->
-<g id="node57" class="node">
+<g id="node55" class="node"><a xlink:href="./components/VisitListComponent.html" href="./components/VisitListComponent.html" target="_top">
 <title>VisitListComponent</title>
-<polygon fill="#ffffb3" stroke="#000000" points="4231.3342,-122 4100.6658,-122 4100.6658,-86 4231.3342,-86 4231.3342,-122"/>
-<text text-anchor="middle" x="4166" y="-99.8" font-family="Times,serif" font-size="14.00" fill="#000000">VisitListComponent</text>
-</g>
+<polygon fill="#ffffb3" stroke="black" points="4513.33,-122 4382.67,-122 4382.67,-86 4513.33,-86 4513.33,-122"/>
+<text text-anchor="middle" x="4448" y="-99.8" font-family="Times,serif" font-size="14.00">VisitListComponent</text>
+</a></g>
 <!-- VisitListComponent&#45;&gt;VisitsModule -->
-<g id="edge57" class="edge">
+<g id="edge56" class="edge">
 <title>VisitListComponent&#45;&gt;VisitsModule</title>
-<path fill="none" stroke="#000000" d="M4142.6052,-122.0449C4142.6052,-129.749 4142.6052,-137 4142.6052,-137 4142.6052,-137 2507.5029,-137 2507.5029,-137 2507.5029,-137 2507.5029,-151.5146 2507.5029,-151.5146"/>
-<polygon fill="#000000" stroke="#000000" points="2504.003,-151.5145 2507.5029,-161.5146 2511.003,-151.5146 2504.003,-151.5145"/>
+<path fill="none" stroke="black" d="M4437.32,-122.19C4437.32,-130.28 4437.32,-138 4437.32,-138 4437.32,-138 2640.06,-138 2640.06,-138 2640.06,-138 2640.06,-151.94 2640.06,-151.94"/>
+<polygon fill="black" stroke="black" points="2636.56,-151.94 2640.06,-161.94 2643.56,-151.94 2636.56,-151.94"/>
 </g>
 <!-- VisitsRoutingModule -->
-<g id="node58" class="node">
+<g id="node56" class="node"><a xlink:href="./modules/VisitsRoutingModule.html" href="./modules/VisitsRoutingModule.html" target="_top">
 <title>VisitsRoutingModule</title>
-<polygon fill="#8dd3c7" stroke="#000000" points="4076.8356,-122 4073.8356,-126 4052.8356,-126 4049.8356,-122 3939.1644,-122 3939.1644,-86 4076.8356,-86 4076.8356,-122"/>
-<text text-anchor="middle" x="4008" y="-99.8" font-family="Times,serif" font-size="14.00" fill="#000000">VisitsRoutingModule</text>
-</g>
+<polygon fill="#8dd3c7" stroke="black" points="4358.84,-122 4355.84,-126 4334.84,-126 4331.84,-122 4221.16,-122 4221.16,-86 4358.84,-86 4358.84,-122"/>
+<text text-anchor="middle" x="4290" y="-99.8" font-family="Times,serif" font-size="14.00">VisitsRoutingModule</text>
+</a></g>
 <!-- VisitsRoutingModule&#45;&gt;VisitsModule -->
-<g id="edge59" class="edge">
+<g id="edge58" class="edge">
 <title>VisitsRoutingModule&#45;&gt;VisitsModule</title>
-<path fill="none" stroke="#000000" d="M3981.466,-122.0328C3981.466,-128.8526 3981.466,-135 3981.466,-135 3981.466,-135 2497.9657,-135 2497.9657,-135 2497.9657,-135 2497.9657,-151.9561 2497.9657,-151.9561"/>
-<polygon fill="#000000" stroke="#000000" points="2494.4658,-151.956 2497.9657,-161.9561 2501.4658,-151.9561 2494.4658,-151.956"/>
+<path fill="none" stroke="black" d="M4270.85,-122.04C4270.85,-129.75 4270.85,-137 4270.85,-137 4270.85,-137 2631.67,-137 2631.67,-137 2631.67,-137 2631.67,-151.51 2631.67,-151.51"/>
+<polygon fill="black" stroke="black" points="2628.17,-151.51 2631.67,-161.51 2635.17,-151.51 2628.17,-151.51"/>
 </g>
 <!-- VisitService -->
-<g id="node62" class="node">
+<g id="node60" class="node"><a xlink:href="./injectables/VisitService.html" href="./injectables/VisitService.html" target="_top">
 <title>VisitService</title>
-<ellipse fill="#fdb462" stroke="#000000" cx="3390" cy="-104" rx="58.5405" ry="18"/>
-<text text-anchor="middle" x="3390" y="-99.8" font-family="Times,serif" font-size="14.00" fill="#000000">VisitService</text>
-</g>
+<ellipse fill="#fdb462" stroke="black" cx="3672" cy="-104" rx="58.54" ry="18"/>
+<text text-anchor="middle" x="3672" y="-99.8" font-family="Times,serif" font-size="14.00">VisitService</text>
+</a></g>
 <!-- VisitService&#45;&gt;VisitsModule -->
-<g id="edge63" class="edge">
+<g id="edge62" class="edge">
 <title>VisitService&#45;&gt;VisitsModule</title>
-<path fill="none" stroke="#000000" d="M3346.4461,-116.1152C3346.4461,-126.9059 3346.4461,-141 3346.4461,-141 3346.4461,-141 2565.8021,-141 2565.8021,-141 2565.8021,-141 2565.8021,-151.8701 2565.8021,-151.8701"/>
-<polygon fill="#000000" stroke="#000000" points="2562.3022,-151.8701 2565.8021,-161.8701 2569.3022,-151.8701 2562.3022,-151.8701"/>
+<path fill="none" stroke="black" d="M3631.86,-117.29C3631.86,-128.25 3631.86,-142 3631.86,-142 3631.86,-142 2698.76,-142 2698.76,-142 2698.76,-142 2698.76,-151.89 2698.76,-151.89"/>
+<polygon fill="black" stroke="black" points="2695.26,-151.89 2698.76,-161.89 2702.26,-151.89 2695.26,-151.89"/>
 </g>
 </g>
 </svg>
 
     </div>
     <i id="fullscreen" class="icon ion-ios-resize module-graph-fullscreen-btn" aria-hidden="true"></i>
-    <div class="btn-group">
+    <div class="btn-group size-buttons">
         <button id="zoom-in" class="btn btn-default btn-sm">Zoom in</button>
         <button id="reset" class="btn btn-default btn-sm">Reset</button>
         <button id="zoom-out" class="btn btn-default btn-sm">Zoom out</button>
     </div>
 </div>
   
-<div class="container-fluid overview">
+<div class="tab-content overview">
     <div class="row">
         <div class="col-sm-3">
             <div class="card text-center">
                 <div class="card-block">
                     <h4 class="card-title"><span class="icon ion-ios-archive"></span></h4>
                     <p class="card-text">
-                        <a href="./modules.html">16 Modules</a>
+                        <a href="./modules.html">15 Modules</a>
                     </p>
                 </div>
             </div>
@@ -1009,15 +1060,7 @@
             <div class="card text-center">
                 <div class="card-block">
                     <h4 class="card-title"><span class="icon ion-md-arrow-round-down"></span></h4>
-                    <p class="card-text">9 Injectables</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-3">
-            <div class="card text-center">
-                <div class="card-block">
-                    <h4 class="card-title"><span class="icon ion-ios-lock"></span></h4>
-                    <p class="card-text">2 Guards</p>
+                    <p class="card-text">11 Injectables</p>
                 </div>
             </div>
         </div>
@@ -1034,7 +1077,7 @@
                 <div class="card-block">
                     <h4 class="card-title"><span class="icon ion-ios-git-branch"></span></h4>
                     <p class="card-text">
-                        <a href="./routes.html">24 Routes</a>
+                        <a href="./routes.html">23 Routes</a>
                     </p>
                 </div>
             </div>
@@ -1054,14 +1097,16 @@
 
 
 
-                   
+
+
+
 
 
 
 
                    </div><div class="search-results">
     <div class="has-results">
-        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
         <ul class="search-results-list"></ul>
     </div>
     <div class="no-results">
@@ -1073,16 +1118,56 @@
            </div>
        </div>
 
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 0;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'overview';
             var COMPODOC_CURRENT_PAGE_URL = 'overview.html';
+            var MAX_SEARCH_RESULTS = 15;
        </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var updateDarkModeSwitchOffset = function () {
+                    var content = document.querySelector('.content');
+                    var scrollbarWidth = 0;
+
+                    if (content) {
+                         scrollbarWidth = Math.max(0, content.offsetWidth - content.clientWidth);
+                    }
+
+                    document.documentElement.style.setProperty(
+                         '--content-scrollbar-width',
+                         scrollbarWidth + 'px'
+                    );
+               };
+
+               updateDarkModeSwitchOffset();
+               requestAnimationFrame(updateDarkModeSwitchOffset);
+               window.addEventListener('resize', updateDarkModeSwitchOffset);
+
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
 
        <script src="./js/libs/custom-elements.min.js"></script>
        <script src="./js/libs/lit-html.js"></script>
-       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
-       <script src="./js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+
        <script src="./js/menu-wc.js" defer></script>
 
        <script src="./js/libs/bootstrap-native.js"></script>
@@ -1090,7 +1175,6 @@
        <script src="./js/libs/es6-shim.min.js"></script>
        <script src="./js/libs/EventDispatcher.js"></script>
        <script src="./js/libs/promise.min.js"></script>
-       <script src="./js/libs/zepto.min.js"></script>
 
        <script src="./js/compodoc.js"></script>
 

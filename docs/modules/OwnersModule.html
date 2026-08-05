@@ -8,22 +8,95 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
-	      <link rel="stylesheet" href="../styles/style.css">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
     </head>
     <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
 
-        <div class="navbar navbar-default navbar-fixed-top visible-xs">
-            <a href="../" class="navbar-brand">spring-petclinic-angular documentation</a>
-            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">spring-petclinic-angular documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
         </div>
 
         <div class="xs-menu menu" id="mobile-menu">
-                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+                <div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search">
+    <button type="button"
+        class="search-input-clear"
+        aria-label="Clear search"
+        data-search-input-clear>&times;</button>
+</div>
+            <compodoc-menu></compodoc-menu>
         </div>
 
         <div class="container-fluid main">
            <div class="row main">
-               <div class="hidden-xs menu">
+               <div class="d-none d-md-block menu">
                    <compodoc-menu mode="normal"></compodoc-menu>
                </div>
                <!-- START CONTENT -->
@@ -32,147 +105,156 @@
 
 
 
+
+
+
+
 <ol class="breadcrumb">
-    <li>Modules</li>
-    <li>OwnersModule</li>
+    <li class="breadcrumb-item">Modules</li>
+    <li class="breadcrumb-item" >OwnersModule</li>
 </ol>
+
+<div class="io-file io-file-path" data-compodoc="entity-file-path">
+    <span class="icon ion-ios-document" aria-hidden="true"></span>
+    <code>src/app/owners/owners.module.ts</code>
+</div>
 
 <div class="text-center module-graph-container">
     <div id="module-graph-svg">
         <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<!-- Generated by graphviz version 2.40.1 (20161225.0304)
+<!-- Generated by graphviz version 2.47.0 (20210316.0004)
  -->
 <!-- Title: dependencies Pages: 1 -->
 <svg width="1121pt" height="211pt"
  viewBox="0.00 0.00 1121.00 211.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 <g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 207)">
 <title>dependencies</title>
-<polygon fill="#ffffff" stroke="transparent" points="-4,4 -4,-207 1117,-207 1117,4 -4,4"/>
-<text text-anchor="start" x="535.5091" y="-42.4" font-family="sans-serif" font-weight="bold" font-size="14.00" fill="#000000">Legend</text>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-207 1117,-207 1117,4 -4,4"/>
+<text text-anchor="start" x="535.51" y="-42.4" font-family="Times-12" font-weight="bold" font-size="14.00">Legend</text>
 <polygon fill="#ffffb3" stroke="transparent" points="322.5,-10 322.5,-30 342.5,-30 342.5,-10 322.5,-10"/>
-<text text-anchor="start" x="346.129" y="-15.4" font-family="sans-serif" font-size="14.00" fill="#000000"> &#160;Declarations</text>
+<text text-anchor="start" x="346.13" y="-15.4" font-family="Times-12" font-size="14.00"> &#160;Declarations</text>
 <polygon fill="#8dd3c7" stroke="transparent" points="435.5,-10 435.5,-30 455.5,-30 455.5,-10 435.5,-10"/>
-<text text-anchor="start" x="459.2251" y="-15.4" font-family="sans-serif" font-size="14.00" fill="#000000"> &#160;Module</text>
+<text text-anchor="start" x="459.23" y="-15.4" font-family="Times-12" font-size="14.00"> &#160;Module</text>
 <polygon fill="#80b1d3" stroke="transparent" points="521.5,-10 521.5,-30 541.5,-30 541.5,-10 521.5,-10"/>
-<text text-anchor="start" x="545.2812" y="-15.4" font-family="sans-serif" font-size="14.00" fill="#000000"> &#160;Bootstrap</text>
+<text text-anchor="start" x="545.28" y="-15.4" font-family="Times-12" font-size="14.00"> &#160;Bootstrap</text>
 <polygon fill="#fdb462" stroke="transparent" points="618.5,-10 618.5,-30 638.5,-30 638.5,-10 618.5,-10"/>
-<text text-anchor="start" x="642.1732" y="-15.4" font-family="sans-serif" font-size="14.00" fill="#000000"> &#160;Providers</text>
+<text text-anchor="start" x="642.17" y="-15.4" font-family="Times-12" font-size="14.00"> &#160;Providers</text>
 <polygon fill="#fb8072" stroke="transparent" points="714.5,-10 714.5,-30 734.5,-30 734.5,-10 714.5,-10"/>
-<text text-anchor="start" x="738.2258" y="-15.4" font-family="sans-serif" font-size="14.00" fill="#000000"> &#160;Exports</text>
+<text text-anchor="start" x="738.23" y="-15.4" font-family="Times-12" font-size="14.00"> &#160;Exports</text>
 <g id="clust1" class="cluster">
 <title>cluster_OwnersModule</title>
-<polygon fill="none" stroke="#000000" stroke-dasharray="1,5" points="8,-70 8,-195 1105,-195 1105,-70 8,-70"/>
-</g>
-<g id="clust2" class="cluster">
-<title>cluster_OwnersModule_declarations</title>
-<polygon fill="none" stroke="#000000" points="445,-78 445,-130 1097,-130 1097,-78 445,-78"/>
+<polygon fill="none" stroke="black" stroke-dasharray="1,5" points="8,-70 8,-195 1105,-195 1105,-70 8,-70"/>
 </g>
 <g id="clust7" class="cluster">
 <title>cluster_OwnersModule_imports</title>
-<polygon fill="none" stroke="#000000" points="172,-78 172,-130 437,-130 437,-78 172,-78"/>
+<polygon fill="none" stroke="black" points="832,-78 832,-130 1097,-130 1097,-78 832,-78"/>
+</g>
+<g id="clust2" class="cluster">
+<title>cluster_OwnersModule_declarations</title>
+<polygon fill="none" stroke="black" points="172,-78 172,-130 824,-130 824,-78 172,-78"/>
 </g>
 <g id="clust10" class="cluster">
 <title>cluster_OwnersModule_providers</title>
-<polygon fill="none" stroke="#000000" points="16,-78 16,-130 164,-130 164,-78 16,-78"/>
+<polygon fill="none" stroke="black" points="16,-78 16,-130 164,-130 164,-78 16,-78"/>
 </g>
 <!-- OwnerAddComponent -->
-<g id="node1" class="node">
+<g id="node1" class="node"><a xlink:href="../components/OwnerAddComponent.html" href="../components/OwnerAddComponent.html" target="_top">
 <title>OwnerAddComponent</title>
-<polygon fill="#ffffb3" stroke="#000000" points="1088.5282,-122 945.4718,-122 945.4718,-86 1088.5282,-86 1088.5282,-122"/>
-<text text-anchor="middle" x="1017" y="-99.8" font-family="Times,serif" font-size="14.00" fill="#000000">OwnerAddComponent</text>
-</g>
+<polygon fill="#ffffb3" stroke="black" points="815.53,-122 672.47,-122 672.47,-86 815.53,-86 815.53,-122"/>
+<text text-anchor="middle" x="744" y="-99.8" font-family="Times,serif" font-size="14.00">OwnerAddComponent</text>
+</a></g>
 <!-- OwnersModule -->
-<g id="node5" class="node">
+<g id="node5" class="node"><a xlink:href="../modules/OwnersModule.html" href="../modules/OwnersModule.html" target="_top">
 <title>OwnersModule</title>
-<polygon fill="#8dd3c7" stroke="#000000" points="575.5828,-187 572.5828,-191 551.5828,-191 548.5828,-187 472.4172,-187 472.4172,-151 575.5828,-151 575.5828,-187"/>
-<text text-anchor="middle" x="524" y="-164.8" font-family="Times,serif" font-size="14.00" fill="#000000">OwnersModule</text>
-</g>
+<polygon fill="#8dd3c7" stroke="black" points="628.58,-187 625.58,-191 604.58,-191 601.58,-187 525.42,-187 525.42,-151 628.58,-151 628.58,-187"/>
+<text text-anchor="middle" x="577" y="-164.8" font-family="Times,serif" font-size="14.00">OwnersModule</text>
+</a></g>
 <!-- OwnerAddComponent&#45;&gt;OwnersModule -->
 <g id="edge1" class="edge">
 <title>OwnerAddComponent&#45;&gt;OwnersModule</title>
-<path fill="none" stroke="#000000" d="M1017,-122.2921C1017,-144.2057 1017,-178 1017,-178 1017,-178 585.8278,-178 585.8278,-178"/>
-<polygon fill="#000000" stroke="#000000" points="585.8279,-174.5001 575.8278,-178 585.8278,-181.5001 585.8279,-174.5001"/>
+<path fill="none" stroke="black" d="M744,-122.03C744,-138.4 744,-160 744,-160 744,-160 638.92,-160 638.92,-160"/>
+<polygon fill="black" stroke="black" points="638.92,-156.5 628.92,-160 638.92,-163.5 638.92,-156.5"/>
 </g>
 <!-- OwnerDetailComponent -->
-<g id="node2" class="node">
+<g id="node2" class="node"><a xlink:href="../components/OwnerDetailComponent.html" href="../components/OwnerDetailComponent.html" target="_top">
 <title>OwnerDetailComponent</title>
-<polygon fill="#ffffb3" stroke="#000000" points="926.6288,-122 773.3712,-122 773.3712,-86 926.6288,-86 926.6288,-122"/>
-<text text-anchor="middle" x="850" y="-99.8" font-family="Times,serif" font-size="14.00" fill="#000000">OwnerDetailComponent</text>
-</g>
+<polygon fill="#ffffb3" stroke="black" points="653.63,-122 500.37,-122 500.37,-86 653.63,-86 653.63,-122"/>
+<text text-anchor="middle" x="577" y="-99.8" font-family="Times,serif" font-size="14.00">OwnerDetailComponent</text>
+</a></g>
 <!-- OwnerDetailComponent&#45;&gt;OwnersModule -->
 <g id="edge2" class="edge">
 <title>OwnerDetailComponent&#45;&gt;OwnersModule</title>
-<path fill="none" stroke="#000000" d="M850,-122.1061C850,-141.3391 850,-169 850,-169 850,-169 585.6557,-169 585.6557,-169"/>
-<polygon fill="#000000" stroke="#000000" points="585.6557,-165.5001 575.6557,-169 585.6556,-172.5001 585.6557,-165.5001"/>
+<path fill="none" stroke="black" d="M577,-122.11C577,-122.11 577,-140.99 577,-140.99"/>
+<polygon fill="black" stroke="black" points="573.5,-140.99 577,-150.99 580.5,-140.99 573.5,-140.99"/>
 </g>
 <!-- OwnerEditComponent -->
-<g id="node3" class="node">
+<g id="node3" class="node"><a xlink:href="../components/OwnerEditComponent.html" href="../components/OwnerEditComponent.html" target="_top">
 <title>OwnerEditComponent</title>
-<polygon fill="#ffffb3" stroke="#000000" points="755.2548,-122 612.7452,-122 612.7452,-86 755.2548,-86 755.2548,-122"/>
-<text text-anchor="middle" x="684" y="-99.8" font-family="Times,serif" font-size="14.00" fill="#000000">OwnerEditComponent</text>
-</g>
+<polygon fill="#ffffb3" stroke="black" points="482.25,-122 339.75,-122 339.75,-86 482.25,-86 482.25,-122"/>
+<text text-anchor="middle" x="411" y="-99.8" font-family="Times,serif" font-size="14.00">OwnerEditComponent</text>
+</a></g>
 <!-- OwnerEditComponent&#45;&gt;OwnersModule -->
 <g id="edge3" class="edge">
 <title>OwnerEditComponent&#45;&gt;OwnersModule</title>
-<path fill="none" stroke="#000000" d="M684,-122.027C684,-138.3976 684,-160 684,-160 684,-160 585.9474,-160 585.9474,-160"/>
-<polygon fill="#000000" stroke="#000000" points="585.9474,-156.5001 575.9474,-160 585.9474,-163.5001 585.9474,-156.5001"/>
+<path fill="none" stroke="black" d="M411,-122.03C411,-138.4 411,-160 411,-160 411,-160 515.39,-160 515.39,-160"/>
+<polygon fill="black" stroke="black" points="515.39,-163.5 525.39,-160 515.39,-156.5 515.39,-163.5"/>
 </g>
 <!-- OwnerListComponent -->
-<g id="node4" class="node">
+<g id="node4" class="node"><a xlink:href="../components/OwnerListComponent.html" href="../components/OwnerListComponent.html" target="_top">
 <title>OwnerListComponent</title>
-<polygon fill="#ffffb3" stroke="#000000" points="594.6993,-122 453.3007,-122 453.3007,-86 594.6993,-86 594.6993,-122"/>
-<text text-anchor="middle" x="524" y="-99.8" font-family="Times,serif" font-size="14.00" fill="#000000">OwnerListComponent</text>
-</g>
+<polygon fill="#ffffb3" stroke="black" points="321.7,-122 180.3,-122 180.3,-86 321.7,-86 321.7,-122"/>
+<text text-anchor="middle" x="251" y="-99.8" font-family="Times,serif" font-size="14.00">OwnerListComponent</text>
+</a></g>
 <!-- OwnerListComponent&#45;&gt;OwnersModule -->
 <g id="edge4" class="edge">
 <title>OwnerListComponent&#45;&gt;OwnersModule</title>
-<path fill="none" stroke="#000000" d="M524,-122.1061C524,-122.1061 524,-140.991 524,-140.991"/>
-<polygon fill="#000000" stroke="#000000" points="520.5001,-140.9909 524,-150.991 527.5001,-140.991 520.5001,-140.9909"/>
+<path fill="none" stroke="black" d="M251,-122.11C251,-141.34 251,-169 251,-169 251,-169 515.34,-169 515.34,-169"/>
+<polygon fill="black" stroke="black" points="515.34,-172.5 525.34,-169 515.34,-165.5 515.34,-172.5"/>
 </g>
 <!-- OwnersRoutingModule -->
-<g id="node6" class="node">
+<g id="node6" class="node"><a xlink:href="../modules/OwnersRoutingModule.html" href="../modules/OwnersRoutingModule.html" target="_top">
 <title>OwnersRoutingModule</title>
-<polygon fill="#8dd3c7" stroke="#000000" points="429.2007,-122 426.2007,-126 405.2007,-126 402.2007,-122 280.7993,-122 280.7993,-86 429.2007,-86 429.2007,-122"/>
-<text text-anchor="middle" x="355" y="-99.8" font-family="Times,serif" font-size="14.00" fill="#000000">OwnersRoutingModule</text>
-</g>
+<polygon fill="#8dd3c7" stroke="black" points="1089.2,-122 1086.2,-126 1065.2,-126 1062.2,-122 940.8,-122 940.8,-86 1089.2,-86 1089.2,-122"/>
+<text text-anchor="middle" x="1015" y="-99.8" font-family="Times,serif" font-size="14.00">OwnersRoutingModule</text>
+</a></g>
 <!-- OwnersRoutingModule&#45;&gt;OwnersModule -->
 <g id="edge5" class="edge">
 <title>OwnersRoutingModule&#45;&gt;OwnersModule</title>
-<path fill="none" stroke="#000000" d="M355,-122.027C355,-138.3976 355,-160 355,-160 355,-160 462.3761,-160 462.3761,-160"/>
-<polygon fill="#000000" stroke="#000000" points="462.3762,-163.5001 472.3761,-160 462.3761,-156.5001 462.3762,-163.5001"/>
+<path fill="none" stroke="black" d="M1015,-122.29C1015,-144.21 1015,-178 1015,-178 1015,-178 638.96,-178 638.96,-178"/>
+<polygon fill="black" stroke="black" points="638.96,-174.5 628.96,-178 638.96,-181.5 638.96,-174.5"/>
 </g>
 <!-- PetsModule -->
-<g id="node7" class="node">
+<g id="node7" class="node"><a xlink:href="../modules/PetsModule.html" href="../modules/PetsModule.html" target="_top">
 <title>PetsModule</title>
-<polygon fill="#8dd3c7" stroke="#000000" points="262.3823,-122 259.3823,-126 238.3823,-126 235.3823,-122 179.6177,-122 179.6177,-86 262.3823,-86 262.3823,-122"/>
-<text text-anchor="middle" x="221" y="-99.8" font-family="Times,serif" font-size="14.00" fill="#000000">PetsModule</text>
-</g>
+<polygon fill="#8dd3c7" stroke="black" points="922.38,-122 919.38,-126 898.38,-126 895.38,-122 839.62,-122 839.62,-86 922.38,-86 922.38,-122"/>
+<text text-anchor="middle" x="881" y="-99.8" font-family="Times,serif" font-size="14.00">PetsModule</text>
+</a></g>
 <!-- PetsModule&#45;&gt;OwnersModule -->
 <g id="edge6" class="edge">
 <title>PetsModule&#45;&gt;OwnersModule</title>
-<path fill="none" stroke="#000000" d="M221,-122.1061C221,-141.3391 221,-169 221,-169 221,-169 462.2567,-169 462.2567,-169"/>
-<polygon fill="#000000" stroke="#000000" points="462.2568,-172.5001 472.2567,-169 462.2567,-165.5001 462.2568,-172.5001"/>
+<path fill="none" stroke="black" d="M881,-122.11C881,-141.34 881,-169 881,-169 881,-169 638.57,-169 638.57,-169"/>
+<polygon fill="black" stroke="black" points="638.57,-165.5 628.57,-169 638.57,-172.5 638.57,-165.5"/>
 </g>
 <!-- OwnerService -->
-<g id="node8" class="node">
+<g id="node8" class="node"><a xlink:href="../injectables/OwnerService.html" href="../injectables/OwnerService.html" target="_top">
 <title>OwnerService</title>
-<ellipse fill="#fdb462" stroke="#000000" cx="90" cy="-104" rx="66.03" ry="18"/>
-<text text-anchor="middle" x="90" y="-99.8" font-family="Times,serif" font-size="14.00" fill="#000000">OwnerService</text>
-</g>
+<ellipse fill="#fdb462" stroke="black" cx="90" cy="-104" rx="66.03" ry="18"/>
+<text text-anchor="middle" x="90" y="-99.8" font-family="Times,serif" font-size="14.00">OwnerService</text>
+</a></g>
 <!-- OwnerService&#45;&gt;OwnersModule -->
 <g id="edge7" class="edge">
 <title>OwnerService&#45;&gt;OwnersModule</title>
-<path fill="none" stroke="#000000" d="M90,-122.2921C90,-144.2057 90,-178 90,-178 90,-178 462.0805,-178 462.0805,-178"/>
-<polygon fill="#000000" stroke="#000000" points="462.0806,-181.5001 472.0805,-178 462.0805,-174.5001 462.0806,-181.5001"/>
+<path fill="none" stroke="black" d="M90,-122.29C90,-144.21 90,-178 90,-178 90,-178 515.34,-178 515.34,-178"/>
+<polygon fill="black" stroke="black" points="515.34,-181.5 525.34,-178 515.34,-174.5 515.34,-181.5"/>
 </g>
 </g>
 </svg>
 
     </div>
     <i id="fullscreen" class="icon ion-ios-resize module-graph-fullscreen-btn" aria-hidden="true"></i>
-    <div class="btn-group">
+    <div class="btn-group size-buttons">
         <button id="zoom-in" class="btn btn-default btn-sm">Zoom in</button>
         <button id="reset" class="btn btn-default btn-sm">Reset</button>
         <button id="zoom-out" class="btn btn-default btn-sm">Zoom out</button>
@@ -182,23 +264,23 @@
 <script src="../js/svg-pan-zoom.controls.js"></script>
 
 <ul class="nav nav-tabs" role="tablist">
-    <li  class="active" >
-        <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+    <li class="nav-item">
+        <a href="#info" 
+            class="nav-link"
+            class="nav-link active"
+            role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
     </li>
-    <li >
-        <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+    <li class="nav-item">
+        <a href="#source" 
+            class="nav-link"
+            
+            role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
     </li>
 </ul>
 
 <div class="tab-content">
-    <div class="tab-pane fade active in" id="c-info">
+    <div class="tab-pane fade active in" id="info">
 
-        <p class="comment">
-            <h3>File</h3>
-        </p>
-        <p class="comment">
-            <code>src/app/owners/owners.module.ts</code>
-        </p>
 
 
 
@@ -206,7 +288,7 @@
         <div class="container-fluid module">
             <div class="row">
                 <div class="col-sm-3">
-                    <h3>Declarations<a href="https://angular.io/api/core/NgModule#declarations" target="_blank"
+                    <h3>Declarations<a href="https://angular.io/api/core/NgModule#declarations" target="_blank" rel="noopener noreferrer"
                             title="Official documentation about module declarations"><span class="icon ion-ios-information-circle-outline"></span></a></h3>
                     <ul class="list-group">
                         <li class="list-group-item">
@@ -224,7 +306,7 @@
                     </ul>
                 </div>
                 <div class="col-sm-3">
-                    <h3>Providers<a href="https://angular.io/api/core/NgModule#providers" target="_blank"
+                    <h3>Providers<a href="https://angular.io/api/core/NgModule#providers" target="_blank" rel="noopener noreferrer"
                             title="Official documentation about module providers"><span class="icon ion-ios-information-circle-outline"></a></h3>
                     <ul class="list-group">
                         <li class="list-group-item">
@@ -233,7 +315,8 @@
                     </ul>
                 </div>
                 <div class="col-sm-3">
-                    <h3>Imports<a href="https://angular.io/api/core/NgModule#imports" target="_blank" title="Official documentation about module imports"><span
+                    <h3>Imports<a href="https://angular.io/api/core/NgModule#imports" target="_blank" rel="noopener noreferrer"
+                            title="Official documentation about module imports"><span
                                 class="icon ion-ios-information-circle-outline"></a></h3>
                     <ul class="list-group">
                         <li class="list-group-item">
@@ -247,11 +330,53 @@
             </div>
         </div>
 
+                <section data-compodoc="block-relationships">
+            <h3>Relationships</h3>
+
+            <div class="row pt-3">
+                <div class="col-sm-6">
+                    <h4>Used by</h4>
+                        <ul class="list-unstyled relationships-list">
+                                <li>
+                                            <code><a href="../modules/AppModule.html" target="_self" >AppModule</a></code>
+                                </li>
+                        </ul>
+                </div>
+
+                <div class="col-sm-6">
+                    <h4>Depends on</h4>
+                        <ul class="list-unstyled relationships-list">
+                                <li>
+                                            <code><a href="../modules/OwnersRoutingModule.html" target="_self" >OwnersRoutingModule</a></code>
+                                </li>
+                                <li>
+                                            <code><a href="../modules/PetsModule.html" target="_self" >PetsModule</a></code>
+                                </li>
+                                <li>
+                                            <code><a href="../components/OwnerAddComponent.html" target="_self" >OwnerAddComponent</a></code>
+                                </li>
+                                <li>
+                                            <code><a href="../components/OwnerDetailComponent.html" target="_self" >OwnerDetailComponent</a></code>
+                                </li>
+                                <li>
+                                            <code><a href="../components/OwnerEditComponent.html" target="_self" >OwnerEditComponent</a></code>
+                                </li>
+                                <li>
+                                            <code><a href="../components/OwnerListComponent.html" target="_self" >OwnerListComponent</a></code>
+                                </li>
+                                <li>
+                                            <code><a href="../injectables/OwnerService.html" target="_self" >OwnerService</a></code>
+                                </li>
+                        </ul>
+                </div>
+            </div>
+        </section>
+
 
     </div>
 
 
-    <div class="tab-pane fade  tab-source-code" id="c-source">
+    <div class="tab-pane fade  tab-source-code" id="source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">/*
  *
  *  * Copyright 2016-2017 the original author or authors.
@@ -317,14 +442,17 @@ export class OwnersModule {
 
 
 
-                   
+
+
+
+
 
 
 
 
                    </div><div class="search-results">
     <div class="has-results">
-        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
         <ul class="search-results-list"></ul>
     </div>
     <div class="no-results">
@@ -336,16 +464,56 @@ export class OwnersModule {
            </div>
        </div>
 
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'module';
             var COMPODOC_CURRENT_PAGE_URL = 'OwnersModule.html';
+            var MAX_SEARCH_RESULTS = 15;
        </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var updateDarkModeSwitchOffset = function () {
+                    var content = document.querySelector('.content');
+                    var scrollbarWidth = 0;
+
+                    if (content) {
+                         scrollbarWidth = Math.max(0, content.offsetWidth - content.clientWidth);
+                    }
+
+                    document.documentElement.style.setProperty(
+                         '--content-scrollbar-width',
+                         scrollbarWidth + 'px'
+                    );
+               };
+
+               updateDarkModeSwitchOffset();
+               requestAnimationFrame(updateDarkModeSwitchOffset);
+               window.addEventListener('resize', updateDarkModeSwitchOffset);
+
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
 
        <script src="../js/libs/custom-elements.min.js"></script>
        <script src="../js/libs/lit-html.js"></script>
-       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
-       <script src="../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+
        <script src="../js/menu-wc.js" defer></script>
 
        <script src="../js/libs/bootstrap-native.js"></script>
@@ -353,7 +521,6 @@ export class OwnersModule {
        <script src="../js/libs/es6-shim.min.js"></script>
        <script src="../js/libs/EventDispatcher.js"></script>
        <script src="../js/libs/promise.min.js"></script>
-       <script src="../js/libs/zepto.min.js"></script>
 
        <script src="../js/compodoc.js"></script>
 

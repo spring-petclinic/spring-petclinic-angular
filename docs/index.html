@@ -8,96 +8,171 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link rel="icon" type="image/x-icon" href="./images/favicon.ico">
-	      <link rel="stylesheet" href="./styles/style.css">
+	   <link rel="stylesheet" href="./styles/style.css">
+        <link rel="stylesheet" href="./styles/dark.css">
     </head>
     <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
 
-        <div class="navbar navbar-default navbar-fixed-top visible-xs">
-            <a href="./" class="navbar-brand">spring-petclinic-angular documentation</a>
-            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="./" class="navbar-brand">spring-petclinic-angular documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
         </div>
 
         <div class="xs-menu menu" id="mobile-menu">
-                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+                <div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search">
+    <button type="button"
+        class="search-input-clear"
+        aria-label="Clear search"
+        data-search-input-clear>&times;</button>
+</div>
+            <compodoc-menu></compodoc-menu>
         </div>
 
         <div class="container-fluid main">
            <div class="row main">
-               <div class="hidden-xs menu">
+               <div class="d-none d-md-block menu">
                    <compodoc-menu mode="normal"></compodoc-menu>
                </div>
                <!-- START CONTENT -->
-               <div class="content getting-started">
+               <div class="content readme">
                    <div class="content-data">
 
-<h1 id="spring-petclinic-angular-build-status">Spring Petclinic Angular <a href="https://github.com/spring-petclinic/spring-petclinic-angular/actions/workflows/angular-ci.yml"><img src="https://github.com/spring-petclinic/spring-petclinic-angular/actions/workflows/angular-ci.yml/badge.svg" alt="Build Status" class="img-responsive"></a></h1>
-<h2 id="angular-frontend-for-spring-petclinic">Angular frontend for Spring Petclinic</h2>
+
+<h1>Spring Petclinic Angular</h1>
+<p><a href="https://github.com/spring-petclinic/spring-petclinic-angular/actions/workflows/angular-ci.yml"><img src="https://github.com/spring-petclinic/spring-petclinic-angular/actions/workflows/angular-ci.yml/badge.svg" alt="Build Status" class="img-responsive"></a></p>
+<h2>Angular frontend for Spring Petclinic</h2>
 <p>Warning: <strong>client only</strong>.
 Use the REST API from the backend <a href="https://github.com/spring-petclinic/spring-petclinic-rest">spring-petclinic-rest project</a>.
 Start the backend server before using workflows that call the API. The frontend expects the Spring Petclinic REST API at <code>http://localhost:9966/petclinic/api/</code>.</p>
-<h2 id="screenshot">Screenshot</h2>
+<h2>Screenshot</h2>
 <p><img src="https://cloud.githubusercontent.com/assets/838318/23263243/f4509c4a-f9dd-11e6-951b-69d0ef72d8bd.png" alt="Screenshot of SPring Petclinic Angular" class="img-responsive"></p>
-<h2 id="installation">Installation</h2>
+<h2>Installation</h2>
 <p>Use Node.js 24.x and npm. The project uses Angular 22 and keeps the Angular CLI as a local dev dependency.</p>
-<div><pre class="line-numbers"><code class="language-none">nvm use
+<b>Example :</b><div><pre class="line-numbers"><code class="language-none">nvm use
 npm ci</code></pre></div><p>For a fresh dependency resolution during maintenance, run <code>npm install</code> and commit the regenerated <code>package-lock.json</code>.</p>
-<h2 id="development-server">Development server</h2>
+<h2>Development server</h2>
 <p>Run <code>npm start</code> for a dev server. Navigate to <code>http://localhost:4200/</code>. The app will automatically reload if you change any of the source files.</p>
-<h2 id="code-scaffolding">Code scaffolding</h2>
+<h2>Code scaffolding</h2>
 <p>Run <code>npm run ng -- generate component component-name</code> to generate a new component. You can also use <code>npm run ng -- generate directive|pipe|service|class|module</code>.</p>
-<h2 id="build">Build</h2>
+<h2>Build</h2>
 <p>Run <code>npm run build</code> to build the project. The build artifacts will be stored in the <code>dist/</code> directory. Use <code>npm run build -- --configuration production</code> for a production build.</p>
 <p>You can also build the application in a dedicated docker image using the provided <code>Dockerfile</code> as follows:</p>
-<div><pre class="line-numbers"><code class="language-none">docker build -t spring-petclinic-angular:latest .</code></pre></div><p>Then you will be able to use it as follows:</p>
-<div><pre class="line-numbers"><code class="language-none">docker run --rm -p 8080:8080 spring-petclinic-angular:latest</code></pre></div>
-<h2 id="documentation">Documentation</h2>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-none">docker build -t spring-petclinic-angular:latest .</code></pre></div><p>Then you will be able to use it as follows:</p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-none">docker run --rm -p 8080:8080 spring-petclinic-angular:latest</code></pre></div><h2>Documentation</h2>
 <p>The documentation of the Spring Petclinic Angular application is generated by the <a href="https://compodoc.app">compodoc</a> tool.</p>
 <p>Documentation URL: <a href="https://spring-petclinic.github.io/spring-petclinic-angular/">https://spring-petclinic.github.io/spring-petclinic-angular/</a></p>
 <p>Regenerate the <code>docs</code> folder with <a href="https://compodoc.app">compodoc</a>:</p>
-<div><pre class="line-numbers"><code class="language-none">compodoc -p src/tsconfig.app.json -d docs</code></pre></div><h2 id="deploy-on-web-servers">Deploy on Web servers</h2>
-<h3 id="deploy-on-nginx-for-nginx-centos-installation">Deploy on Nginx (for Nginx CentOS installation):</h3>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-none">npx &#64;compodoc/compodoc&#64;2.0.0 -p tsconfig.doc.json -d docs</code></pre></div><h2>Deploy on Web servers</h2>
+<h3>Deploy on Nginx (for Nginx CentOS installation):</h3>
 <ol>
-<li><p>Build Angular application:</p>
-<p>npm run build -- --configuration production --base-href=/petclinic/ --deploy-url=/petclinic/</p>
-</li>
+<li>Build Angular application:</li>
+</ol>
+<p>  ng build --prod --base-href=/petclinic/ --deploy-url=/petclinic/</p>
+<ol start="2">
 <li><p>Create sub-directory <strong>/petclinic</strong> in default nginx directory <strong>/usr/share/nginx/html</strong></p>
 </li>
-<li><p>Copy the Angular application build output from <strong>/dist</strong> to <strong>/usr/share/nginx/html/petclinic</strong></p>
+<li><p>Copy <strong>/dist</strong>  sub-directory from Angular appication to  <strong>/usr/share/nginx/html/petclinic</strong></p>
 </li>
 <li><p>Edit nginx config (nginx.conf file in /etc/nginx/ directory)</p>
 </li>
 </ol>
-<div><pre class="line-numbers"><code class="language-none">server {
-    listen       80 default_server;
+<b>Example :</b><div><pre class="line-numbers"><code class="language-none">server {
+	listen       80 default_server;
         root         /usr/share/nginx/html;
         index index.html;
 
-    location /petclinic/ {
+	location /petclinic/ {
                 alias /usr/share/nginx/html/petclinic/dist/;
                 try_files $uri$args $uri$args/ /petclinic/index.html;
         }
 }</code></pre></div><ol start="5">
 <li><p>Reload nginx:  <strong>nginx -s reload</strong></p>
 </li>
-<li><p>Run app in browser:  <a href="http://server_name/petclinic/">http://server_name/petclinic/</a></p>
+<li><p>Run app in brouser:  <a href="http://server_name/petclinic/">http://server_name/petclinic/</a></p>
 </li>
 </ol>
-<h3 id="deploy-on-apache-for-apache-centos-installation">Deploy on Apache (for Apache CentOS installation):</h3>
+<h3>Deploy on Apache (for Apache CentOS installation):</h3>
 <ol>
 <li>Build Angular application:</li>
 </ol>
-<p>npm run build -- --configuration production --base-href=/petclinic/ --deploy-url=/petclinic/</p>
+<p>ng build --prod --base-href=/petclinic/ --deploy-url=/petclinic/</p>
 <ol start="2">
 <li><p>Create sub-directory <strong>/petclinic</strong> in default Apache directory <strong>/var/www/html</strong></p>
 </li>
-<li><p>Go into the Angular application build output under <strong>/dist</strong> and copy all files and subdirectories from it to <strong>/var/www/html/petclinic</strong></p>
+<li><p>Go into Angular appication <strong>/dist</strong> sub-directory and copy all files and sub-dirs from it to <strong>/var/www/html/petclinic</strong></p>
 </li>
 <li><p>Edit Apache config (/etc/https/conf/httpd.conf):</p>
 </li>
 </ol>
 <p>sudo vi /etc/httpd/conf/httpd.conf</p>
 <p>Find the Directory /var/www/html&gt; section and change the AllowOverride directive from None to All:</p>
-<div><pre class="line-numbers"><code class="language-none"> /etc/httpd/conf/httpd.conf
+<b>Example :</b><div><pre class="line-numbers"><code class="language-none"> /etc/httpd/conf/httpd.conf
  . . .
   &lt;Directory /var/www/html&gt;
  . . .
@@ -118,7 +193,7 @@ npm ci</code></pre></div><p>For a fresh dependency resolution during maintenance
 </ol>
 <p>sudo vi /var/www/html/petclinic/.htaccess</p>
 <p>Add the following line to the top of the file to activate the RewriteEngine, which instructs Apache to process any rules that follow:</p>
-<div><pre class="line-numbers"><code class="language-none">RewriteEngine On  
+<b>Example :</b><div><pre class="line-numbers"><code class="language-none">RewriteEngine On  
 # If an existing asset or directory is requested go to it as it is
 RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -f [OR]  
 RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -d  
@@ -132,13 +207,13 @@ RewriteRule ^ index.html  </code></pre></div><ol start="7">
 <ol start="8">
 <li>Run app in browser: <a href="http://server_name/petclinic/">http://server_name/petclinic/</a></li>
 </ol>
-<h2 id="running-unit-tests">Running unit tests</h2>
-<p>Run <code>npm test</code> to execute the unit tests via <a href="https://karma-runner.github.io">Karma</a>. Run <code>npm run test-headless</code> for a single Chrome Headless pass.</p>
-<h2 id="running-end-to-end-tests">Running end-to-end tests</h2>
+<h2>Running unit tests</h2>
+<p>Run <code>npm test</code> to execute the unit tests interactively via <a href="https://vitest.dev/">Vitest</a> in jsdom. Run <code>npm run test:ci</code> for a single jsdom pass, or <code>npm run test:coverage</code> to generate HTML and LCOV coverage reports under <code>coverage/</code>.</p>
+<h2>Running end-to-end tests</h2>
 <p>Run <code>npm run e2e</code> to execute the end-to-end tests via <a href="https://playwright.dev/">Playwright</a>. The Playwright config starts the Angular dev server automatically. Install Playwright browsers first with <code>npx playwright install --with-deps</code>.</p>
-<h2 id="linting">Linting</h2>
+<h2>Linting</h2>
 <p>Run <code>npm run lint</code> to lint TypeScript and Angular templates with Angular ESLint.</p>
-<h2 id="further-help">Further help</h2>
+<h2>Further help</h2>
 <p>To get more help on the Angular CLI use <code>npm run ng -- help</code> or visit the <a href="https://angular.dev/tools/cli">Angular CLI documentation</a>.</p>
 
 
@@ -154,14 +229,19 @@ RewriteRule ^ index.html  </code></pre></div><ol start="7">
 
 
 
-                   
+
+
+
+
+
+
 
 
 
 
                    </div><div class="search-results">
     <div class="has-results">
-        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
         <ul class="search-results-list"></ul>
     </div>
     <div class="no-results">
@@ -173,16 +253,56 @@ RewriteRule ^ index.html  </code></pre></div><ol start="7">
            </div>
        </div>
 
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 0;
-            var COMPODOC_CURRENT_PAGE_CONTEXT = 'getting-started';
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'readme';
             var COMPODOC_CURRENT_PAGE_URL = 'index.html';
+            var MAX_SEARCH_RESULTS = 15;
        </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var updateDarkModeSwitchOffset = function () {
+                    var content = document.querySelector('.content');
+                    var scrollbarWidth = 0;
+
+                    if (content) {
+                         scrollbarWidth = Math.max(0, content.offsetWidth - content.clientWidth);
+                    }
+
+                    document.documentElement.style.setProperty(
+                         '--content-scrollbar-width',
+                         scrollbarWidth + 'px'
+                    );
+               };
+
+               updateDarkModeSwitchOffset();
+               requestAnimationFrame(updateDarkModeSwitchOffset);
+               window.addEventListener('resize', updateDarkModeSwitchOffset);
+
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
 
        <script src="./js/libs/custom-elements.min.js"></script>
        <script src="./js/libs/lit-html.js"></script>
-       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
-       <script src="./js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+
        <script src="./js/menu-wc.js" defer></script>
 
        <script src="./js/libs/bootstrap-native.js"></script>
@@ -190,7 +310,6 @@ RewriteRule ^ index.html  </code></pre></div><ol start="7">
        <script src="./js/libs/es6-shim.min.js"></script>
        <script src="./js/libs/EventDispatcher.js"></script>
        <script src="./js/libs/promise.min.js"></script>
-       <script src="./js/libs/zepto.min.js"></script>
 
        <script src="./js/compodoc.js"></script>
 

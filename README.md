@@ -56,7 +56,7 @@ Documentation URL: [https://spring-petclinic.github.io/spring-petclinic-angular/
 
 Regenerate the `docs` folder with [compodoc](https://compodoc.app):
 ```
-compodoc -p src/tsconfig.app.json -d docs
+npx @compodoc/compodoc@2.0.0 -p tsconfig.doc.json -d docs
 ```
 
 ## Deploy on Web servers
@@ -147,7 +147,7 @@ sudo systemctl restart httpd
 
 ## Running unit tests
 
-Run `npm test` to execute the unit tests via [Karma](https://karma-runner.github.io). Run `npm run test-headless` for a single Chrome Headless pass.
+Run `npm test` to execute the unit tests interactively via [Vitest](https://vitest.dev/) in jsdom. Run `npm run test:ci` for a single jsdom pass, or `npm run test:coverage` to generate HTML and LCOV coverage reports under `coverage/`.
 
 ## Running end-to-end tests
 

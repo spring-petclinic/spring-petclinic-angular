@@ -16,6 +16,7 @@
             "browser": "src/main.ts",
             "tsConfig": "src/tsconfig.app.json",
             "polyfills": [
+              "zone.js",
               "src/polyfills.ts"
             ],
             "assets": [
@@ -38,6 +39,17 @@
             ]
           },
           "configurations": {
+            "testing": {
+              "aot": false,
+              "optimization": false,
+              "polyfills": [
+                "zone.js",
+                "zone.js/testing",
+                "zone.js/plugins/vitest-patch",
+                "src/polyfills.ts"
+              ],
+              "sourceMap": true
+            },
             "production": {
               "budgets": [
                 {
@@ -77,31 +89,21 @@
           }
         },
         "test": {
-          "builder": "@angular/build:karma",
+          "builder": "@angular/build:unit-test",
+          "options": {
+            "buildTarget": "spring-petclinic-angular:build:testing",
+            "tsConfig": "src/tsconfig.spec.json",
+            "runner": "vitest"
+          },
           "configurations": {
-            "production": {
-              "sourceMap": false,
-              "codeCoverage": true,
-              "browsers": "ChromeHeadless",
+            "coverage": {
+              "coverage": true,
+              "coverageReporters": [
+                "html",
+                "lcov"
+              ],
               "watch": false
             }
-          },
-          "options": {
-            "main": "src/test.ts",
-            "karmaConfig": "./karma.conf.js",
-            "polyfills": [
-              "src/polyfills.ts"
-            ],
-            "tsConfig": "src/tsconfig.spec.json",
-            "scripts": [
-              "node_modules/jquery/dist/jquery.js",
-              "node_modules/tether/dist/js/tether.js",
-              "node_modules/bootstrap/dist/js/bootstrap.js"
-            ],
-            "styles": [
-              "src/styles.css"
-            ],
-            "assets": []
           }
         },
         "lint": {

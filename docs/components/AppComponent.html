@@ -8,22 +8,95 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
-	      <link rel="stylesheet" href="../styles/style.css">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
     </head>
     <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
 
-        <div class="navbar navbar-default navbar-fixed-top visible-xs">
-            <a href="../" class="navbar-brand">spring-petclinic-angular documentation</a>
-            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">spring-petclinic-angular documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
         </div>
 
         <div class="xs-menu menu" id="mobile-menu">
-                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+                <div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search">
+    <button type="button"
+        class="search-input-clear"
+        aria-label="Clear search"
+        data-search-input-clear>&times;</button>
+</div>
+            <compodoc-menu></compodoc-menu>
         </div>
 
         <div class="container-fluid main">
            <div class="row main">
-               <div class="hidden-xs menu">
+               <div class="d-none d-md-block menu">
                    <compodoc-menu mode="normal"></compodoc-menu>
                </div>
                <!-- START CONTENT -->
@@ -33,45 +106,60 @@
 
 
 
+
+
+
+
 <ol class="breadcrumb">
-  <li>Components</li>
-  <li>AppComponent</li>
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  AppComponent</li>
 </ol>
 
+<div class="io-file io-file-path" data-compodoc="entity-file-path">
+    <span class="icon ion-ios-document" aria-hidden="true"></span>
+    <code>src/app/app.component.ts</code>
+</div>
+
 <ul class="nav nav-tabs" role="tablist">
-        <li class="active">
-            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
         </li>
-        <li >
-            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
         </li>
-        <li >
-            <a href="#templateData" role="tab" id="templateData-tab" data-toggle="tab" data-link="template">Template</a>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
         </li>
-        <li >
-            <a href="#styleData" role="tab" id="styleData-tab" data-toggle="tab" data-link="style">Styles</a>
+        <li class="nav-item">
+            <a href="#styleData" class="nav-link"
+                role="tab" id="styleData-tab" data-bs-toggle="tab" data-link="style">Styles</a>
         </li>
-        <li >
-            <a href="#tree" role="tab" id="tree-tab" data-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
         </li>
 </ul>
 
 <div class="tab-content">
-    <div class="tab-pane fade active in" id="c-info"><p class="comment">
-    <h3>File</h3>
-</p>
-<p class="comment">
-    <code>src/app/app.component.ts</code>
-</p>
+    <div class="tab-pane fade active in" id="info">
 
 
 
 
-
-<section>
+<section data-compodoc="block-metadata">
     <h3>Metadata</h3>
-    <table class="table table-sm table-hover">
+    <table class="table table-sm table-hover metadata">
         <tbody>
+
+            <tr>
+                <td class="col-md-3">changeDetection</td>
+                <td class="col-md-9"><code>ChangeDetectionStrategy.OnPush</code></td>
+            </tr>
 
 
 
@@ -88,10 +176,13 @@
                 <td class="col-md-9"><code>app-root</code></td>
             </tr>
 
+
+
             <tr>
                 <td class="col-md-3">styleUrls</td>
                 <td class="col-md-9"><code>./app.component.css</code></td>
             </tr>
+
 
 
 
@@ -111,22 +202,35 @@
     </table>
 </section>
 
+        <section data-compodoc="block-relationships">
+            <h3>Relationships</h3>
 
+            <div class="row pt-3">
+                <div class="col-sm-6">
+                    <h4>Used by</h4>
+                        <ul class="list-unstyled relationships-list">
+                                <li>
+                                            <code><a href="../modules/AppModule.html" target="_self" >AppModule</a></code>
+                                </li>
+                        </ul>
+                </div>
 
-
-
-
-
-
-
+                <div class="col-sm-6">
+                    <h4>Depends on</h4>
+                        <p class="comment"><i>No results matching.</i></p>
+                </div>
+            </div>
+        </section>
 </div>
 
 
-    <div class="tab-pane fade  tab-source-code" id="c-source">
+
+    <div class="tab-pane fade  tab-source-code" id="source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Component} from &#x27;@angular/core&#x27;;
 
 @Component({
   selector: &#x27;app-root&#x27;,
+  standalone: false,
   templateUrl: &#x27;./app.component.html&#x27;,
   styleUrls: [&#x27;./app.component.css&#x27;]
 })
@@ -136,7 +240,7 @@ export class AppComponent {
 </code></pre>
     </div>
 
-    <div class="tab-pane fade " id="c-templateData">
+    <div class="tab-pane fade " id="templateData">
         <pre class="line-numbers"><code class="language-html">&lt;!--
   ~ /*
   ~  * Copyright 2016-2017 the original author or authors.
@@ -155,70 +259,70 @@ export class AppComponent {
   ~  */
   --&gt;
 
-&lt;div class&#x3D;&quot;container-fluid&quot;&gt;
-
-&lt;nav class&#x3D;&quot;navbar navbar-default &quot; role&#x3D;&quot;navigation&quot;&gt;
+&lt;div class&#x3D;&quot;container-fluid main-wrapper&quot;&gt;
+  &lt;nav class&#x3D;&quot;navbar navbar-default &quot; role&#x3D;&quot;navigation&quot;&gt;
   &lt;div class&#x3D;&quot;container-fluid&quot;&gt;
   &lt;div class&#x3D;&quot;navbar-header&quot;&gt;
     &lt;a class&#x3D;&quot;navbar-brand&quot; href&#x3D;&quot;#&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;/a&gt;
   &lt;/div&gt;
 
-    &lt;ul class&#x3D;&quot;nav navbar-nav&quot;&gt;
-      &lt;li&gt;
-        &lt;a routerLink&#x3D;&quot;welcome&quot; title&#x3D;&quot;home page&quot;&gt;
-          &lt;span class&#x3D;&quot;glyphicon glyphicon-home&quot; aria-hidden&#x3D;&quot;true&quot;&gt;&lt;/span&gt;
-          &lt;span&gt;Home&lt;/span&gt;
-        &lt;/a&gt;
-      &lt;/li&gt;
+  &lt;ul class&#x3D;&quot;nav navbar-nav&quot;&gt;
+    &lt;li&gt;
+      &lt;a routerLink&#x3D;&quot;welcome&quot; title&#x3D;&quot;home page&quot;&gt;
+        &lt;span class&#x3D;&quot;glyphicon glyphicon-home&quot; aria-hidden&#x3D;&quot;true&quot;&gt;&lt;/span&gt;
+        &lt;span&gt; Home&lt;/span&gt;
+      &lt;/a&gt;
+    &lt;/li&gt;
 
-      &lt;li class&#x3D;&quot;dropdown&quot;&gt;
-        &lt;a class&#x3D;&quot;dropdown-toggle&quot; data-toggle&#x3D;&quot;dropdown&quot; role&#x3D;&quot;button&quot;
-           aria-haspopup&#x3D;&quot;true&quot; aria-expanded&#x3D;&quot;false&quot;&gt;Owners&lt;span class&#x3D;&quot;caret&quot;&gt;&lt;/span&gt;
-        &lt;/a&gt;
-        &lt;ul class&#x3D;&quot;dropdown-menu&quot;&gt;
-          &lt;li&gt;&lt;a routerLink&#x3D;&quot;/owners&quot;&gt;&lt;span class&#x3D;&quot;glyphicon glyphicon-search&quot;
-                                            aria-hidden&#x3D;&quot;true&quot;&gt;&lt;/span&gt;&lt;span&gt; All&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
-          &lt;li&gt;&lt;a routerLink&#x3D;&quot;/owners/add&quot;&gt;&lt;span class&#x3D;&quot;glyphicon glyphicon-plus&quot; aria-hidden&#x3D;&quot;true&quot;&gt;&lt;/span&gt;&lt;span&gt; Add New&lt;/span&gt;&lt;/a&gt;
-          &lt;/li&gt;
-        &lt;/ul&gt;
-      &lt;/li&gt;
-      &lt;li class&#x3D;&quot;dropdown&quot;&gt;
-        &lt;a class&#x3D;&quot;dropdown-toggle&quot; data-toggle&#x3D;&quot;dropdown&quot; role&#x3D;&quot;button&quot;
-           aria-haspopup&#x3D;&quot;true&quot; aria-expanded&#x3D;&quot;false&quot;&gt;Veterinarians&lt;span class&#x3D;&quot;caret&quot;&gt;&lt;/span&gt;
-        &lt;/a&gt;
-        &lt;ul class&#x3D;&quot;dropdown-menu&quot;&gt;
-          &lt;li&gt;&lt;a routerLink&#x3D;&quot;/vets&quot;&gt;&lt;span class&#x3D;&quot;glyphicon glyphicon-search&quot; aria-hidden&#x3D;&quot;true&quot;&gt;&lt;/span&gt;&lt;span&gt; All&lt;/span&gt;&lt;/a&gt;
-          &lt;/li&gt;
-          &lt;li&gt;&lt;a routerLink&#x3D;&quot;/vets/add&quot;&gt;&lt;span class&#x3D;&quot;glyphicon glyphicon-plus&quot;
-                                              aria-hidden&#x3D;&quot;true&quot;&gt;&lt;/span&gt;&lt;span&gt; Add New&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
-        &lt;/ul&gt;
-      &lt;/li&gt;
-      &lt;li&gt;
-        &lt;a routerLink&#x3D;&quot;/pettypes&quot; routerLinkActive&#x3D;&quot;active&quot; title&#x3D;&quot;pettypes&quot;&gt;
-          &lt;span class&#x3D;&quot;glyphicon glyphicon-th-list&quot; aria-hidden&#x3D;&quot;true&quot;&gt;&lt;/span&gt;
-          &lt;span&gt;Pet Types&lt;/span&gt;
-        &lt;/a&gt;
-      &lt;/li&gt;
-      &lt;li&gt;
-        &lt;a routerLink&#x3D;&quot;/specialties&quot; routerLinkActive&#x3D;&quot;active&quot; title&#x3D;&quot;specialties&quot;&gt;
-          &lt;span class&#x3D;&quot;glyphicon glyphicon-th-list&quot; aria-hidden&#x3D;&quot;true&quot;&gt;&lt;/span&gt;
-          &lt;span&gt;Specialties&lt;/span&gt;
-        &lt;/a&gt;
-      &lt;/li&gt;
-    &lt;/ul&gt;
+    &lt;li class&#x3D;&quot;dropdown&quot;&gt;
+      &lt;a class&#x3D;&quot;dropdown-toggle&quot; data-toggle&#x3D;&quot;dropdown&quot; role&#x3D;&quot;button&quot;
+          aria-haspopup&#x3D;&quot;true&quot; aria-expanded&#x3D;&quot;false&quot;&gt;
+          &lt;span class&#x3D;&quot;glyphicon glyphicon-user&quot; aria-hidden&#x3D;&quot;true&quot;&gt;&lt;/span&gt; Owners&lt;span class&#x3D;&quot;caret&quot;&gt;&lt;/span&gt;
+      &lt;/a&gt;
+      &lt;ul class&#x3D;&quot;dropdown-menu&quot;&gt;
+        &lt;li&gt;&lt;a routerLink&#x3D;&quot;/owners&quot;&gt;&lt;span class&#x3D;&quot;glyphicon glyphicon-search&quot;
+                                          aria-hidden&#x3D;&quot;true&quot;&gt;&lt;/span&gt;&lt;span&gt; Search&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a routerLink&#x3D;&quot;/owners/add&quot;&gt;&lt;span class&#x3D;&quot;glyphicon glyphicon-plus&quot; aria-hidden&#x3D;&quot;true&quot;&gt;&lt;/span&gt;&lt;span&gt; Add New&lt;/span&gt;&lt;/a&gt;
+        &lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/li&gt;
+    &lt;li class&#x3D;&quot;dropdown&quot;&gt;
+      &lt;a class&#x3D;&quot;dropdown-toggle&quot; data-toggle&#x3D;&quot;dropdown&quot; role&#x3D;&quot;button&quot;
+          aria-haspopup&#x3D;&quot;true&quot; aria-expanded&#x3D;&quot;false&quot;&gt;
+          &lt;span class&#x3D;&quot;glyphicon glyphicon-education&quot; aria-hidden&#x3D;&quot;true&quot;&gt;&lt;/span&gt; Veterinarians&lt;span class&#x3D;&quot;caret&quot;&gt;&lt;/span&gt;
+      &lt;/a&gt;
+      &lt;ul class&#x3D;&quot;dropdown-menu&quot;&gt;
+        &lt;li&gt;&lt;a routerLink&#x3D;&quot;/vets&quot;&gt;&lt;span class&#x3D;&quot;glyphicon glyphicon-search&quot; aria-hidden&#x3D;&quot;true&quot;&gt;&lt;/span&gt;&lt;span&gt; All&lt;/span&gt;&lt;/a&gt;
+        &lt;/li&gt;
+        &lt;li&gt;&lt;a routerLink&#x3D;&quot;/vets/add&quot;&gt;&lt;span class&#x3D;&quot;glyphicon glyphicon-plus&quot;
+                                            aria-hidden&#x3D;&quot;true&quot;&gt;&lt;/span&gt;&lt;span&gt; Add New&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/li&gt;
+    &lt;li&gt;
+      &lt;a routerLink&#x3D;&quot;/pettypes&quot; routerLinkActive&#x3D;&quot;active&quot; title&#x3D;&quot;pettypes&quot;&gt;
+        &lt;span class&#x3D;&quot;glyphicon glyphicon-heart&quot; aria-hidden&#x3D;&quot;true&quot;&gt;&lt;/span&gt;
+        &lt;span&gt; Pet Types&lt;/span&gt;
+      &lt;/a&gt;
+    &lt;/li&gt;
+    &lt;li&gt;
+      &lt;a routerLink&#x3D;&quot;/specialties&quot; routerLinkActive&#x3D;&quot;active&quot; title&#x3D;&quot;specialties&quot;&gt;
+        &lt;span class&#x3D;&quot;glyphicon glyphicon-th-list&quot; aria-hidden&#x3D;&quot;true&quot;&gt;&lt;/span&gt;
+        &lt;span&gt; Specialties&lt;/span&gt;
+      &lt;/a&gt;
+    &lt;/li&gt;
+  &lt;/ul&gt;
 
   &lt;/div&gt;
-&lt;/nav&gt;
-
+  &lt;/nav&gt;
 &lt;/div&gt;
 
-
-
-&lt;router-outlet&gt;&lt;/router-outlet&gt;
+&lt;div class&#x3D;&quot;content-wrapper&quot;&gt;
+  &lt;router-outlet&gt;&lt;/router-outlet&gt;
+&lt;/div&gt;
 
 &lt;br/&gt;
 &lt;br/&gt;
-&lt;div class&#x3D;&quot;container&quot;&gt;
+&lt;div class&#x3D;&quot;container footer-wrapper&quot;&gt;
   &lt;div class&#x3D;&quot;row&quot;&gt;
     &lt;div class&#x3D;&quot;col-12 text-center&quot;&gt;&lt;img src&#x3D;&quot;./assets/images/angular.png&quot;
                                          alt&#x3D;&quot;Angular&quot; height&#x3D;&quot;80&quot; width&#x3D;&quot;80&quot;/&gt;
@@ -229,7 +333,7 @@ export class AppComponent {
 </code></pre>
     </div>
 
-    <div class="tab-pane fade " id="c-styleData">
+    <div class="tab-pane fade " id="styleData">
                 <p class="comment">
                     <code>./app.component.css</code>
                 </p>
@@ -250,11 +354,45 @@ export class AppComponent {
  *  * limitations under the License.
  *
  */
+ body {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
 
+.main-wrapper {
+  flex: 1;
+}
+
+div.navbar-header {
+  padding: inherit;
+}
+
+.content-wrapper {
+  min-height: calc(100% - 8rem);
+}
+
+.footer-wrapper {
+  background-color: #f8f9fa;
+  text-align: center;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 8rem;
+}
+
+@media screen and (max-width: 768px) {
+  .content-wrapper {
+    margin-bottom: calc(8rem - 30px);
+
+  }
+}
 </code></pre>
     </div>
 
-    <div class="tab-pane fade " id="c-tree">
+    <div class="tab-pane fade " id="tree">
         <div id="tree-container"></div>
         <div class="tree-legend">
             <div class="title">
@@ -275,11 +413,11 @@ export class AppComponent {
     
 </div>
 
-<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/vis-network.min.js"></script>
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><!--  ~ /*  ~  * Copyright 2016-2017 the original author or authors.  ~  *  ~  * Licensed under the Apache License, Version 2.0 (the "License");  ~  * you may not use this file except in compliance with the License.  ~  * You may obtain a copy of the License at  ~  *  ~  *      http://www.apache.org/licenses/LICENSE-2.0  ~  *  ~  * Unless required by applicable law or agreed to in writing, software  ~  * distributed under the License is distributed on an "AS IS" BASIS,  ~  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  ~  * See the License for the specific language governing permissions and  ~  * limitations under the License.  ~  */  --><div class="container-fluid"><nav class="navbar navbar-default " role="navigation">  <div class="container-fluid">  <div class="navbar-header">    <a class="navbar-brand" href="#"><span></span></a>  </div>    <ul class="nav navbar-nav">      <li>        <a routerLink="welcome" title="home page">          <span class="glyphicon glyphicon-home" aria-hidden="true"></span>          <span>Home</span>        </a>      </li>      <li class="dropdown">        <a class="dropdown-toggle" data-toggle="dropdown" role="button"           aria-haspopup="true" aria-expanded="false">Owners<span class="caret"></span>        </a>        <ul class="dropdown-menu">          <li><a routerLink="/owners"><span class="glyphicon glyphicon-search"                                            aria-hidden="true"></span><span> All</span></a></li>          <li><a routerLink="/owners/add"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span><span> Add New</span></a>          </li>        </ul>      </li>      <li class="dropdown">        <a class="dropdown-toggle" data-toggle="dropdown" role="button"           aria-haspopup="true" aria-expanded="false">Veterinarians<span class="caret"></span>        </a>        <ul class="dropdown-menu">          <li><a routerLink="/vets"><span class="glyphicon glyphicon-search" aria-hidden="true"></span><span> All</span></a>          </li>          <li><a routerLink="/vets/add"><span class="glyphicon glyphicon-plus"                                              aria-hidden="true"></span><span> Add New</span></a></li>        </ul>      </li>      <li>        <a routerLink="/pettypes" routerLinkActive="active" title="pettypes">          <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>          <span>Pet Types</span>        </a>      </li>      <li>        <a routerLink="/specialties" routerLinkActive="active" title="specialties">          <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>          <span>Specialties</span>        </a>      </li>    </ul>  </div></nav></div><router-outlet></router-outlet><br/><br/><div class="container">  <div class="row">    <div class="col-12 text-center"><img src="./assets/images/angular.png"                                         alt="Angular" height="80" width="80"/>      <img src="./assets/images/spring-pivotal-logo.png"           alt="Sponsored by Pivotal"/></div>  </div></div></div>'
+        var COMPONENT_TEMPLATE = '<div><!--  ~ /*  ~  * Copyright 2016-2017 the original author or authors.  ~  *  ~  * Licensed under the Apache License, Version 2.0 (the "License");  ~  * you may not use this file except in compliance with the License.  ~  * You may obtain a copy of the License at  ~  *  ~  *      http://www.apache.org/licenses/LICENSE-2.0  ~  *  ~  * Unless required by applicable law or agreed to in writing, software  ~  * distributed under the License is distributed on an "AS IS" BASIS,  ~  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  ~  * See the License for the specific language governing permissions and  ~  * limitations under the License.  ~  */  --><div class="container-fluid main-wrapper">  <nav class="navbar navbar-default " role="navigation">  <div class="container-fluid">  <div class="navbar-header">    <a class="navbar-brand" href="#"><span></span></a>  </div>  <ul class="nav navbar-nav">    <li>      <a routerLink="welcome" title="home page">        <span class="glyphicon glyphicon-home" aria-hidden="true"></span>        <span> Home</span>      </a>    </li>    <li class="dropdown">      <a class="dropdown-toggle" data-toggle="dropdown" role="button"          aria-haspopup="true" aria-expanded="false">          <span class="glyphicon glyphicon-user" aria-hidden="true"></span> Owners<span class="caret"></span>      </a>      <ul class="dropdown-menu">        <li><a routerLink="/owners"><span class="glyphicon glyphicon-search"                                          aria-hidden="true"></span><span> Search</span></a></li>        <li><a routerLink="/owners/add"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span><span> Add New</span></a>        </li>      </ul>    </li>    <li class="dropdown">      <a class="dropdown-toggle" data-toggle="dropdown" role="button"          aria-haspopup="true" aria-expanded="false">          <span class="glyphicon glyphicon-education" aria-hidden="true"></span> Veterinarians<span class="caret"></span>      </a>      <ul class="dropdown-menu">        <li><a routerLink="/vets"><span class="glyphicon glyphicon-search" aria-hidden="true"></span><span> All</span></a>        </li>        <li><a routerLink="/vets/add"><span class="glyphicon glyphicon-plus"                                            aria-hidden="true"></span><span> Add New</span></a></li>      </ul>    </li>    <li>      <a routerLink="/pettypes" routerLinkActive="active" title="pettypes">        <span class="glyphicon glyphicon-heart" aria-hidden="true"></span>        <span> Pet Types</span>      </a>    </li>    <li>      <a routerLink="/specialties" routerLinkActive="active" title="specialties">        <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>        <span> Specialties</span>      </a>    </li>  </ul>  </div>  </nav></div><div class="content-wrapper">  <router-outlet></router-outlet></div><br/><br/><div class="container footer-wrapper">  <div class="row">    <div class="col-12 text-center"><img src="./assets/images/angular.png"                                         alt="Angular" height="80" width="80"/>      <img src="./assets/images/spring-pivotal-logo.png"           alt="Sponsored by Pivotal"/></div>  </div></div></div>'
     var COMPONENTS = [{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'DummyComponent', 'selector': ''},{'name': 'OwnerAddComponent', 'selector': 'app-owner-add'},{'name': 'OwnerDetailComponent', 'selector': 'app-owner-detail'},{'name': 'OwnerEditComponent', 'selector': 'app-owner-edit'},{'name': 'OwnerListComponent', 'selector': 'app-owner-list'},{'name': 'PageNotFoundComponent', 'selector': 'app-page-not-found'},{'name': 'PetAddComponent', 'selector': 'app-pet-add'},{'name': 'PetEditComponent', 'selector': 'app-pet-edit'},{'name': 'PetListComponent', 'selector': 'app-pet-list'},{'name': 'PettypeAddComponent', 'selector': 'app-pettype-add'},{'name': 'PettypeEditComponent', 'selector': 'app-pettype-edit'},{'name': 'PettypeListComponent', 'selector': 'app-pettype-list'},{'name': 'RouterOutletStubComponent', 'selector': 'app-router-outlet'},{'name': 'SpecialtyAddComponent', 'selector': 'app-specialty-add'},{'name': 'SpecialtyEditComponent', 'selector': 'app-specialty-edit'},{'name': 'SpecialtyListComponent', 'selector': 'app-specialty-list'},{'name': 'VetAddComponent', 'selector': 'app-vet-add'},{'name': 'VetEditComponent', 'selector': 'app-vet-edit'},{'name': 'VetListComponent', 'selector': 'app-vet-list'},{'name': 'VisitAddComponent', 'selector': 'app-visit-add'},{'name': 'VisitEditComponent', 'selector': 'app-visit-edit'},{'name': 'VisitListComponent', 'selector': 'app-visit-list'},{'name': 'WelcomeComponent', 'selector': 'app-welcome'}];
     var DIRECTIVES = [{'name': 'RouterLinkStubDirective', 'selector': '[appRouterLink]'}];
     var ACTUAL_COMPONENT = {'name': 'AppComponent'};
@@ -295,14 +433,16 @@ export class AppComponent {
 
 
 
-                   
+
+
+
 
 
 
 
                    </div><div class="search-results">
     <div class="has-results">
-        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
         <ul class="search-results-list"></ul>
     </div>
     <div class="no-results">
@@ -314,16 +454,56 @@ export class AppComponent {
            </div>
        </div>
 
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
             var COMPODOC_CURRENT_PAGE_URL = 'AppComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
        </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var updateDarkModeSwitchOffset = function () {
+                    var content = document.querySelector('.content');
+                    var scrollbarWidth = 0;
+
+                    if (content) {
+                         scrollbarWidth = Math.max(0, content.offsetWidth - content.clientWidth);
+                    }
+
+                    document.documentElement.style.setProperty(
+                         '--content-scrollbar-width',
+                         scrollbarWidth + 'px'
+                    );
+               };
+
+               updateDarkModeSwitchOffset();
+               requestAnimationFrame(updateDarkModeSwitchOffset);
+               window.addEventListener('resize', updateDarkModeSwitchOffset);
+
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
 
        <script src="../js/libs/custom-elements.min.js"></script>
        <script src="../js/libs/lit-html.js"></script>
-       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
-       <script src="../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+
        <script src="../js/menu-wc.js" defer></script>
 
        <script src="../js/libs/bootstrap-native.js"></script>
@@ -331,7 +511,6 @@ export class AppComponent {
        <script src="../js/libs/es6-shim.min.js"></script>
        <script src="../js/libs/EventDispatcher.js"></script>
        <script src="../js/libs/promise.min.js"></script>
-       <script src="../js/libs/zepto.min.js"></script>
 
        <script src="../js/compodoc.js"></script>
 

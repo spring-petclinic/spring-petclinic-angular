@@ -8,22 +8,95 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link rel="icon" type="image/x-icon" href="./images/favicon.ico">
-	      <link rel="stylesheet" href="./styles/style.css">
+	   <link rel="stylesheet" href="./styles/style.css">
+        <link rel="stylesheet" href="./styles/dark.css">
     </head>
     <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
 
-        <div class="navbar navbar-default navbar-fixed-top visible-xs">
-            <a href="./" class="navbar-brand">spring-petclinic-angular documentation</a>
-            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="./" class="navbar-brand">spring-petclinic-angular documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
         </div>
 
         <div class="xs-menu menu" id="mobile-menu">
-                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+                <div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search">
+    <button type="button"
+        class="search-input-clear"
+        aria-label="Clear search"
+        data-search-input-clear>&times;</button>
+</div>
+            <compodoc-menu></compodoc-menu>
         </div>
 
         <div class="container-fluid main">
            <div class="row main">
-               <div class="hidden-xs menu">
+               <div class="d-none d-md-block menu">
                    <compodoc-menu mode="normal"></compodoc-menu>
                </div>
                <!-- START CONTENT -->
@@ -43,15 +116,35 @@
 
 
 
-                   
+
+
+
+
+
+
+
 
 
 <ol class="breadcrumb">
-    <li>Documentation coverage</li>
+    <li class="breadcrumb-item">Documentation coverage</li>
 </ol>
 
 <div>
     <img src="./images/coverage-badge-documentation.svg">
+</div>
+
+<div class="coverage-summary" data-coverage-summary></div>
+
+<div class="coverage-filter">
+    <input type="text"
+        class="coverage-filter-input"
+        placeholder="Filter entities..."
+        aria-label="Filter coverage results"
+        data-coverage-filter>
+    <button type="button"
+        class="coverage-filter-clear"
+        aria-label="Clear filter"
+        data-coverage-filter-clear>&times;</button>
 </div>
 
 <table class="table table-bordered coverage" id="coverage-table">
@@ -67,7 +160,7 @@
         <tr class="low">
             <td>
                 <!-- miscellaneous -->
-                <a href="./components/AppComponent.html">src/app/app.component.ts</a>
+                        <a href="./components/AppComponent.html">src/app/app.component.ts</a>
             </td>
             <td>component</td>
             <td>AppComponent</td>
@@ -79,7 +172,7 @@
         <tr class="very-good">
             <td>
                 <!-- miscellaneous -->
-                <a href="./injectables/HttpErrorHandler.html">src/app/error.service.ts</a>
+                        <a href="./injectables/HttpErrorHandler.html">src/app/error.service.ts</a>
             </td>
             <td>injectable</td>
             <td>HttpErrorHandler</td>
@@ -88,10 +181,22 @@
                 <span class="coverage-count">(3/3)</span>
             </td>
         </tr>
+        <tr class="very-good">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./miscellaneous/typealiases.html#HandleError">src/app/error.service.ts</a>
+            </td>
+            <td>type alias</td>
+            <td>HandleError</td>
+            <td align="right" data-sort="100">
+                <span class="coverage-percent">100 %</span>
+                <span class="coverage-count">(1/1)</span>
+            </td>
+        </tr>
         <tr class="low">
             <td>
                 <!-- miscellaneous -->
-                <a href="./components/OwnerAddComponent.html">src/app/owners/owner-add/owner-add.component.ts</a>
+                        <a href="./components/OwnerAddComponent.html">src/app/owners/owner-add/owner-add.component.ts</a>
             </td>
             <td>component</td>
             <td>OwnerAddComponent</td>
@@ -103,7 +208,7 @@
         <tr class="low">
             <td>
                 <!-- miscellaneous -->
-                <a href="./components/OwnerDetailComponent.html">src/app/owners/owner-detail/owner-detail.component.ts</a>
+                        <a href="./components/OwnerDetailComponent.html">src/app/owners/owner-detail/owner-detail.component.ts</a>
             </td>
             <td>component</td>
             <td>OwnerDetailComponent</td>
@@ -115,43 +220,43 @@
         <tr class="low">
             <td>
                 <!-- miscellaneous -->
-                <a href="./components/OwnerEditComponent.html">src/app/owners/owner-edit/owner-edit.component.ts</a>
+                        <a href="./components/OwnerEditComponent.html">src/app/owners/owner-edit/owner-edit.component.ts</a>
             </td>
             <td>component</td>
             <td>OwnerEditComponent</td>
             <td align="right" data-sort="0">
                 <span class="coverage-percent">0 %</span>
-                <span class="coverage-count">(0/7)</span>
+                <span class="coverage-count">(0/8)</span>
             </td>
         </tr>
         <tr class="low">
             <td>
                 <!-- miscellaneous -->
-                <a href="./components/OwnerListComponent.html">src/app/owners/owner-list/owner-list.component.ts</a>
+                        <a href="./components/OwnerListComponent.html">src/app/owners/owner-list/owner-list.component.ts</a>
             </td>
             <td>component</td>
             <td>OwnerListComponent</td>
             <td align="right" data-sort="0">
                 <span class="coverage-percent">0 %</span>
-                <span class="coverage-count">(0/7)</span>
+                <span class="coverage-count">(0/11)</span>
             </td>
         </tr>
         <tr class="low">
             <td>
                 <!-- miscellaneous -->
-                <a href="./injectables/OwnerService.html">src/app/owners/owner.service.ts</a>
+                        <a href="./injectables/OwnerService.html">src/app/owners/owner.service.ts</a>
             </td>
             <td>injectable</td>
             <td>OwnerService</td>
             <td align="right" data-sort="0">
                 <span class="coverage-percent">0 %</span>
-                <span class="coverage-count">(0/9)</span>
+                <span class="coverage-count">(0/10)</span>
             </td>
         </tr>
         <tr class="low">
             <td>
                 <!-- miscellaneous -->
-                <a href="./interfaces/Owner.html">src/app/owners/owner.ts</a>
+                        <a href="./interfaces/Owner.html">src/app/owners/owner.ts</a>
             </td>
             <td>interface</td>
             <td>Owner</td>
@@ -163,7 +268,7 @@
         <tr class="low">
             <td>
                 <!-- miscellaneous -->
-                <a href="./components/PageNotFoundComponent.html">src/app/parts/page-not-found/page-not-found.component.ts</a>
+                        <a href="./components/PageNotFoundComponent.html">src/app/parts/page-not-found/page-not-found.component.ts</a>
             </td>
             <td>component</td>
             <td>PageNotFoundComponent</td>
@@ -175,7 +280,7 @@
         <tr class="low">
             <td>
                 <!-- miscellaneous -->
-                <a href="./components/WelcomeComponent.html">src/app/parts/welcome/welcome.component.ts</a>
+                        <a href="./components/WelcomeComponent.html">src/app/parts/welcome/welcome.component.ts</a>
             </td>
             <td>component</td>
             <td>WelcomeComponent</td>
@@ -187,7 +292,7 @@
         <tr class="low">
             <td>
                 <!-- miscellaneous -->
-                <a href="./components/PetAddComponent.html">src/app/pets/pet-add/pet-add.component.ts</a>
+                        <a href="./components/PetAddComponent.html">src/app/pets/pet-add/pet-add.component.ts</a>
             </td>
             <td>component</td>
             <td>PetAddComponent</td>
@@ -199,7 +304,7 @@
         <tr class="low">
             <td>
                 <!-- miscellaneous -->
-                <a href="./components/PetEditComponent.html">src/app/pets/pet-edit/pet-edit.component.ts</a>
+                        <a href="./components/PetEditComponent.html">src/app/pets/pet-edit/pet-edit.component.ts</a>
             </td>
             <td>component</td>
             <td>PetEditComponent</td>
@@ -211,7 +316,7 @@
         <tr class="low">
             <td>
                 <!-- miscellaneous -->
-                <a href="./components/PetListComponent.html">src/app/pets/pet-list/pet-list.component.ts</a>
+                        <a href="./components/PetListComponent.html">src/app/pets/pet-list/pet-list.component.ts</a>
             </td>
             <td>component</td>
             <td>PetListComponent</td>
@@ -223,7 +328,7 @@
         <tr class="low">
             <td>
                 <!-- miscellaneous -->
-                <a href="./injectables/PetService.html">src/app/pets/pet.service.ts</a>
+                        <a href="./injectables/PetService.html">src/app/pets/pet.service.ts</a>
             </td>
             <td>injectable</td>
             <td>PetService</td>
@@ -235,19 +340,19 @@
         <tr class="low">
             <td>
                 <!-- miscellaneous -->
-                <a href="./interfaces/Pet.html">src/app/pets/pet.ts</a>
+                        <a href="./interfaces/Pet.html">src/app/pets/pet.ts</a>
             </td>
             <td>interface</td>
             <td>Pet</td>
             <td align="right" data-sort="0">
                 <span class="coverage-percent">0 %</span>
-                <span class="coverage-count">(0/7)</span>
+                <span class="coverage-count">(0/8)</span>
             </td>
         </tr>
         <tr class="low">
             <td>
                 <!-- miscellaneous -->
-                <a href="./miscellaneous/variables.html#MY_DATE_FORMATS">src/app/pets/pets.module.ts</a>
+                        <a href="./miscellaneous/variables.html#MY_DATE_FORMATS">src/app/pets/pets.module.ts</a>
             </td>
             <td>variable</td>
             <td>MY_DATE_FORMATS</td>
@@ -259,7 +364,7 @@
         <tr class="low">
             <td>
                 <!-- miscellaneous -->
-                <a href="./components/PettypeAddComponent.html">src/app/pettypes/pettype-add/pettype-add.component.ts</a>
+                        <a href="./components/PettypeAddComponent.html">src/app/pettypes/pettype-add/pettype-add.component.ts</a>
             </td>
             <td>component</td>
             <td>PettypeAddComponent</td>
@@ -271,7 +376,7 @@
         <tr class="low">
             <td>
                 <!-- miscellaneous -->
-                <a href="./components/PettypeEditComponent.html">src/app/pettypes/pettype-edit/pettype-edit.component.ts</a>
+                        <a href="./components/PettypeEditComponent.html">src/app/pettypes/pettype-edit/pettype-edit.component.ts</a>
             </td>
             <td>component</td>
             <td>PettypeEditComponent</td>
@@ -283,19 +388,19 @@
         <tr class="low">
             <td>
                 <!-- miscellaneous -->
-                <a href="./components/PettypeListComponent.html">src/app/pettypes/pettype-list/pettype-list.component.ts</a>
+                        <a href="./components/PettypeListComponent.html">src/app/pettypes/pettype-list/pettype-list.component.ts</a>
             </td>
             <td>component</td>
             <td>PettypeListComponent</td>
             <td align="right" data-sort="0">
                 <span class="coverage-percent">0 %</span>
-                <span class="coverage-count">(0/12)</span>
+                <span class="coverage-count">(0/13)</span>
             </td>
         </tr>
         <tr class="low">
             <td>
                 <!-- miscellaneous -->
-                <a href="./injectables/PetTypeService.html">src/app/pettypes/pettype.service.ts</a>
+                        <a href="./injectables/PetTypeService.html">src/app/pettypes/pettype.service.ts</a>
             </td>
             <td>injectable</td>
             <td>PetTypeService</td>
@@ -304,46 +409,46 @@
                 <span class="coverage-count">(0/9)</span>
             </td>
         </tr>
-        <tr class="low">
+        <tr class="medium">
             <td>
                 <!-- miscellaneous -->
-                <a href="./interfaces/PetType.html">src/app/pettypes/pettype.ts</a>
+                        <a href="./interfaces/PetType.html">src/app/pettypes/pettype.ts</a>
             </td>
             <td>interface</td>
             <td>PetType</td>
-            <td align="right" data-sort="0">
-                <span class="coverage-percent">0 %</span>
-                <span class="coverage-count">(0/3)</span>
+            <td align="right" data-sort="33">
+                <span class="coverage-percent">33 %</span>
+                <span class="coverage-count">(1/3)</span>
             </td>
         </tr>
-        <tr class="low">
+        <tr class="medium">
             <td>
                 <!-- miscellaneous -->
-                <a href="./guards/SpecResolver.html">src/app/specialties/spec-resolver.ts</a>
+                        <a href="./injectables/SpecResolver.html">src/app/specialties/spec-resolver.ts</a>
             </td>
-            <td>guard</td>
+            <td>injectable</td>
             <td>SpecResolver</td>
-            <td align="right" data-sort="0">
-                <span class="coverage-percent">0 %</span>
-                <span class="coverage-count">(0/3)</span>
+            <td align="right" data-sort="33">
+                <span class="coverage-percent">33 %</span>
+                <span class="coverage-count">(1/3)</span>
             </td>
         </tr>
         <tr class="low">
             <td>
                 <!-- miscellaneous -->
-                <a href="./components/SpecialtyAddComponent.html">src/app/specialties/specialty-add/specialty-add.component.ts</a>
+                        <a href="./components/SpecialtyAddComponent.html">src/app/specialties/specialty-add/specialty-add.component.ts</a>
             </td>
             <td>component</td>
             <td>SpecialtyAddComponent</td>
             <td align="right" data-sort="0">
                 <span class="coverage-percent">0 %</span>
-                <span class="coverage-count">(0/8)</span>
+                <span class="coverage-count">(0/9)</span>
             </td>
         </tr>
         <tr class="low">
             <td>
                 <!-- miscellaneous -->
-                <a href="./components/SpecialtyEditComponent.html">src/app/specialties/specialty-edit/specialty-edit.component.ts</a>
+                        <a href="./components/SpecialtyEditComponent.html">src/app/specialties/specialty-edit/specialty-edit.component.ts</a>
             </td>
             <td>component</td>
             <td>SpecialtyEditComponent</td>
@@ -355,19 +460,19 @@
         <tr class="low">
             <td>
                 <!-- miscellaneous -->
-                <a href="./components/SpecialtyListComponent.html">src/app/specialties/specialty-list/specialty-list.component.ts</a>
+                        <a href="./components/SpecialtyListComponent.html">src/app/specialties/specialty-list/specialty-list.component.ts</a>
             </td>
             <td>component</td>
             <td>SpecialtyListComponent</td>
             <td align="right" data-sort="0">
                 <span class="coverage-percent">0 %</span>
-                <span class="coverage-count">(0/12)</span>
+                <span class="coverage-count">(0/13)</span>
             </td>
         </tr>
         <tr class="low">
             <td>
                 <!-- miscellaneous -->
-                <a href="./injectables/SpecialtyService.html">src/app/specialties/specialty.service.ts</a>
+                        <a href="./injectables/SpecialtyService.html">src/app/specialties/specialty.service.ts</a>
             </td>
             <td>injectable</td>
             <td>SpecialtyService</td>
@@ -376,22 +481,22 @@
                 <span class="coverage-count">(0/9)</span>
             </td>
         </tr>
-        <tr class="low">
+        <tr class="medium">
             <td>
                 <!-- miscellaneous -->
-                <a href="./interfaces/Specialty.html">src/app/specialties/specialty.ts</a>
+                        <a href="./interfaces/Specialty.html">src/app/specialties/specialty.ts</a>
             </td>
             <td>interface</td>
             <td>Specialty</td>
-            <td align="right" data-sort="0">
-                <span class="coverage-percent">0 %</span>
-                <span class="coverage-count">(0/3)</span>
+            <td align="right" data-sort="33">
+                <span class="coverage-percent">33 %</span>
+                <span class="coverage-count">(1/3)</span>
             </td>
         </tr>
         <tr class="low">
             <td>
                 <!-- miscellaneous -->
-                <a href="./components/DummyComponent.html">src/app/testing/dummy.component.ts</a>
+                        <a href="./components/DummyComponent.html">src/app/testing/dummy.component.ts</a>
             </td>
             <td>component</td>
             <td>DummyComponent</td>
@@ -403,7 +508,7 @@
         <tr class="low">
             <td>
                 <!-- miscellaneous -->
-                <a href="./components/RouterOutletStubComponent.html">src/app/testing/router-stubs.ts</a>
+                        <a href="./components/RouterOutletStubComponent.html">src/app/testing/router-stubs.ts</a>
             </td>
             <td>component</td>
             <td>RouterOutletStubComponent</td>
@@ -415,19 +520,19 @@
         <tr class="low">
             <td>
                 <!-- miscellaneous -->
-                <a href="./directives/RouterLinkStubDirective.html">src/app/testing/router-stubs.ts</a>
+                        <a href="./directives/RouterLinkStubDirective.html">src/app/testing/router-stubs.ts</a>
             </td>
             <td>directive</td>
             <td>RouterLinkStubDirective</td>
             <td align="right" data-sort="0">
                 <span class="coverage-percent">0 %</span>
-                <span class="coverage-count">(0/4)</span>
+                <span class="coverage-count">(0/5)</span>
             </td>
         </tr>
         <tr class="low">
             <td>
                 <!-- miscellaneous -->
-                <a href="./injectables/ActivatedRouteStub.html">src/app/testing/router-stubs.ts</a>
+                        <a href="./injectables/ActivatedRouteStub.html">src/app/testing/router-stubs.ts</a>
             </td>
             <td>injectable</td>
             <td>ActivatedRouteStub</td>
@@ -439,7 +544,7 @@
         <tr class="low">
             <td>
                 <!-- miscellaneous -->
-                <a href="./injectables/RouterStub.html">src/app/testing/router-stubs.ts</a>
+                        <a href="./injectables/RouterStub.html">src/app/testing/router-stubs.ts</a>
             </td>
             <td>injectable</td>
             <td>RouterStub</td>
@@ -451,7 +556,7 @@
         <tr class="low">
             <td>
                 <!-- miscellaneous -->
-                <a href="./components/VetAddComponent.html">src/app/vets/vet-add/vet-add.component.ts</a>
+                        <a href="./components/VetAddComponent.html">src/app/vets/vet-add/vet-add.component.ts</a>
             </td>
             <td>component</td>
             <td>VetAddComponent</td>
@@ -463,7 +568,7 @@
         <tr class="low">
             <td>
                 <!-- miscellaneous -->
-                <a href="./components/VetEditComponent.html">src/app/vets/vet-edit/vet-edit.component.ts</a>
+                        <a href="./components/VetEditComponent.html">src/app/vets/vet-edit/vet-edit.component.ts</a>
             </td>
             <td>component</td>
             <td>VetEditComponent</td>
@@ -475,31 +580,31 @@
         <tr class="low">
             <td>
                 <!-- miscellaneous -->
-                <a href="./components/VetListComponent.html">src/app/vets/vet-list/vet-list.component.ts</a>
+                        <a href="./components/VetListComponent.html">src/app/vets/vet-list/vet-list.component.ts</a>
             </td>
             <td>component</td>
             <td>VetListComponent</td>
             <td align="right" data-sort="0">
                 <span class="coverage-percent">0 %</span>
-                <span class="coverage-count">(0/10)</span>
+                <span class="coverage-count">(0/11)</span>
             </td>
         </tr>
-        <tr class="low">
+        <tr class="medium">
             <td>
                 <!-- miscellaneous -->
-                <a href="./guards/VetResolver.html">src/app/vets/vet-resolver.ts</a>
+                        <a href="./injectables/VetResolver.html">src/app/vets/vet-resolver.ts</a>
             </td>
-            <td>guard</td>
+            <td>injectable</td>
             <td>VetResolver</td>
-            <td align="right" data-sort="0">
-                <span class="coverage-percent">0 %</span>
-                <span class="coverage-count">(0/3)</span>
+            <td align="right" data-sort="33">
+                <span class="coverage-percent">33 %</span>
+                <span class="coverage-count">(1/3)</span>
             </td>
         </tr>
         <tr class="low">
             <td>
                 <!-- miscellaneous -->
-                <a href="./injectables/VetService.html">src/app/vets/vet.service.ts</a>
+                        <a href="./injectables/VetService.html">src/app/vets/vet.service.ts</a>
             </td>
             <td>injectable</td>
             <td>VetService</td>
@@ -511,7 +616,7 @@
         <tr class="low">
             <td>
                 <!-- miscellaneous -->
-                <a href="./interfaces/Vet.html">src/app/vets/vet.ts</a>
+                        <a href="./interfaces/Vet.html">src/app/vets/vet.ts</a>
             </td>
             <td>interface</td>
             <td>Vet</td>
@@ -523,7 +628,7 @@
         <tr class="low">
             <td>
                 <!-- miscellaneous -->
-                <a href="./components/VisitAddComponent.html">src/app/visits/visit-add/visit-add.component.ts</a>
+                        <a href="./components/VisitAddComponent.html">src/app/visits/visit-add/visit-add.component.ts</a>
             </td>
             <td>component</td>
             <td>VisitAddComponent</td>
@@ -535,7 +640,7 @@
         <tr class="low">
             <td>
                 <!-- miscellaneous -->
-                <a href="./components/VisitEditComponent.html">src/app/visits/visit-edit/visit-edit.component.ts</a>
+                        <a href="./components/VisitEditComponent.html">src/app/visits/visit-edit/visit-edit.component.ts</a>
             </td>
             <td>component</td>
             <td>VisitEditComponent</td>
@@ -547,7 +652,7 @@
         <tr class="low">
             <td>
                 <!-- miscellaneous -->
-                <a href="./components/VisitListComponent.html">src/app/visits/visit-list/visit-list.component.ts</a>
+                        <a href="./components/VisitListComponent.html">src/app/visits/visit-list/visit-list.component.ts</a>
             </td>
             <td>component</td>
             <td>VisitListComponent</td>
@@ -559,7 +664,7 @@
         <tr class="low">
             <td>
                 <!-- miscellaneous -->
-                <a href="./injectables/VisitService.html">src/app/visits/visit.service.ts</a>
+                        <a href="./injectables/VisitService.html">src/app/visits/visit.service.ts</a>
             </td>
             <td>injectable</td>
             <td>VisitService</td>
@@ -571,19 +676,19 @@
         <tr class="low">
             <td>
                 <!-- miscellaneous -->
-                <a href="./interfaces/Visit.html">src/app/visits/visit.ts</a>
+                        <a href="./interfaces/Visit.html">src/app/visits/visit.ts</a>
             </td>
             <td>interface</td>
             <td>Visit</td>
             <td align="right" data-sort="0">
                 <span class="coverage-percent">0 %</span>
-                <span class="coverage-count">(0/5)</span>
+                <span class="coverage-count">(0/6)</span>
             </td>
         </tr>
         <tr class="low">
             <td>
                 <!-- miscellaneous -->
-                <a href="./miscellaneous/variables.html#MY_DATE_FORMATS">src/app/visits/visits.module.ts</a>
+                        <a href="./miscellaneous/variables.html#MY_DATE_FORMATS">src/app/visits/visits.module.ts</a>
             </td>
             <td>variable</td>
             <td>MY_DATE_FORMATS</td>
@@ -595,7 +700,7 @@
         <tr class="low">
             <td>
                 <!-- miscellaneous -->
-                <a href="./miscellaneous/variables.html#environment">src/environments/environment.prod.ts</a>
+                        <a href="./miscellaneous/variables.html#environment">src/environments/environment.prod.ts</a>
             </td>
             <td>variable</td>
             <td>environment</td>
@@ -607,7 +712,7 @@
         <tr class="low">
             <td>
                 <!-- miscellaneous -->
-                <a href="./miscellaneous/variables.html#environment">src/environments/environment.ts</a>
+                        <a href="./miscellaneous/variables.html#environment">src/environments/environment.ts</a>
             </td>
             <td>variable</td>
             <td>environment</td>
@@ -623,11 +728,192 @@
 <script src="js/libs/tablesort.number.min.js"></script>
 <script>
     new Tablesort(document.getElementById('coverage-table'));
+
+    (function () {
+        var table = document.getElementById('coverage-table');
+        if (!table) {
+            return;
+        }
+
+        var tableBody = table.querySelector('tbody');
+        if (!tableBody) {
+            return;
+        }
+
+        var rows = Array.prototype.slice.call(tableBody.querySelectorAll('tr'));
+        var summaryContainer = document.querySelector('[data-coverage-summary]');
+        var filterInput = document.querySelector('[data-coverage-filter]');
+        var filterClearButton = document.querySelector('[data-coverage-filter-clear]');
+
+        function toPercent(value, total) {
+            if (!total) {
+                return 0;
+            }
+            return Math.round((value / total) * 100);
+        }
+
+        function getRowCoverageBucket(row) {
+            var className = (row.className || '').toLowerCase();
+            if (className.indexOf('low') !== -1) {
+                return 'undocumented';
+            }
+            if (className.indexOf('medium') !== -1) {
+                return 'partial';
+            }
+            if (className.indexOf('very-good') !== -1 || className.indexOf('good') !== -1) {
+                return 'documented';
+            }
+            return 'partial';
+        }
+
+        function getCoverageStats() {
+            var documented = 0;
+            var partial = 0;
+            var undocumented = 0;
+
+            rows.forEach(function (row) {
+                var bucket = getRowCoverageBucket(row);
+                if (bucket === 'documented') {
+                    documented += 1;
+                } else if (bucket === 'partial') {
+                    partial += 1;
+                } else {
+                    undocumented += 1;
+                }
+            });
+
+            var total = rows.length;
+            var totalCoveragePercent = rows.reduce(function (sum, row) {
+                var scoreCell = row.querySelector('td[data-sort]');
+                var rowScore = scoreCell ? parseFloat(scoreCell.getAttribute('data-sort') || '0') : 0;
+                return sum + (isNaN(rowScore) ? 0 : rowScore);
+            }, 0);
+            var score = total ? Math.floor(totalCoveragePercent / total) : 0;
+
+            return {
+                total: total,
+                documented: documented,
+                partial: partial,
+                undocumented: undocumented,
+                score: score
+            };
+        }
+
+        function buildDonutSegment(title, color, count, total, offset, circumference) {
+            var percent = toPercent(count, total);
+            if (!count) {
+                return '';
+            }
+
+            var arcLength = (count / total) * circumference;
+            var remaining = circumference - arcLength;
+
+            return '<circle cx="60" cy="60" r="50" fill="none" stroke="' + color + '" stroke-width="10" ' +
+                'style="stroke-dasharray: ' + arcLength + ', ' + remaining + '; stroke-dashoffset: ' + (-offset) + ';" ' +
+                'transform="rotate(-90 60 60)" class="coverage-donut-segment">' +
+                '<title>' + title + ': ' + count + ' (' + percent + '%)</title>' +
+                '</circle>';
+        }
+
+        function renderSummary(stats) {
+            if (!summaryContainer) {
+                return;
+            }
+
+            var total = stats.total;
+            var documentedPercent = toPercent(stats.documented, total);
+            var partialPercent = toPercent(stats.partial, total);
+            var undocumentedPercent = toPercent(stats.undocumented, total);
+            var circumference = 2 * Math.PI * 50;
+            var offset = 0;
+
+            var documentedSegment = buildDonutSegment('Documented', '#4dc71f', stats.documented, total, offset, circumference);
+            offset += total ? (stats.documented / total) * circumference : 0;
+
+            var partialSegment = buildDonutSegment('Partial', '#dab226', stats.partial, total, offset, circumference);
+            offset += total ? (stats.partial / total) * circumference : 0;
+
+            var undocumentedSegment = buildDonutSegment('Undocumented', '#d8624c', stats.undocumented, total, offset, circumference);
+
+            summaryContainer.innerHTML =
+                '<svg viewBox="0 0 120 120" class="coverage-donut" role="img" aria-label="Documentation coverage: ' + stats.score + '%">' +
+                    '<title>Documentation coverage: ' + stats.score + '%</title>' +
+                    '<desc>' + stats.documented + ' documented, ' + stats.partial + ' partial, ' + stats.undocumented + ' undocumented of ' + stats.total + ' entities</desc>' +
+                    '<circle cx="60" cy="60" r="50" fill="none" stroke="var(--bs-border-color, #dee2e6)" stroke-width="10" class="coverage-donut-ring"></circle>' +
+                    documentedSegment +
+                    partialSegment +
+                    undocumentedSegment +
+                    '<text x="60" y="60" text-anchor="middle" dominant-baseline="central" class="coverage-donut-pct">' + stats.score + '%</text>' +
+                '</svg>' +
+                '<div class="coverage-stats">' +
+                    '<div>' +
+                        '<div class="coverage-stat-value">' + stats.total + '</div>' +
+                        '<div class="coverage-stat-label">Total</div>' +
+                        '<div class="coverage-stat-sub">' + stats.total + ' entities</div>' +
+                    '</div>' +
+                    '<div>' +
+                        '<div class="coverage-stat-value coverage-stat-value--documented">' + stats.documented + '</div>' +
+                        '<div class="coverage-stat-label">Documented</div>' +
+                        '<div class="coverage-stat-sub">' + documentedPercent + '%</div>' +
+                    '</div>' +
+                    '<div>' +
+                        '<div class="coverage-stat-value coverage-stat-value--partial">' + stats.partial + '</div>' +
+                        '<div class="coverage-stat-label">Partial</div>' +
+                        '<div class="coverage-stat-sub">' + partialPercent + '%</div>' +
+                    '</div>' +
+                    '<div>' +
+                        '<div class="coverage-stat-value coverage-stat-value--undocumented">' + stats.undocumented + '</div>' +
+                        '<div class="coverage-stat-label">Undocumented</div>' +
+                        '<div class="coverage-stat-sub">' + undocumentedPercent + '%</div>' +
+                    '</div>' +
+                '</div>';
+        }
+
+        function applyFilter() {
+            if (!filterInput) {
+                return;
+            }
+
+            var query = filterInput.value.toLowerCase().trim();
+            rows.forEach(function (row) {
+                var text = (row.textContent || '').toLowerCase();
+                row.style.display = query.length === 0 || text.indexOf(query) !== -1 ? '' : 'none';
+            });
+
+            if (filterClearButton) {
+                filterClearButton.classList.toggle('is-visible', query.length > 0);
+            }
+        }
+
+        if (filterInput) {
+            filterInput.addEventListener('input', applyFilter);
+            filterInput.addEventListener('keydown', function (event) {
+                if (event.key === 'Escape') {
+                    filterInput.value = '';
+                    applyFilter();
+                }
+            });
+        }
+
+        if (filterClearButton) {
+            filterClearButton.addEventListener('click', function () {
+                if (filterInput) {
+                    filterInput.value = '';
+                    applyFilter();
+                    filterInput.focus();
+                }
+            });
+        }
+
+        renderSummary(getCoverageStats());
+        applyFilter();
+    })();
 </script>
+
 
                    </div><div class="search-results">
     <div class="has-results">
-        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
         <ul class="search-results-list"></ul>
     </div>
     <div class="no-results">
@@ -639,16 +925,56 @@
            </div>
        </div>
 
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 0;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'coverage';
             var COMPODOC_CURRENT_PAGE_URL = 'coverage.html';
+            var MAX_SEARCH_RESULTS = 15;
        </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var updateDarkModeSwitchOffset = function () {
+                    var content = document.querySelector('.content');
+                    var scrollbarWidth = 0;
+
+                    if (content) {
+                         scrollbarWidth = Math.max(0, content.offsetWidth - content.clientWidth);
+                    }
+
+                    document.documentElement.style.setProperty(
+                         '--content-scrollbar-width',
+                         scrollbarWidth + 'px'
+                    );
+               };
+
+               updateDarkModeSwitchOffset();
+               requestAnimationFrame(updateDarkModeSwitchOffset);
+               window.addEventListener('resize', updateDarkModeSwitchOffset);
+
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
 
        <script src="./js/libs/custom-elements.min.js"></script>
        <script src="./js/libs/lit-html.js"></script>
-       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
-       <script src="./js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+
        <script src="./js/menu-wc.js" defer></script>
 
        <script src="./js/libs/bootstrap-native.js"></script>
@@ -656,7 +982,6 @@
        <script src="./js/libs/es6-shim.min.js"></script>
        <script src="./js/libs/EventDispatcher.js"></script>
        <script src="./js/libs/promise.min.js"></script>
-       <script src="./js/libs/zepto.min.js"></script>
 
        <script src="./js/compodoc.js"></script>
 
