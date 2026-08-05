@@ -20,7 +20,7 @@
  * @author Vitaliy Fedoriv
  */
 
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, inject, OnInit} from '@angular/core';
 import {Specialty} from '../specialty';
 import {SpecialtyService} from '../specialty.service';
 import {Router} from '@angular/router';
@@ -33,6 +33,8 @@ import { finalize } from 'rxjs/operators';
   styleUrls: ['./specialty-list.component.css']
 })
 export class SpecialtyListComponent implements OnInit {
+  private readonly changeDetectorRef = inject(ChangeDetectorRef);
+
   specialties: Specialty[];
   errorMessage: string;
   responseStatus: number;
@@ -47,6 +49,7 @@ export class SpecialtyListComponent implements OnInit {
     this.specService.getSpecialties().pipe(
       finalize(() => {
         this.isSpecialitiesDataReceived = true;
+        this.changeDetectorRef.markForCheck();
       })
     ).subscribe(
       specialties => this.specialties = specialties,
@@ -54,7 +57,9 @@ export class SpecialtyListComponent implements OnInit {
   }
 
   deleteSpecialty(specialty: Specialty) {
-    this.specService.deleteSpecialty(specialty.id.toString()).subscribe(
+    this.specService.deleteSpecialty(specialty.id.toString()).pipe(
+      finalize(() => this.changeDetectorRef.markForCheck())
+    ).subscribe(
       response => {
         this.responseStatus = response;
         this.specialties = this.specialties.filter(currentItem => !(currentItem.id === specialty.id));

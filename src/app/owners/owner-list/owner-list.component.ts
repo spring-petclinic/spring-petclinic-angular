@@ -20,7 +20,7 @@
  * @author Vitaliy Fedoriv
  */
 
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, inject, OnInit} from '@angular/core';
 import {OwnerService} from '../owner.service';
 import {Owner} from '../owner';
 import {Router} from '@angular/router';
@@ -33,6 +33,8 @@ import { finalize } from 'rxjs/operators';
   styleUrls: ['./owner-list.component.css']
 })
 export class OwnerListComponent implements OnInit {
+  private readonly changeDetectorRef = inject(ChangeDetectorRef);
+
   errorMessage: string;
   lastName: string;
   owners: Owner[];
@@ -47,6 +49,7 @@ export class OwnerListComponent implements OnInit {
     this.ownerService.getOwners().pipe(
       finalize(() => {
         this.isOwnersDataReceived = true;
+        this.changeDetectorRef.markForCheck();
       })
     ).subscribe(
       owners => this.owners = owners,
@@ -67,6 +70,7 @@ export class OwnerListComponent implements OnInit {
       if (lastName === '')
       {
       this.ownerService.getOwners()
+      .pipe(finalize(() => this.changeDetectorRef.markForCheck()))
       .subscribe(
             (owners) => {
              this.owners = owners;
@@ -75,6 +79,7 @@ export class OwnerListComponent implements OnInit {
       if (lastName !== '')
       {
       this.ownerService.searchOwners(lastName)
+      .pipe(finalize(() => this.changeDetectorRef.markForCheck()))
       .subscribe(
       (owners) => {
 

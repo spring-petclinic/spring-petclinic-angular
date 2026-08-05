@@ -20,7 +20,7 @@
  * @author Vitaliy Fedoriv
  */
 
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, inject, OnInit} from '@angular/core';
 import {Vet} from '../vet';
 import {VetService} from '../vet.service';
 import {Router} from '@angular/router';
@@ -33,6 +33,8 @@ import { finalize } from 'rxjs/operators';
   styleUrls: ['./vet-list.component.css']
 })
 export class VetListComponent implements OnInit {
+  private readonly changeDetectorRef = inject(ChangeDetectorRef);
+
   vets: Vet[];
   errorMessage: string;
   responseStatus: number;
@@ -46,6 +48,7 @@ export class VetListComponent implements OnInit {
     this.vetService.getVets().pipe(
       finalize(() => {
         this.isVetDataReceived = true;
+        this.changeDetectorRef.markForCheck();
       })
     ).subscribe(
       vets => this.vets = vets,
@@ -53,7 +56,9 @@ export class VetListComponent implements OnInit {
   }
 
   deleteVet(vet: Vet) {
-    this.vetService.deleteVet(vet.id.toString()).subscribe(
+    this.vetService.deleteVet(vet.id.toString()).pipe(
+      finalize(() => this.changeDetectorRef.markForCheck())
+    ).subscribe(
       response => {
         this.responseStatus = response;
         this.vets = this.vets.filter(currentItem => !(currentItem.id === vet.id));
