@@ -8,22 +8,95 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
-	      <link rel="stylesheet" href="../styles/style.css">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
     </head>
     <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
 
-        <div class="navbar navbar-default navbar-fixed-top visible-xs">
-            <a href="../" class="navbar-brand">spring-petclinic-angular documentation</a>
-            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">spring-petclinic-angular documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
         </div>
 
         <div class="xs-menu menu" id="mobile-menu">
-                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+                <div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search">
+    <button type="button"
+        class="search-input-clear"
+        aria-label="Clear search"
+        data-search-input-clear>&times;</button>
+</div>
+            <compodoc-menu></compodoc-menu>
         </div>
 
         <div class="container-fluid main">
            <div class="row main">
-               <div class="hidden-xs menu">
+               <div class="d-none d-md-block menu">
                    <compodoc-menu mode="normal"></compodoc-menu>
                </div>
                <!-- START CONTENT -->
@@ -33,51 +106,70 @@
 
 
 
+
+
+
+
 <ol class="breadcrumb">
-  <li>Components</li>
-  <li>WelcomeComponent</li>
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  WelcomeComponent</li>
 </ol>
 
+<div class="io-file io-file-path" data-compodoc="entity-file-path">
+    <span class="icon ion-ios-document" aria-hidden="true"></span>
+    <code>src/app/parts/welcome/welcome.component.ts</code>
+</div>
+
 <ul class="nav nav-tabs" role="tablist">
-        <li class="active">
-            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
         </li>
-        <li >
-            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        <li class="nav-item">
+            <a href="#api" class="nav-link"
+                role="tab" id="api-tab" data-bs-toggle="tab" data-link="api">API</a>
         </li>
-        <li >
-            <a href="#templateData" role="tab" id="templateData-tab" data-toggle="tab" data-link="template">Template</a>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
         </li>
-        <li >
-            <a href="#styleData" role="tab" id="styleData-tab" data-toggle="tab" data-link="style">Styles</a>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
         </li>
-        <li >
-            <a href="#tree" role="tab" id="tree-tab" data-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        <li class="nav-item">
+            <a href="#styleData" class="nav-link"
+                role="tab" id="styleData-tab" data-bs-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
         </li>
 </ul>
 
 <div class="tab-content">
-    <div class="tab-pane fade active in" id="c-info"><p class="comment">
-    <h3>File</h3>
-</p>
-<p class="comment">
-    <code>src/app/parts/welcome/welcome.component.ts</code>
-</p>
-
+    <div class="tab-pane fade active in" id="info">
 
 
     <p class="comment">
         <h3>Implements</h3>
     </p>
     <p class="comment">
-                    <code><a href="https://angular.io/api/core/OnInit" target="_blank" >OnInit</a></code>
+                    <code><a href="https://angular.dev/api/core/OnInit" target="_blank" >OnInit</a></code>
     </p>
 
 
-<section>
+<section data-compodoc="block-metadata">
     <h3>Metadata</h3>
-    <table class="table table-sm table-hover">
+    <table class="table table-sm table-hover metadata">
         <tbody>
+
+            <tr>
+                <td class="col-md-3">changeDetection</td>
+                <td class="col-md-9"><code>ChangeDetectionStrategy.OnPush</code></td>
+            </tr>
 
 
 
@@ -94,10 +186,13 @@
                 <td class="col-md-9"><code>app-welcome</code></td>
             </tr>
 
+
+
             <tr>
                 <td class="col-md-3">styleUrls</td>
                 <td class="col-md-9"><code>./welcome.component.css</code></td>
             </tr>
+
 
 
 
@@ -117,35 +212,59 @@
     </table>
 </section>
 
-    <section>
-    <h3 id="index">Index</h3>
-    <table class="table table-sm table-bordered index-table">
-        <tbody>
+        <section data-compodoc="block-relationships">
+            <h3>Relationships</h3>
 
+            <div class="row pt-3">
+                <div class="col-sm-6">
+                    <h4>Used by</h4>
+                        <ul class="list-unstyled relationships-list">
+                                <li>
+                                            <code><a href="../modules/PartsModule.html" target="_self" >PartsModule</a></code>
+                                </li>
+                        </ul>
+                </div>
+
+                <div class="col-sm-6">
+                    <h4>Depends on</h4>
+                        <ul class="list-unstyled relationships-list">
+                                <li>
+                                            <code><a href="https://angular.dev/api/core/OnInit" target="_blank" >OnInit</a></code>
+                                </li>
+                        </ul>
+                </div>
+            </div>
+        </section>
+</div>
+
+    <div class="tab-pane fade " id="api">    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+
+        <table class="table table-sm table-bordered index-table">
+            <tbody>
                 <tr>
-                    <td class="col-md-4">
+                    <td class="col-md-3">
                         <h6><b>Methods</b></h6>
                     </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
+                    <td class="col-md-9">
                         <ul class="index-list">
                             <li>
-                                <a href="#ngOnInit">ngOnInit</a>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#ngOnInit" >ngOnInit</a>
                             </li>
                         </ul>
                     </td>
                 </tr>
+            </tbody>
+        </table>
 
 
 
 
 
-        </tbody>
-    </table>
 </section>
 
-    <section>
+    <section data-compodoc="block-constructor">
     <h3 id="constructor">Constructor</h3>
         <table class="table table-sm table-bordered">
             <tbody>
@@ -156,7 +275,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="31" class="link-to-prism">src/app/parts/welcome/welcome.component.ts:31</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="32" class="link-to-prism">src/app/parts/welcome/welcome.component.ts:32</a></div>
                             </td>
                         </tr>
 
@@ -168,7 +287,7 @@
 
 
 
-    <section>
+    <section data-compodoc="block-methods">
     
     <h3 id="methods">
         Methods
@@ -179,9 +298,7 @@
                 <td class="col-md-4">
                     <a name="ngOnInit"></a>
                     <span class="name">
-                        <b>
-                            ngOnInit
-                        </b>
+                        <span ><b>ngOnInit</b></span>
                         <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
@@ -193,35 +310,37 @@
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="36"
-                            class="link-to-prism">src/app/parts/welcome/welcome.component.ts:36</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="37"
+                                    class="link-to-prism">src/app/parts/welcome/welcome.component.ts:37</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
 
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
-                    </div>
+                        </div>
                 </td>
             </tr>
         </tbody>
     </table>
 </section>
 
+
 </div>
 
 
-    <div class="tab-pane fade  tab-source-code" id="c-source">
+    <div class="tab-pane fade  tab-source-code" id="source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Component, OnInit} from &#x27;@angular/core&#x27;;
 
 @Component({
   selector: &#x27;app-welcome&#x27;,
+  standalone: false,
   templateUrl: &#x27;./welcome.component.html&#x27;,
   styleUrls: [&#x27;./welcome.component.css&#x27;]
 })
@@ -237,7 +356,7 @@ export class WelcomeComponent implements OnInit {
 </code></pre>
     </div>
 
-    <div class="tab-pane fade " id="c-templateData">
+    <div class="tab-pane fade " id="templateData">
         <pre class="line-numbers"><code class="language-html">&lt;!--
   ~ /*
   ~  * Copyright 2016-2017 the original author or authors.
@@ -256,7 +375,7 @@ export class WelcomeComponent implements OnInit {
   ~  */
   --&gt;
 
-&lt;h1&gt;Welcome to Petclinic&lt;/h1&gt;
+&lt;h1 class&#x3D;&quot;title&quot;&gt;Welcome to Petclinic&lt;/h1&gt;
 
 &lt;div class&#x3D;&quot;container-fluid&quot;&gt;
   &lt;div class&#x3D;&quot;container xd-container&quot;&gt;
@@ -271,7 +390,7 @@ export class WelcomeComponent implements OnInit {
 </code></pre>
     </div>
 
-    <div class="tab-pane fade " id="c-styleData">
+    <div class="tab-pane fade " id="styleData">
                 <p class="comment">
                     <code>./welcome.component.css</code>
                 </p>
@@ -292,11 +411,50 @@ export class WelcomeComponent implements OnInit {
  *  * limitations under the License.
  *
  */
+/* Center all HTML components */
+body, html {
+  height: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 
+.container-fluid {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.container.xd-container {
+  text-align: center;
+}
+
+.row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.col-md-12 {
+  text-align: center;
+}
+
+.img-responsive {
+  display: block;
+  margin: 0 auto;
+}
+
+.title {
+  text-align: center;
+  padding-top: 2rem;
+}
 </code></pre>
     </div>
 
-    <div class="tab-pane fade " id="c-tree">
+    <div class="tab-pane fade " id="tree">
         <div id="tree-container"></div>
         <div class="tree-legend">
             <div class="title">
@@ -317,11 +475,11 @@ export class WelcomeComponent implements OnInit {
     
 </div>
 
-<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/vis-network.min.js"></script>
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><!--  ~ /*  ~  * Copyright 2016-2017 the original author or authors.  ~  *  ~  * Licensed under the Apache License, Version 2.0 (the "License");  ~  * you may not use this file except in compliance with the License.  ~  * You may obtain a copy of the License at  ~  *  ~  *      http://www.apache.org/licenses/LICENSE-2.0  ~  *  ~  * Unless required by applicable law or agreed to in writing, software  ~  * distributed under the License is distributed on an "AS IS" BASIS,  ~  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  ~  * See the License for the specific language governing permissions and  ~  * limitations under the License.  ~  */  --><h1>Welcome to Petclinic</h1><div class="container-fluid">  <div class="container xd-container">    <h2>Welcome</h2>    <div class="row">      <div class="col-md-12">        <img class="img-responsive" src="./assets/images/pets.png" alt="pets logo"/>      </div>    </div>  </div></div>'
+        var COMPONENT_TEMPLATE = '<div><!--  ~ /*  ~  * Copyright 2016-2017 the original author or authors.  ~  *  ~  * Licensed under the Apache License, Version 2.0 (the "License");  ~  * you may not use this file except in compliance with the License.  ~  * You may obtain a copy of the License at  ~  *  ~  *      http://www.apache.org/licenses/LICENSE-2.0  ~  *  ~  * Unless required by applicable law or agreed to in writing, software  ~  * distributed under the License is distributed on an "AS IS" BASIS,  ~  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  ~  * See the License for the specific language governing permissions and  ~  * limitations under the License.  ~  */  --><h1 class="title">Welcome to Petclinic</h1><div class="container-fluid">  <div class="container xd-container">    <h2>Welcome</h2>    <div class="row">      <div class="col-md-12">        <img class="img-responsive" src="./assets/images/pets.png" alt="pets logo"/>      </div>    </div>  </div></div>'
     var COMPONENTS = [{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'DummyComponent', 'selector': ''},{'name': 'OwnerAddComponent', 'selector': 'app-owner-add'},{'name': 'OwnerDetailComponent', 'selector': 'app-owner-detail'},{'name': 'OwnerEditComponent', 'selector': 'app-owner-edit'},{'name': 'OwnerListComponent', 'selector': 'app-owner-list'},{'name': 'PageNotFoundComponent', 'selector': 'app-page-not-found'},{'name': 'PetAddComponent', 'selector': 'app-pet-add'},{'name': 'PetEditComponent', 'selector': 'app-pet-edit'},{'name': 'PetListComponent', 'selector': 'app-pet-list'},{'name': 'PettypeAddComponent', 'selector': 'app-pettype-add'},{'name': 'PettypeEditComponent', 'selector': 'app-pettype-edit'},{'name': 'PettypeListComponent', 'selector': 'app-pettype-list'},{'name': 'RouterOutletStubComponent', 'selector': 'app-router-outlet'},{'name': 'SpecialtyAddComponent', 'selector': 'app-specialty-add'},{'name': 'SpecialtyEditComponent', 'selector': 'app-specialty-edit'},{'name': 'SpecialtyListComponent', 'selector': 'app-specialty-list'},{'name': 'VetAddComponent', 'selector': 'app-vet-add'},{'name': 'VetEditComponent', 'selector': 'app-vet-edit'},{'name': 'VetListComponent', 'selector': 'app-vet-list'},{'name': 'VisitAddComponent', 'selector': 'app-visit-add'},{'name': 'VisitEditComponent', 'selector': 'app-visit-edit'},{'name': 'VisitListComponent', 'selector': 'app-visit-list'},{'name': 'WelcomeComponent', 'selector': 'app-welcome'}];
     var DIRECTIVES = [{'name': 'RouterLinkStubDirective', 'selector': '[appRouterLink]'}];
     var ACTUAL_COMPONENT = {'name': 'WelcomeComponent'};
@@ -337,14 +495,16 @@ export class WelcomeComponent implements OnInit {
 
 
 
-                   
+
+
+
 
 
 
 
                    </div><div class="search-results">
     <div class="has-results">
-        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
         <ul class="search-results-list"></ul>
     </div>
     <div class="no-results">
@@ -356,16 +516,56 @@ export class WelcomeComponent implements OnInit {
            </div>
        </div>
 
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
             var COMPODOC_CURRENT_PAGE_URL = 'WelcomeComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
        </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var updateDarkModeSwitchOffset = function () {
+                    var content = document.querySelector('.content');
+                    var scrollbarWidth = 0;
+
+                    if (content) {
+                         scrollbarWidth = Math.max(0, content.offsetWidth - content.clientWidth);
+                    }
+
+                    document.documentElement.style.setProperty(
+                         '--content-scrollbar-width',
+                         scrollbarWidth + 'px'
+                    );
+               };
+
+               updateDarkModeSwitchOffset();
+               requestAnimationFrame(updateDarkModeSwitchOffset);
+               window.addEventListener('resize', updateDarkModeSwitchOffset);
+
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
 
        <script src="../js/libs/custom-elements.min.js"></script>
        <script src="../js/libs/lit-html.js"></script>
-       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
-       <script src="../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+
        <script src="../js/menu-wc.js" defer></script>
 
        <script src="../js/libs/bootstrap-native.js"></script>
@@ -373,7 +573,6 @@ export class WelcomeComponent implements OnInit {
        <script src="../js/libs/es6-shim.min.js"></script>
        <script src="../js/libs/EventDispatcher.js"></script>
        <script src="../js/libs/promise.min.js"></script>
-       <script src="../js/libs/zepto.min.js"></script>
 
        <script src="../js/compodoc.js"></script>
 

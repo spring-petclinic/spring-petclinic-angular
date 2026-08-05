@@ -1,17 +1,15 @@
-(function(compodoc) {
-    var MAX_RESULTS = 15,
-        MAX_DESCRIPTION_SIZE = 500,
-
-        usePushState = (typeof history.pushState !== 'undefined'),
-
-    // DOM Elements
-        $body = $('body'),
+(function (compodoc) {
+    var usePushState = typeof history.pushState !== 'undefined',
+        // DOM Elements
+        $body = document.querySelector('body'),
         $searchResults,
         $searchInput,
         $searchList,
         $searchTitle,
         $searchResultsCount,
         $searchQuery,
+        $searchInputs,
+        $searchClearButtons,
         $mainContainer,
         $xsMenu;
 
@@ -19,10 +17,11 @@
     function throttle(fn, wait) {
         var timeout;
 
-        return function() {
-            var ctx = this, args = arguments;
+        return function () {
+            var ctx = this,
+                args = arguments;
             if (!timeout) {
-                timeout = setTimeout(function() {
+                timeout = setTimeout(function () {
                     timeout = undefined;
                     fn.apply(ctx, args);
                 }, wait);
@@ -33,24 +32,28 @@
     function displayResults(res) {
         var noResults = res.count == 0;
         var groups = {};
-        $searchResults.toggleClass('no-results', noResults);
+        if (noResults) {
+            $searchResults.classList.add('no-results');
+        } else {
+            $searchResults.classList.remove('no-results');
+        }
 
         // Clear old results
-        $searchList.empty();
+        $searchList.innerText = '';
 
         // Display title for research
-        $searchResultsCount.text(res.count);
-        $searchQuery.text(res.query);
+        $searchResultsCount.innerText = res.count;
+        $searchQuery.innerText = res.query;
 
         // Group result by context
-        res.results.forEach(function(res) {
+        res.results.forEach(function (res) {
             var context = res.title.split(' - ')[0];
             if (typeof groups[context] === 'undefined') {
                 groups[context] = {
                     results: [res]
-                }
+                };
             } else {
-                groups[context].results.push(res)
+                groups[context].results.push(res);
             }
         });
 
@@ -58,34 +61,48 @@
 
         for (var i = 0; i < sortedGroups.length; i++) {
             var property = sortedGroups[i];
-            
-            var $li = $('<li>', {
-                'class': 'search-results-group'
-            });
+
+            var $li = document.createElement('li');
+            $li.classList.add('search-results-group');
             var finalPropertyLabel = '';
             var propertyLabels = property.split('-');
-            
-            if (propertyLabels.length === 2 && propertyLabels[0] !== 'miscellaneous' && propertyLabels[0] !== 'additional') {
-                finalPropertyLabel = propertyLabels[0].charAt(0).toUpperCase() + propertyLabels[0].substring(1) + ' - ' + propertyLabels[1].charAt(0).toUpperCase() + propertyLabels[1].substring(1) + ' (' + groups[property].results.length + ')';
+
+            if (
+                propertyLabels.length === 2 &&
+                propertyLabels[0] !== 'miscellaneous' &&
+                propertyLabels[0] !== 'additional'
+            ) {
+                finalPropertyLabel =
+                    propertyLabels[0].charAt(0).toUpperCase() +
+                    propertyLabels[0].substring(1) +
+                    ' - ' +
+                    propertyLabels[1].charAt(0).toUpperCase() +
+                    propertyLabels[1].substring(1) +
+                    ' (' +
+                    groups[property].results.length +
+                    ')';
             } else if (propertyLabels[0] === 'additional') {
-                finalPropertyLabel = 'Additional pages' + ' (' + groups[property].results.length + ')'
+                finalPropertyLabel =
+                    'Additional pages' + ' (' + groups[property].results.length + ')';
             } else {
-                finalPropertyLabel = propertyLabels[0].charAt(0).toUpperCase() + propertyLabels[0].substring(1) + ' (' + groups[property].results.length + ')'
+                finalPropertyLabel =
+                    propertyLabels[0].charAt(0).toUpperCase() +
+                    propertyLabels[0].substring(1) +
+                    ' (' +
+                    groups[property].results.length +
+                    ')';
             }
-            var $groupTitle = $('<h3>', {
-                'text': finalPropertyLabel
-            });
-            $groupTitle.appendTo($li);
+            var $groupTitle = document.createElement('h3');
+            $groupTitle.innerText = finalPropertyLabel;
+            $li.appendChild($groupTitle);
 
-            var $ulResults = $('<ul>', {
-                'class': 'search-results-list'
-            })
+            var $ulResults = document.createElement('ul');
+            $ulResults.classList.add('search-results-list');
 
-            groups[property].results.forEach(function(res) {
+            groups[property].results.forEach(function (res) {
                 var link = '';
-                var $liResult = $('<li>', {
-                    'class': 'search-results-item'
-                });
+                var $liResult = document.createElement('li');
+                $liResult.classList.add('search-results-item');
                 switch (COMPODOC_CURRENT_PAGE_DEPTH) {
                     case 0:
                         link = './';
@@ -97,72 +114,104 @@
                     case 5:
                         link = '../'.repeat(COMPODOC_CURRENT_PAGE_DEPTH);
                         break;
-                };
-                var finalResLabel = res.title.split(' - ')[1].charAt(0).toUpperCase() + res.title.split(' - ')[1].substring(1);
-                var $link = $('<a>', {
-                    'href': link + res.url,
-                    'text': finalResLabel
-                });
-                $link.appendTo($liResult);
-                $liResult.appendTo($ulResults);
+                }
+                var finalResLabel =
+                    res.title.split(' - ')[1].charAt(0).toUpperCase() +
+                    res.title.split(' - ')[1].substring(1);
+                var $link = document.createElement('a');
+                $link.innerText = finalResLabel;
+                $link.href = link + res.url;
+                $liResult.appendChild($link);
+                $ulResults.appendChild($liResult);
             });
-            $ulResults.appendTo($li);
+            $li.appendChild($ulResults);
 
-            $li.appendTo($searchList);
+            $searchList.appendChild($li);
         }
     }
 
     function launchSearch(q) {
-        $body.addClass('with-search');
+        $body.classList.add('with-search');
 
-        if ($xsMenu.css('display') === 'block') {
-            $mainContainer.css('height', 'calc(100% - 100px)');
-            $mainContainer.css('margin-top', '100px');
+        if ($xsMenu.style.display === 'block') {
+            $mainContainer.style.height = 'calc(100% - 100px)';
+            $mainContainer.style.marginTop = '100px';
         }
 
-        throttle(compodoc.search.query(q, 0, MAX_RESULTS)
-        .then(function(results) {
-            displayResults(results);
-        }), 1000);
+        throttle(
+            compodoc.search.query(q, 0, MAX_SEARCH_RESULTS).then(function (results) {
+                displayResults(results);
+            }),
+            1000
+        );
     }
 
     function closeSearch() {
-        $body.removeClass('with-search');
-        if ($xsMenu.css('display') === 'block') {
-            $mainContainer.css('height', 'calc(100% - 50px)');
-            $mainContainer.css('margin-top', '50px');
+        $body.classList.remove('with-search');
+        if ($xsMenu.style.display === 'block') {
+            $mainContainer.style.height = 'calc(100% - 50px)';
         }
     }
 
     function bindMenuButton() {
-        document.getElementById('btn-menu').addEventListener('click', function() {
-            if ($xsMenu.css('display') === 'none') {
-                $body.removeClass('with-search');
-                $mainContainer.css('height', 'calc(100% - 50px)');
-                $mainContainer.css('margin-top', '50px');
+        document.getElementById('btn-menu').addEventListener('click', function () {
+            if ($xsMenu.style.display === 'none') {
+                $body.classList.remove('with-search');
+                $mainContainer.style.height = 'calc(100% - 50px)';
             }
-            $.each($searchInputs, function(index, item){
-                var item = $(item);
-                item.val('');
+            $searchInputs.forEach((item, index) => {
+                item.value = '';
             });
+            syncSearchClearButtons();
+        });
+    }
+
+    function getSearchInputContainer(element) {
+        var current = element;
+        while (current && current !== document) {
+            if (current.id === 'book-search-input') {
+                return current;
+            }
+            current = current.parentNode;
+        }
+        return null;
+    }
+
+    function syncSearchClearButtons() {
+        if (!$searchInputs || !$searchClearButtons) {
+            return;
+        }
+
+        var hasValue = false;
+        $searchInputs.forEach((input) => {
+            if (input.value && input.value.length > 0) {
+                hasValue = true;
+            }
+        });
+
+        $searchClearButtons.forEach((button) => {
+            button.classList.toggle('is-visible', hasValue);
         });
     }
 
     function bindSearch() {
         // Bind DOM
-        $searchInputs        = $('#book-search-input input');
+        $searchInputs = document.querySelectorAll('#book-search-input input');
+        $searchClearButtons = document.querySelectorAll(
+            '#book-search-input [data-search-input-clear]'
+        );
 
-        $searchResults = $('.search-results');
-        $searchList         = $searchResults.find('.search-results-list');
-        $searchTitle        = $searchResults.find('.search-results-title');
-        $searchResultsCount = $searchTitle.find('.search-results-count');
-        $searchQuery        = $searchTitle.find('.search-query');
-        $mainContainer      = $('.container-fluid');
-        $xsMenu             = $('.xs-menu');
+        $searchResults = document.querySelector('.search-results');
+        $searchList = $searchResults.querySelector('.search-results-list');
+        $searchTitle = $searchResults.querySelector('.search-results-title');
+        $searchResultsCount = $searchTitle.querySelector('.search-results-count');
+        $searchQuery = $searchTitle.querySelector('.search-query');
+        $mainContainer = document.querySelector('.container-fluid');
+        $xsMenu = document.querySelector('.xs-menu');
 
         // Launch query based on input content
         function handleUpdate(item) {
-            var q = item.val();
+            var q = item.value;
 
             if (q.length == 0) {
                 closeSearch();
@@ -175,51 +224,71 @@
         // Detect true content change in search input
         var propertyChangeUnbound = false;
 
-        $.each($searchInputs, function(index, item){
-            var item = $(item);
+        $searchInputs.forEach((item, index) => {
             // HTML5 (IE9 & others)
-            item.on('input', function(e) {
-                // Unbind propertychange event for IE9+
-                if (!propertyChangeUnbound) {
-                    $(this).unbind('propertychange');
-                    propertyChangeUnbound = true;
-                }
-
-                handleUpdate($(this));
+            item.addEventListener('input', function (e) {
+                handleUpdate(this);
+                syncSearchClearButtons();
             });
             // Workaround for IE < 9
-            item.on('propertychange', function(e) {
+            item.addEventListener('propertychange', function (e) {
                 if (e.originalEvent.propertyName == 'value') {
-                    handleUpdate($(this));
+                    handleUpdate(this);
+                    syncSearchClearButtons();
                 }
             });
             // Push to history on blur
-            item.on('blur', function(e) {
+            item.addEventListener('blur', function (e) {
                 // Update history state
                 if (usePushState) {
-                    var uri = updateQueryString('q', $(this).val());
-                    if ($(this).val() !== '') {
+                    var uri = updateQueryString('q', this.value);
+                    if (this.value !== '') {
                         history.pushState({ path: uri }, null, uri);
                     }
                 }
             });
         });
+
+        $searchClearButtons.forEach((button) => {
+            button.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                var container = getSearchInputContainer(this);
+                var containerInput = container ? container.querySelector('input') : null;
+                var nextValue = '';
+
+                $searchInputs.forEach((input) => {
+                    input.value = nextValue;
+                });
+
+                if (containerInput) {
+                    handleUpdate(containerInput);
+                    containerInput.focus();
+                } else if ($searchInputs.length > 0) {
+                    handleUpdate($searchInputs[0]);
+                }
+
+                syncSearchClearButtons();
+            });
+        });
+
+        syncSearchClearButtons();
     }
 
     function launchSearchFromQueryString() {
         var q = getParameterByName('q');
         if (q && q.length > 0) {
             // Update search inputs
-            $.each($searchInputs, function(index, item){
-                var item = $(item);
-                item.val(q)
+            $searchInputs.forEach((item, index) => {
+                item.value = q;
             });
+            syncSearchClearButtons();
             // Launch search
             launchSearch(q);
         }
     }
 
-    compodoc.addEventListener(compodoc.EVENTS.SEARCH_READY, function(event) {
+    compodoc.addEventListener(compodoc.EVENTS.SEARCH_READY, function (event) {
         bindSearch();
 
         bindMenuButton();
@@ -250,22 +319,17 @@
             else {
                 hash = url.split('#');
                 url = hash[0].replace(re, '$1$3').replace(/(&|\?)$/, '');
-                if (typeof hash[1] !== 'undefined' && hash[1] !== null)
-                    url += '#' + hash[1];
+                if (typeof hash[1] !== 'undefined' && hash[1] !== null) url += '#' + hash[1];
                 return url;
             }
-        }
-        else {
+        } else {
             if (typeof value !== 'undefined' && value !== null) {
                 var separator = url.indexOf('?') !== -1 ? '&' : '?';
                 hash = url.split('#');
                 url = hash[0] + separator + key + '=' + value;
-                if (typeof hash[1] !== 'undefined' && hash[1] !== null)
-                    url += '#' + hash[1];
+                if (typeof hash[1] !== 'undefined' && hash[1] !== null) url += '#' + hash[1];
                 return url;
-            }
-            else
-                return url;
+            } else return url;
         }
     }
 })(compodoc);

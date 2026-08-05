@@ -8,22 +8,95 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
-	      <link rel="stylesheet" href="../styles/style.css">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
     </head>
     <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
 
-        <div class="navbar navbar-default navbar-fixed-top visible-xs">
-            <a href="../" class="navbar-brand">spring-petclinic-angular documentation</a>
-            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">spring-petclinic-angular documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
         </div>
 
         <div class="xs-menu menu" id="mobile-menu">
-                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+                <div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search">
+    <button type="button"
+        class="search-input-clear"
+        aria-label="Clear search"
+        data-search-input-clear>&times;</button>
+</div>
+            <compodoc-menu></compodoc-menu>
         </div>
 
         <div class="container-fluid main">
            <div class="row main">
-               <div class="hidden-xs menu">
+               <div class="d-none d-md-block menu">
                    <compodoc-menu mode="normal"></compodoc-menu>
                </div>
                <!-- START CONTENT -->
@@ -33,51 +106,70 @@
 
 
 
+
+
+
+
 <ol class="breadcrumb">
-  <li>Components</li>
-  <li>PetEditComponent</li>
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  PetEditComponent</li>
 </ol>
 
+<div class="io-file io-file-path" data-compodoc="entity-file-path">
+    <span class="icon ion-ios-document" aria-hidden="true"></span>
+    <code>src/app/pets/pet-edit/pet-edit.component.ts</code>
+</div>
+
 <ul class="nav nav-tabs" role="tablist">
-        <li class="active">
-            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
         </li>
-        <li >
-            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        <li class="nav-item">
+            <a href="#api" class="nav-link"
+                role="tab" id="api-tab" data-bs-toggle="tab" data-link="api">API</a>
         </li>
-        <li >
-            <a href="#templateData" role="tab" id="templateData-tab" data-toggle="tab" data-link="template">Template</a>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
         </li>
-        <li >
-            <a href="#styleData" role="tab" id="styleData-tab" data-toggle="tab" data-link="style">Styles</a>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
         </li>
-        <li >
-            <a href="#tree" role="tab" id="tree-tab" data-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        <li class="nav-item">
+            <a href="#styleData" class="nav-link"
+                role="tab" id="styleData-tab" data-bs-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
         </li>
 </ul>
 
 <div class="tab-content">
-    <div class="tab-pane fade active in" id="c-info"><p class="comment">
-    <h3>File</h3>
-</p>
-<p class="comment">
-    <code>src/app/pets/pet-edit/pet-edit.component.ts</code>
-</p>
-
+    <div class="tab-pane fade active in" id="info">
 
 
     <p class="comment">
         <h3>Implements</h3>
     </p>
     <p class="comment">
-                    <code><a href="https://angular.io/api/core/OnInit" target="_blank" >OnInit</a></code>
+                    <code><a href="https://angular.dev/api/core/OnInit" target="_blank" >OnInit</a></code>
     </p>
 
 
-<section>
+<section data-compodoc="block-metadata">
     <h3>Metadata</h3>
-    <table class="table table-sm table-hover">
+    <table class="table table-sm table-hover metadata">
         <tbody>
+
+            <tr>
+                <td class="col-md-3">changeDetection</td>
+                <td class="col-md-9"><code>ChangeDetectionStrategy.OnPush</code></td>
+            </tr>
 
 
 
@@ -94,10 +186,13 @@
                 <td class="col-md-9"><code>app-pet-edit</code></td>
             </tr>
 
+
+
             <tr>
                 <td class="col-md-3">styleUrls</td>
                 <td class="col-md-9"><code>./pet-edit.component.css</code></td>
             </tr>
+
 
 
 
@@ -117,89 +212,123 @@
     </table>
 </section>
 
-    <section>
+        <section data-compodoc="block-relationships">
+            <h3>Relationships</h3>
+
+            <div class="row pt-3">
+                <div class="col-sm-6">
+                    <h4>Used by</h4>
+                        <ul class="list-unstyled relationships-list">
+                                <li>
+                                            <code><a href="../modules/PetsModule.html" target="_self" >PetsModule</a></code>
+                                </li>
+                        </ul>
+                </div>
+
+                <div class="col-sm-6">
+                    <h4>Depends on</h4>
+                        <ul class="list-unstyled relationships-list">
+                                <li>
+                                            <code><a href="https://angular.dev/api/core/OnInit" target="_blank" >OnInit</a></code>
+                                </li>
+                        </ul>
+                </div>
+            </div>
+        </section>
+</div>
+
+    <div class="tab-pane fade " id="api">    <section data-compodoc="block-index">
     <h3 id="index">Index</h3>
-    <table class="table table-sm table-bordered index-table">
-        <tbody>
+        <table class="table table-sm table-bordered index-table">
+            <tbody>
                 <tr>
-                    <td class="col-md-4">
+                    <td class="col-md-3">
                         <h6><b>Properties</b></h6>
                     </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
+                    <td class="col-md-9">
                         <ul class="index-list">
                             <li>
-                                <a href="#currentOwner">currentOwner</a>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#currentOwner" >currentOwner</a>
                             </li>
                             <li>
-                                <a href="#errorMessage">errorMessage</a>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#errorMessage" >errorMessage</a>
                             </li>
                             <li>
-                                <a href="#pet">pet</a>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#pet" >pet</a>
                             </li>
                             <li>
-                                <a href="#petTypes">petTypes</a>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#petTypes" >petTypes</a>
                             </li>
                         </ul>
                     </td>
                 </tr>
+            </tbody>
+        </table>
 
+        <table class="table table-sm table-bordered index-table">
+            <tbody>
                 <tr>
-                    <td class="col-md-4">
+                    <td class="col-md-3">
                         <h6><b>Methods</b></h6>
                     </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
+                    <td class="col-md-9">
                         <ul class="index-list">
                             <li>
-                                <a href="#gotoOwnerDetail">gotoOwnerDetail</a>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#gotoOwnerDetail" >gotoOwnerDetail</a>
                             </li>
                             <li>
-                                <a href="#ngOnInit">ngOnInit</a>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#ngOnInit" >ngOnInit</a>
                             </li>
                             <li>
-                                <a href="#onSubmit">onSubmit</a>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#onSubmit" >onSubmit</a>
                             </li>
                         </ul>
                     </td>
                 </tr>
+            </tbody>
+        </table>
 
+        <table class="table table-sm table-bordered index-table">
+            <tbody>
                 <tr>
-                    <td class="col-md-4">
+                    <td class="col-md-3">
                         <h6><b>Inputs</b></h6>
                     </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
+                    <td class="col-md-9">
                         <ul class="index-list">
                             <li>
-                                <a href="#currentType">currentType</a>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">I</span><a href="#currentType" >currentType</a>
                             </li>
                         </ul>
                     </td>
                 </tr>
+            </tbody>
+        </table>
 
 
 
 
-        </tbody>
-    </table>
 </section>
 
-    <section>
+    <section data-compodoc="block-constructor">
     <h3 id="constructor">Constructor</h3>
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(petService: <a href="../injectables/PetService.html">PetService</a>, petTypeService: <a href="../injectables/PetTypeService.html">PetTypeService</a>, router: <a href="https://angular.io/api/router/Router" target="_blank">Router</a>, route: <a href="https://angular.io/api/router/ActivatedRoute" target="_blank">ActivatedRoute</a>)</code>
+<code>constructor(petService: <a href="../injectables/PetService.html" target="_self">PetService</a>, petTypeService: <a href="../injectables/PetTypeService.html" target="_self">PetTypeService</a>, ownerService: <a href="../injectables/OwnerService.html" target="_self">OwnerService</a>, router: <a href="https://angular.dev/api/router/Router" target="_blank">Router</a>, route: <a href="https://angular.dev/api/router/ActivatedRoute" target="_blank">ActivatedRoute</a>)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="44" class="link-to-prism">src/app/pets/pet-edit/pet-edit.component.ts:44</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="46" class="link-to-prism">src/app/pets/pet-edit/pet-edit.component.ts:46</a></div>
                             </td>
                         </tr>
 
@@ -241,10 +370,22 @@
                                                     
                                                 </tr>
                                                 <tr>
+                                                        <td>ownerService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/OwnerService.html" target="_self" >OwnerService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
                                                         <td>router</td>
                                                   
                                                         <td>
-                                                                        <code><a href="https://angular.io/api/router/Router" target="_blank" >Router</a></code>
+                                                                        <code><a href="https://angular.dev/api/router/Router" target="_blank" >Router</a></code>
                                                         </td>
                                                   
                                                     <td>
@@ -256,7 +397,7 @@
                                                         <td>route</td>
                                                   
                                                         <td>
-                                                                        <code><a href="https://angular.io/api/router/ActivatedRoute" target="_blank" >ActivatedRoute</a></code>
+                                                                        <code><a href="https://angular.dev/api/router/ActivatedRoute" target="_blank" >ActivatedRoute</a></code>
                                                         </td>
                                                   
                                                     <td>
@@ -273,7 +414,7 @@
         </table>
 </section>
 
-    <section>
+    <section data-compodoc="block-inputs">
     <h3 id="inputs">Inputs</h3>
         <table class="table table-sm table-bordered">
             <tbody>
@@ -291,7 +432,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="41" class="link-to-prism">src/app/pets/pet-edit/pet-edit.component.ts:41</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="43" class="link-to-prism">src/app/pets/pet-edit/pet-edit.component.ts:43</a></div>
                             </td>
                         </tr>
             </tbody>
@@ -300,7 +441,8 @@
 
 
 
-    <section>
+
+    <section data-compodoc="block-methods">
     
     <h3 id="methods">
         Methods
@@ -311,66 +453,63 @@
                 <td class="col-md-4">
                     <a name="gotoOwnerDetail"></a>
                     <span class="name">
-                        <b>
-                            gotoOwnerDetail
-                        </b>
+                        <span ><b>gotoOwnerDetail</b></span>
                         <a href="#gotoOwnerDetail"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>gotoOwnerDetail(owner: <a href="../interfaces/Owner.html">Owner</a>)</code>
+<code>gotoOwnerDetail(owner: <a href="../interfaces/Owner.html" target="_self">Owner</a>)</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="83"
-                            class="link-to-prism">src/app/pets/pet-edit/pet-edit.component.ts:83</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="91"
+                                    class="link-to-prism">src/app/pets/pet-edit/pet-edit.component.ts:91</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>owner</td>
-                                    <td>
-                                                <code><a href="../interfaces/Owner.html" target="_self" >Owner</a></code>
-                                    </td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>owner</td>
+                                            <td>
+                                                            <code><a href="../interfaces/Owner.html" target="_self" >Owner</a></code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -381,9 +520,7 @@
                 <td class="col-md-4">
                     <a name="ngOnInit"></a>
                     <span class="name">
-                        <b>
-                            ngOnInit
-                        </b>
+                        <span ><b>ngOnInit</b></span>
                         <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
@@ -395,21 +532,21 @@
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="54"
-                            class="link-to-prism">src/app/pets/pet-edit/pet-edit.component.ts:54</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="59"
+                                    class="link-to-prism">src/app/pets/pet-edit/pet-edit.component.ts:59</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
 
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
-                    </div>
+                        </div>
                 </td>
             </tr>
         </tbody>
@@ -420,190 +557,184 @@
                 <td class="col-md-4">
                     <a name="onSubmit"></a>
                     <span class="name">
-                        <b>
-                            onSubmit
-                        </b>
+                        <span ><b>onSubmit</b></span>
                         <a href="#onSubmit"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>onSubmit(pet: <a href="../interfaces/Pet.html">Pet</a>)</code>
+<code>onSubmit(pet: <a href="../interfaces/Pet.html" target="_self">Pet</a>)</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="71"
-                            class="link-to-prism">src/app/pets/pet-edit/pet-edit.component.ts:71</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="79"
+                                    class="link-to-prism">src/app/pets/pet-edit/pet-edit.component.ts:79</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>pet</td>
-                                    <td>
-                                                <code><a href="../interfaces/Pet.html" target="_self" >Pet</a></code>
-                                    </td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>pet</td>
+                                            <td>
+                                                            <code><a href="../interfaces/Pet.html" target="_self" >Pet</a></code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
     </table>
 </section>
-    <section>
+
+    <section data-compodoc="block-properties">
     
-        <h3 id="inputs">
-            Properties
-        </h3>
-        <table class="table table-sm table-bordered">
-            <tbody>
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="currentOwner"></a>
+                    <span class="name">
+                        <span ><b>currentOwner</b></span>
+                        <a href="#currentOwner"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
                 <tr>
                     <td class="col-md-4">
-                        <a name="currentOwner"></a>
-                        <span class="name">
-                            <b>
-                            currentOwner</b>
-                            <a href="#currentOwner"><span class="icon ion-ios-link"></span></a>
-                        </span>
+                        <i>Type : </i>        <code><a href="../interfaces/Owner.html" target="_self" >Owner</a></code>
+
                     </td>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                            <i>Type : </i>        <code><a href="../interfaces/Owner.html" target="_self" >Owner</a></code>
-
+                                <div class="io-line">Defined in <a href="" data-line="44" class="link-to-prism">src/app/pets/pet-edit/pet-edit.component.ts:44</a></div>
                         </td>
                     </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="42" class="link-to-prism">src/app/pets/pet-edit/pet-edit.component.ts:42</a></div>
-                            </td>
-                        </tr>
 
 
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="errorMessage"></a>
+                    <span class="name">
+                        <span ><b>errorMessage</b></span>
+                        <a href="#errorMessage"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
                 <tr>
                     <td class="col-md-4">
-                        <a name="errorMessage"></a>
-                        <span class="name">
-                            <b>
-                            errorMessage</b>
-                            <a href="#errorMessage"><span class="icon ion-ios-link"></span></a>
-                        </span>
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
                     </td>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-
+                                <div class="io-line">Defined in <a href="" data-line="46" class="link-to-prism">src/app/pets/pet-edit/pet-edit.component.ts:46</a></div>
                         </td>
                     </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="44" class="link-to-prism">src/app/pets/pet-edit/pet-edit.component.ts:44</a></div>
-                            </td>
-                        </tr>
 
 
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="pet"></a>
+                    <span class="name">
+                        <span ><b>pet</b></span>
+                        <a href="#pet"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
                 <tr>
                     <td class="col-md-4">
-                        <a name="pet"></a>
-                        <span class="name">
-                            <b>
-                            pet</b>
-                            <a href="#pet"><span class="icon ion-ios-link"></span></a>
-                        </span>
+                        <i>Type : </i>        <code><a href="../interfaces/Pet.html" target="_self" >Pet</a></code>
+
                     </td>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                            <i>Type : </i>        <code><a href="../interfaces/Pet.html" target="_self" >Pet</a></code>
-
+                                <div class="io-line">Defined in <a href="" data-line="42" class="link-to-prism">src/app/pets/pet-edit/pet-edit.component.ts:42</a></div>
                         </td>
                     </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="40" class="link-to-prism">src/app/pets/pet-edit/pet-edit.component.ts:40</a></div>
-                            </td>
-                        </tr>
 
 
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="petTypes"></a>
+                    <span class="name">
+                        <span ><b>petTypes</b></span>
+                        <a href="#petTypes"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
                 <tr>
                     <td class="col-md-4">
-                        <a name="petTypes"></a>
-                        <span class="name">
-                            <b>
-                            petTypes</b>
-                            <a href="#petTypes"><span class="icon ion-ios-link"></span></a>
-                        </span>
+                        <i>Type : </i>    <code>PetType[]</code>
+
                     </td>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                            <i>Type : </i>    <code>PetType[]</code>
-
+                                <div class="io-line">Defined in <a href="" data-line="45" class="link-to-prism">src/app/pets/pet-edit/pet-edit.component.ts:45</a></div>
                         </td>
                     </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="43" class="link-to-prism">src/app/pets/pet-edit/pet-edit.component.ts:43</a></div>
-                            </td>
-                        </tr>
 
 
-            </tbody>
-        </table>
+        </tbody>
+    </table>
 </section>
 
 </div>
 
 
-    <div class="tab-pane fade  tab-source-code" id="c-source">
+    <div class="tab-pane fade  tab-source-code" id="source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Component, Input, OnInit} from &#x27;@angular/core&#x27;;
 import {Pet} from &#x27;../pet&#x27;;
 import {PetService} from &#x27;../pet.service&#x27;;
@@ -612,10 +743,12 @@ import {Owner} from &#x27;../../owners/owner&#x27;;
 import {PetType} from &#x27;../../pettypes/pettype&#x27;;
 import {PetTypeService} from &#x27;../../pettypes/pettype.service&#x27;;
 
-import * as moment from &#x27;moment&#x27;;
+import moment from &#x27;moment&#x27;;
+import {OwnerService} from &#x27;../../owners/owner.service&#x27;;
 
 @Component({
   selector: &#x27;app-pet-edit&#x27;,
+  standalone: false,
   templateUrl: &#x27;./pet-edit.component.html&#x27;,
   styleUrls: [&#x27;./pet-edit.component.css&#x27;]
 })
@@ -626,7 +759,10 @@ export class PetEditComponent implements OnInit {
   petTypes: PetType[];
   errorMessage: string;
 
-  constructor(private petService: PetService, private petTypeService: PetTypeService, private router: Router,
+  constructor(private petService: PetService,
+              private petTypeService: PetTypeService,
+              private ownerService: OwnerService,
+              private router: Router,
               private route: ActivatedRoute) {
     this.pet &#x3D; {} as Pet;
     this.currentOwner &#x3D; {} as Owner;
@@ -644,7 +780,10 @@ export class PetEditComponent implements OnInit {
     this.petService.getPetById(petId).subscribe(
       pet &#x3D;&gt; {
         this.pet &#x3D; pet;
-        this.currentOwner &#x3D; this.pet.owner;
+        this.ownerService.getOwnerById(pet.ownerId).subscribe(
+          response &#x3D;&gt; {
+            this.currentOwner &#x3D; response;
+          });
         this.currentType &#x3D; this.pet.type;
       },
       error &#x3D;&gt; this.errorMessage &#x3D; error as any);
@@ -654,8 +793,8 @@ export class PetEditComponent implements OnInit {
   onSubmit(pet: Pet) {
     pet.type &#x3D; this.currentType;
     const that &#x3D; this;
-    // format output from datepicker to short string yyyy/mm/dd format
-    pet.birthDate &#x3D; moment(pet.birthDate).format(&#x27;YYYY/MM/DD&#x27;);
+    // format output from datepicker to short string yyyy-mm-dd format (rfc3339)
+    pet.birthDate &#x3D; moment(pet.birthDate).format(&#x27;YYYY-MM-DD&#x27;);
 
     this.petService.updatePet(pet.id.toString(), pet).subscribe(
       res &#x3D;&gt; this.gotoOwnerDetail(this.currentOwner),
@@ -671,7 +810,7 @@ export class PetEditComponent implements OnInit {
 </code></pre>
     </div>
 
-    <div class="tab-pane fade " id="c-templateData">
+    <div class="tab-pane fade " id="templateData">
         <pre class="line-numbers"><code class="language-html">&lt;!--
   ~ /*
   ~  * Copyright 2016-2017 the original author or authors.
@@ -709,32 +848,46 @@ export class PetEditComponent implements OnInit {
         &lt;/div&gt;
       &lt;/div&gt;
       &lt;br/&gt;
-      &lt;div class&#x3D;&quot;form-group &quot;&gt;
+      &lt;div class&#x3D;&quot;form-group has-feedback&quot; [class.has-success]&#x3D;&quot;name.dirty &amp;&amp; name.valid&quot; [class.has-error]&#x3D;&quot;name.dirty &amp;&amp;  !name.valid&quot;&gt;
         &lt;label for&#x3D;&quot;name&quot; class&#x3D;&quot;col-sm-2 control-label&quot;&gt;Name&lt;/label&gt;
         &lt;div class&#x3D;&quot;col-sm-10&quot;&gt;
-          &lt;input id&#x3D;&quot;name&quot; name&#x3D;&quot;name&quot; class&#x3D;&quot;form-control&quot; type&#x3D;&quot;text&quot; [(ngModel)]&#x3D;&quot;pet.name&quot;/&gt;
+          &lt;input id&#x3D;&quot;name&quot; name&#x3D;&quot;name&quot; class&#x3D;&quot;form-control&quot;  minlength&#x3D;&quot;1&quot; maxlength&#x3D;&quot;30&quot;  pattern&#x3D;&quot;^[A-Za-z0-9].{0,29}$&quot; required type&#x3D;&quot;text&quot; [(ngModel)]&#x3D;&quot;pet.name&quot; #name&#x3D;&quot;ngModel&quot;/&gt;
+          &lt;span class&#x3D;&quot;glyphicon form-control-feedback&quot; [class.glyphicon-ok]&#x3D;&quot;name.valid&quot; [class.glyphicon-remove]&#x3D;&quot;!name.valid&quot; aria-hidden&#x3D;&quot;true&quot;&gt;&lt;/span&gt;
+          &lt;span class&#x3D;&quot;help-block&quot; *ngIf&#x3D;&quot;name.dirty &amp;&amp; name.hasError(&#x27;required&#x27;)&quot;&gt;Name is required&lt;/span&gt;
+          &lt;span class&#x3D;&quot;help-block&quot; *ngIf&#x3D;&quot;name.dirty &amp;&amp; name.hasError(&#x27;minlength&#x27;)&quot;&gt;Name must be at least 1 character long&lt;/span&gt;
+          &lt;span class&#x3D;&quot;help-block&quot; *ngIf&#x3D;&quot;name.dirty &amp;&amp; name.hasError(&#x27;maxlength&#x27;)&quot;&gt;Name may be at most 30 character long&lt;/span&gt;
+          &lt;span class&#x3D;&quot;help-block&quot; *ngIf&#x3D;&quot;name.dirty &amp;&amp; name.hasError(&#x27;pattern&#x27;)&quot;&gt;Name must begin with a letter&lt;/span&gt;
         &lt;/div&gt;
       &lt;/div&gt;
-      &lt;div class&#x3D;&quot;form-group &quot;&gt;
+      &lt;div class&#x3D;&quot;form-group has-feedback&quot; [class.has-success]&#x3D;&quot;birthDate.dirty &amp;&amp; birthDate.valid&quot; [class.has-error]&#x3D;&quot;birthDate.dirty &amp;&amp; !birthDate.valid&quot;&gt;
         &lt;label class&#x3D;&quot;col-sm-2 control-label&quot;&gt;Birth Date&lt;/label&gt;
-        &lt;input matInput [matDatepicker]&#x3D;&quot;birthDateDatepicker&quot; [ngModel]&#x3D;&quot;pet.birthDate | date:&#x27;yyyy-MM-dd&#x27;&quot; name&#x3D;&quot;birthDate&quot;&gt;
+        &lt;div class&#x3D;&quot;col-sm-10&quot;&gt;
+        &lt;input matInput [matDatepicker]&#x3D;&quot;birthDateDatepicker&quot;  required [ngModel]&#x3D;&quot;pet.birthDate | date:&#x27;yyyy-MM-dd&#x27;&quot; name&#x3D;&quot;birthDate&quot; #birthDate&#x3D;&quot;ngModel&quot;&gt;
         &lt;mat-datepicker-toggle matSuffix [for]&#x3D;&quot;birthDateDatepicker&quot;&gt;&lt;/mat-datepicker-toggle&gt;
         &lt;mat-datepicker #birthDateDatepicker&gt;&lt;/mat-datepicker&gt;
+          &lt;span class&#x3D;&quot;glyphicon form-control-feedback&quot; [class.glyphicon-ok]&#x3D;&quot;birthDate.valid&quot; [class.glyphicon-remove]&#x3D;&quot;!birthDate.valid&quot; aria-hidden&#x3D;&quot;true&quot;&gt;&lt;/span&gt;
+          &lt;span class&#x3D;&quot;glyphicon form-control-feedback&quot; [class.glyphicon-ok]&#x3D;&quot;birthDate.valid&quot; [class.glyphicon-remove]&#x3D;&quot;!birthDate.valid&quot; aria-hidden&#x3D;&quot;true&quot;&gt;&lt;/span&gt;
+          &lt;span class&#x3D;&quot;help-block&quot; *ngIf&#x3D;&quot;birthDate.dirty &amp;&amp; birthDate.hasError(&#x27;required&#x27;)&quot;&gt;BirthDate is required&lt;/span&gt;
+        &lt;/div&gt;
       &lt;/div&gt;
       &lt;div class&#x3D;&quot;control-group&quot;&gt;
-        &lt;div class&#x3D;&quot;form-group &quot;&gt;
+        &lt;div class&#x3D;&quot;form-group has-feedback&quot; [class.has-success]&#x3D;&quot;pettype.dirty &amp;&amp; pettype.valid&quot; [class.has-error]&#x3D;&quot;pettype.dirty &amp;&amp; !pettype.valid&quot;&gt;
           &lt;label for&#x3D;&quot;type&quot; class&#x3D;&quot;col-sm-2 control-label&quot;&gt;Type &lt;/label&gt;
           &lt;div class&#x3D;&quot;col-sm-10&quot;&gt;
             &lt;div class&#x3D;&quot;col-sm-2&quot;&gt;
               &lt;input id&#x3D;&quot;type1&quot; name&#x3D;&quot;type1&quot; class&#x3D;&quot;form-control&quot; type&#x3D;&quot;text&quot; value&#x3D;&quot;{{ currentType.name }}&quot; readonly/&gt;
             &lt;/div&gt;
             &lt;div class&#x3D;&quot;col-sm-8&quot;&gt;
-              &lt;select id&#x3D;&quot;type&quot; name&#x3D;&quot;type&quot; class&#x3D;&quot;form-control&quot; [(ngModel)]&#x3D;&quot;currentType&quot;&gt;
+              &lt;select id&#x3D;&quot;type&quot; name&#x3D;&quot;pettype&quot; class&#x3D;&quot;form-control&quot; required [(ngModel)]&#x3D;&quot;currentType&quot;  #pettype&#x3D;&quot;ngModel&quot;&gt;
                 &lt;option *ngFor&#x3D;&quot;let type of petTypes&quot;
-                        [selected]&#x3D;&quot;type.id &#x3D;&#x3D; currentType.id ? true : null&quot;
+                        [selected]&#x3D;&quot;type.id &#x3D;&#x3D;&#x3D; currentType.id ? true : null&quot;
                         [ngValue]&#x3D;&quot;type&quot;&gt;{{ type.name }}
                 &lt;/option&gt;
               &lt;/select&gt;
+              &lt;span class&#x3D;&quot;glyphicon form-control-feedback&quot; [class.glyphicon-ok]&#x3D;&quot;pettype.valid&quot; [class.glyphicon-remove]&#x3D;&quot;!pettype.valid&quot; aria-hidden&#x3D;&quot;true&quot;&gt;&lt;/span&gt;
+              &lt;span class&#x3D;&quot;help-block&quot; *ngIf&#x3D;&quot;pettype.dirty &amp;&amp; pettype.hasError(&#x27;required&#x27;)&quot;&gt;First name is required&lt;/span&gt;
+              &lt;span class&#x3D;&quot;help-block&quot; *ngIf&#x3D;&quot;pettype.dirty &amp;&amp; pettype.hasError(&#x27;minlength&#x27;)&quot;&gt;First name must be at least 2 characters long&lt;/span&gt;
+
             &lt;/div&gt;
           &lt;/div&gt;
         &lt;/div&gt;
@@ -743,7 +896,7 @@ export class PetEditComponent implements OnInit {
         &lt;div class&#x3D;&quot;col-sm-offset-2 col-sm-10&quot;&gt;
           &lt;br/&gt;
           &lt;button class&#x3D;&quot;btn btn-default&quot; type&#x3D;&quot;button&quot; (click)&#x3D;&quot;gotoOwnerDetail(pet.owner)&quot;&gt;&lt; Back&lt;/button&gt;
-          &lt;button class&#x3D;&quot;btn btn-default&quot; type&#x3D;&quot;submit&quot;&gt;Update Pet&lt;/button&gt;
+          &lt;button class&#x3D;&quot;btn btn-default&quot; type&#x3D;&quot;submit&quot; [disabled]&#x3D;&quot;!petForm.valid&quot; &gt;Update Pet&lt;/button&gt;
         &lt;/div&gt;
       &lt;/div&gt;
     &lt;/form&gt;
@@ -752,7 +905,7 @@ export class PetEditComponent implements OnInit {
 </code></pre>
     </div>
 
-    <div class="tab-pane fade " id="c-styleData">
+    <div class="tab-pane fade " id="styleData">
                 <p class="comment">
                     <code>./pet-edit.component.css</code>
                 </p>
@@ -777,7 +930,7 @@ export class PetEditComponent implements OnInit {
 </code></pre>
     </div>
 
-    <div class="tab-pane fade " id="c-tree">
+    <div class="tab-pane fade " id="tree">
         <div id="tree-container"></div>
         <div class="tree-legend">
             <div class="title">
@@ -798,11 +951,11 @@ export class PetEditComponent implements OnInit {
     
 </div>
 
-<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/vis-network.min.js"></script>
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><!--  ~ /*  ~  * Copyright 2016-2017 the original author or authors.  ~  *  ~  * Licensed under the Apache License, Version 2.0 (the "License");  ~  * you may not use this file except in compliance with the License.  ~  * You may obtain a copy of the License at  ~  *  ~  *      http://www.apache.org/licenses/LICENSE-2.0  ~  *  ~  * Unless required by applicable law or agreed to in writing, software  ~  * distributed under the License is distributed on an "AS IS" BASIS,  ~  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  ~  * See the License for the specific language governing permissions and  ~  * limitations under the License.  ~  */  --><div class="container-fluid">  <div class="container xd-container">    <h2>      Pet    </h2>    <form class="form-horizontal" (ngSubmit)="onSubmit(petForm.value)" #petForm="ngForm">      <div class="form-group" hidden="true">        <input type="text" hidden="true" class="form-control" id="id" [(ngModel)]="pet.id" name="id"/>        <input type="text" hidden="true" class="form-control" id="owner" [(ngModel)]="pet.owner" name="owner"/>      </div>      <div class="form-group">        <label for="owner" class="col-sm-2 control-label">Owner</label>        <div class="col-sm-10">          <input id="owner_name" name="owner_name" class="form-control" type="text"                 value="{{ currentOwner.firstName }} {{ currentOwner.lastName }}" readonly/>        </div>      </div>      <br/>      <div class="form-group ">        <label for="name" class="col-sm-2 control-label">Name</label>        <div class="col-sm-10">          <input id="name" name="name" class="form-control" type="text" [(ngModel)]="pet.name"/>        </div>      </div>      <div class="form-group ">        <label class="col-sm-2 control-label">Birth Date</label>        <input matInput [matDatepicker]="birthDateDatepicker" [ngModel]="pet.birthDate | date:\'yyyy-MM-dd\'" name="birthDate">        <mat-datepicker-toggle matSuffix [for]="birthDateDatepicker"></mat-datepicker-toggle>        <mat-datepicker #birthDateDatepicker></mat-datepicker>      </div>      <div class="control-group">        <div class="form-group ">          <label for="type" class="col-sm-2 control-label">Type </label>          <div class="col-sm-10">            <div class="col-sm-2">              <input id="type1" name="type1" class="form-control" type="text" value="{{ currentType.name }}" readonly/>            </div>            <div class="col-sm-8">              <select id="type" name="type" class="form-control" [(ngModel)]="currentType">                <option *ngFor="let type of petTypes"                        [selected]="type.id == currentType.id ? true : null"                        [ngValue]="type">{{ type.name }}                </option>              </select>            </div>          </div>        </div>      </div>      <div class="form-group">        <div class="col-sm-offset-2 col-sm-10">          <br/>          <button class="btn btn-default" type="button" (click)="gotoOwnerDetail(pet.owner)">< Back</button>          <button class="btn btn-default" type="submit">Update Pet</button>        </div>      </div>    </form>  </div></div></div>'
+        var COMPONENT_TEMPLATE = '<div><!--  ~ /*  ~  * Copyright 2016-2017 the original author or authors.  ~  *  ~  * Licensed under the Apache License, Version 2.0 (the "License");  ~  * you may not use this file except in compliance with the License.  ~  * You may obtain a copy of the License at  ~  *  ~  *      http://www.apache.org/licenses/LICENSE-2.0  ~  *  ~  * Unless required by applicable law or agreed to in writing, software  ~  * distributed under the License is distributed on an "AS IS" BASIS,  ~  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  ~  * See the License for the specific language governing permissions and  ~  * limitations under the License.  ~  */  --><div class="container-fluid">  <div class="container xd-container">    <h2>      Pet    </h2>    <form class="form-horizontal" (ngSubmit)="onSubmit(petForm.value)" #petForm="ngForm">      <div class="form-group" hidden="true">        <input type="text" hidden="true" class="form-control" id="id" [(ngModel)]="pet.id" name="id"/>        <input type="text" hidden="true" class="form-control" id="owner" [(ngModel)]="pet.owner" name="owner"/>      </div>      <div class="form-group">        <label for="owner" class="col-sm-2 control-label">Owner</label>        <div class="col-sm-10">          <input id="owner_name" name="owner_name" class="form-control" type="text"                 value="{{ currentOwner.firstName }} {{ currentOwner.lastName }}" readonly/>        </div>      </div>      <br/>      <div class="form-group has-feedback" [class.has-success]="name.dirty && name.valid" [class.has-error]="name.dirty &&  !name.valid">        <label for="name" class="col-sm-2 control-label">Name</label>        <div class="col-sm-10">          <input id="name" name="name" class="form-control"  minlength="1" maxlength="30"  pattern="^[A-Za-z0-9].{0,29}$" required type="text" [(ngModel)]="pet.name" #name="ngModel"/>          <span class="glyphicon form-control-feedback" [class.glyphicon-ok]="name.valid" [class.glyphicon-remove]="!name.valid" aria-hidden="true"></span>          <span class="help-block" *ngIf="name.dirty && name.hasError(\'required\')">Name is required</span>          <span class="help-block" *ngIf="name.dirty && name.hasError(\'minlength\')">Name must be at least 1 character long</span>          <span class="help-block" *ngIf="name.dirty && name.hasError(\'maxlength\')">Name may be at most 30 character long</span>          <span class="help-block" *ngIf="name.dirty && name.hasError(\'pattern\')">Name must begin with a letter</span>        </div>      </div>      <div class="form-group has-feedback" [class.has-success]="birthDate.dirty && birthDate.valid" [class.has-error]="birthDate.dirty && !birthDate.valid">        <label class="col-sm-2 control-label">Birth Date</label>        <div class="col-sm-10">        <input matInput [matDatepicker]="birthDateDatepicker"  required [ngModel]="pet.birthDate | date:\'yyyy-MM-dd\'" name="birthDate" #birthDate="ngModel">        <mat-datepicker-toggle matSuffix [for]="birthDateDatepicker"></mat-datepicker-toggle>        <mat-datepicker #birthDateDatepicker></mat-datepicker>          <span class="glyphicon form-control-feedback" [class.glyphicon-ok]="birthDate.valid" [class.glyphicon-remove]="!birthDate.valid" aria-hidden="true"></span>          <span class="glyphicon form-control-feedback" [class.glyphicon-ok]="birthDate.valid" [class.glyphicon-remove]="!birthDate.valid" aria-hidden="true"></span>          <span class="help-block" *ngIf="birthDate.dirty && birthDate.hasError(\'required\')">BirthDate is required</span>        </div>      </div>      <div class="control-group">        <div class="form-group has-feedback" [class.has-success]="pettype.dirty && pettype.valid" [class.has-error]="pettype.dirty && !pettype.valid">          <label for="type" class="col-sm-2 control-label">Type </label>          <div class="col-sm-10">            <div class="col-sm-2">              <input id="type1" name="type1" class="form-control" type="text" value="{{ currentType.name }}" readonly/>            </div>            <div class="col-sm-8">              <select id="type" name="pettype" class="form-control" required [(ngModel)]="currentType"  #pettype="ngModel">                <option *ngFor="let type of petTypes"                        [selected]="type.id === currentType.id ? true : null"                        [ngValue]="type">{{ type.name }}                </option>              </select>              <span class="glyphicon form-control-feedback" [class.glyphicon-ok]="pettype.valid" [class.glyphicon-remove]="!pettype.valid" aria-hidden="true"></span>              <span class="help-block" *ngIf="pettype.dirty && pettype.hasError(\'required\')">First name is required</span>              <span class="help-block" *ngIf="pettype.dirty && pettype.hasError(\'minlength\')">First name must be at least 2 characters long</span>            </div>          </div>        </div>      </div>      <div class="form-group">        <div class="col-sm-offset-2 col-sm-10">          <br/>          <button class="btn btn-default" type="button" (click)="gotoOwnerDetail(pet.owner)">< Back</button>          <button class="btn btn-default" type="submit" [disabled]="!petForm.valid" >Update Pet</button>        </div>      </div>    </form>  </div></div></div>'
     var COMPONENTS = [{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'DummyComponent', 'selector': ''},{'name': 'OwnerAddComponent', 'selector': 'app-owner-add'},{'name': 'OwnerDetailComponent', 'selector': 'app-owner-detail'},{'name': 'OwnerEditComponent', 'selector': 'app-owner-edit'},{'name': 'OwnerListComponent', 'selector': 'app-owner-list'},{'name': 'PageNotFoundComponent', 'selector': 'app-page-not-found'},{'name': 'PetAddComponent', 'selector': 'app-pet-add'},{'name': 'PetEditComponent', 'selector': 'app-pet-edit'},{'name': 'PetListComponent', 'selector': 'app-pet-list'},{'name': 'PettypeAddComponent', 'selector': 'app-pettype-add'},{'name': 'PettypeEditComponent', 'selector': 'app-pettype-edit'},{'name': 'PettypeListComponent', 'selector': 'app-pettype-list'},{'name': 'RouterOutletStubComponent', 'selector': 'app-router-outlet'},{'name': 'SpecialtyAddComponent', 'selector': 'app-specialty-add'},{'name': 'SpecialtyEditComponent', 'selector': 'app-specialty-edit'},{'name': 'SpecialtyListComponent', 'selector': 'app-specialty-list'},{'name': 'VetAddComponent', 'selector': 'app-vet-add'},{'name': 'VetEditComponent', 'selector': 'app-vet-edit'},{'name': 'VetListComponent', 'selector': 'app-vet-list'},{'name': 'VisitAddComponent', 'selector': 'app-visit-add'},{'name': 'VisitEditComponent', 'selector': 'app-visit-edit'},{'name': 'VisitListComponent', 'selector': 'app-visit-list'},{'name': 'WelcomeComponent', 'selector': 'app-welcome'}];
     var DIRECTIVES = [{'name': 'RouterLinkStubDirective', 'selector': '[appRouterLink]'}];
     var ACTUAL_COMPONENT = {'name': 'PetEditComponent'};
@@ -818,14 +971,16 @@ export class PetEditComponent implements OnInit {
 
 
 
-                   
+
+
+
 
 
 
 
                    </div><div class="search-results">
     <div class="has-results">
-        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
         <ul class="search-results-list"></ul>
     </div>
     <div class="no-results">
@@ -837,16 +992,56 @@ export class PetEditComponent implements OnInit {
            </div>
        </div>
 
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
             var COMPODOC_CURRENT_PAGE_URL = 'PetEditComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
        </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var updateDarkModeSwitchOffset = function () {
+                    var content = document.querySelector('.content');
+                    var scrollbarWidth = 0;
+
+                    if (content) {
+                         scrollbarWidth = Math.max(0, content.offsetWidth - content.clientWidth);
+                    }
+
+                    document.documentElement.style.setProperty(
+                         '--content-scrollbar-width',
+                         scrollbarWidth + 'px'
+                    );
+               };
+
+               updateDarkModeSwitchOffset();
+               requestAnimationFrame(updateDarkModeSwitchOffset);
+               window.addEventListener('resize', updateDarkModeSwitchOffset);
+
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
 
        <script src="../js/libs/custom-elements.min.js"></script>
        <script src="../js/libs/lit-html.js"></script>
-       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
-       <script src="../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+
        <script src="../js/menu-wc.js" defer></script>
 
        <script src="../js/libs/bootstrap-native.js"></script>
@@ -854,7 +1049,6 @@ export class PetEditComponent implements OnInit {
        <script src="../js/libs/es6-shim.min.js"></script>
        <script src="../js/libs/EventDispatcher.js"></script>
        <script src="../js/libs/promise.min.js"></script>
-       <script src="../js/libs/zepto.min.js"></script>
 
        <script src="../js/compodoc.js"></script>
 
