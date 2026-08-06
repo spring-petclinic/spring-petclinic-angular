@@ -34,8 +34,8 @@
           <input [id]=element_id [readonly]="true" type="text" class="form-control" [(ngModel)]="specialty.name" name="spec_name" />
         </td>
         <td>
-          <button class="btn btn-default" (click)="showEditSpecialtyComponent(specialty)">Edit</button>
-          <button class="btn btn-default" (click)="deleteSpecialty(specialty)">Delete</button>
+          <button class="btn btn-secondary" (click)="showEditSpecialtyComponent(specialty)">Edit</button>
+          <button class="btn btn-secondary" (click)="deleteSpecialty(specialty)">Delete</button>
         </td>
       </tr>
       </tbody>
@@ -44,8 +44,8 @@
       <app-specialty-add (newSpeciality)="onNewSpecialty($event)">...</app-specialty-add>
     </div>
     <div>
-      <button *ngIf="isSpecialitiesDataReceived" class="btn btn-default" (click)="gotoHome()">Home</button>
-      <button *ngIf="isSpecialitiesDataReceived" class="btn btn-default" (click)="showAddSpecialtyComponent()"> Add </button>
+      <button *ngIf="isSpecialitiesDataReceived" class="btn btn-secondary" (click)="gotoHome()">Home</button>
+      <button *ngIf="isSpecialitiesDataReceived" class="btn btn-secondary" (click)="showAddSpecialtyComponent()"> Add </button>
     </div>
   </div>
 </div>

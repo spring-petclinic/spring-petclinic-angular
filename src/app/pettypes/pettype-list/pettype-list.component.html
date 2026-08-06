@@ -34,8 +34,8 @@
           <input [id]=element_id [readonly]="true" type="text" class="form-control" [(ngModel)]="pettype.name" name="pettype_name" />
         </td>
         <td>
-          <button class="btn btn-default" (click)="showEditPettypeComponent(pettype)">Edit</button>
-          <button class="btn btn-default" (click)="deletePettype(pettype)">Delete</button>
+          <button class="btn btn-secondary" (click)="showEditPettypeComponent(pettype)">Edit</button>
+          <button class="btn btn-secondary" (click)="deletePettype(pettype)">Delete</button>
         </td>
       </tr>
       </tbody>
@@ -44,8 +44,8 @@
       <app-pettype-add (newPetType)="onNewPettype($event)">...</app-pettype-add>
     </div>
     <div>
-      <button *ngIf="isPetTypesDataReceived" class="btn btn-default" (click)="gotoHome()">Home</button>
-      <button *ngIf="isPetTypesDataReceived" class="btn btn-default" (click)="showAddPettypeComponent()"> Add </button>
+      <button *ngIf="isPetTypesDataReceived" class="btn btn-secondary" (click)="gotoHome()">Home</button>
+      <button *ngIf="isPetTypesDataReceived" class="btn btn-secondary" (click)="showAddPettypeComponent()"> Add </button>
     </div>
   </div>
 </div>

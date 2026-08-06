@@ -18,81 +18,48 @@
 
 <div class="container-fluid">
   <div class="container xd-container">
-
     <h2>New Visit</h2>
 
     <b>Pet</b>
-    <table class="table table-striped">
-      <thead>
-      <tr>
-        <th>Name</th>
-        <th>Birth Date</th>
-        <th>Type</th>
-        <th>Owner</th>
-      </tr>
-      </thead>
-      <tr>
-        <td>{{ currentPet.name }}</td>
-        <td>{{ currentPet.birthDate }}</td>
-        <td>{{ currentPetType.name }}</td>
-        <td>{{ currentOwner.firstName }} {{ currentOwner.lastName }}</td>
-      </tr>
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead><tr><th>Name</th><th>Birth Date</th><th>Type</th><th>Owner</th></tr></thead>
+        <tbody><tr><td>{{ currentPet.name }}</td><td>{{ currentPet.birthDate }}</td><td>{{ currentPetType.name }}</td><td>{{ currentOwner.firstName }} {{ currentOwner.lastName }}</td></tr></tbody>
+      </table>
+    </div>
 
-    </table>
-
-    <form id="visit" class="form-horizontal" (ngSubmit)="onSubmit(visitForm.value)" #visitForm="ngForm">
-
-      <div class="form-group" >
-
-        <div class="form-group has-feedback" [class.has-success]="date.dirty && date.valid" [class.has-error]="date.dirty && !date.valid">
-          <label class="col-sm-2 control-label">Date</label>
-          <div class="col-sm-10">
-            <input matInput [matDatepicker]="visitDateDatepicker" required [ngModel]="visit.date | date:'yyyy-MM-dd'" name="date"  #date="ngModel">
-            <mat-datepicker-toggle matSuffix [for]="visitDateDatepicker"></mat-datepicker-toggle>
-            <mat-datepicker #visitDateDatepicker></mat-datepicker>
-            <span class="glyphicon form-control-feedback" [class.glyphicon-ok]="date.valid" [class.glyphicon-remove]="!date.valid" aria-hidden="true"></span>
-            <span class="help-block" *ngIf="date.dirty && date.hasError('required')">Date is required</span>
-
-          </div>
+    <form id="visit" (ngSubmit)="onSubmit(visitForm.value)" #visitForm="ngForm" novalidate>
+      <div class="row mb-3">
+        <label for="date" class="col-sm-2 col-form-label">Date</label>
+        <div class="col-sm-10">
+          <input id="date" matInput [matDatepicker]="visitDateDatepicker" required [ngModel]="visit.date | date:'yyyy-MM-dd'" name="date" #date="ngModel" [class.is-valid]="date.dirty && date.valid" [class.is-invalid]="date.dirty && date.invalid" />
+          <mat-datepicker-toggle matSuffix [for]="visitDateDatepicker"></mat-datepicker-toggle>
+          <mat-datepicker #visitDateDatepicker></mat-datepicker>
+          <div class="invalid-feedback" *ngIf="date.dirty && date.hasError('required')">Date is required</div>
         </div>
-        <div class="form-group has-feedback " [class.has-success]="description.dirty && description.valid" [class.has-error]="description.dirty && !description.valid">
-          <label class="col-sm-2 control-label">Description</label>
-          <div class="col-sm-10">
-            <input id="description" name="description" class="form-control"   minlength="1" maxlength="255" required type="text"
-                   [(ngModel)]="visit.description" #description="ngModel"/>
-            <span class="glyphicon form-control-feedback" [class.glyphicon-ok]="description.valid" [class.glyphicon-remove]="!description.valid" aria-hidden="true"></span>
-            <span class="help-block" *ngIf="description.dirty && description.hasError('required')">Description is required</span>
-            <span class="help-block" *ngIf="description.dirty && description.hasError('minlength')">Description must be at least 1 characters long</span>
-            <span class="help-block" *ngIf="description.dirty && description.hasError('maxlength')">Description may be at most 255 characters long</span>
-
-
-          </div>
-        </div>
-
       </div>
-      <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-10">
-          <input type="hidden" name="id" id="id" [(ngModel)]="visit.id"/>
-          <input type="hidden" name="pet" id="pet" [(ngModel)]="visit.pet"/>
-          <button class="btn btn-default" type="button" (click)="gotoOwnerDetail()">Back</button>
-          <button class="btn btn-default" type="submit" [disabled]="!visitForm.valid">Add Visit</button>
+
+      <div class="row mb-3">
+        <label for="description" class="col-sm-2 col-form-label">Description</label>
+        <div class="col-sm-10">
+          <input id="description" name="description" class="form-control" minlength="1" maxlength="255" required type="text" [(ngModel)]="visit.description" #description="ngModel" [class.is-valid]="description.dirty && description.valid" [class.is-invalid]="description.dirty && description.invalid" />
+          <div class="invalid-feedback" *ngIf="description.dirty && description.hasError('required')">Description is required</div>
+          <div class="invalid-feedback" *ngIf="description.dirty && description.hasError('minlength')">Description must be at least 1 character long</div>
+          <div class="invalid-feedback" *ngIf="description.dirty && description.hasError('maxlength')">Description may be at most 255 characters long</div>
+        </div>
+      </div>
+
+      <input type="hidden" name="id" id="id" [(ngModel)]="visit.id" />
+      <input type="hidden" name="pet" id="pet" [(ngModel)]="visit.pet" />
+      <div class="row">
+        <div class="offset-sm-2 col-sm-10 d-flex gap-2">
+          <button class="btn btn-secondary" type="button" (click)="gotoOwnerDetail()">Back</button>
+          <button class="btn btn-secondary" type="submit" [disabled]="visitForm.invalid">Add Visit</button>
         </div>
       </div>
     </form>
 
-    <br/>
-    <div class="col-12 text-left">
-      <p>
-        <b>Previous Visits</b>
-      </p>
-    </div>
-    <br/>
-    <div class="container">
-      <div class="row">
-        <div class="col-12 text-center">
-          <app-visit-list [visits]="currentPet.visits"></app-visit-list>
-        </div>
-      </div>
-    </div>
+    <h3 class="mt-4">Previous Visits</h3>
+    <app-visit-list [visits]="currentPet.visits"></app-visit-list>
   </div>
 </div>

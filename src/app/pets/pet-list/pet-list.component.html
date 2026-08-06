@@ -19,18 +19,19 @@
 <table [hidden]="deleteSuccess" class="table table-striped">
   <tr>
     <td valign="top">
-      <dl class="dl-horizontal">
-        <dt>Name</dt>
-        <dd>{{ pet.name }}</dd>
-        <dt>Birth Date</dt>
-        <dd>{{ pet.birthDate }}</dd>
-        <dt>Type</dt>
-        <dd *ngIf="!deleteSuccess">{{ pet.type.name }}</dd>
-        <button class="btn btn-default" (click)="editPet(pet)">Edit Pet</button>
-        <button class="btn btn-default" (click)="deletePet(pet)">Delete Pet</button>
-        <button class="btn btn-default" (click)="addVisit(pet)">Add Visit</button>
-
+      <dl class="row">
+        <dt class="col-sm-4">Name</dt>
+        <dd class="col-sm-8">{{ pet.name }}</dd>
+        <dt class="col-sm-4">Birth Date</dt>
+        <dd class="col-sm-8">{{ pet.birthDate }}</dd>
+        <dt class="col-sm-4">Type</dt>
+        <dd class="col-sm-8" *ngIf="!deleteSuccess">{{ pet.type.name }}</dd>
       </dl>
+      <div class="d-flex flex-wrap gap-2">
+        <button class="btn btn-secondary" (click)="editPet(pet)">Edit Pet</button>
+        <button class="btn btn-secondary" (click)="deletePet(pet)">Delete Pet</button>
+        <button class="btn btn-secondary" (click)="addVisit(pet)">Add Visit</button>
+      </div>
     </td>
     <td valign="top">
       <app-visit-list [visits]="pet.visits"></app-visit-list>

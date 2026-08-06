@@ -16,254 +16,70 @@
   ~  */
   -->
 
-  <div class="container-fluid">
-    <div class="container xd-container">
-      <h2>Edit Owner</h2>
-      <div *ngIf="errorMessage" class="alert alert-danger">
-        {{ errorMessage }}
+<div class="container-fluid">
+  <div class="container xd-container">
+    <h2>Edit Owner</h2>
+    <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+    <form (ngSubmit)="onSubmit(ownerForm.value)" #ownerForm="ngForm" novalidate>
+      <input type="hidden" id="id" [(ngModel)]="owner.id" name="id" />
+
+      <div class="row mb-3">
+        <label for="firstName" class="col-sm-2 col-form-label">First Name</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="firstName" [(ngModel)]="owner.firstName" minlength="1" maxlength="30" pattern="^[a-zA-Z]*$" required name="firstName" #firstName="ngModel" [class.is-valid]="firstName.dirty && firstName.valid" [class.is-invalid]="firstName.dirty && firstName.invalid" />
+          <div class="invalid-feedback" *ngIf="firstName.dirty && firstName.hasError('required')">First name is required</div>
+          <div class="invalid-feedback" *ngIf="firstName.dirty && firstName.hasError('minlength')">First name must be at least 1 character long</div>
+          <div class="invalid-feedback" *ngIf="firstName.dirty && firstName.hasError('maxlength')">First name may be at most 30 characters long</div>
+          <div class="invalid-feedback" *ngIf="firstName.dirty && firstName.hasError('pattern')">First name must consist of letters only</div>
+        </div>
       </div>
-      <form
-        (ngSubmit)="onSubmit(ownerForm.value)"
-        #ownerForm="ngForm"
-        class="form-horizontal"
-      >
-        <div class="form-group" hidden="true">
-          <input
-            type="text"
-            hidden="true"
-            class="form-control"
-            id="id"
-            [(ngModel)]="owner.id"
-            name="id"
-          />
+
+      <div class="row mb-3">
+        <label for="lastName" class="col-sm-2 col-form-label">Last Name</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="lastName" [(ngModel)]="owner.lastName" name="lastName" minlength="1" maxlength="30" pattern="^[a-zA-Z]*$" required #lastName="ngModel" [class.is-valid]="lastName.dirty && lastName.valid" [class.is-invalid]="lastName.dirty && lastName.invalid" />
+          <div class="invalid-feedback" *ngIf="lastName.dirty && lastName.hasError('required')">Last name is required</div>
+          <div class="invalid-feedback" *ngIf="lastName.dirty && lastName.hasError('minlength')">Last name must be at least 1 character long</div>
+          <div class="invalid-feedback" *ngIf="lastName.dirty && lastName.hasError('maxlength')">Last name may be at most 30 characters long</div>
+          <div class="invalid-feedback" *ngIf="lastName.dirty && lastName.hasError('pattern')">Last name must consist of letters only</div>
         </div>
-        <div
-          class="form-group has-feedback"
-          [class.has-success]="firstName.valid"
-          [class.has-error]="!firstName.valid"
-        >
-          <label for="firstName" class="col-sm-2 control-label">First Name</label>
-          <div class="col-sm-10">
-            <input
-              type="text"
-              class="form-control"
-              id="firstName"
-              [(ngModel)]="owner.firstName"
-              minlength="1"
-              maxlength="30" 
-              pattern="^[a-zA-Z]*$"
-              required
-              name="firstName"
-              #firstName="ngModel"
-            />
-            <span
-              class="glyphicon form-control-feedback"
-              [class.glyphicon-ok]="firstName.valid"
-              [class.glyphicon-remove]="!firstName.valid"
-              aria-hidden="true"
-            ></span>
-            <span
-              class="help-block"
-              *ngIf="firstName.dirty && firstName.hasError('required')"
-              >First name is required</span
-            >
-            <span
-              class="help-block"
-              *ngIf="firstName.dirty && firstName.hasError('minlength')"
-              >First name must be at least 1 characters long</span
-            >
-            <span
-            class="help-block"
-            *ngIf="firstName.dirty && firstName.hasError('maxlength')"
-            >First name may be at most 30 characters long</span
-          >
-          <span
-          class="help-block"
-          *ngIf="firstName.dirty && firstName.hasError('pattern')"
-          >First name must consist of letters only</span
-        >
-          </div>
+      </div>
+
+      <div class="row mb-3">
+        <label for="address" class="col-sm-2 col-form-label">Address</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="address" [(ngModel)]="owner.address" name="address" maxlength="255" required #address="ngModel" [class.is-valid]="address.dirty && address.valid" [class.is-invalid]="address.dirty && address.invalid" />
+          <div class="invalid-feedback" *ngIf="address.dirty && address.hasError('required')">Address is required</div>
+          <div class="invalid-feedback" *ngIf="address.dirty && address.hasError('maxlength')">Address may be at most 255 characters long</div>
         </div>
-        <div
-          class="form-group has-feedback"
-          [class.has-success]="lastName.valid"
-          [class.has-error]="!lastName.valid"
-        >
-          <label for="lastName" class="col-sm-2 control-label">Last Name</label>
-          <div class="col-sm-10">
-            <input
-              type="text"
-              class="form-control"
-              id="lastName"
-              [(ngModel)]="owner.lastName"
-              name="lastName"
-              minlength="1"
-              maxlength="30" 
-              pattern="^[a-zA-Z]*$"
-              required
-              #lastName="ngModel"
-            />
-            <span
-              class="glyphicon form-control-feedback"
-              [class.glyphicon-ok]="lastName.valid"
-              [class.glyphicon-remove]="!lastName.valid"
-              aria-hidden="true"
-            ></span>
-            <span
-              class="help-block"
-              *ngIf="lastName.dirty && lastName.hasError('required')"
-              >Last name is required</span
-            >
-            <span
-              class="help-block"
-              *ngIf="lastName.dirty && lastName.hasError('minlength')"
-              >Last name must be at least 1 characters long</span
-            >
-            <span
-            class="help-block"
-            *ngIf="lastName.dirty && lastName.hasError('maxlength')"
-            >Last name may be at most 30 characters long</span
-          >
-          <span
-          class="help-block"
-          *ngIf="lastName.dirty && lastName.hasError('pattern')"
-          >Last name must consist of letters only</span
-        >
-          </div>
+      </div>
+
+      <div class="row mb-3">
+        <label for="city" class="col-sm-2 col-form-label">City</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="city" [(ngModel)]="owner.city" name="city" maxlength="80" required #city="ngModel" [class.is-valid]="city.dirty && city.valid" [class.is-invalid]="city.dirty && city.invalid" />
+          <div class="invalid-feedback" *ngIf="city.dirty && city.hasError('required')">City is required</div>
+          <div class="invalid-feedback" *ngIf="city.dirty && city.hasError('maxlength')">City may be at most 80 characters long</div>
         </div>
-        <div
-          class="form-group has-feedback"
-          [class.has-success]="address.valid"
-          [class.has-error]="!address.valid"
-        >
-          <label for="address" class="col-sm-2 control-label">Address</label>
-          <div class="col-sm-10">
-            <input
-              type="text"
-              class="form-control"
-              id="address"
-              [(ngModel)]="owner.address"
-              name="address"
-              maxlength="255"  
-              required
-              #address="ngModel"
-            />
-            <span
-              class="glyphicon form-control-feedback"
-              [class.glyphicon-ok]="address.valid"
-              [class.glyphicon-remove]="!address.valid"
-              aria-hidden="true"
-            ></span>
-            <span
-              class="help-block"
-              *ngIf="address.dirty && address.hasError('required')"
-              >Address is required</span
-            >
-            <span
-            class="help-block"
-            *ngIf="address.dirty && address.hasError('maxlength')"
-            >Address may be at most 255 characters long</span
-          >
-          </div>
+      </div>
+
+      <div class="row mb-3">
+        <label for="telephone" class="col-sm-2 col-form-label">Telephone</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="telephone" [(ngModel)]="owner.telephone" name="telephone" required minlength="1" maxlength="20" pattern="^[0-9]*$" #telephone="ngModel" [class.is-valid]="telephone.dirty && telephone.valid" [class.is-invalid]="telephone.dirty && telephone.invalid" />
+          <div class="invalid-feedback" *ngIf="telephone.dirty && telephone.hasError('required')">Phone number is required</div>
+          <div class="invalid-feedback" *ngIf="telephone.dirty && telephone.hasError('minlength')">Phone number must be at least one digit long</div>
+          <div class="invalid-feedback" *ngIf="telephone.dirty && telephone.hasError('maxlength')">Phone number cannot be more than 20 digits long</div>
+          <div class="invalid-feedback" *ngIf="telephone.dirty && telephone.hasError('pattern')">Phone number only accepts digits</div>
         </div>
-        <div
-          class="form-group has-feedback"
-          [class.has-success]="city.valid"
-          [class.has-error]="!city.valid"
-        >
-          <label for="city" class="col-sm-2 control-label">City</label>
-          <div class="col-sm-10">
-            <input
-              type="text"
-              class="form-control"
-              id="city"
-              [(ngModel)]="owner.city"
-              name="city"
-              maxlength="80" 
-              required
-              #city="ngModel"
-            />
-            <span
-              class="glyphicon form-control-feedback"
-              [class.glyphicon-ok]="city.valid"
-              [class.glyphicon-remove]="!city.valid"
-              aria-hidden="true"
-            ></span>
-            <span
-              class="help-block"
-              *ngIf="city.dirty && city.hasError('required')"
-              >City is required</span
-            >
-            <span
-            class="help-block"
-            *ngIf="city.dirty && city.hasError('maxlength')"
-            >City may be at most 80 characters long</span
-          >
-          </div>
+      </div>
+
+      <div class="row">
+        <div class="offset-sm-2 col-sm-10 d-flex gap-2">
+          <button class="btn btn-secondary" type="button" (click)="gotoOwnerDetail(owner)">Back</button>
+          <button type="submit" [disabled]="ownerForm.invalid" class="btn btn-secondary">Update Owner</button>
         </div>
-        <div
-          class="form-group has-feedback"
-          [class.has-success]="telephone.valid"
-          [class.has-error]="!telephone.valid"
-        >
-          <label for="telephone" class="col-sm-2 control-label">Telephone</label>
-          <div class="col-sm-10">
-            <input
-              type="text"
-              class="form-control"
-              id="telephone"
-              [(ngModel)]="owner.telephone"
-              name="telephone"
-              required
-              minlength="1"
-              maxlength="20"
-              pattern="^[0-9]*$"
-              #telephone="ngModel"
-            />
-            <span
-              class="glyphicon form-control-feedback"
-              [class.glyphicon-ok]="telephone.valid"
-              [class.glyphicon-remove]="!telephone.valid"
-              aria-hidden="true"
-            ></span>
-            <span
-              class="help-block"
-              *ngIf="telephone.dirty && telephone.hasError('required')"
-              >Phone number is required</span
-            >
-            <span
-            class="help-block"
-            *ngIf="telephone.dirty && telephone.hasError('minlength')"
-            >Phone number must be at least one digit long</span
-          >
-            <span
-              class="help-block"
-              *ngIf="telephone.dirty && telephone.hasError('maxlength')"
-              >Phone number cannot be more than 20 digits long</span
-            >
-            <span
-              class="help-block"
-              *ngIf="telephone.dirty && telephone.hasError('pattern')"
-              >Phone number only accept digits</span
-            >
-          </div>
-        </div>
-  
-        <div class="form-group">
-          <div class="col-sm-offset-2 col-sm-10">
-            <button class="btn btn-default" (click)="gotoOwnerDetail(owner)">
-              Back
-            </button>
-            <button
-              type="submit"
-              [disabled]="!ownerForm.valid"
-              class="btn btn-default"
-            >
-              Update Owner
-            </button>
-          </div>
-        </div>
-      </form>
-    </div>
+      </div>
+    </form>
   </div>
-  
+</div>
