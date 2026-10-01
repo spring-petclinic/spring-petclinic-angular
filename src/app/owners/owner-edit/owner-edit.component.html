@@ -66,11 +66,11 @@
       <div class="row mb-3">
         <label for="telephone" class="col-sm-2 col-form-label">Telephone</label>
         <div class="col-sm-10">
-          <input type="text" class="form-control" id="telephone" [(ngModel)]="owner.telephone" name="telephone" required minlength="1" maxlength="20" pattern="^[0-9]*$" #telephone="ngModel" [class.is-valid]="telephone.dirty && telephone.valid" [class.is-invalid]="telephone.dirty && telephone.invalid" />
+          <input type="text" class="form-control" id="telephone" [(ngModel)]="owner.telephone" name="telephone" required minlength="10" maxlength="10" pattern="^[0-9]{10}$" #telephone="ngModel" [class.is-valid]="telephone.dirty && telephone.valid" [class.is-invalid]="telephone.dirty && telephone.invalid" />
           <div class="invalid-feedback" *ngIf="telephone.dirty && telephone.hasError('required')">Phone number is required</div>
-          <div class="invalid-feedback" *ngIf="telephone.dirty && telephone.hasError('minlength')">Phone number must be at least one digit long</div>
-          <div class="invalid-feedback" *ngIf="telephone.dirty && telephone.hasError('maxlength')">Phone number cannot be more than 20 digits long</div>
-          <div class="invalid-feedback" *ngIf="telephone.dirty && telephone.hasError('pattern')">Phone number only accepts digits</div>
+          <div class="invalid-feedback" *ngIf="telephone.dirty && telephone.hasError('maxlength')">Phone number cannot be more than 10 digits long</div>
+          <div class="invalid-feedback" *ngIf="telephone.dirty && telephone.hasError('minlength')">Phone number cannot be less than 10 digits long</div>
+          <div class="invalid-feedback" *ngIf="telephone.dirty && telephone.hasError('pattern')">Phone number must be exactly 10 digits</div>
         </div>
       </div>
 
