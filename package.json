@@ -27,7 +27,7 @@
     "@angular/material-moment-adapter": "22.1.0",
     "@angular/platform-browser": "22.1.1",
     "@angular/platform-browser-dynamic": "22.1.1",
-    "@angular/router": "22.1.1",
+    "@angular/router": "22.2.0",
     "bootstrap": "^5.3.8",
     "bootstrap-icons": "^1.13.1",
     "core-js": "^3.32.1",
