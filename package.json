@@ -42,7 +42,7 @@
     "@angular/cli": "22.2.0",
     "@angular/compiler-cli": "22.2.1",
     "@angular/language-service": "22.2.1",
-    "@playwright/test": "^1.61.1",
+    "@playwright/test": "^1.63.0",
     "@types/node": "^24.13.2",
     "@vitest/coverage-v8": "^5.0.3",
     "angular-eslint": "22.0.0",
