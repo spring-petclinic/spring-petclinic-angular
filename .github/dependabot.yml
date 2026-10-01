@@ -5,6 +5,10 @@ updates:
     schedule:
       interval: "weekly"
     groups:
+      vitest:
+        patterns:
+          - "vitest"
+          - "@vitest/*"
       angular:
         patterns:
           - "@angular/*"
