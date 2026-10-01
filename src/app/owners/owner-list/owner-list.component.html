@@ -51,7 +51,7 @@
         <tbody>
         <tr *ngFor="let owner of owners">
           <td class="ownerFullName"><a routerLink="/owners/{{owner.id}}" routerLinkActive="active"
-                                       (click)="onSelect(owner)">{{ owner.firstName }} {{ owner.lastName }}</a></td>
+                                       (click)="onSelect(owner)">{{ owner.firstName }}{{ owner.middleName ? ' ' + owner.middleName : '' }} {{ owner.lastName }}</a></td>
           <td>{{ owner.address }}</td>
           <td>{{ owner.city }}</td>
           <td>{{ owner.telephone }}</td>

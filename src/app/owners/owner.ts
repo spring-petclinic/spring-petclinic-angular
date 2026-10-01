@@ -25,6 +25,7 @@ import {Pet} from '../pets/pet';
 export interface Owner {
   id: number;
   firstName: string;
+  middleName?: string;
   lastName: string;
   address: string;
   city: string;

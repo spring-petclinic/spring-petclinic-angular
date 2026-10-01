@@ -25,7 +25,7 @@
     <table class="table table-striped">
       <tr>
         <th>Name</th>
-        <td><b class="ownerFullName">{{ owner.firstName }} {{ owner.lastName }}</b></td>
+        <td><b class="ownerFullName">{{ owner.firstName }}{{ owner.middleName ? ' ' + owner.middleName : '' }} {{ owner.lastName }}</b></td>
       </tr>
       <tr>
         <th>Address</th>

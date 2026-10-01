@@ -35,6 +35,15 @@
       </div>
 
       <div class="row mb-3">
+        <label for="middleName" class="col-sm-2 col-form-label">Middle Name</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="middleName" [(ngModel)]="owner.middleName" name="middleName" maxlength="30" pattern="^[a-zA-Z]*$" #middleName="ngModel" [class.is-valid]="middleName.dirty && middleName.valid" [class.is-invalid]="middleName.dirty && middleName.invalid" />
+          <div class="invalid-feedback" *ngIf="middleName.dirty && middleName.hasError('maxlength')">Middle name may be at most 30 characters long</div>
+          <div class="invalid-feedback" *ngIf="middleName.dirty && middleName.hasError('pattern')">Middle name must consist of letters only</div>
+        </div>
+      </div>
+
+      <div class="row mb-3">
         <label for="lastName" class="col-sm-2 col-form-label">Last Name</label>
         <div class="col-sm-10">
           <input type="text" class="form-control" id="lastName" [(ngModel)]="owner.lastName" name="lastName" minlength="1" maxlength="30" pattern="^[a-zA-Z]*$" required #lastName="ngModel" [class.is-valid]="lastName.dirty && lastName.valid" [class.is-invalid]="lastName.dirty && lastName.invalid" />
