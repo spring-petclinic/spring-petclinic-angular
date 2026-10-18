@@ -28,8 +28,8 @@ import { By } from '@angular/platform-browser';
 import { OwnerDetailComponent } from './owner-detail.component';
 import { FormsModule } from '@angular/forms';
 import { OwnerService } from '../owner.service';
-import { ActivatedRoute, provideRouter, Router } from '@angular/router';
-import { ActivatedRouteStub, RouterStub } from '../../testing/router-stubs';
+import { provideRouter, Router } from '@angular/router';
+import { RouterStub } from '../../testing/router-stubs';
 import { Owner } from '../owner';
 import { Observable, of } from 'rxjs';
 
@@ -55,7 +55,6 @@ describe('OwnerDetailComponent', () => {
                 provideRouter([]),
                 { provide: OwnerService, useClass: OwnerServiceStub },
                 { provide: Router, useClass: RouterStub },
-                { provide: ActivatedRoute, useClass: ActivatedRouteStub },
             ],
         }).compileComponents();
     }));
@@ -71,6 +70,7 @@ describe('OwnerDetailComponent', () => {
 
     beforeEach(() => {
         fixture = TestBed.createComponent(OwnerDetailComponent);
+        fixture.componentRef.setInput('id', 1);
         component = fixture.componentInstance;
         fixture.detectChanges();
         router = TestBed.inject(Router);

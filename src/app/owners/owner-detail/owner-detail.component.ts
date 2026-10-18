@@ -20,9 +20,11 @@
  * @author Vitaliy Fedoriv
  */
 
-import {Component, OnInit} from '@angular/core';
+import { Component, computed, inject, input } from '@angular/core';
+import { rxResource } from '@angular/core/rxjs-interop';
 import {OwnerService} from '../owner.service';
-import {ActivatedRoute, Router} from '@angular/router';
+import {Router} from '@angular/router';
+import {resourceErrorMessage, valueOrDefault} from '../../resource-utils';
 import {Owner} from '../owner';
 
 
@@ -32,32 +34,32 @@ import {Owner} from '../owner';
   templateUrl: './owner-detail.component.html',
   styleUrls: ['./owner-detail.component.css']
 })
-export class OwnerDetailComponent implements OnInit {
-  errorMessage: string;
-  owner: Owner;
+export class OwnerDetailComponent {
+  private router = inject(Router);
+  private ownerService = inject(OwnerService);
 
-  constructor(private route: ActivatedRoute, private router: Router, private ownerService: OwnerService) {
-    this.owner = {} as Owner;
-  }
+  // route parameter, bound by the router (bindToComponentInputs)
+  readonly id = input<string>();
 
-  ngOnInit() {
-    const ownerId = this.route.snapshot.params.id;
-    this.ownerService.getOwnerById(ownerId).subscribe(
-      owner => this.owner = owner,
-      error => this.errorMessage = error as any);
-  }
+  private readonly ownerResource = rxResource({
+    params: () => this.id(),
+    stream: ({params}) => this.ownerService.getOwnerById(Number(params))
+  });
+
+  private readonly emptyOwner = {} as Owner;
+
+  protected readonly owner = computed(() => valueOrDefault(this.ownerResource, this.emptyOwner));
+  protected readonly errorMessage = computed(() => resourceErrorMessage(this.ownerResource));
 
   gotoOwnersList() {
     this.router.navigate(['/owners']);
   }
 
   editOwner() {
-    this.router.navigate(['/owners', this.owner.id, 'edit']);
+    this.router.navigate(['/owners', this.owner().id, 'edit']);
   }
 
   addPet(owner: Owner) {
     this.router.navigate(['/owners', owner.id, 'pets', 'add']);
   }
-
-
 }

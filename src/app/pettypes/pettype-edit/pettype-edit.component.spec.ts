@@ -5,8 +5,8 @@ import { PettypeEditComponent } from './pettype-edit.component';
 import { PetTypeService } from '../pettype.service';
 import { PetType } from '../pettype';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ActivatedRouteStub, RouterStub } from '../../testing/router-stubs';
+import { Router } from '@angular/router';
+import { RouterStub } from '../../testing/router-stubs';
 import { FormsModule } from '@angular/forms';
 import { Observable, of } from 'rxjs';
 type Spy = Mock;
@@ -32,8 +32,7 @@ describe('PettypeEditComponent', () => {
             imports: [FormsModule],
             providers: [
                 { provide: PetTypeService, useClass: PetTypeServiceStub },
-                { provide: Router, useClass: RouterStub },
-                { provide: ActivatedRoute, useClass: ActivatedRouteStub }
+                { provide: Router, useClass: RouterStub }
             ]
         })
             .compileComponents();
@@ -41,6 +40,7 @@ describe('PettypeEditComponent', () => {
 
     beforeEach(() => {
         fixture = TestBed.createComponent(PettypeEditComponent);
+        fixture.componentRef.setInput('id', 1);
         component = fixture.componentInstance;
         testPettype = {
             id: 1,

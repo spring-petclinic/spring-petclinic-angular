@@ -20,7 +20,7 @@
  * @author Vitaliy Fedoriv
  */
 
-import {Component, OnInit} from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import {OwnerService} from '../owner.service';
 import {Owner} from '../owner';
 import {Router} from '@angular/router';
@@ -31,27 +31,20 @@ import {Router} from '@angular/router';
   templateUrl: './owner-add.component.html',
   styleUrls: ['./owner-add.component.css']
 })
-export class OwnerAddComponent implements OnInit {
+export class OwnerAddComponent {
+  private ownerService = inject(OwnerService);
+  private router = inject(Router);
 
-  owner: Owner;
-  errorMessage: string;
-
-  constructor(private ownerService: OwnerService, private router: Router) {
-    this.owner = {} as Owner;
-  }
-
-  ngOnInit() {
-  }
+  // the form fields are bound to the properties of this object with ngModel
+  protected readonly owner = {} as Owner;
+  protected readonly errorMessage = signal<string | null>(null);
 
   onSubmit(owner: Owner) {
     owner.id = null;
-    this.ownerService.addOwner(owner).subscribe(
-      newOwner => {
-        this.owner = newOwner;
-        this.gotoOwnersList();
-      },
-      error => this.errorMessage = error as any
-    );
+    this.ownerService.addOwner(owner).subscribe({
+      next: () => this.gotoOwnersList(),
+      error: (error) => this.errorMessage.set(String(error))
+    });
   }
 
   gotoOwnersList() {

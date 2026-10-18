@@ -1,24 +1,27 @@
 <!--
-  ~ /*
-  ~  * Copyright 2016-2017 the original author or authors.
-  ~  *
-  ~  * Licensed under the Apache License, Version 2.0 (the "License");
-  ~  * you may not use this file except in compliance with the License.
-  ~  * You may obtain a copy of the License at
-  ~  *
-  ~  *      http://www.apache.org/licenses/LICENSE-2.0
-  ~  *
-  ~  * Unless required by applicable law or agreed to in writing, software
-  ~  * distributed under the License is distributed on an "AS IS" BASIS,
-  ~  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  ~  * See the License for the specific language governing permissions and
-  ~  * limitations under the License.
-  ~  */
-  -->
+~ /*
+~  * Copyright 2016-2017 the original author or authors.
+~  *
+~  * Licensed under the Apache License, Version 2.0 (the "License");
+~  * you may not use this file except in compliance with the License.
+~  * You may obtain a copy of the License at
+~  *
+~  *      http://www.apache.org/licenses/LICENSE-2.0
+~  *
+~  * Unless required by applicable law or agreed to in writing, software
+~  * distributed under the License is distributed on an "AS IS" BASIS,
+~  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+~  * See the License for the specific language governing permissions and
+~  * limitations under the License.
+~  */
+-->
 
 <div class="container-fluid">
   <div class="container xd-container">
     <h2>New Owner</h2>
+    @if (errorMessage()) {
+      <div class="alert alert-danger">{{ errorMessage() }}</div>
+    }
     <form (ngSubmit)="onSubmit(ownerForm.value)" #ownerForm="ngForm" novalidate>
       <input type="hidden" id="id" [(ngModel)]="owner.id" name="id" />
 
@@ -26,10 +29,18 @@
         <label for="firstName" class="col-sm-2 col-form-label">First Name</label>
         <div class="col-sm-10">
           <input type="text" class="form-control" id="firstName" [(ngModel)]="owner.firstName" minlength="1" maxlength="30" pattern="^[a-zA-Z]*$" required name="firstName" #firstName="ngModel" [class.is-valid]="firstName.dirty && firstName.valid" [class.is-invalid]="firstName.dirty && firstName.invalid" />
-          <div class="invalid-feedback" *ngIf="firstName.dirty && firstName.hasError('required')">First name is required</div>
-          <div class="invalid-feedback" *ngIf="firstName.dirty && firstName.hasError('minlength')">First name must be at least 1 character long</div>
-          <div class="invalid-feedback" *ngIf="firstName.dirty && firstName.hasError('maxlength')">First name may be at most 30 characters long</div>
-          <div class="invalid-feedback" *ngIf="firstName.dirty && firstName.hasError('pattern')">First name must consist of letters only</div>
+          @if (firstName.dirty && firstName.hasError('required')) {
+            <div class="invalid-feedback">First name is required</div>
+          }
+          @if (firstName.dirty && firstName.hasError('minlength')) {
+            <div class="invalid-feedback">First name must be at least 1 character long</div>
+          }
+          @if (firstName.dirty && firstName.hasError('maxlength')) {
+            <div class="invalid-feedback">First name may be at most 30 characters long</div>
+          }
+          @if (firstName.dirty && firstName.hasError('pattern')) {
+            <div class="invalid-feedback">First name must consist of letters only</div>
+          }
         </div>
       </div>
 
@@ -37,10 +48,18 @@
         <label for="lastName" class="col-sm-2 col-form-label">Last Name</label>
         <div class="col-sm-10">
           <input type="text" class="form-control" id="lastName" [(ngModel)]="owner.lastName" name="lastName" minlength="1" maxlength="30" pattern="^[a-zA-Z]*$" required #lastName="ngModel" [class.is-valid]="lastName.dirty && lastName.valid" [class.is-invalid]="lastName.dirty && lastName.invalid" />
-          <div class="invalid-feedback" *ngIf="lastName.dirty && lastName.hasError('required')">Last name is required</div>
-          <div class="invalid-feedback" *ngIf="lastName.dirty && lastName.hasError('minlength')">Last name must be at least 1 character long</div>
-          <div class="invalid-feedback" *ngIf="lastName.dirty && lastName.hasError('maxlength')">Last name may be at most 30 characters long</div>
-          <div class="invalid-feedback" *ngIf="lastName.dirty && lastName.hasError('pattern')">Last name must consist of letters only</div>
+          @if (lastName.dirty && lastName.hasError('required')) {
+            <div class="invalid-feedback">Last name is required</div>
+          }
+          @if (lastName.dirty && lastName.hasError('minlength')) {
+            <div class="invalid-feedback">Last name must be at least 1 character long</div>
+          }
+          @if (lastName.dirty && lastName.hasError('maxlength')) {
+            <div class="invalid-feedback">Last name may be at most 30 characters long</div>
+          }
+          @if (lastName.dirty && lastName.hasError('pattern')) {
+            <div class="invalid-feedback">Last name must consist of letters only</div>
+          }
         </div>
       </div>
 
@@ -48,8 +67,12 @@
         <label for="address" class="col-sm-2 col-form-label">Address</label>
         <div class="col-sm-10">
           <input type="text" class="form-control" id="address" [(ngModel)]="owner.address" name="address" maxlength="255" required #address="ngModel" [class.is-valid]="address.dirty && address.valid" [class.is-invalid]="address.dirty && address.invalid" />
-          <div class="invalid-feedback" *ngIf="address.dirty && address.hasError('required')">Address is required</div>
-          <div class="invalid-feedback" *ngIf="address.dirty && address.hasError('maxlength')">Address may be at most 255 characters long</div>
+          @if (address.dirty && address.hasError('required')) {
+            <div class="invalid-feedback">Address is required</div>
+          }
+          @if (address.dirty && address.hasError('maxlength')) {
+            <div class="invalid-feedback">Address may be at most 255 characters long</div>
+          }
         </div>
       </div>
 
@@ -57,8 +80,12 @@
         <label for="city" class="col-sm-2 col-form-label">City</label>
         <div class="col-sm-10">
           <input type="text" class="form-control" id="city" [(ngModel)]="owner.city" name="city" maxlength="80" required #city="ngModel" [class.is-valid]="city.dirty && city.valid" [class.is-invalid]="city.dirty && city.invalid" />
-          <div class="invalid-feedback" *ngIf="city.dirty && city.hasError('required')">City is required</div>
-          <div class="invalid-feedback" *ngIf="city.dirty && city.hasError('maxlength')">City may be at most 80 characters long</div>
+          @if (city.dirty && city.hasError('required')) {
+            <div class="invalid-feedback">City is required</div>
+          }
+          @if (city.dirty && city.hasError('maxlength')) {
+            <div class="invalid-feedback">City may be at most 80 characters long</div>
+          }
         </div>
       </div>
 
@@ -66,9 +93,15 @@
         <label for="telephone" class="col-sm-2 col-form-label">Telephone</label>
         <div class="col-sm-10">
           <input type="text" class="form-control" id="telephone" [(ngModel)]="owner.telephone" name="telephone" required minlength="1" maxlength="20" pattern="^[0-9]*$" #telephone="ngModel" [class.is-valid]="telephone.dirty && telephone.valid" [class.is-invalid]="telephone.dirty && telephone.invalid" />
-          <div class="invalid-feedback" *ngIf="telephone.dirty && telephone.hasError('required')">Phone number is required</div>
-          <div class="invalid-feedback" *ngIf="telephone.dirty && telephone.hasError('maxlength')">Phone number cannot be more than 20 digits long</div>
-          <div class="invalid-feedback" *ngIf="telephone.dirty && telephone.hasError('pattern')">Phone number only accepts digits</div>
+          @if (telephone.dirty && telephone.hasError('required')) {
+            <div class="invalid-feedback">Phone number is required</div>
+          }
+          @if (telephone.dirty && telephone.hasError('maxlength')) {
+            <div class="invalid-feedback">Phone number cannot be more than 20 digits long</div>
+          }
+          @if (telephone.dirty && telephone.hasError('pattern')) {
+            <div class="invalid-feedback">Phone number only accepts digits</div>
+          }
         </div>
       </div>
 

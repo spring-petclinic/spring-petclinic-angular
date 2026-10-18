@@ -29,8 +29,8 @@ import { Specialty } from '../specialty';
 import { SpecialtyEditComponent } from './specialty-edit.component';
 import { SpecialtyService } from '../specialty.service';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ActivatedRouteStub, RouterStub } from '../../testing/router-stubs';
+import { Router } from '@angular/router';
+import { RouterStub } from '../../testing/router-stubs';
 import { Observable, of } from 'rxjs';
 type Spy = Mock;
 
@@ -54,8 +54,7 @@ describe('SpecialtyEditComponent', () => {
             imports: [FormsModule],
             providers: [
                 { provide: SpecialtyService, useClass: SpecialityServiceStub },
-                { provide: Router, useClass: RouterStub },
-                { provide: ActivatedRoute, useClass: ActivatedRouteStub }
+                { provide: Router, useClass: RouterStub }
             ]
         })
             .compileComponents();
@@ -63,6 +62,7 @@ describe('SpecialtyEditComponent', () => {
 
     beforeEach(() => {
         fixture = TestBed.createComponent(SpecialtyEditComponent);
+        fixture.componentRef.setInput('id', 1);
         component = fixture.componentInstance;
         testSpecialty = {
             id: 1,

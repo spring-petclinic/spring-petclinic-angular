@@ -54,7 +54,7 @@ describe('PettypeListComponent', () => {
 
         pettypeService = fixture.debugElement.injector.get(PetTypeService);
         responseStatus = 204; // success delete return NO_CONTENT
-        component.pettypes = testPettypes;
+        component.pettypes.set(testPettypes);
 
         spy = vi.spyOn(pettypeService, 'deletePetType').mockReturnValue(of(responseStatus));
 
@@ -67,7 +67,7 @@ describe('PettypeListComponent', () => {
 
     it('should call deletePetType() method', () => {
         fixture.detectChanges();
-        component.deletePettype(component.pettypes[0]);
+        component.deletePettype(component.pettypes()[0]);
         expect(vi.mocked(spy).mock.calls.length > 0, 'deletePetType called').toBe(true);
     });
 });

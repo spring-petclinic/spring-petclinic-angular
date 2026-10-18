@@ -20,12 +20,14 @@
  * @author Vitaliy Fedoriv
  */
 
-import {Component, OnInit} from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
+import { rxResource } from '@angular/core/rxjs-interop';
 import {Specialty} from '../../specialties/specialty';
 import {SpecialtyService} from 'app/specialties/specialty.service';
 import {Vet} from '../vet';
 import {Router} from '@angular/router';
 import {VetService} from '../vet.service';
+import {resourceErrorMessage, valueOrDefault} from '../../resource-utils';
 
 @Component({
   selector: 'app-vet-add',
@@ -33,24 +35,23 @@ import {VetService} from '../vet.service';
   templateUrl: './vet-add.component.html',
   styleUrls: ['./vet-add.component.css']
 })
-export class VetAddComponent implements OnInit {
-  vet: Vet;
-  specialtiesList: Specialty[];
-  selectedSpecialty: Specialty;
-  errorMessage: string;
+export class VetAddComponent {
+  private specialtyService = inject(SpecialtyService);
+  private vetService = inject(VetService);
+  private router = inject(Router);
 
-  constructor(private specialtyService: SpecialtyService, private vetService: VetService, private router: Router) {
-    this.vet = {} as Vet;
-    this.selectedSpecialty = {} as Specialty;
-    this.specialtiesList = [];
-  }
+  private readonly specialtiesResource = rxResource({
+    stream: () => this.specialtyService.getSpecialties(),
+  });
 
-  ngOnInit() {
-    this.specialtyService.getSpecialties().subscribe(
-      specialties => this.specialtiesList = specialties,
-      error => this.errorMessage = error as any
-    );
-  }
+  // the form fields are bound to the properties of these objects with ngModel
+  vet = {} as Vet;
+  selectedSpecialty = {} as Specialty;
+  readonly specialtiesList = computed(() => valueOrDefault(this.specialtiesResource, [] as Specialty[]));
+  private readonly submitError = signal<string | null>(null);
+  readonly errorMessage = computed(
+    () => this.submitError() ?? resourceErrorMessage(this.specialtiesResource)
+  );
 
   onSubmit(vet: Vet) {
     vet.id = null;
@@ -58,13 +59,10 @@ export class VetAddComponent implements OnInit {
     if (this.selectedSpecialty.id !== undefined) {
       vet.specialties.push(this.selectedSpecialty);
     }
-    this.vetService.addVet(vet).subscribe(
-      newVet => {
-        this.vet = newVet;
-        this.gotoVetList();
-      },
-      error => this.errorMessage = error as any
-    );
+    this.vetService.addVet(vet).subscribe({
+      next: () => this.gotoVetList(),
+      error: error => this.submitError.set(String(error))
+    });
   }
 
   gotoVetList() {

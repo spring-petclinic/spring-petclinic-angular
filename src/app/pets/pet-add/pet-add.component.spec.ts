@@ -29,8 +29,8 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { PetAddComponent } from './pet-add.component';
 import { FormsModule } from '@angular/forms';
 import { PetService } from '../pet.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ActivatedRouteStub, RouterStub } from '../../testing/router-stubs';
+import { Router } from '@angular/router';
+import { RouterStub } from '../../testing/router-stubs';
 import { Observable, of } from 'rxjs';
 import { Pet } from '../pet';
 import { OwnerService } from '../../owners/owner.service';
@@ -75,8 +75,7 @@ describe('PetAddComponent', () => {
                 { provide: PetService, useClass: PetServiceStub },
                 { provide: OwnerService, useClass: OwnerServiceStub },
                 { provide: PetTypeService, useClass: PetTypeServiceStub },
-                { provide: Router, useClass: RouterStub },
-                { provide: ActivatedRoute, useClass: ActivatedRouteStub }
+                { provide: Router, useClass: RouterStub }
             ]
         })
             .compileComponents();
@@ -84,6 +83,7 @@ describe('PetAddComponent', () => {
 
     beforeEach(() => {
         fixture = TestBed.createComponent(PetAddComponent);
+        fixture.componentRef.setInput('id', 1);
         component = fixture.componentInstance;
         testPet = {
             id: 1,

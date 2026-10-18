@@ -20,10 +20,12 @@
  * @author Vitaliy Fedoriv
  */
 
-import {Component, OnInit} from '@angular/core';
+import { Component, computed, inject, input, linkedSignal, signal } from '@angular/core';
+import { rxResource } from '@angular/core/rxjs-interop';
 import {PetType} from '../pettype';
 import {PetTypeService} from '../pettype.service';
-import {ActivatedRoute, Router} from '@angular/router';
+import {Router} from '@angular/router';
+import {resourceErrorMessage, valueOrDefault} from '../../resource-utils';
 
 @Component({
   selector: 'app-pettype-edit',
@@ -31,29 +33,33 @@ import {ActivatedRoute, Router} from '@angular/router';
   templateUrl: './pettype-edit.component.html',
   styleUrls: ['./pettype-edit.component.css']
 })
-export class PettypeEditComponent implements OnInit {
-  pettype: PetType;
-  errorMessage: string;
+export class PettypeEditComponent {
+  private pettypeService = inject(PetTypeService);
+  private router = inject(Router);
 
-  constructor(private pettypeService: PetTypeService, private route: ActivatedRoute, private router: Router) {
-    this.pettype = {} as PetType;
-  }
+  // route parameter, bound by the router (bindToComponentInputs)
+  readonly id = input<string>();
 
-  ngOnInit() {
-    const pettypeId = this.route.snapshot.params.id;
-    this.pettypeService.getPetTypeById(pettypeId).subscribe(
-      pettype => this.pettype = pettype,
-      error => this.errorMessage = error as any);
-  }
+  private readonly pettypeResource = rxResource({
+    params: () => this.id(),
+    stream: ({ params }) => this.pettypeService.getPetTypeById(params),
+  });
+
+  private readonly emptyPettype = {} as PetType;
+
+  // working copy bound to the form fields with ngModel: the loaded pet type is never mutated
+  protected readonly pettype = linkedSignal(() => ({ ...valueOrDefault(this.pettypeResource, this.emptyPettype) }));
+
+  private readonly submitError = signal<string | null>(null);
+  protected readonly errorMessage = computed(
+    () => this.submitError() ?? resourceErrorMessage(this.pettypeResource)
+  );
 
   onSubmit(pettype: PetType) {
-    this.pettypeService.updatePetType(pettype.id.toString(), pettype).subscribe(
-      res => {
-        console.log('update success');
-        this.onBack();
-      },
-      error => this.errorMessage = error as any);
-
+    this.pettypeService.updatePetType(pettype.id.toString(), pettype).subscribe({
+      next: () => this.onBack(),
+      error: error => this.submitError.set(String(error))
+    });
   }
 
   onBack() {

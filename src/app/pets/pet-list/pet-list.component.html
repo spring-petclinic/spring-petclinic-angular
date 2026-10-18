@@ -1,41 +1,50 @@
 <!--
-  ~ /*
-  ~  * Copyright 2016-2017 the original author or authors.
-  ~  *
-  ~  * Licensed under the Apache License, Version 2.0 (the "License");
-  ~  * you may not use this file except in compliance with the License.
-  ~  * You may obtain a copy of the License at
-  ~  *
-  ~  *      http://www.apache.org/licenses/LICENSE-2.0
-  ~  *
-  ~  * Unless required by applicable law or agreed to in writing, software
-  ~  * distributed under the License is distributed on an "AS IS" BASIS,
-  ~  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  ~  * See the License for the specific language governing permissions and
-  ~  * limitations under the License.
-  ~  */
-  -->
+~ /*
+~  * Copyright 2016-2017 the original author or authors.
+~  *
+~  * Licensed under the Apache License, Version 2.0 (the "License");
+~  * you may not use this file except in compliance with the License.
+~  * You may obtain a copy of the License at
+~  *
+~  *      http://www.apache.org/licenses/LICENSE-2.0
+~  *
+~  * Unless required by applicable law or agreed to in writing, software
+~  * distributed under the License is distributed on an "AS IS" BASIS,
+~  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+~  * See the License for the specific language governing permissions and
+~  * limitations under the License.
+~  */
+-->
 
-<table [hidden]="deleteSuccess" class="table table-striped">
-  <tr>
-    <td valign="top">
-      <dl class="row">
-        <dt class="col-sm-4">Name</dt>
-        <dd class="col-sm-8">{{ pet.name }}</dd>
-        <dt class="col-sm-4">Birth Date</dt>
-        <dd class="col-sm-8">{{ pet.birthDate }}</dd>
-        <dt class="col-sm-4">Type</dt>
-        <dd class="col-sm-8" *ngIf="!deleteSuccess">{{ pet.type.name }}</dd>
-      </dl>
-      <div class="d-flex flex-wrap gap-2">
-        <button class="btn btn-secondary" (click)="editPet(pet)">Edit Pet</button>
-        <button class="btn btn-secondary" (click)="deletePet(pet)">Delete Pet</button>
-        <button class="btn btn-secondary" (click)="addVisit(pet)">Add Visit</button>
-      </div>
-    </td>
-    <td valign="top">
-      <app-visit-list [visits]="pet.visits"></app-visit-list>
-    </td>
-  </tr>
+@if (errorMessage()) {
+  <div class="alert alert-danger">{{ errorMessage() }}</div>
+}
 
-</table>
+<div [hidden]="deleteSuccess()" class="row g-4">
+  <div class="col-lg-5">
+    <table class="table table-striped mb-2">
+      <tbody>
+        <tr>
+          <th class="w-25">Name</th>
+          <td>{{ pet().name }}</td>
+        </tr>
+        <tr>
+          <th>Birth Date</th>
+          <td>{{ pet().birthDate }}</td>
+        </tr>
+        <tr>
+          <th>Type</th>
+          <td>{{ pet().type?.name }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="d-flex flex-wrap gap-2">
+      <button class="btn btn-secondary" (click)="editPet(pet())">Edit Pet</button>
+      <button class="btn btn-secondary" (click)="deletePet(pet())">Delete Pet</button>
+      <button class="btn btn-secondary" (click)="addVisit(pet())">Add Visit</button>
+    </div>
+  </div>
+  <div class="col-lg-7">
+    <app-visit-list [visits]="pet().visits" />
+  </div>
+</div>

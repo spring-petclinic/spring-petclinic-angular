@@ -1,24 +1,27 @@
 <!--
-  ~ /*
-  ~  * Copyright 2016-2018 the original author or authors.
-  ~  *
-  ~  * Licensed under the Apache License, Version 2.0 (the "License");
-  ~  * you may not use this file except in compliance with the License.
-  ~  * You may obtain a copy of the License at
-  ~  *
-  ~  *      http://www.apache.org/licenses/LICENSE-2.0
-  ~  *
-  ~  * Unless required by applicable law or agreed to in writing, software
-  ~  * distributed under the License is distributed on an "AS IS" BASIS,
-  ~  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  ~  * See the License for the specific language governing permissions and
-  ~  * limitations under the License.
-  ~  */
-  -->
+~ /*
+~  * Copyright 2016-2018 the original author or authors.
+~  *
+~  * Licensed under the Apache License, Version 2.0 (the "License");
+~  * you may not use this file except in compliance with the License.
+~  * You may obtain a copy of the License at
+~  *
+~  *      http://www.apache.org/licenses/LICENSE-2.0
+~  *
+~  * Unless required by applicable law or agreed to in writing, software
+~  * distributed under the License is distributed on an "AS IS" BASIS,
+~  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+~  * See the License for the specific language governing permissions and
+~  * limitations under the License.
+~  */
+-->
 
 <div class="container-fluid">
   <div class="container xd-container">
     <h2>New Veterinarian</h2>
+    @if (errorMessage()) {
+      <div class="alert alert-danger">{{ errorMessage() }}</div>
+    }
     <form id="vet" (ngSubmit)="onSubmit(vetForm.value)" #vetForm="ngForm" novalidate>
       <input type="hidden" id="id" [(ngModel)]="vet.id" name="id" />
 
@@ -26,10 +29,18 @@
         <label for="firstName" class="col-sm-2 col-form-label">First Name</label>
         <div class="col-sm-10">
           <input type="text" class="form-control" id="firstName" [(ngModel)]="vet.firstName" minlength="1" maxlength="30" pattern="^[a-zA-Z]*$" required name="firstName" #firstName="ngModel" [class.is-valid]="firstName.dirty && firstName.valid" [class.is-invalid]="firstName.dirty && firstName.invalid" />
-          <div class="invalid-feedback" *ngIf="firstName.dirty && firstName.hasError('maxlength')">First name may be only 30 characters long</div>
-          <div class="invalid-feedback" *ngIf="firstName.dirty && firstName.hasError('minlength')">First name must be at least 1 character long</div>
-          <div class="invalid-feedback" *ngIf="firstName.dirty && firstName.hasError('pattern')">First name may only consist of letters</div>
-          <div class="invalid-feedback" *ngIf="(vetForm.submitted && firstName.hasError('required')) || (firstName.dirty && firstName.hasError('required'))">First name is required</div>
+          @if (firstName.dirty && firstName.hasError('maxlength')) {
+            <div class="invalid-feedback">First name may be only 30 characters long</div>
+          }
+          @if (firstName.dirty && firstName.hasError('minlength')) {
+            <div class="invalid-feedback">First name must be at least 1 character long</div>
+          }
+          @if (firstName.dirty && firstName.hasError('pattern')) {
+            <div class="invalid-feedback">First name may only consist of letters</div>
+          }
+          @if ((vetForm.submitted && firstName.hasError('required')) || (firstName.dirty && firstName.hasError('required'))) {
+            <div class="invalid-feedback">First name is required</div>
+          }
         </div>
       </div>
 
@@ -37,10 +48,18 @@
         <label for="lastName" class="col-sm-2 col-form-label">Last Name</label>
         <div class="col-sm-10">
           <input type="text" class="form-control" id="lastName" [(ngModel)]="vet.lastName" name="lastName" minlength="1" maxlength="30" pattern="^[a-zA-Z]*$" required #lastName="ngModel" [class.is-valid]="lastName.dirty && lastName.valid" [class.is-invalid]="lastName.dirty && lastName.invalid" />
-          <div class="invalid-feedback" *ngIf="lastName.dirty && lastName.hasError('maxlength')">Last name may be only 30 characters long</div>
-          <div class="invalid-feedback" *ngIf="lastName.dirty && lastName.hasError('minlength')">Last name must be at least 1 character long</div>
-          <div class="invalid-feedback" *ngIf="lastName.dirty && lastName.hasError('pattern')">Last name may only consist of letters</div>
-          <div class="invalid-feedback" *ngIf="(vetForm.submitted && lastName.hasError('required')) || (lastName.dirty && lastName.hasError('required'))">Last name is required</div>
+          @if (lastName.dirty && lastName.hasError('maxlength')) {
+            <div class="invalid-feedback">Last name may be only 30 characters long</div>
+          }
+          @if (lastName.dirty && lastName.hasError('minlength')) {
+            <div class="invalid-feedback">Last name must be at least 1 character long</div>
+          }
+          @if (lastName.dirty && lastName.hasError('pattern')) {
+            <div class="invalid-feedback">Last name may only consist of letters</div>
+          }
+          @if ((vetForm.submitted && lastName.hasError('required')) || (lastName.dirty && lastName.hasError('required'))) {
+            <div class="invalid-feedback">Last name is required</div>
+          }
         </div>
       </div>
 
@@ -48,7 +67,9 @@
         <label for="specialties" class="col-sm-2 col-form-label">Specialty</label>
         <div class="col-sm-10">
           <select id="specialties" name="specialties" class="form-select" [(ngModel)]="selectedSpecialty">
-            <option *ngFor="let spec of specialtiesList" [ngValue]="spec">{{ spec.name }}</option>
+            @for (spec of specialtiesList(); track spec) {
+              <option [ngValue]="spec">{{ spec.name }}</option>
+            }
           </select>
         </div>
       </div>
