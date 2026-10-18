@@ -94,7 +94,7 @@ describe('VisitListComponent', () => {
 
         visitService = fixture.debugElement.injector.get(VisitService);
         responseStatus = 204; // success delete return NO_CONTENT
-        component.visits = testVisits;
+        fixture.componentRef.setInput('visits', testVisits);
 
         spy = vi.spyOn(visitService, 'deleteVisit').mockReturnValue(of(responseStatus));
 
@@ -107,7 +107,7 @@ describe('VisitListComponent', () => {
 
     it('should call deleteVisit() method', () => {
         fixture.detectChanges();
-        component.deleteVisit(component.visits[0]);
+        component.deleteVisit(component.visits()[0]);
         expect(vi.mocked(spy).mock.calls.length > 0, 'deleteVisit called').toBe(true);
     });
 

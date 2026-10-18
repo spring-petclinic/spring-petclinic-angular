@@ -20,7 +20,7 @@
  * @author Vitaliy Fedoriv
  */
 
-import {Injectable} from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {environment} from '../../environments/environment';
 import {Observable} from 'rxjs';
 import {Vet} from './vet';
@@ -31,12 +31,17 @@ import {catchError} from 'rxjs/operators';
 
 @Injectable()
 export class VetService {
+  private http = inject(HttpClient);
+  private httpErrorHandler = inject(HttpErrorHandler);
+
 
   entityUrl = environment.REST_API_URL + 'vets';
 
   private readonly handlerError: HandleError;
 
-  constructor(private http: HttpClient, private httpErrorHandler: HttpErrorHandler) {
+  constructor() {
+    const httpErrorHandler = this.httpErrorHandler;
+
     this.handlerError = httpErrorHandler.createHandleError('OwnerService');
   }
 

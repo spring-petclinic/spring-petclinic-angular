@@ -30,8 +30,8 @@ import { VisitAddComponent } from './visit-add.component';
 import { FormsModule } from '@angular/forms';
 import { VisitService } from '../visit.service';
 import { PetService } from '../../pets/pet.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ActivatedRouteStub, RouterStub } from '../../testing/router-stubs';
+import { Router } from '@angular/router';
+import { RouterStub } from '../../testing/router-stubs';
 import { Pet } from '../../pets/pet';
 import { Observable, of } from 'rxjs';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
@@ -71,8 +71,7 @@ describe('VisitAddComponent', () => {
                 { provide: PetService, useClass: PetServiceStub },
                 { provide: VisitService, useClass: VisitServiceStub },
                 { provide: OwnerService, useClass: OwnerServiceStub },
-                { provide: Router, useClass: RouterStub },
-                { provide: ActivatedRoute, useClass: ActivatedRouteStub }
+                { provide: Router, useClass: RouterStub }
             ]
         })
             .compileComponents();
@@ -80,6 +79,7 @@ describe('VisitAddComponent', () => {
 
     beforeEach(() => {
         fixture = TestBed.createComponent(VisitAddComponent);
+        fixture.componentRef.setInput('id', 1);
         component = fixture.componentInstance;
         testPet = {
             id: 1,

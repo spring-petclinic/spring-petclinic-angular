@@ -29,8 +29,8 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { VisitEditComponent } from './visit-edit.component';
 import { FormsModule } from '@angular/forms';
 import { VisitService } from '../visit.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ActivatedRouteStub, RouterStub } from '../../testing/router-stubs';
+import { Router } from '@angular/router';
+import { RouterStub } from '../../testing/router-stubs';
 import { Visit } from '../visit';
 import { Observable, of } from 'rxjs';
 import { Pet } from '../../pets/pet';
@@ -72,8 +72,7 @@ describe('VisitEditComponent', () => {
                 { provide: VisitService, useClass: VisitServiceStub },
                 { provide: OwnerService, useClass: OwnerServiceStub },
                 { provide: PetService, useClass: PetServiceStub },
-                { provide: Router, useClass: RouterStub },
-                { provide: ActivatedRoute, useClass: ActivatedRouteStub }
+                { provide: Router, useClass: RouterStub }
             ]
         })
             .compileComponents();
@@ -81,6 +80,7 @@ describe('VisitEditComponent', () => {
 
     beforeEach(() => {
         fixture = TestBed.createComponent(VisitEditComponent);
+        fixture.componentRef.setInput('id', 1);
         component = fixture.componentInstance;
         testPet = {
             id: 1,

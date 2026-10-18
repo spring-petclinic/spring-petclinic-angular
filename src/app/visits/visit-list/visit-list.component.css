@@ -16,3 +16,7 @@
  *
  */
 
+:host {
+  display: block;
+}
+

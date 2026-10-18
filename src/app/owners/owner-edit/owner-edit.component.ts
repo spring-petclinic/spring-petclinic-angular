@@ -20,10 +20,12 @@
  * @author Vitaliy Fedoriv
  */
 
-import { Component, OnInit } from '@angular/core';
+import { Component, computed, inject, input, linkedSignal, signal } from '@angular/core';
+import { rxResource } from '@angular/core/rxjs-interop';
 import { OwnerService } from '../owner.service';
 import { Owner } from '../owner';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
+import { resourceErrorMessage, valueOrDefault } from '../../resource-utils';
 
 @Component({
   selector: 'app-owner-edit',
@@ -31,37 +33,37 @@ import { ActivatedRoute, Router } from '@angular/router';
   templateUrl: './owner-edit.component.html',
   styleUrls: ['./owner-edit.component.css'],
 })
-export class OwnerEditComponent implements OnInit {
-  owner: Owner;
-  errorMessage: string; // server error message
-  ownerId: number;
-  constructor(
-    private ownerService: OwnerService,
-    private route: ActivatedRoute,
-    private router: Router
-  ) {
-    this.owner = {} as Owner;
-  }
+export class OwnerEditComponent {
+  private ownerService = inject(OwnerService);
+  private router = inject(Router);
 
-  ngOnInit() {
-    const ownerId = this.route.snapshot.params.id;
-    this.ownerService.getOwnerById(ownerId).subscribe(
-      (owner) => (this.owner = owner),
-      (error) => (this.errorMessage = error as any)
-    );
-  }
+  // route parameter, bound by the router (bindToComponentInputs)
+  readonly id = input<string>();
+
+  private readonly ownerResource = rxResource({
+    params: () => this.id(),
+    stream: ({ params }) => this.ownerService.getOwnerById(Number(params)),
+  });
+
+  private readonly emptyOwner = {} as Owner;
+
+  // working copy bound to the form fields with ngModel: the loaded owner is never mutated
+  protected readonly owner = linkedSignal(() => ({ ...valueOrDefault(this.ownerResource, this.emptyOwner) }));
+
+  private readonly submitError = signal<string | null>(null);
+  protected readonly errorMessage = computed(
+    () => this.submitError() ?? resourceErrorMessage(this.ownerResource)
+  );
 
   onSubmit(owner: Owner) {
-    const that = this;  
-    const ownerId = this.route.snapshot.params.id;
-    this.ownerService.updateOwner(ownerId , owner).subscribe(
-      (res) => this.gotoOwnerDetail(owner),
-      (error) => (this.errorMessage = error as any)
-    );
+    this.ownerService.updateOwner(this.id(), owner).subscribe({
+      next: () => this.gotoOwnerDetail(owner),
+      error: (error) => this.submitError.set(String(error)),
+    });
   }
 
   gotoOwnerDetail(owner: Owner) {
-    this.errorMessage = null;
+    this.submitError.set(null);
     this.router.navigate(['/owners', owner.id]);
   }
 }

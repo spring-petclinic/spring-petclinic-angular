@@ -81,7 +81,7 @@ describe('PetListComponent', () => {
             },
             visits: null,
         };
-        component.pet = inputPet;
+        fixture.componentRef.setInput('pet', inputPet);
         petService = fixture.debugElement.injector.get(PetService);
         spy = vi.spyOn(petService, 'deletePet').mockReturnValue(of(1));
 
@@ -94,7 +94,7 @@ describe('PetListComponent', () => {
 
     it('should call deletePet() method', () => {
         fixture.detectChanges();
-        component.deletePet(component.pet);
+        component.deletePet(component.pet());
         expect(vi.mocked(spy).mock.calls.length > 0, 'deletePet called').toBe(true);
     });
 });

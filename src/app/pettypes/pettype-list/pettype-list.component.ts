@@ -1,9 +1,9 @@
-import {ChangeDetectorRef, Component, inject, OnInit} from '@angular/core';
+import {Component, computed, inject, linkedSignal, signal} from '@angular/core';
+import {rxResource} from '@angular/core/rxjs-interop';
 import {PetType} from '../pettype';
 import {Router} from '@angular/router';
 import {PetTypeService} from '../pettype.service';
-import {Specialty} from '../../specialties/specialty';
-import { finalize } from 'rxjs/operators';
+import {resourceErrorMessage, valueOrDefault} from '../../resource-utils';
 
 @Component({
   selector: 'app-pettype-list',
@@ -11,49 +11,36 @@ import { finalize } from 'rxjs/operators';
   templateUrl: './pettype-list.component.html',
   styleUrls: ['./pettype-list.component.css']
 })
-export class PettypeListComponent implements OnInit {
-  private readonly changeDetectorRef = inject(ChangeDetectorRef);
+export class PettypeListComponent {
+  private pettypeService = inject(PetTypeService);
+  private router = inject(Router);
 
-  pettypes: PetType[];
-  errorMessage: string;
-  responseStatus: number;
-  isPetTypesDataReceived: boolean = false;
-  isInsert = false;
+  private readonly pettypesResource = rxResource({
+    stream: () => this.pettypeService.getPetTypes(),
+  });
 
-  constructor(private pettypeService: PetTypeService, private router: Router) {
-    this.pettypes = [] as PetType[];
-  }
+  // local copy so that added and deleted pet types appear without reloading the list
+  readonly pettypes = linkedSignal(() => valueOrDefault(this.pettypesResource, [] as PetType[]));
+  readonly isPetTypesDataReceived = computed(() => !this.pettypesResource.isLoading());
+  readonly isInsert = signal(false);
 
-  ngOnInit() {
-    this.pettypeService.getPetTypes().pipe(
-      finalize(() => {
-        this.isPetTypesDataReceived = true;
-        this.changeDetectorRef.markForCheck();
-      })
-    ).subscribe(
-      pettypes => this.pettypes = pettypes,
-      error => this.errorMessage = error as any
-      );
-  }
+  private readonly deleteError = signal<string | null>(null);
+  readonly errorMessage = computed(() => this.deleteError() ?? resourceErrorMessage(this.pettypesResource));
 
   deletePettype(pettype: PetType) {
-    this.pettypeService.deletePetType(pettype.id.toString()).pipe(
-      finalize(() => this.changeDetectorRef.markForCheck())
-    ).subscribe(
-      response => {
-        this.responseStatus = response;
-        this.pettypes = this.pettypes.filter(currentItem => !(currentItem.id === pettype.id));
-      },
-      error => this.errorMessage = error as any);
+    this.pettypeService.deletePetType(pettype.id.toString()).subscribe({
+      next: () => this.pettypes.update(pettypes => pettypes.filter(currentItem => currentItem.id !== pettype.id)),
+      error: error => this.deleteError.set(String(error))
+    });
   }
 
-  onNewPettype(newPetType: Specialty) {
-    this.pettypes.push(newPetType);
+  onNewPettype(newPetType: PetType) {
+    this.pettypes.update(pettypes => [...pettypes, newPetType]);
     this.showAddPettypeComponent();
   }
 
   showAddPettypeComponent() {
-    this.isInsert = !this.isInsert;
+    this.isInsert.update(isInsert => !isInsert);
   }
 
   showEditPettypeComponent(updatedPetType: PetType) {

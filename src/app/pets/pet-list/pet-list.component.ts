@@ -21,7 +21,7 @@
  * @author Vitaliy Fedoriv
  */
 
-import {Component, Input, OnInit} from '@angular/core';
+import { Component, inject, input, signal } from '@angular/core';
 import {Router} from '@angular/router';
 import {PetService} from '../pet.service';
 import {Pet} from '../pet';
@@ -32,30 +32,23 @@ import {Pet} from '../pet';
   templateUrl: './pet-list.component.html',
   styleUrls: ['./pet-list.component.css']
 })
-export class PetListComponent implements OnInit {
-  errorMessage: string;
-  @Input() pet: Pet;
-  responseStatus: number;
-  deleteSuccess = false;
+export class PetListComponent {
+  private router = inject(Router);
+  private petService = inject(PetService);
 
-  constructor(private router: Router, private petService: PetService) {
-    this.pet = {} as Pet;
-  }
-
-  ngOnInit() {
-  }
+  readonly pet = input.required<Pet>();
+  protected readonly errorMessage = signal<string | null>(null);
+  protected readonly deleteSuccess = signal(false);
 
   editPet(pet: Pet) {
     this.router.navigate(['/pets', pet.id, 'edit']);
   }
 
   deletePet(pet: Pet) {
-    this.petService.deletePet(pet.id.toString()).subscribe(
-      response => {
-        this.deleteSuccess = true;
-        this.pet = {} as Pet;
-      },
-      error => this.errorMessage = error as any);
+    this.petService.deletePet(pet.id.toString()).subscribe({
+      next: () => this.deleteSuccess.set(true),
+      error: (error) => this.errorMessage.set(String(error))
+    });
   }
 
   addVisit(pet: Pet) {
