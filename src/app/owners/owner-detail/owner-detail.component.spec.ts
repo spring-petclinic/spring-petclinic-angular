@@ -22,7 +22,7 @@
  * @author Vitaliy Fedoriv
  */
 
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CUSTOM_ELEMENTS_SCHEMA, DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { OwnerDetailComponent } from './owner-detail.component';
@@ -46,8 +46,8 @@ describe('OwnerDetailComponent', () => {
     let de: DebugElement;
     let el: HTMLElement;
     let router: Router;
-    beforeEach(waitForAsync(() => {
-        TestBed.configureTestingModule({
+    beforeEach(async () => {
+        await TestBed.configureTestingModule({
             declarations: [OwnerDetailComponent],
             schemas: [CUSTOM_ELEMENTS_SCHEMA],
             imports: [FormsModule],
@@ -57,7 +57,7 @@ describe('OwnerDetailComponent', () => {
                 { provide: Router, useClass: RouterStub },
             ],
         }).compileComponents();
-    }));
+    });
     const owner: Owner = {
         id: 10,
         firstName: 'James',

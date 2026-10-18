@@ -22,7 +22,7 @@
  * @author Vitaliy Fedoriv
  */
 
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 
 import {VetAddComponent} from './vet-add.component';
@@ -51,8 +51,8 @@ describe('VetAddComponent', () => {
   let component: VetAddComponent;
   let fixture: ComponentFixture<VetAddComponent>;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       declarations: [VetAddComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       imports: [FormsModule],
@@ -63,7 +63,7 @@ describe('VetAddComponent', () => {
       ]
     })
       .compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(VetAddComponent);

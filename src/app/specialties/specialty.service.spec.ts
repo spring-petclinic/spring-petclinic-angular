@@ -22,7 +22,7 @@
  * @author Vitaliy Fedoriv
  */
 
-import { inject, TestBed, waitForAsync } from '@angular/core/testing';
+import { inject, TestBed } from '@angular/core/testing';
 import {SpecialtyService} from './specialty.service';
 import {provideHttpClient} from '@angular/common/http';
 import {provideHttpClientTesting} from '@angular/common/http/testing';
@@ -36,7 +36,7 @@ describe('SpecialtyService', () => {
     });
   });
 
-  it('should ...', waitForAsync(inject([SpecialtyService], (specialtyService: SpecialtyService) => {
+  it('should ...', inject([SpecialtyService], (specialtyService: SpecialtyService) => {
     expect(specialtyService).toBeTruthy();
-  })));
+  }));
 });

@@ -16,7 +16,6 @@
             "browser": "src/main.ts",
             "tsConfig": "src/tsconfig.app.json",
             "polyfills": [
-              "zone.js",
               "src/polyfills.ts"
             ],
             "assets": [
@@ -43,9 +42,6 @@
               "aot": false,
               "optimization": false,
               "polyfills": [
-                "zone.js",
-                "zone.js/testing",
-                "zone.js/plugins/vitest-patch",
                 "src/polyfills.ts"
               ],
               "sourceMap": true

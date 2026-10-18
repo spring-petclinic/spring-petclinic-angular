@@ -23,7 +23,7 @@ import type { Mock } from 'vitest';
  * @author Vitaliy Fedoriv
  */
 
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
 
@@ -71,8 +71,8 @@ describe('OwnerListComponent', () => {
     };
     let testOwners: Owner[];
 
-    beforeEach(waitForAsync(() => {
-        TestBed.configureTestingModule({
+    beforeEach(async () => {
+        await TestBed.configureTestingModule({
             declarations: [DummyComponent],
             schemas: [NO_ERRORS_SCHEMA],
             imports: [CommonModule, FormsModule, PartsModule, OwnersModule],
@@ -87,7 +87,7 @@ describe('OwnerListComponent', () => {
             ]
         })
             .compileComponents();
-    }));
+    });
 
     beforeEach(() => {
         testOwners = [{
@@ -125,14 +125,13 @@ describe('OwnerListComponent', () => {
     });
 
 
-    it(' should show full name after getOwners observable (async) ', waitForAsync(() => {
+    it(' should show full name after getOwners observable (async) ', async () => {
         fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            fixture.detectChanges(); // update view with name
-            de = fixture.debugElement.query(By.css('.ownerFullName'));
-            el = de.nativeElement;
-            expect(el.textContent).toBe((testOwner.firstName.toString() + ' ' + testOwner.lastName.toString()));
-        });
-    }));
+        await fixture.whenStable();
+        fixture.detectChanges(); // update view with name
+        de = fixture.debugElement.query(By.css('.ownerFullName'));
+        el = de.nativeElement;
+        expect(el.textContent).toBe((testOwner.firstName.toString() + ' ' + testOwner.lastName.toString()));
+    });
 
 });
