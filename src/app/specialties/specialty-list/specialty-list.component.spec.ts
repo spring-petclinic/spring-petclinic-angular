@@ -23,7 +23,7 @@ import type { Mock } from 'vitest';
  * @author Vitaliy Fedoriv
  */
 
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 import { SpecialtyListComponent } from './specialty-list.component';
@@ -53,8 +53,8 @@ describe('SpecialtyListComponent', () => {
     let testSpecialties: Specialty[];
     let responseStatus: number;
 
-    beforeEach(waitForAsync(() => {
-        TestBed.configureTestingModule({
+    beforeEach(async () => {
+        await TestBed.configureTestingModule({
             declarations: [SpecialtyListComponent],
             schemas: [CUSTOM_ELEMENTS_SCHEMA],
             imports: [FormsModule],
@@ -65,7 +65,7 @@ describe('SpecialtyListComponent', () => {
             ]
         })
             .compileComponents();
-    }));
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(SpecialtyListComponent);
