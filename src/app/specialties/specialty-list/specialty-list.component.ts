@@ -20,11 +20,12 @@
  * @author Vitaliy Fedoriv
  */
 
-import {ChangeDetectorRef, Component, inject, OnInit} from '@angular/core';
+import {Component, computed, inject, linkedSignal, signal} from '@angular/core';
+import {rxResource} from '@angular/core/rxjs-interop';
 import {Specialty} from '../specialty';
 import {SpecialtyService} from '../specialty.service';
 import {Router} from '@angular/router';
-import { finalize } from 'rxjs/operators';
+import {resourceErrorMessage, valueOrDefault} from '../../resource-utils';
 
 @Component({
   selector: 'app-specialty-list',
@@ -32,48 +33,36 @@ import { finalize } from 'rxjs/operators';
   templateUrl: './specialty-list.component.html',
   styleUrls: ['./specialty-list.component.css']
 })
-export class SpecialtyListComponent implements OnInit {
-  private readonly changeDetectorRef = inject(ChangeDetectorRef);
+export class SpecialtyListComponent {
+  private specService = inject(SpecialtyService);
+  private router = inject(Router);
 
-  specialties: Specialty[];
-  errorMessage: string;
-  responseStatus: number;
-  isInsert = false;
-  isSpecialitiesDataReceived: boolean = false;
+  private readonly specialtiesResource = rxResource({
+    stream: () => this.specService.getSpecialties(),
+  });
 
-  constructor(private specService: SpecialtyService, private router: Router) {
-    this.specialties = [];
-  }
+  // local copy so that added and deleted specialties appear without reloading the list
+  readonly specialties = linkedSignal(() => valueOrDefault(this.specialtiesResource, [] as Specialty[]));
+  readonly isSpecialitiesDataReceived = computed(() => !this.specialtiesResource.isLoading());
+  readonly isInsert = signal(false);
 
-  ngOnInit() {
-    this.specService.getSpecialties().pipe(
-      finalize(() => {
-        this.isSpecialitiesDataReceived = true;
-        this.changeDetectorRef.markForCheck();
-      })
-    ).subscribe(
-      specialties => this.specialties = specialties,
-      error => this.errorMessage = error as any);
-  }
+  private readonly deleteError = signal<string | null>(null);
+  readonly errorMessage = computed(() => this.deleteError() ?? resourceErrorMessage(this.specialtiesResource));
 
   deleteSpecialty(specialty: Specialty) {
-    this.specService.deleteSpecialty(specialty.id.toString()).pipe(
-      finalize(() => this.changeDetectorRef.markForCheck())
-    ).subscribe(
-      response => {
-        this.responseStatus = response;
-        this.specialties = this.specialties.filter(currentItem => !(currentItem.id === specialty.id));
-      },
-      error => this.errorMessage = error as any);
+    this.specService.deleteSpecialty(specialty.id.toString()).subscribe({
+      next: () => this.specialties.update(specialties => specialties.filter(currentItem => currentItem.id !== specialty.id)),
+      error: error => this.deleteError.set(String(error))
+    });
   }
 
   onNewSpecialty(newSpecialty: Specialty) {
-    this.specialties.push(newSpecialty);
+    this.specialties.update(specialties => [...specialties, newSpecialty]);
     this.showAddSpecialtyComponent();
   }
 
   showAddSpecialtyComponent() {
-    this.isInsert = !this.isInsert;
+    this.isInsert.update(isInsert => !isInsert);
   }
 
   showEditSpecialtyComponent(updatedSpecialty: Specialty) {

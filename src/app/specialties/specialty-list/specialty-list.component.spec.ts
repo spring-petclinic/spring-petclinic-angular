@@ -77,7 +77,7 @@ describe('SpecialtyListComponent', () => {
 
         specialtyService = fixture.debugElement.injector.get(SpecialtyService);
         responseStatus = 204; // success delete return NO_CONTENT
-        component.specialties = testSpecialties;
+        component.specialties.set(testSpecialties);
 
         spy = vi.spyOn(specialtyService, 'deleteSpecialty').mockReturnValue(of(responseStatus));
 
@@ -90,7 +90,7 @@ describe('SpecialtyListComponent', () => {
 
     it('should call deleteSpecialty() method', () => {
         fixture.detectChanges();
-        component.deleteSpecialty(component.specialties[0]);
+        component.deleteSpecialty(component.specialties()[0]);
         expect(vi.mocked(spy).mock.calls.length > 0, 'deleteSpecialty called').toBe(true);
     });
 

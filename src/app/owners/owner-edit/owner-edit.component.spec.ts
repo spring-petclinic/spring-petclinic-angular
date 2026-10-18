@@ -27,8 +27,8 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { OwnerEditComponent } from './owner-edit.component';
 import { FormsModule } from '@angular/forms';
 import { OwnerService } from '../owner.service';
-import { ActivatedRoute, provideRouter, Router } from '@angular/router';
-import { ActivatedRouteStub, RouterStub } from '../../testing/router-stubs';
+import { provideRouter, Router } from '@angular/router';
+import { RouterStub } from '../../testing/router-stubs';
 import { Owner } from '../owner';
 import { Observable, of } from 'rxjs';
 import { By } from '@angular/platform-browser';
@@ -54,13 +54,13 @@ describe('OwnerEditComponent', () => {
                 provideRouter([{ path: 'owners', component: OwnerListComponent }]),
                 { provide: OwnerService, useClass: OwnserServiceStub },
                 { provide: Router, useClass: RouterStub },
-                { provide: ActivatedRoute, useClass: ActivatedRouteStub },
             ],
         }).compileComponents();
     }));
 
     beforeEach(() => {
         fixture = TestBed.createComponent(OwnerEditComponent);
+        fixture.componentRef.setInput('id', 1);
         component = fixture.componentInstance;
         fixture.detectChanges();
         router = TestBed.inject(Router);

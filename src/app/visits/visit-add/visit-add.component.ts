@@ -20,13 +20,14 @@
  * @author Vitaliy Fedoriv
  */
 
-import {Component, OnInit} from '@angular/core';
+import { Component, computed, inject, input, signal } from '@angular/core';
+import { rxResource } from '@angular/core/rxjs-interop';
 import {Visit} from '../visit';
 import {VisitService} from '../visit.service';
-import {ActivatedRoute, Router} from '@angular/router';
+import {Router} from '@angular/router';
+import {resourceErrorMessage, valueOrDefault} from '../../resource-utils';
 import {PetService} from '../../pets/pet.service';
 import {Pet} from '../../pets/pet';
-import {PetType} from '../../pettypes/pettype';
 import {Owner} from '../../owners/owner';
 
 import moment from 'moment';
@@ -38,63 +39,56 @@ import {OwnerService} from '../../owners/owner.service';
   templateUrl: './visit-add.component.html',
   styleUrls: ['./visit-add.component.css']
 })
-export class VisitAddComponent implements OnInit {
+export class VisitAddComponent {
+  private visitService = inject(VisitService);
+  private petService = inject(PetService);
+  private ownerService = inject(OwnerService);
+  private router = inject(Router);
 
-  visit: Visit;
-  currentPet: Pet;
-  currentOwner: Owner;
-  currentPetType: PetType;
-  addedSuccess = false;
-  errorMessage: string;
+  // pet id: route parameter, bound by the router (bindToComponentInputs)
+  readonly id = input<string>();
 
-  constructor(private visitService: VisitService,
-              private petService: PetService,
-              private ownerService: OwnerService,
-              private router: Router,
-              private route: ActivatedRoute) {
-    this.visit = {} as Visit;
-    this.currentPet = {} as Pet;
-    this.currentOwner = {} as Owner;
-    this.currentPetType = {} as PetType;
+  private readonly petResource = rxResource({
+    params: () => this.id(),
+    stream: ({ params }) => this.petService.getPetById(Number(params)),
+  });
+  // the owner is loaded once the pet, which references it, has been received
+  private readonly ownerResource = rxResource({
+    params: () => (this.petResource.hasValue() ? this.petResource.value().ownerId : undefined),
+    stream: ({ params }) => this.ownerService.getOwnerById(params),
+  });
 
-  }
+  private readonly emptyPet = {} as Pet;
+  private readonly emptyOwner = {} as Owner;
 
-  ngOnInit() {
-    console.log(this.route.parent);
-    const petId = this.route.snapshot.params.id;
-    this.petService.getPetById(petId).subscribe(
-      pet => {
-        this.currentPet = pet;
-        this.visit.pet = this.currentPet;
-        this.currentPetType = this.currentPet.type;
-        this.ownerService.getOwnerById(pet.ownerId).subscribe(
-          owner => {
-            this.currentOwner = owner;
-          }
-        )
-      },
-      error => this.errorMessage = error as any);
-  }
+  // the form fields are bound to the properties of this object with ngModel
+  visit = {} as Visit;
+  readonly currentPet = computed(() => valueOrDefault(this.petResource, this.emptyPet));
+  readonly currentOwner = computed(() => valueOrDefault(this.ownerResource, this.emptyOwner));
+  readonly addedSuccess = signal(false);
+  private readonly submitError = signal<string | null>(null);
+  readonly errorMessage = computed(
+    () => this.submitError() ?? resourceErrorMessage(this.petResource)
+  );
 
   onSubmit(visit: Visit) {
     visit.id = null;
-    const that = this;
+    visit.pet = this.currentPet();
 
     // format output from datepicker to short string yyyy-mm-dd format (rfc3339)
     visit.date = moment(visit.date).format('YYYY-MM-DD');
 
-    this.visitService.addVisit(visit).subscribe(
-      newVisit => {
-        this.visit = newVisit;
-        this.addedSuccess = true;
-        that.gotoOwnerDetail();
+    this.visitService.addVisit(visit).subscribe({
+      next: () => {
+        this.addedSuccess.set(true);
+        this.gotoOwnerDetail();
       },
-      error => this.errorMessage = error as any
-    );
+      error: error => this.submitError.set(String(error))
+    });
   }
 
   gotoOwnerDetail() {
-    this.router.navigate(['/owners', this.currentOwner.id]);
+    this.router.navigate(['/owners', this.currentOwner().id]);
   }
 
 }

@@ -16,14 +16,7 @@
  *
  */
 
-import {
-  Component,
-  EventEmitter,
-  OnInit,
-  Output,
-  ViewChild,
-} from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { Component, inject, output, signal } from '@angular/core';
 import { Specialty } from '../specialty';
 import { SpecialtyService } from '../specialty.service';
 
@@ -33,27 +26,22 @@ import { SpecialtyService } from '../specialty.service';
   templateUrl: './specialty-add.component.html',
   styleUrls: ['./specialty-add.component.css'],
 })
-export class SpecialtyAddComponent implements OnInit {
-  @ViewChild('specialityForm', { static: true }) specialityForm: NgForm;
-  speciality: Specialty;
-  addedSuccess = false;
-  errorMessage: string;
-  @Output() newSpeciality = new EventEmitter<Specialty>();
+export class SpecialtyAddComponent {
+  private specialtyService = inject(SpecialtyService);
 
-  constructor(private specialtyService: SpecialtyService) {
-    this.speciality = {} as Specialty;
-  }
-
-  ngOnInit() {}
+  // the form fields are bound to the properties of this object with ngModel
+  speciality = {} as Specialty;
+  readonly addedSuccess = signal(false);
+  readonly errorMessage = signal<string | null>(null);
+  readonly newSpeciality = output<Specialty>();
 
   onSubmit(specialty: Specialty) {
-    this.specialtyService.addSpecialty(specialty).subscribe(
-      (newSpecialty) => {
-        this.speciality = newSpecialty;
-        this.addedSuccess = true;
-        this.newSpeciality.emit(this.speciality);
+    this.specialtyService.addSpecialty(specialty).subscribe({
+      next: (newSpecialty) => {
+        this.addedSuccess.set(true);
+        this.newSpeciality.emit(newSpecialty);
       },
-      (error) => (this.errorMessage = error as any)
-    );
+      error: (error) => this.errorMessage.set(String(error)),
+    });
   }
 }

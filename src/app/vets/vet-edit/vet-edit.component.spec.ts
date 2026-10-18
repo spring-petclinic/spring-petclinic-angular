@@ -27,19 +27,11 @@ import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 
 import {VetEditComponent} from './vet-edit.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {SpecialtyService} from '../../specialties/specialty.service';
 import {VetService} from '../vet.service';
-import {ActivatedRoute, Router} from '@angular/router';
+import {Router} from '@angular/router';
 import {RouterStub} from '../../testing/router-stubs';
 import {Observable, of} from 'rxjs';
-import {Specialty} from '../../specialties/specialty';
 import {Vet} from '../vet';
-
-class SpecialtyServiceStub {
-  getSpecialties(): Observable<Specialty[]> {
-    return of([]);
-  }
-}
 
 class VetServiceStub {
   updateVet(id: string, vet: Vet): Observable<Vet> {
@@ -57,20 +49,8 @@ describe('VetEditComponent', () => {
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       imports: [FormsModule, ReactiveFormsModule],
       providers: [
-        {provide: SpecialtyService, useClass: SpecialtyServiceStub},
         {provide: VetService, useClass: VetServiceStub},
-        {provide: Router, useClass: RouterStub},
-        {
-          provide: ActivatedRoute,
-          useValue: {
-            snapshot: {
-              data: {
-                specs: [],
-                vet: {id: 1, firstName: 'James', lastName: 'Carter', specialties: []}
-              }
-            }
-          }
-        }
+        {provide: Router, useClass: RouterStub}
       ]
     })
       .overrideComponent(VetEditComponent, {
@@ -82,9 +62,16 @@ describe('VetEditComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(VetEditComponent);
     component = fixture.componentInstance;
+    fixture.componentRef.setInput('specs', []);
+    fixture.componentRef.setInput('vet', {id: 1, firstName: 'James', lastName: 'Carter', specialties: []});
     fixture.detectChanges();
   });
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should fill the form with the resolved vet', () => {
+    expect(component.vetEditForm.value.firstName).toBe('James');
+    expect(component.vetEditForm.value.lastName).toBe('Carter');
   });
 });

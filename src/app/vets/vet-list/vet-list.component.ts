@@ -20,11 +20,12 @@
  * @author Vitaliy Fedoriv
  */
 
-import {ChangeDetectorRef, Component, inject, OnInit} from '@angular/core';
+import {Component, computed, inject, linkedSignal, signal} from '@angular/core';
+import {rxResource} from '@angular/core/rxjs-interop';
 import {Vet} from '../vet';
 import {VetService} from '../vet.service';
 import {Router} from '@angular/router';
-import { finalize } from 'rxjs/operators';
+import {resourceErrorMessage, valueOrDefault} from '../../resource-utils';
 
 @Component({
   selector: 'app-vet-list',
@@ -32,38 +33,26 @@ import { finalize } from 'rxjs/operators';
   templateUrl: './vet-list.component.html',
   styleUrls: ['./vet-list.component.css']
 })
-export class VetListComponent implements OnInit {
-  private readonly changeDetectorRef = inject(ChangeDetectorRef);
+export class VetListComponent {
+  private vetService = inject(VetService);
+  private router = inject(Router);
 
-  vets: Vet[];
-  errorMessage: string;
-  responseStatus: number;
-  isVetDataReceived: boolean = false;
+  private readonly vetsResource = rxResource({
+    stream: () => this.vetService.getVets(),
+  });
 
-  constructor(private vetService: VetService, private router: Router) {
-    this.vets = [];
-  }
+  // local copy so that deleted vets disappear without reloading the list
+  readonly vets = linkedSignal(() => valueOrDefault(this.vetsResource, [] as Vet[]));
+  readonly isVetDataReceived = computed(() => !this.vetsResource.isLoading());
 
-  ngOnInit() {
-    this.vetService.getVets().pipe(
-      finalize(() => {
-        this.isVetDataReceived = true;
-        this.changeDetectorRef.markForCheck();
-      })
-    ).subscribe(
-      vets => this.vets = vets,
-      error => this.errorMessage = error as any);
-  }
+  private readonly deleteError = signal<string | null>(null);
+  readonly errorMessage = computed(() => this.deleteError() ?? resourceErrorMessage(this.vetsResource));
 
   deleteVet(vet: Vet) {
-    this.vetService.deleteVet(vet.id.toString()).pipe(
-      finalize(() => this.changeDetectorRef.markForCheck())
-    ).subscribe(
-      response => {
-        this.responseStatus = response;
-        this.vets = this.vets.filter(currentItem => !(currentItem.id === vet.id));
-      },
-      error => this.errorMessage = error as any);
+    this.vetService.deleteVet(vet.id.toString()).subscribe({
+      next: () => this.vets.update(vets => vets.filter(currentItem => currentItem.id !== vet.id)),
+      error: error => this.deleteError.set(String(error))
+    });
   }
 
   gotoHome() {

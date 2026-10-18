@@ -31,8 +31,8 @@ import { FormsModule } from '@angular/forms';
 import { PetService } from '../pet.service';
 import { OwnerService } from '../../owners/owner.service';
 import { PetTypeService } from '../../pettypes/pettype.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ActivatedRouteStub, RouterStub } from '../../testing/router-stubs';
+import { Router } from '@angular/router';
+import { RouterStub } from '../../testing/router-stubs';
 import { Pet } from '../pet';
 import { Observable, of } from 'rxjs';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -74,8 +74,7 @@ describe('PetEditComponent', () => {
                 { provide: PetService, useClass: PetServiceStub },
                 { provide: OwnerService, useClass: OwnerServiceStub },
                 { provide: PetTypeService, useClass: PetTypeServiceStub },
-                { provide: Router, useClass: RouterStub },
-                { provide: ActivatedRoute, useClass: ActivatedRouteStub }
+                { provide: Router, useClass: RouterStub }
             ]
         })
             .compileComponents();
@@ -83,6 +82,7 @@ describe('PetEditComponent', () => {
 
     beforeEach(() => {
         fixture = TestBed.createComponent(PetEditComponent);
+        fixture.componentRef.setInput('id', 1);
         component = fixture.componentInstance;
         testPet = {
             id: 1,

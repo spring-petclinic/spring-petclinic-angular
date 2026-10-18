@@ -20,7 +20,7 @@
  * @author Vitaliy Fedoriv
  */
 
-import {Injectable} from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {environment} from '../../environments/environment';
 import {Observable} from 'rxjs';
 import {Specialty} from './specialty';
@@ -30,12 +30,17 @@ import {HttpClient} from '@angular/common/http';
 
 @Injectable()
 export class SpecialtyService {
+  private http = inject(HttpClient);
+  private httpErrorHandler = inject(HttpErrorHandler);
+
 
   private entityUrl = environment.REST_API_URL + 'specialties';
 
   private handlerError: HandleError;
 
-  constructor(private http: HttpClient, private httpErrorHandler: HttpErrorHandler) {
+  constructor() {
+    const httpErrorHandler = this.httpErrorHandler;
+
     this.handlerError = httpErrorHandler.createHandleError('OwnerService');
   }
 

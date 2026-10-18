@@ -20,13 +20,14 @@
  * @author Vitaliy Fedoriv
  */
 
-import {Component, OnInit} from '@angular/core';
+import { Component, computed, inject, input, linkedSignal, signal } from '@angular/core';
+import { rxResource } from '@angular/core/rxjs-interop';
 import {Visit} from '../visit';
 import {Pet} from '../../pets/pet';
 import {Owner} from '../../owners/owner';
-import {PetType} from '../../pettypes/pettype';
 import {VisitService} from '../visit.service';
-import {ActivatedRoute, Router} from '@angular/router';
+import {Router} from '@angular/router';
+import {resourceErrorMessage, valueOrDefault} from '../../resource-utils';
 
 import moment from 'moment';
 import {OwnerService} from '../../owners/owner.service';
@@ -38,59 +39,57 @@ import {PetService} from '../../pets/pet.service';
   templateUrl: './visit-edit.component.html',
   styleUrls: ['./visit-edit.component.css']
 })
-export class VisitEditComponent implements OnInit {
-  visit: Visit;
-  currentPet: Pet;
-  currentOwner: Owner;
-  currentPetType: PetType;
-  updateSuccess = false;
-  errorMessage: string;
+export class VisitEditComponent {
+  private visitService = inject(VisitService);
+  private petService = inject(PetService);
+  private ownerService = inject(OwnerService);
+  private router = inject(Router);
 
-  constructor(private visitService: VisitService,
-              private petService: PetService,
-              private ownerService: OwnerService,
-              private route: ActivatedRoute,
-              private router: Router) {
-    this.visit = {} as Visit;
-    this.currentPet = {} as Pet;
-    this.currentOwner = {} as Owner;
-    this.currentPetType = {} as PetType;
-  }
+  // route parameter, bound by the router (bindToComponentInputs)
+  readonly id = input<string>();
 
-  ngOnInit() {
-    const visitId = this.route.snapshot.params.id;
-    this.visitService.getVisitById(visitId).subscribe(
-      visit => {
-        this.visit = visit;
-        this.petService.getPetById(visit.petId).subscribe(
-          pet => {
-            this.currentPet = pet;
-            this.currentPetType = pet.type;
-            this.ownerService.getOwnerById(pet.ownerId).subscribe(
-              owner => {
-                this.currentOwner = owner;
-              }
-            )
-          }
-        )
-      },
-      error => this.errorMessage = error as any);
-  }
+  private readonly visitResource = rxResource({
+    params: () => this.id(),
+    stream: ({ params }) => this.visitService.getVisitById(params),
+  });
+  // each level is loaded once the previous one, which references it, has been received
+  private readonly petResource = rxResource({
+    params: () => (this.visitResource.hasValue() ? this.visitResource.value().petId : undefined),
+    stream: ({ params }) => this.petService.getPetById(params),
+  });
+  private readonly ownerResource = rxResource({
+    params: () => (this.petResource.hasValue() ? this.petResource.value().ownerId : undefined),
+    stream: ({ params }) => this.ownerService.getOwnerById(params),
+  });
+
+  private readonly emptyVisit = {} as Visit;
+  private readonly emptyPet = {} as Pet;
+  private readonly emptyOwner = {} as Owner;
+
+  // working copy bound to the form fields with ngModel: the loaded visit is never mutated
+  readonly visit = linkedSignal(() => ({ ...valueOrDefault(this.visitResource, this.emptyVisit) }));
+  readonly currentPet = computed(() => valueOrDefault(this.petResource, this.emptyPet));
+  readonly currentOwner = computed(() => valueOrDefault(this.ownerResource, this.emptyOwner));
+  readonly updateSuccess = signal(false);
+  private readonly submitError = signal<string | null>(null);
+  readonly errorMessage = computed(
+    () => this.submitError() ?? resourceErrorMessage(this.visitResource)
+  );
 
   onSubmit(visit: Visit) {
-    visit.pet = this.currentPet;
+    visit.pet = this.currentPet();
 
     // format output from datepicker to short string yyyy-mm-dd format (rfc3339)
     visit.date = moment(visit.date).format('YYYY-MM-DD');
 
-    this.visitService.updateVisit(visit.id.toString(), visit).subscribe(
-      res => this.gotoOwnerDetail(),
-      error => this.errorMessage = error as any);
-
+    this.visitService.updateVisit(visit.id.toString(), visit).subscribe({
+      next: () => this.gotoOwnerDetail(),
+      error: error => this.submitError.set(String(error))
+    });
   }
 
   gotoOwnerDetail() {
-    this.router.navigate(['/owners', this.currentOwner.id]);
+    this.router.navigate(['/owners', this.currentOwner().id]);
   }
 
 }
