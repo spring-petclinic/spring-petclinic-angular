@@ -22,24 +22,22 @@
     @if (errorMessage()) {
       <div class="alert alert-danger">{{ errorMessage() }}</div>
     }
-    <form id="vet_form" (ngSubmit)="onSubmit(vetEditForm.value)" [formGroup]="vetEditForm" novalidate>
-      <input type="hidden" id="id" name="id" formControlName="id" />
-
+    <form id="vet_form" [formRoot]="vetForm">
       <div class="row mb-3">
         <label for="firstName" class="col-sm-2 col-form-label">First Name</label>
         <div class="col-sm-10">
-          <input type="text" class="form-control" id="firstName" name="firstName" minlength="1" maxlength="30" pattern="^[A-Za-z]*$" required formControlName="firstName" [class.is-valid]="firstNameCtrl.dirty && firstNameCtrl.valid" [class.is-invalid]="firstNameCtrl.dirty && firstNameCtrl.invalid" />
-          @if (firstNameCtrl.dirty && firstNameCtrl.hasError('maxlength')) {
-            <div class="invalid-feedback">First name may be only 30 characters long</div>
-          }
-          @if (firstNameCtrl.dirty && firstNameCtrl.hasError('minlength')) {
-            <div class="invalid-feedback">First name must be at least 1 character long</div>
-          }
-          @if (firstNameCtrl.dirty && firstNameCtrl.hasError('pattern')) {
-            <div class="invalid-feedback">First name may only consist of letters</div>
-          }
-          @if (firstNameCtrl.dirty && firstNameCtrl.hasError('required')) {
-            <div class="invalid-feedback">First name is required</div>
+          <input type="text" class="form-control" id="firstName" [formField]="vetForm.firstName" [class.is-valid]="vetForm.firstName().dirty() && vetForm.firstName().valid()" [class.is-invalid]="vetForm.firstName().dirty() && vetForm.firstName().invalid()" />
+          @if (vetForm.firstName().dirty()) {
+            @for (error of vetForm.firstName().errors(); track error.kind) {
+              <div class="invalid-feedback">
+                @switch (error.kind) {
+                  @case ('maxLength') { First name may be only 30 characters long }
+                  @case ('minLength') { First name must be at least 2 characters long }
+                  @case ('pattern') { First name may only consist of letters }
+                  @case ('required') { First name is required }
+                }
+              </div>
+            }
           }
         </div>
       </div>
@@ -47,18 +45,18 @@
       <div class="row mb-3">
         <label for="lastName" class="col-sm-2 col-form-label">Last Name</label>
         <div class="col-sm-10">
-          <input type="text" class="form-control" id="lastName" name="lastName" minlength="1" maxlength="30" pattern="^[A-Za-z]*$" required formControlName="lastName" [class.is-valid]="lastNameCtrl.dirty && lastNameCtrl.valid" [class.is-invalid]="lastNameCtrl.dirty && lastNameCtrl.invalid" />
-          @if (lastNameCtrl.dirty && lastNameCtrl.hasError('maxlength')) {
-            <div class="invalid-feedback">Last name may be only 30 characters long</div>
-          }
-          @if (lastNameCtrl.dirty && lastNameCtrl.hasError('minlength')) {
-            <div class="invalid-feedback">Last name must be at least 1 character long</div>
-          }
-          @if (lastNameCtrl.dirty && lastNameCtrl.hasError('pattern')) {
-            <div class="invalid-feedback">Last name may only consist of letters</div>
-          }
-          @if (lastNameCtrl.dirty && lastNameCtrl.hasError('required')) {
-            <div class="invalid-feedback">Last name is required</div>
+          <input type="text" class="form-control" id="lastName" [formField]="vetForm.lastName" [class.is-valid]="vetForm.lastName().dirty() && vetForm.lastName().valid()" [class.is-invalid]="vetForm.lastName().dirty() && vetForm.lastName().invalid()" />
+          @if (vetForm.lastName().dirty()) {
+            @for (error of vetForm.lastName().errors(); track error.kind) {
+              <div class="invalid-feedback">
+                @switch (error.kind) {
+                  @case ('maxLength') { Last name may be only 30 characters long }
+                  @case ('minLength') { Last name must be at least 2 characters long }
+                  @case ('pattern') { Last name may only consist of letters }
+                  @case ('required') { Last name is required }
+                }
+              </div>
+            }
           }
         </div>
       </div>
@@ -67,8 +65,8 @@
         <label for="spec" class="col-sm-2 col-form-label">Specialties</label>
         <div class="col-sm-10">
           <mat-form-field class="w-100">
-            <mat-select [compareWith]="compareSpecFn" id="spec" name="specialties" formControlName="specialties" multiple>
-              @for (specialty of specs(); track specialty) {
+            <mat-select [compareWith]="compareSpecFn" id="spec" [formField]="vetForm.specialties" multiple>
+              @for (specialty of specs(); track specialty.id) {
                 <mat-option [value]="specialty">{{ specialty.name }}</mat-option>
               }
             </mat-select>
@@ -79,7 +77,7 @@
       <div class="row">
         <div class="offset-sm-2 col-sm-10 d-flex gap-2">
           <button class="btn btn-secondary" type="button" (click)="gotoVetList()">Back</button>
-          <button class="btn btn-secondary" type="submit" [disabled]="vetEditForm.invalid">Save Vet</button>
+          <button class="btn btn-secondary" type="submit" [disabled]="vetForm().invalid()">Save Vet</button>
         </div>
       </div>
     </form>

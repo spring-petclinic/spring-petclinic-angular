@@ -17,6 +17,9 @@
  */
 
 import { Component, inject, output, signal } from '@angular/core';
+import { form } from '@angular/forms/signals';
+import { specialtySchema } from '../specialty-form';
+import { firstValueFrom } from 'rxjs';
 import { Specialty } from '../specialty';
 import { SpecialtyService } from '../specialty.service';
 
@@ -29,19 +32,29 @@ import { SpecialtyService } from '../specialty.service';
 export class SpecialtyAddComponent {
   private specialtyService = inject(SpecialtyService);
 
-  // the form fields are bound to the properties of this object with ngModel
-  speciality = {} as Specialty;
+  private readonly speciality = signal({ name: '' });
   readonly addedSuccess = signal(false);
   readonly errorMessage = signal<string | null>(null);
   readonly newSpeciality = output<Specialty>();
 
-  onSubmit(specialty: Specialty) {
-    this.specialtyService.addSpecialty(specialty).subscribe({
-      next: (newSpecialty) => {
-        this.addedSuccess.set(true);
-        this.newSpeciality.emit(newSpecialty);
-      },
-      error: (error) => this.errorMessage.set(String(error)),
-    });
-  }
+  protected readonly specialityForm = form(
+    this.speciality,
+    specialtySchema,
+    {
+      submission: {
+        action: async () => {
+          try {
+            const newSpecialty = await firstValueFrom(
+              this.specialtyService.addSpecialty({ name: this.speciality().name } as Specialty)
+            );
+            this.addedSuccess.set(true);
+            this.newSpeciality.emit(newSpecialty);
+          } catch (error) {
+            this.errorMessage.set(String(error));
+          }
+          return undefined;
+        }
+      }
+    }
+  );
 }

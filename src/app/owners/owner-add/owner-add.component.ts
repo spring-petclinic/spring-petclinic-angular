@@ -24,6 +24,9 @@ import { Component, inject, signal } from '@angular/core';
 import {OwnerService} from '../owner.service';
 import {Owner} from '../owner';
 import {Router} from '@angular/router';
+import {form} from '@angular/forms/signals';
+import {firstValueFrom} from 'rxjs';
+import {emptyOwnerForm, ownerSchema} from '../owner-form';
 
 @Component({
   selector: 'app-owner-add',
@@ -35,17 +38,22 @@ export class OwnerAddComponent {
   private ownerService = inject(OwnerService);
   private router = inject(Router);
 
-  // the form fields are bound to the properties of this object with ngModel
-  protected readonly owner = {} as Owner;
+  private readonly owner = signal(emptyOwnerForm());
   protected readonly errorMessage = signal<string | null>(null);
 
-  onSubmit(owner: Owner) {
-    owner.id = null;
-    this.ownerService.addOwner(owner).subscribe({
-      next: () => this.gotoOwnersList(),
-      error: (error) => this.errorMessage.set(String(error))
-    });
-  }
+  protected readonly ownerForm = form(this.owner, ownerSchema, {
+    submission: {
+      action: async () => {
+        try {
+          await firstValueFrom(this.ownerService.addOwner({id: null, ...this.owner()} as Owner));
+          this.gotoOwnersList();
+        } catch (error) {
+          this.errorMessage.set(String(error));
+        }
+        return undefined;
+      }
+    }
+  });
 
   gotoOwnersList() {
     this.router.navigate(['/owners']);

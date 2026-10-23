@@ -31,15 +31,21 @@
       </table>
     </div>
 
-    <form id="visit" (ngSubmit)="onSubmit(visitForm.value)" #visitForm="ngForm" novalidate>
+    <form id="visit" [formRoot]="visitForm">
       <div class="row mb-3">
         <label for="date" class="col-sm-2 col-form-label">Date</label>
         <div class="col-sm-10">
-          <input id="date" matInput [matDatepicker]="visitDateDatepicker" required [ngModel]="visit.date | date:'yyyy-MM-dd'" name="date" #date="ngModel" [class.is-valid]="date.dirty && date.valid" [class.is-invalid]="date.dirty && date.invalid" />
+          <input id="date" matInput [matDatepicker]="visitDateDatepicker" [formField]="visitForm.date" [class.is-valid]="visitForm.date().dirty() && visitForm.date().valid()" [class.is-invalid]="visitForm.date().dirty() && visitForm.date().invalid()" />
           <mat-datepicker-toggle matSuffix [for]="visitDateDatepicker" />
           <mat-datepicker #visitDateDatepicker />
-          @if (date.dirty && date.hasError('required')) {
-            <div class="invalid-feedback">Date is required</div>
+          @if (visitForm.date().dirty()) {
+            @for (error of visitForm.date().errors(); track error.kind) {
+              <div class="invalid-feedback">
+                @switch (error.kind) {
+                  @case ('required') { Date is required }
+                }
+              </div>
+            }
           }
         </div>
       </div>
@@ -47,24 +53,25 @@
       <div class="row mb-3">
         <label for="description" class="col-sm-2 col-form-label">Description</label>
         <div class="col-sm-10">
-          <input id="description" name="description" class="form-control" minlength="1" maxlength="255" required type="text" [(ngModel)]="visit.description" #description="ngModel" [class.is-valid]="description.dirty && description.valid" [class.is-invalid]="description.dirty && description.invalid" />
-          @if (description.dirty && description.hasError('required')) {
-            <div class="invalid-feedback">Description is required</div>
-          }
-          @if (description.dirty && description.hasError('minlength')) {
-            <div class="invalid-feedback">Description must be at least 1 character long</div>
-          }
-          @if (description.dirty && description.hasError('maxlength')) {
-            <div class="invalid-feedback">Description may be at most 255 characters long</div>
+          <input type="text" class="form-control" id="description" [formField]="visitForm.description" [class.is-valid]="visitForm.description().dirty() && visitForm.description().valid()" [class.is-invalid]="visitForm.description().dirty() && visitForm.description().invalid()" />
+          @if (visitForm.description().dirty()) {
+            @for (error of visitForm.description().errors(); track error.kind) {
+              <div class="invalid-feedback">
+                @switch (error.kind) {
+                  @case ('required') { Description is required }
+                  @case ('minLength') { Description must be at least 1 character long }
+                  @case ('maxLength') { Description may be at most 255 characters long }
+                }
+              </div>
+            }
           }
         </div>
       </div>
 
-      <input type="hidden" name="id" id="id" [(ngModel)]="visit.id" />
       <div class="row">
         <div class="offset-sm-2 col-sm-10 d-flex gap-2">
           <button class="btn btn-secondary" type="button" (click)="gotoOwnerDetail()">Back</button>
-          <button class="btn btn-secondary" type="submit" [disabled]="visitForm.invalid">Add Visit</button>
+          <button class="btn btn-secondary" type="submit" [disabled]="visitForm().invalid()">Add Visit</button>
         </div>
       </div>
     </form>

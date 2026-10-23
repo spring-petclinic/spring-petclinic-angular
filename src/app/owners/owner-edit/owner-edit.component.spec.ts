@@ -25,7 +25,7 @@
 import { ComponentFixture, TestBed, } from '@angular/core/testing';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { OwnerEditComponent } from './owner-edit.component';
-import { FormsModule } from '@angular/forms';
+import { FormField, FormRoot } from '@angular/forms/signals';
 import { OwnerService } from '../owner.service';
 import { provideRouter, Router } from '@angular/router';
 import { RouterStub } from '../../testing/router-stubs';
@@ -36,7 +36,10 @@ import { OwnerListComponent } from '../owner-list/owner-list.component';
 
 class OwnserServiceStub {
     getOwnerById(): Observable<Owner> {
-        return of({ id: 1, firstName: 'James' } as Owner);
+        return of({ id: 1, firstName: 'James', lastName: 'Carter', address: '2749 Blackhawk Trail', city: 'Madison', telephone: '6085552765' } as Owner);
+    }
+    updateOwner(): Observable<Owner> {
+        return of({} as Owner);
     }
 }
 
@@ -44,12 +47,20 @@ describe('OwnerEditComponent', () => {
     let component: OwnerEditComponent;
     let fixture: ComponentFixture<OwnerEditComponent>;
     let router: Router;
+
+    const setValue = async (selector: string, value: string) => {
+        const input = fixture.nativeElement.querySelector(selector) as HTMLInputElement;
+        input.value = value;
+        input.dispatchEvent(new Event('input'));
+        await fixture.whenStable();
+    };
+    const submitButton = () => fixture.nativeElement.querySelector('button[type=submit]') as HTMLButtonElement;
     beforeEach(async () => {
         await TestBed.configureTestingModule({
             declarations: [OwnerEditComponent],
             schemas: [CUSTOM_ELEMENTS_SCHEMA],
             // schemas: [ NO_ERRORS_SCHEMA ],
-            imports: [FormsModule],
+            imports: [FormField, FormRoot],
             providers: [
                 provideRouter([{ path: 'owners', component: OwnerListComponent }]),
                 { provide: OwnerService, useClass: OwnserServiceStub },
@@ -58,11 +69,12 @@ describe('OwnerEditComponent', () => {
         }).compileComponents();
     });
 
-    beforeEach(() => {
+    beforeEach(async () => {
         fixture = TestBed.createComponent(OwnerEditComponent);
         fixture.componentRef.setInput('id', 1);
         component = fixture.componentInstance;
         fixture.detectChanges();
+        await fixture.whenStable();
         router = TestBed.inject(Router);
         vi.spyOn(router, 'navigate').mockReturnValue(undefined);
     });
@@ -80,12 +92,34 @@ describe('OwnerEditComponent', () => {
     });
 
 
-    it('update owner', () => {
-        let buttons = fixture.debugElement.queryAll(By.css('button'));
-        let updateOwnerButton = buttons[1].nativeElement;
-        vi.spyOn(component, 'onSubmit').mockReturnValue(undefined);
-        updateOwnerButton.click();
-        expect(component.onSubmit).toHaveBeenCalled();
+    it('should display the loaded owner', () => {
+        expect(fixture.nativeElement.querySelector('#firstName').value).toBe('James');
+        expect(fixture.nativeElement.querySelector('#telephone').value).toBe('6085552765');
+        expect(submitButton().disabled).toBe(false);
+    });
+
+    it('update owner', async () => {
+        const updateOwner = vi.spyOn(TestBed.inject(OwnerService), 'updateOwner');
+        await setValue('#city', 'Windsor');
+
+        fixture.nativeElement.querySelector('form').dispatchEvent(new Event('submit'));
+        await fixture.whenStable();
+
+        expect(updateOwner).toHaveBeenCalledWith(1, {
+            id: 1,
+            firstName: 'James',
+            lastName: 'Carter',
+            address: '2749 Blackhawk Trail',
+            city: 'Windsor',
+            telephone: '6085552765'
+        });
+        expect(router.navigate).toHaveBeenCalledWith(['/owners', 1]);
+    });
+
+    it('should disable the submit button when the form is invalid', async () => {
+        await setValue('#telephone', 'abc');
+        expect(fixture.nativeElement.textContent).toContain('Phone number only accepts digits');
+        expect(submitButton().disabled).toBe(true);
     });
 
 });

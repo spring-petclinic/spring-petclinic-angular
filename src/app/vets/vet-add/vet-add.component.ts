@@ -26,8 +26,11 @@ import {Specialty} from '../../specialties/specialty';
 import {SpecialtyService} from 'app/specialties/specialty.service';
 import {Vet} from '../vet';
 import {Router} from '@angular/router';
+import {form} from '@angular/forms/signals';
+import {firstValueFrom} from 'rxjs';
+import {vetNamesSchema} from '../vet-form';
 import {VetService} from '../vet.service';
-import {resourceErrorMessage, valueOrDefault} from '../../resource-utils';
+import {resourceErrorMessage, valueOrDefault} from '../../utils/resource-utils';
 
 @Component({
   selector: 'app-vet-add',
@@ -44,26 +47,30 @@ export class VetAddComponent {
     stream: () => this.specialtyService.getSpecialties(),
   });
 
-  // the form fields are bound to the properties of these objects with ngModel
-  vet = {} as Vet;
-  selectedSpecialty = {} as Specialty;
+  // the specialty is the id of the selected one, as the native select only handles strings
+  private readonly vet = signal({ firstName: '', lastName: '', specialtyId: '' });
   readonly specialtiesList = computed(() => valueOrDefault(this.specialtiesResource, [] as Specialty[]));
   private readonly submitError = signal<string | null>(null);
   readonly errorMessage = computed(
     () => this.submitError() ?? resourceErrorMessage(this.specialtiesResource)
   );
 
-  onSubmit(vet: Vet) {
-    vet.id = null;
-    vet.specialties = [];
-    if (this.selectedSpecialty.id !== undefined) {
-      vet.specialties.push(this.selectedSpecialty);
+  protected readonly vetForm = form(this.vet, vetNamesSchema(1), {
+    submission: {
+      action: async () => {
+        const { firstName, lastName, specialtyId } = this.vet();
+        const specialty = this.specialtiesList().find(spec => String(spec.id) === specialtyId);
+        const vet = { id: null, firstName, lastName, specialties: specialty ? [specialty] : [] } as Vet;
+        try {
+          await firstValueFrom(this.vetService.addVet(vet));
+          this.gotoVetList();
+        } catch (error) {
+          this.submitError.set(String(error));
+        }
+        return undefined;
+      }
     }
-    this.vetService.addVet(vet).subscribe({
-      next: () => this.gotoVetList(),
-      error: error => this.submitError.set(String(error))
-    });
-  }
+  });
 
   gotoVetList() {
     this.router.navigate(['/vets']);

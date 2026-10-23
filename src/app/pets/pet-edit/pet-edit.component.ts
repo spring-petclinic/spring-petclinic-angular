@@ -26,7 +26,10 @@ import { rxResource } from '@angular/core/rxjs-interop';
 import {Pet} from '../pet';
 import {PetService} from '../pet.service';
 import {Router} from '@angular/router';
-import {resourceErrorMessage, valueOrDefault} from '../../resource-utils';
+import {form} from '@angular/forms/signals';
+import {firstValueFrom} from 'rxjs';
+import {petSchema, PetFormModel} from '../pet-form';
+import {resourceErrorMessage, valueOrDefault} from '../../utils/resource-utils';
 import {Owner} from '../../owners/owner';
 import {PetType} from '../../pettypes/pettype';
 import {PetTypeService} from '../../pettypes/pettype.service';
@@ -65,8 +68,12 @@ export class PetEditComponent {
   private readonly emptyPet = {} as Pet;
   private readonly emptyOwner = {} as Owner;
 
-  // working copy bound to the form fields with ngModel: the loaded pet is never mutated
-  protected readonly pet = linkedSignal(() => ({ ...valueOrDefault(this.petResource, this.emptyPet) }));
+  protected readonly pet = computed(() => valueOrDefault(this.petResource, this.emptyPet));
+  // working copy edited through the signal form: the loaded pet is never mutated
+  private readonly petModel = linkedSignal<PetFormModel>(() => {
+    const { name = '', birthDate = null, type } = this.pet();
+    return { name, birthDate, typeId: type ? String(type.id) : '' };
+  });
   protected readonly petTypes = computed(() => valueOrDefault(this.petTypesResource, [] as PetType[]));
   protected readonly currentOwner = computed(() => valueOrDefault(this.ownerResource, this.emptyOwner));
 
@@ -75,21 +82,28 @@ export class PetEditComponent {
     () => this.submitError() ?? resourceErrorMessage(this.petTypesResource) ?? resourceErrorMessage(this.petResource)
   );
 
-  onSubmit(pet: Pet) {
-    // the form value only holds the named controls: type is bound to the pet itself
-    pet.type = this.pet().type;
-    // format output from datepicker to short string yyyy-mm-dd format (rfc3339)
-    pet.birthDate = moment(pet.birthDate).format('YYYY-MM-DD');
-
-    this.petService.updatePet(pet.id.toString(), pet).subscribe({
-      next: () => this.gotoOwnerDetail(this.currentOwner()),
-      error: error => this.submitError.set(String(error))
-    });
-  }
-
-  comparePetTypes(a: PetType, b: PetType): boolean {
-    return a && b ? a.id === b.id : a === b;
-  }
+  protected readonly petForm = form(this.petModel, petSchema, {
+    submission: {
+      action: async () => {
+        const { name, birthDate, typeId } = this.petModel();
+        const pet = {
+          id: this.pet().id,
+          owner: this.pet().owner,
+          name,
+          // format output from datepicker to short string yyyy-mm-dd format (rfc3339)
+          birthDate: moment(birthDate).format('YYYY-MM-DD'),
+          type: this.petTypes().find(petType => String(petType.id) === typeId)
+        } as Pet;
+        try {
+          await firstValueFrom(this.petService.updatePet(pet.id.toString(), pet));
+          this.gotoOwnerDetail(this.currentOwner());
+        } catch (error) {
+          this.submitError.set(String(error));
+        }
+        return undefined;
+      }
+    }
+  });
 
   gotoOwnerDetail(owner: Owner) {
     this.router.navigate(['/owners', owner.id]);

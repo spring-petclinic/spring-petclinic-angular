@@ -48,6 +48,9 @@ class OwnerServiceStub {
     getOwners(): Observable<Owner[]> {
         return of();
     }
+    searchOwners(lastName: string): Observable<Owner[]> {
+        return of();
+    }
 }
 
 describe('OwnerListComponent', () => {
@@ -132,6 +135,21 @@ describe('OwnerListComponent', () => {
         de = fixture.debugElement.query(By.css('.ownerFullName'));
         el = de.nativeElement;
         expect(el.textContent).toBe((testOwner.firstName.toString() + ' ' + testOwner.lastName.toString()));
+    });
+
+    it('should search the owners by last name when the form is submitted', async () => {
+        const searchSpy = vi.spyOn(ownerService, 'searchOwners').mockReturnValue(of(testOwners));
+        fixture.detectChanges();
+        await fixture.whenStable();
+        const input = fixture.nativeElement.querySelector('#lastName') as HTMLInputElement;
+        input.value = 'Franklin';
+        input.dispatchEvent(new Event('input'));
+        await fixture.whenStable();
+
+        fixture.nativeElement.querySelector('#search-owner-form').dispatchEvent(new Event('submit'));
+        await fixture.whenStable();
+
+        expect(searchSpy).toHaveBeenCalledWith('Franklin');
     });
 
 });
