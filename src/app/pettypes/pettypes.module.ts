@@ -22,7 +22,7 @@
 
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {FormsModule} from '@angular/forms';
+import {FormField, FormRoot} from '@angular/forms/signals';
 import {PetTypeService} from './pettype.service';
 import {PettypeListComponent} from './pettype-list/pettype-list.component';
 import {PettypeAddComponent} from './pettype-add/pettype-add.component';
@@ -32,7 +32,8 @@ import {PettypesRoutingModule} from './pettypes-routing.module';
 @NgModule({
   imports: [
     CommonModule,
-    FormsModule,
+    FormField,
+    FormRoot,
     PettypesRoutingModule
   ],
   declarations: [

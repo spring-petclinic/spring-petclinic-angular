@@ -3,7 +3,7 @@ import {rxResource} from '@angular/core/rxjs-interop';
 import {PetType} from '../pettype';
 import {Router} from '@angular/router';
 import {PetTypeService} from '../pettype.service';
-import {resourceErrorMessage, valueOrDefault} from '../../resource-utils';
+import {resourceErrorMessage, valueOrDefault} from '../../utils/resource-utils';
 
 @Component({
   selector: 'app-pettype-list',

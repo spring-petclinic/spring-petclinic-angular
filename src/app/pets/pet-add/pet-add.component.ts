@@ -27,7 +27,10 @@ import {Pet} from '../pet';
 import {PetType} from '../../pettypes/pettype';
 import {Owner} from '../../owners/owner';
 import {Router} from '@angular/router';
-import {resourceErrorMessage, valueOrDefault} from '../../resource-utils';
+import {form} from '@angular/forms/signals';
+import {firstValueFrom} from 'rxjs';
+import {petSchema, PetFormModel} from '../pet-form';
+import {resourceErrorMessage, valueOrDefault} from '../../utils/resource-utils';
 import {PetTypeService} from '../../pettypes/pettype.service';
 import {PetService} from '../pet.service';
 import {OwnerService} from '../../owners/owner.service';
@@ -59,8 +62,7 @@ export class PetAddComponent {
 
   private readonly emptyOwner = {} as Owner;
 
-  // the form fields are bound to the properties of this object with ngModel
-  pet = {} as Pet;
+  private readonly pet = signal<PetFormModel>({ name: '', birthDate: null, typeId: '' });
   readonly petTypes = computed(() => valueOrDefault(this.petTypesResource, [] as PetType[]));
   readonly currentOwner = computed(() => valueOrDefault(this.ownerResource, this.emptyOwner));
   readonly addedSuccess = signal(false);
@@ -69,19 +71,29 @@ export class PetAddComponent {
     () => this.submitError() ?? resourceErrorMessage(this.petTypesResource) ?? resourceErrorMessage(this.ownerResource)
   );
 
-  onSubmit(pet: Pet) {
-    pet.id = null;
-    pet.owner = this.currentOwner();
-    // format output from datepicker to short string yyyy-mm-dd format (rfc3339)
-    pet.birthDate = moment(pet.birthDate).format('YYYY-MM-DD');
-    this.petService.addPet(pet).subscribe({
-      next: () => {
-        this.addedSuccess.set(true);
-        this.gotoOwnerDetail();
-      },
-      error: error => this.submitError.set(String(error))
-    });
-  }
+  protected readonly petForm = form(this.pet, petSchema, {
+    submission: {
+      action: async () => {
+        const { name, birthDate, typeId } = this.pet();
+        const pet = {
+          id: null,
+          owner: this.currentOwner(),
+          name,
+          // format output from datepicker to short string yyyy-mm-dd format (rfc3339)
+          birthDate: moment(birthDate).format('YYYY-MM-DD'),
+          type: this.petTypes().find(petType => String(petType.id) === typeId)
+        } as Pet;
+        try {
+          await firstValueFrom(this.petService.addPet(pet));
+          this.addedSuccess.set(true);
+          this.gotoOwnerDetail();
+        } catch (error) {
+          this.submitError.set(String(error));
+        }
+        return undefined;
+      }
+    }
+  });
 
   gotoOwnerDetail() {
     this.router.navigate(['/owners', this.currentOwner().id]);

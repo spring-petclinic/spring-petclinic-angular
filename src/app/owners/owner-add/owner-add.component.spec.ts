@@ -25,7 +25,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { OwnerAddComponent } from './owner-add.component';
-import { FormsModule } from '@angular/forms';
+import { FormField, FormRoot } from '@angular/forms/signals';
 import { provideRouter, Router } from '@angular/router';
 import { OwnerService } from '../owner.service';
 import { RouterStub } from '../../testing/router-stubs';
@@ -45,11 +45,19 @@ describe('OwnerAddComponent', () => {
     let component: OwnerAddComponent;
     let fixture: ComponentFixture<OwnerAddComponent>;
     let router: Router;
+
+    const setValue = async (selector: string, value: string) => {
+        const input = fixture.nativeElement.querySelector(selector) as HTMLInputElement;
+        input.value = value;
+        input.dispatchEvent(new Event('input'));
+        await fixture.whenStable();
+    };
+    const submitButton = () => fixture.nativeElement.querySelector('button[type=submit]') as HTMLButtonElement;
     beforeEach(async () => {
         await TestBed.configureTestingModule({
             declarations: [OwnerAddComponent],
             schemas: [CUSTOM_ELEMENTS_SCHEMA],
-            imports: [FormsModule],
+            imports: [FormField, FormRoot],
             providers: [
                 provideRouter([]),
                 { provide: OwnerService, useClass: OwnserServiceStub },
@@ -81,12 +89,61 @@ describe('OwnerAddComponent', () => {
     });
 
 
-    it('add owner', () => {
-        let buttons = fixture.debugElement.queryAll(By.css('button'));
-        let addOwnerButton = buttons[1].nativeElement;
-        vi.spyOn(component, 'onSubmit').mockReturnValue(undefined);
-        addOwnerButton.click();
-        expect(component.onSubmit).toHaveBeenCalled();
+    it('add owner', async () => {
+        const addOwner = vi.spyOn(TestBed.inject(OwnerService), 'addOwner');
+        await setValue('#firstName', 'George');
+        await setValue('#lastName', 'Franklin');
+        await setValue('#address', '110 W. Liberty St.');
+        await setValue('#city', 'Madison');
+        await setValue('#telephone', '6085551023');
+        expect(submitButton().disabled).toBe(false);
+
+        fixture.nativeElement.querySelector('form').dispatchEvent(new Event('submit'));
+        await fixture.whenStable();
+
+        expect(addOwner).toHaveBeenCalledWith({
+            id: null,
+            firstName: 'George',
+            lastName: 'Franklin',
+            address: '110 W. Liberty St.',
+            city: 'Madison',
+            telephone: '6085551023'
+        });
+        expect(router.navigate).toHaveBeenCalledWith(['/owners']);
+    });
+
+    it('should disable the submit button until the form is valid', () => {
+        expect(submitButton().disabled).toBe(true);
+    });
+
+    it('should require exactly 10 digits for the telephone', async () => {
+        await setValue('#telephone', '608555102');
+        expect(fixture.nativeElement.textContent).toContain('Phone number must be exactly 10 digits');
+        await setValue('#telephone', '60855510234');
+        expect(fixture.nativeElement.textContent).toContain('Phone number must be exactly 10 digits');
+        expect(fixture.nativeElement.querySelector('#telephone').maxLength).toBe(10);
+        await setValue('#telephone', '6085551023');
+        expect(fixture.nativeElement.textContent).not.toContain('Phone number must be exactly 10 digits');
+    });
+
+    it('should reject blank address and city', async () => {
+        await setValue('#address', ' ');
+        await setValue('#city', '  ');
+        const text = fixture.nativeElement.textContent;
+        expect(text).toContain('Address is required');
+        expect(text).toContain('City is required');
+        expect(submitButton().disabled).toBe(true);
+    });
+
+    it('should show validation errors', async () => {
+        await setValue('#firstName', 'George1');
+        await setValue('#telephone', '60855a');
+        await setValue('#city', '');
+        const text = fixture.nativeElement.textContent;
+        expect(text).toContain('First name must consist of letters only');
+        expect(text).toContain('Phone number only accepts digits');
+        expect(text).toContain('City is required');
+        expect(submitButton().disabled).toBe(true);
     });
 
 });

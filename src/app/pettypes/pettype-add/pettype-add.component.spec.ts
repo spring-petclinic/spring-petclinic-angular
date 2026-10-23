@@ -7,7 +7,8 @@ import { PetType } from '../pettype';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ActivatedRouteStub, RouterStub } from '../../testing/router-stubs';
-import { FormsModule } from '@angular/forms';
+import { setValue, submitButton, submitForm } from '../../testing/form-utils';
+import { FormField, FormRoot } from '@angular/forms/signals';
 import { Observable, of } from 'rxjs';
 type Spy = Mock;
 
@@ -28,7 +29,7 @@ describe('PettypeAddComponent', () => {
         await TestBed.configureTestingModule({
             declarations: [PettypeAddComponent],
             schemas: [CUSTOM_ELEMENTS_SCHEMA],
-            imports: [FormsModule],
+            imports: [FormField, FormRoot],
             providers: [
                 { provide: PetTypeService, useClass: PetTypeServiceStub },
                 { provide: Router, useClass: RouterStub },
@@ -54,5 +55,25 @@ describe('PettypeAddComponent', () => {
 
     it('should create PettypeAddComponent', () => {
         expect(component).toBeTruthy();
+    });
+
+    it('should disable the submit button until the name is valid', async () => {
+        expect(submitButton(fixture).disabled).toBe(true);
+        await setValue(fixture, '#name', 'a'.repeat(81));
+        expect(fixture.nativeElement.textContent).toContain('Name may be only 80 characters long');
+        expect(submitButton(fixture).disabled).toBe(true);
+        await setValue(fixture, '#name', 'hamster');
+        expect(submitButton(fixture).disabled).toBe(false);
+    });
+
+    it('should add the pet type and emit it', async () => {
+        const added = vi.fn();
+        component.newPetType.subscribe(added);
+        await setValue(fixture, '#name', 'hamster');
+
+        await submitForm(fixture);
+
+        expect(spy).toHaveBeenCalledWith({ id: null, name: 'hamster' });
+        expect(added).toHaveBeenCalledWith(testPettype);
     });
 });

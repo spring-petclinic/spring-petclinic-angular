@@ -22,7 +22,7 @@
 
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {FormsModule} from '@angular/forms';
+import {FormField, FormRoot} from '@angular/forms/signals';
 import {SpecialtyService} from './specialty.service';
 import {SpecialtyListComponent} from './specialty-list/specialty-list.component';
 import {SpecialtiesRoutingModule} from './specialties-routing.module';
@@ -33,7 +33,8 @@ import {SpecResolver} from './spec-resolver';
 @NgModule({
   imports: [
     CommonModule,
-    FormsModule,
+    FormField,
+    FormRoot,
     SpecialtiesRoutingModule
   ],
   declarations: [

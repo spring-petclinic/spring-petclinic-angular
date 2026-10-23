@@ -28,15 +28,19 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { Specialty } from '../specialty';
 import { SpecialtyEditComponent } from './specialty-edit.component';
 import { SpecialtyService } from '../specialty.service';
-import { FormsModule } from '@angular/forms';
+import { FormField, FormRoot } from '@angular/forms/signals';
 import { Router } from '@angular/router';
 import { RouterStub } from '../../testing/router-stubs';
+import { setValue, submitButton, submitForm } from '../../testing/form-utils';
 import { Observable, of } from 'rxjs';
 type Spy = Mock;
 
 class SpecialityServiceStub {
     getSpecialtyById(specId: string): Observable<Specialty> {
         return of();
+    }
+    updateSpecialty(specId: string, specialty: Specialty): Observable<Specialty> {
+        return of(specialty);
     }
 }
 
@@ -51,7 +55,7 @@ describe('SpecialtyEditComponent', () => {
         await TestBed.configureTestingModule({
             declarations: [SpecialtyEditComponent],
             schemas: [CUSTOM_ELEMENTS_SCHEMA],
-            imports: [FormsModule],
+            imports: [FormField, FormRoot],
             providers: [
                 { provide: SpecialtyService, useClass: SpecialityServiceStub },
                 { provide: Router, useClass: RouterStub }
@@ -77,5 +81,30 @@ describe('SpecialtyEditComponent', () => {
 
     it('should create SpecialtyEditComponent', () => {
         expect(component).toBeTruthy();
+    });
+
+    it('should display the loaded specialty', async () => {
+        await fixture.whenStable();
+        expect(fixture.nativeElement.querySelector('#name').value).toBe('test');
+    });
+
+    it('should update the specialty and go back to the list', async () => {
+        const updateSpy = vi.spyOn(specialtyService, 'updateSpecialty').mockReturnValue(of(testSpecialty));
+        const router = TestBed.inject(Router);
+        vi.spyOn(router, 'navigate');
+        await fixture.whenStable();
+        await setValue(fixture, '#name', 'surgery');
+
+        await submitForm(fixture);
+
+        expect(updateSpy).toHaveBeenCalledWith('1', { id: 1, name: 'surgery' });
+        expect(router.navigate).toHaveBeenCalledWith(['/specialties']);
+    });
+
+    it('should disable the submit button when the name is empty', async () => {
+        await fixture.whenStable();
+        await setValue(fixture, '#name', '');
+        expect(fixture.nativeElement.textContent).toContain('Name is required');
+        expect(submitButton(fixture).disabled).toBe(true);
     });
 });

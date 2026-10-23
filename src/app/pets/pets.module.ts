@@ -27,7 +27,7 @@ import {PetListComponent} from './pet-list/pet-list.component';
 import {PetService} from './pet.service';
 import {VisitsModule} from '../visits/visits.module';
 import {PetEditComponent} from './pet-edit/pet-edit.component';
-import {FormsModule} from '@angular/forms';
+import {FormField, FormRoot} from '@angular/forms/signals';
 import {PetAddComponent} from './pet-add/pet-add.component';
 
 import {MatMomentDateModule, MomentDateAdapter} from '@angular/material-moment-adapter';
@@ -50,7 +50,8 @@ export const MY_DATE_FORMATS = {
 @NgModule({
   imports: [
     CommonModule,
-    FormsModule,
+    FormField,
+    FormRoot,
     MatDatepickerModule,
     MatMomentDateModule,
     PetsRoutingModule,

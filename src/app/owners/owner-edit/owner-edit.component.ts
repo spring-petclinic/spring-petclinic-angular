@@ -25,7 +25,10 @@ import { rxResource } from '@angular/core/rxjs-interop';
 import { OwnerService } from '../owner.service';
 import { Owner } from '../owner';
 import { Router } from '@angular/router';
-import { resourceErrorMessage, valueOrDefault } from '../../resource-utils';
+import { form } from '@angular/forms/signals';
+import { firstValueFrom } from 'rxjs';
+import { OwnerFormModel, ownerSchema } from '../owner-form';
+import { resourceErrorMessage, valueOrDefault } from '../../utils/resource-utils';
 
 @Component({
   selector: 'app-owner-edit',
@@ -47,20 +50,33 @@ export class OwnerEditComponent {
 
   private readonly emptyOwner = {} as Owner;
 
-  // working copy bound to the form fields with ngModel: the loaded owner is never mutated
-  protected readonly owner = linkedSignal(() => ({ ...valueOrDefault(this.ownerResource, this.emptyOwner) }));
+  protected readonly owner = computed(() => valueOrDefault(this.ownerResource, this.emptyOwner));
+
+  // working copy edited through the signal form: the loaded owner is never mutated
+  private readonly ownerModel = linkedSignal<OwnerFormModel>(() => {
+    const {firstName = '', lastName = '', address = '', city = '', telephone = ''} = this.owner();
+    return {firstName, lastName, address, city, telephone};
+  });
 
   private readonly submitError = signal<string | null>(null);
   protected readonly errorMessage = computed(
     () => this.submitError() ?? resourceErrorMessage(this.ownerResource)
   );
 
-  onSubmit(owner: Owner) {
-    this.ownerService.updateOwner(this.id(), owner).subscribe({
-      next: () => this.gotoOwnerDetail(owner),
-      error: (error) => this.submitError.set(String(error)),
-    });
-  }
+  protected readonly ownerForm = form(this.ownerModel, ownerSchema, {
+    submission: {
+      action: async () => {
+        const owner = {id: this.owner().id, ...this.ownerModel()} as Owner;
+        try {
+          await firstValueFrom(this.ownerService.updateOwner(this.id(), owner));
+          this.gotoOwnerDetail(owner);
+        } catch (error) {
+          this.submitError.set(String(error));
+        }
+        return undefined;
+      }
+    }
+  });
 
   gotoOwnerDetail(owner: Owner) {
     this.submitError.set(null);

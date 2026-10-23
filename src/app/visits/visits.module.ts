@@ -27,7 +27,7 @@ import {VisitEditComponent} from './visit-edit/visit-edit.component';
 import {NgModule} from '@angular/core';
 import {VisitService} from './visit.service';
 import {VisitAddComponent} from './visit-add/visit-add.component';
-import {FormsModule} from '@angular/forms';
+import {FormField, FormRoot} from '@angular/forms/signals';
 import {PetsRoutingModule} from '../pets/pets-routing.module';
 import {MatMomentDateModule, MomentDateAdapter} from '@angular/material-moment-adapter';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -48,7 +48,8 @@ export const MY_DATE_FORMATS = {
 @NgModule({
   imports: [
     CommonModule,
-    FormsModule,
+    FormField,
+    FormRoot,
     MatDatepickerModule,
     MatMomentDateModule,
     VisitsRoutingModule,

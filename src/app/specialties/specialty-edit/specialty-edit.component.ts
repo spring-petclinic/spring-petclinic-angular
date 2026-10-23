@@ -25,7 +25,10 @@ import { rxResource } from '@angular/core/rxjs-interop';
 import {Specialty} from '../specialty';
 import {SpecialtyService} from '../specialty.service';
 import {Router} from '@angular/router';
-import {resourceErrorMessage, valueOrDefault} from '../../resource-utils';
+import {form} from '@angular/forms/signals';
+import {specialtySchema} from '../specialty-form';
+import {firstValueFrom} from 'rxjs';
+import {resourceErrorMessage, valueOrDefault} from '../../utils/resource-utils';
 
 @Component({
   selector: 'app-specialty-edit',
@@ -45,22 +48,34 @@ export class SpecialtyEditComponent {
     stream: ({ params }) => this.specialtyService.getSpecialtyById(params),
   });
 
-  private readonly emptySpecialty = {} as Specialty;
+  private readonly emptySpecialty = { name: '' } as Specialty;
 
-  // working copy bound to the form fields with ngModel: the loaded specialty is never mutated
-  protected readonly specialty = linkedSignal(() => ({ ...valueOrDefault(this.specialtyResource, this.emptySpecialty) }));
+  // working copy edited through the signal form: the loaded specialty is never mutated
+  private readonly specialty = linkedSignal(() => ({ ...valueOrDefault(this.specialtyResource, this.emptySpecialty) }));
 
   private readonly submitError = signal<string | null>(null);
   protected readonly errorMessage = computed(
     () => this.submitError() ?? resourceErrorMessage(this.specialtyResource)
   );
 
-  onSubmit(specialty: Specialty) {
-    this.specialtyService.updateSpecialty(specialty.id.toString(), specialty).subscribe({
-      next: () => this.onBack(),
-      error: error => this.submitError.set(String(error))
-    });
-  }
+  protected readonly specialtyForm = form(
+    this.specialty,
+    specialtySchema,
+    {
+      submission: {
+        action: async () => {
+          const specialty = this.specialty();
+          try {
+            await firstValueFrom(this.specialtyService.updateSpecialty(specialty.id.toString(), specialty));
+            this.onBack();
+          } catch (error) {
+            this.submitError.set(String(error));
+          }
+          return undefined;
+        }
+      }
+    }
+  );
 
   onBack() {
     this.router.navigate(['/specialties']);
