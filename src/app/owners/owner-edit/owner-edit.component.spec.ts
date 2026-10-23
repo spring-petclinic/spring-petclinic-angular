@@ -22,7 +22,7 @@
  * @author Vitaliy Fedoriv
  */
 
-import { ComponentFixture, TestBed, waitForAsync, } from '@angular/core/testing';
+import { ComponentFixture, TestBed, } from '@angular/core/testing';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { OwnerEditComponent } from './owner-edit.component';
 import { FormsModule } from '@angular/forms';
@@ -44,8 +44,8 @@ describe('OwnerEditComponent', () => {
     let component: OwnerEditComponent;
     let fixture: ComponentFixture<OwnerEditComponent>;
     let router: Router;
-    beforeEach(waitForAsync(() => {
-        TestBed.configureTestingModule({
+    beforeEach(async () => {
+        await TestBed.configureTestingModule({
             declarations: [OwnerEditComponent],
             schemas: [CUSTOM_ELEMENTS_SCHEMA],
             // schemas: [ NO_ERRORS_SCHEMA ],
@@ -56,7 +56,7 @@ describe('OwnerEditComponent', () => {
                 { provide: Router, useClass: RouterStub },
             ],
         }).compileComponents();
-    }));
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(OwnerEditComponent);
@@ -80,12 +80,12 @@ describe('OwnerEditComponent', () => {
     });
 
 
-    it('update owner', waitForAsync(() => {
+    it('update owner', () => {
         let buttons = fixture.debugElement.queryAll(By.css('button'));
         let updateOwnerButton = buttons[1].nativeElement;
         vi.spyOn(component, 'onSubmit').mockReturnValue(undefined);
         updateOwnerButton.click();
         expect(component.onSubmit).toHaveBeenCalled();
-    }));
+    });
 
 });

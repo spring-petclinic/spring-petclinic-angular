@@ -22,7 +22,7 @@
  * @author Vitaliy Fedoriv
  */
 
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { OwnerAddComponent } from './owner-add.component';
 import { FormsModule } from '@angular/forms';
@@ -45,8 +45,8 @@ describe('OwnerAddComponent', () => {
     let component: OwnerAddComponent;
     let fixture: ComponentFixture<OwnerAddComponent>;
     let router: Router;
-    beforeEach(waitForAsync(() => {
-        TestBed.configureTestingModule({
+    beforeEach(async () => {
+        await TestBed.configureTestingModule({
             declarations: [OwnerAddComponent],
             schemas: [CUSTOM_ELEMENTS_SCHEMA],
             imports: [FormsModule],
@@ -56,7 +56,7 @@ describe('OwnerAddComponent', () => {
                 { provide: Router, useClass: RouterStub },
             ],
         }).compileComponents();
-    }));
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(OwnerAddComponent);
@@ -81,12 +81,12 @@ describe('OwnerAddComponent', () => {
     });
 
 
-    it('add owner', waitForAsync(() => {
+    it('add owner', () => {
         let buttons = fixture.debugElement.queryAll(By.css('button'));
         let addOwnerButton = buttons[1].nativeElement;
         vi.spyOn(component, 'onSubmit').mockReturnValue(undefined);
         addOwnerButton.click();
         expect(component.onSubmit).toHaveBeenCalled();
-    }));
+    });
 
 });
