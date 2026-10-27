@@ -22,7 +22,7 @@
 
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {FormField, FormRoot} from '@angular/forms/signals';
 import {MatSelectModule} from '@angular/material/select';
 import {VetListComponent} from './vet-list/vet-list.component';
 import {VetService} from './vet.service';
@@ -34,8 +34,8 @@ import {VetResolver} from './vet-resolver';
 @NgModule({
   imports: [
     CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
+    FormField,
+    FormRoot,
     MatSelectModule,
     VetsRoutingModule
   ],

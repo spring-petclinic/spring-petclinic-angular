@@ -25,7 +25,10 @@ import { rxResource } from '@angular/core/rxjs-interop';
 import {Visit} from '../visit';
 import {VisitService} from '../visit.service';
 import {Router} from '@angular/router';
-import {resourceErrorMessage, valueOrDefault} from '../../resource-utils';
+import {form} from '@angular/forms/signals';
+import {firstValueFrom} from 'rxjs';
+import {VisitFormModel, visitSchema} from '../visit-form';
+import {resourceErrorMessage, valueOrDefault} from '../../utils/resource-utils';
 import {PetService} from '../../pets/pet.service';
 import {Pet} from '../../pets/pet';
 import {Owner} from '../../owners/owner';
@@ -61,8 +64,7 @@ export class VisitAddComponent {
   private readonly emptyPet = {} as Pet;
   private readonly emptyOwner = {} as Owner;
 
-  // the form fields are bound to the properties of this object with ngModel
-  visit = {} as Visit;
+  private readonly visit = signal<VisitFormModel>({ date: null, description: '' });
   readonly currentPet = computed(() => valueOrDefault(this.petResource, this.emptyPet));
   readonly currentOwner = computed(() => valueOrDefault(this.ownerResource, this.emptyOwner));
   readonly addedSuccess = signal(false);
@@ -71,21 +73,28 @@ export class VisitAddComponent {
     () => this.submitError() ?? resourceErrorMessage(this.petResource)
   );
 
-  onSubmit(visit: Visit) {
-    visit.id = null;
-    visit.pet = this.currentPet();
-
-    // format output from datepicker to short string yyyy-mm-dd format (rfc3339)
-    visit.date = moment(visit.date).format('YYYY-MM-DD');
-
-    this.visitService.addVisit(visit).subscribe({
-      next: () => {
-        this.addedSuccess.set(true);
-        this.gotoOwnerDetail();
-      },
-      error: error => this.submitError.set(String(error))
-    });
-  }
+  protected readonly visitForm = form(this.visit, visitSchema, {
+    submission: {
+      action: async () => {
+        const { date, description } = this.visit();
+        const visit = {
+          id: null,
+          pet: this.currentPet(),
+          // format output from datepicker to short string yyyy-mm-dd format (rfc3339)
+          date: moment(date).format('YYYY-MM-DD'),
+          description
+        } as Visit;
+        try {
+          await firstValueFrom(this.visitService.addVisit(visit));
+          this.addedSuccess.set(true);
+          this.gotoOwnerDetail();
+        } catch (error) {
+          this.submitError.set(String(error));
+        }
+        return undefined;
+      }
+    }
+  });
 
   gotoOwnerDetail() {
     this.router.navigate(['/owners', this.currentOwner().id]);

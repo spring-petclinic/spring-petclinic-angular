@@ -1,4 +1,7 @@
 import { Component, inject, output, signal } from '@angular/core';
+import { form } from '@angular/forms/signals';
+import { pettypeSchema } from '../pettype-form';
+import { firstValueFrom } from 'rxjs';
 import {PetType} from '../pettype';
 import {PetTypeService} from '../pettype.service';
 
@@ -11,17 +14,27 @@ import {PetTypeService} from '../pettype.service';
 export class PettypeAddComponent {
   private pettypeService = inject(PetTypeService);
 
-  // the form fields are bound to the properties of this object with ngModel
-  pettype = {} as PetType;
+  private readonly pettype = signal({ name: '' });
   readonly errorMessage = signal<string | null>(null);
   readonly newPetType = output<PetType>();
 
-  onSubmit(pettype: PetType) {
-    pettype.id = null;
-    this.pettypeService.addPetType(pettype).subscribe({
-      next: newPettype => this.newPetType.emit(newPettype),
-      error: error => this.errorMessage.set(String(error))
-    });
-  }
-
+  protected readonly pettypeForm = form(
+    this.pettype,
+    pettypeSchema,
+    {
+      submission: {
+        action: async () => {
+          try {
+            const newPettype = await firstValueFrom(
+              this.pettypeService.addPetType({ id: null, name: this.pettype().name })
+            );
+            this.newPetType.emit(newPettype);
+          } catch (error) {
+            this.errorMessage.set(String(error));
+          }
+          return undefined;
+        }
+      }
+    }
+  );
 }

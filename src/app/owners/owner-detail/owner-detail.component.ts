@@ -24,7 +24,7 @@ import { Component, computed, inject, input } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 import {OwnerService} from '../owner.service';
 import {Router} from '@angular/router';
-import {resourceErrorMessage, valueOrDefault} from '../../resource-utils';
+import {resourceErrorMessage, valueOrDefault} from '../../utils/resource-utils';
 import {Owner} from '../owner';
 
 

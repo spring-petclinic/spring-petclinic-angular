@@ -35,7 +35,7 @@
         @for (pettype of pettypes(); track pettype; let element_id = $index) {
           <tr>
             <td>
-              <input [id]=element_id [readonly]="true" type="text" class="form-control" [(ngModel)]="pettype.name" name="pettype_name" />
+              <input [id]=element_id [readonly]="true" type="text" class="form-control" [value]="pettype.name" />
             </td>
             <td>
               <button class="btn btn-secondary" (click)="showEditPettypeComponent(pettype)">Edit</button>

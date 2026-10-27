@@ -35,7 +35,7 @@
         @for (specialty of specialties(); track specialty; let element_id = $index) {
           <tr>
             <td>
-              <input [id]=element_id [readonly]="true" type="text" class="form-control" [(ngModel)]="specialty.name" name="spec_name" />
+              <input [id]=element_id [readonly]="true" type="text" class="form-control" [value]="specialty.name" />
             </td>
             <td>
               <button class="btn btn-secondary" (click)="showEditSpecialtyComponent(specialty)">Edit</button>

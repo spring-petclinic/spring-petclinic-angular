@@ -25,7 +25,7 @@ import {rxResource} from '@angular/core/rxjs-interop';
 import {Vet} from '../vet';
 import {VetService} from '../vet.service';
 import {Router} from '@angular/router';
-import {resourceErrorMessage, valueOrDefault} from '../../resource-utils';
+import {resourceErrorMessage, valueOrDefault} from '../../utils/resource-utils';
 
 @Component({
   selector: 'app-vet-list',

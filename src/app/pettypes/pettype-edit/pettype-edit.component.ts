@@ -25,7 +25,10 @@ import { rxResource } from '@angular/core/rxjs-interop';
 import {PetType} from '../pettype';
 import {PetTypeService} from '../pettype.service';
 import {Router} from '@angular/router';
-import {resourceErrorMessage, valueOrDefault} from '../../resource-utils';
+import {form} from '@angular/forms/signals';
+import {pettypeSchema} from '../pettype-form';
+import {firstValueFrom} from 'rxjs';
+import {resourceErrorMessage, valueOrDefault} from '../../utils/resource-utils';
 
 @Component({
   selector: 'app-pettype-edit',
@@ -45,22 +48,34 @@ export class PettypeEditComponent {
     stream: ({ params }) => this.pettypeService.getPetTypeById(params),
   });
 
-  private readonly emptyPettype = {} as PetType;
+  private readonly emptyPettype = { name: '' } as PetType;
 
-  // working copy bound to the form fields with ngModel: the loaded pet type is never mutated
-  protected readonly pettype = linkedSignal(() => ({ ...valueOrDefault(this.pettypeResource, this.emptyPettype) }));
+  // working copy edited through the signal form: the loaded pet type is never mutated
+  private readonly pettype = linkedSignal(() => ({ ...valueOrDefault(this.pettypeResource, this.emptyPettype) }));
 
   private readonly submitError = signal<string | null>(null);
+
+  protected readonly pettypeForm = form(
+    this.pettype,
+    pettypeSchema,
+    {
+      submission: {
+        action: async () => {
+          const pettype = this.pettype();
+          try {
+            await firstValueFrom(this.pettypeService.updatePetType(pettype.id.toString(), pettype));
+            this.onBack();
+          } catch (error) {
+            this.submitError.set(String(error));
+          }
+          return undefined;
+        }
+      }
+    }
+  );
   protected readonly errorMessage = computed(
     () => this.submitError() ?? resourceErrorMessage(this.pettypeResource)
   );
-
-  onSubmit(pettype: PetType) {
-    this.pettypeService.updatePetType(pettype.id.toString(), pettype).subscribe({
-      next: () => this.onBack(),
-      error: error => this.submitError.set(String(error))
-    });
-  }
 
   onBack() {
     this.router.navigate(['/pettypes']);

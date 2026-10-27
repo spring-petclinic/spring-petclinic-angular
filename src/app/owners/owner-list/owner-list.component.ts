@@ -25,6 +25,7 @@ import {rxResource} from '@angular/core/rxjs-interop';
 import {OwnerService} from '../owner.service';
 import {Owner} from '../owner';
 import {Router} from '@angular/router';
+import {form, maxLength} from '@angular/forms/signals';
 
 @Component({
   selector: 'app-owner-list',
@@ -36,7 +37,7 @@ export class OwnerListComponent {
   private router = inject(Router);
   private ownerService = inject(OwnerService);
 
-  protected readonly lastName = signal('');
+  private readonly search = signal({lastName: ''});
   // search term applied by the "Find Owner" button: changing it reloads the owners
   private readonly searchTerm = signal('');
 
@@ -45,6 +46,15 @@ export class OwnerListComponent {
     stream: ({params}) => params === ''
       ? this.ownerService.getOwners()
       : this.ownerService.searchOwners(params)
+  });
+
+  protected readonly searchForm = form(this.search, path => maxLength(path.lastName, 80), {
+    submission: {
+      action: async () => {
+        this.searchByLastName(this.search().lastName);
+        return undefined;
+      }
+    }
   });
 
   protected readonly owners = computed(() =>

@@ -22,24 +22,22 @@
     @if (errorMessage()) {
       <div class="alert alert-danger">{{ errorMessage() }}</div>
     }
-    <form (ngSubmit)="onSubmit(ownerForm.value)" #ownerForm="ngForm" novalidate>
-      <input type="hidden" id="id" [(ngModel)]="owner.id" name="id" />
-
+    <form [formRoot]="ownerForm">
       <div class="row mb-3">
         <label for="firstName" class="col-sm-2 col-form-label">First Name</label>
         <div class="col-sm-10">
-          <input type="text" class="form-control" id="firstName" [(ngModel)]="owner.firstName" minlength="1" maxlength="30" pattern="^[a-zA-Z]*$" required name="firstName" #firstName="ngModel" [class.is-valid]="firstName.dirty && firstName.valid" [class.is-invalid]="firstName.dirty && firstName.invalid" />
-          @if (firstName.dirty && firstName.hasError('required')) {
-            <div class="invalid-feedback">First name is required</div>
-          }
-          @if (firstName.dirty && firstName.hasError('minlength')) {
-            <div class="invalid-feedback">First name must be at least 1 character long</div>
-          }
-          @if (firstName.dirty && firstName.hasError('maxlength')) {
-            <div class="invalid-feedback">First name may be at most 30 characters long</div>
-          }
-          @if (firstName.dirty && firstName.hasError('pattern')) {
-            <div class="invalid-feedback">First name must consist of letters only</div>
+          <input type="text" class="form-control" id="firstName" [formField]="ownerForm.firstName" [class.is-valid]="ownerForm.firstName().dirty() && ownerForm.firstName().valid()" [class.is-invalid]="ownerForm.firstName().dirty() && ownerForm.firstName().invalid()" />
+          @if (ownerForm.firstName().dirty()) {
+            @for (error of ownerForm.firstName().errors(); track error.kind) {
+              <div class="invalid-feedback">
+                @switch (error.kind) {
+                  @case ('required') { First name is required }
+                  @case ('minLength') { First name must be at least 1 character long }
+                  @case ('maxLength') { First name may be at most 30 characters long }
+                  @case ('pattern') { First name must consist of letters only }
+                }
+              </div>
+            }
           }
         </div>
       </div>
@@ -47,18 +45,18 @@
       <div class="row mb-3">
         <label for="lastName" class="col-sm-2 col-form-label">Last Name</label>
         <div class="col-sm-10">
-          <input type="text" class="form-control" id="lastName" [(ngModel)]="owner.lastName" name="lastName" minlength="1" maxlength="30" pattern="^[a-zA-Z]*$" required #lastName="ngModel" [class.is-valid]="lastName.dirty && lastName.valid" [class.is-invalid]="lastName.dirty && lastName.invalid" />
-          @if (lastName.dirty && lastName.hasError('required')) {
-            <div class="invalid-feedback">Last name is required</div>
-          }
-          @if (lastName.dirty && lastName.hasError('minlength')) {
-            <div class="invalid-feedback">Last name must be at least 1 character long</div>
-          }
-          @if (lastName.dirty && lastName.hasError('maxlength')) {
-            <div class="invalid-feedback">Last name may be at most 30 characters long</div>
-          }
-          @if (lastName.dirty && lastName.hasError('pattern')) {
-            <div class="invalid-feedback">Last name must consist of letters only</div>
+          <input type="text" class="form-control" id="lastName" [formField]="ownerForm.lastName" [class.is-valid]="ownerForm.lastName().dirty() && ownerForm.lastName().valid()" [class.is-invalid]="ownerForm.lastName().dirty() && ownerForm.lastName().invalid()" />
+          @if (ownerForm.lastName().dirty()) {
+            @for (error of ownerForm.lastName().errors(); track error.kind) {
+              <div class="invalid-feedback">
+                @switch (error.kind) {
+                  @case ('required') { Last name is required }
+                  @case ('minLength') { Last name must be at least 1 character long }
+                  @case ('maxLength') { Last name may be at most 30 characters long }
+                  @case ('pattern') { Last name must consist of letters only }
+                }
+              </div>
+            }
           }
         </div>
       </div>
@@ -66,12 +64,16 @@
       <div class="row mb-3">
         <label for="address" class="col-sm-2 col-form-label">Address</label>
         <div class="col-sm-10">
-          <input type="text" class="form-control" id="address" [(ngModel)]="owner.address" name="address" maxlength="255" required #address="ngModel" [class.is-valid]="address.dirty && address.valid" [class.is-invalid]="address.dirty && address.invalid" />
-          @if (address.dirty && address.hasError('required')) {
-            <div class="invalid-feedback">Address is required</div>
-          }
-          @if (address.dirty && address.hasError('maxlength')) {
-            <div class="invalid-feedback">Address may be at most 255 characters long</div>
+          <input type="text" class="form-control" id="address" [formField]="ownerForm.address" [class.is-valid]="ownerForm.address().dirty() && ownerForm.address().valid()" [class.is-invalid]="ownerForm.address().dirty() && ownerForm.address().invalid()" />
+          @if (ownerForm.address().dirty()) {
+            @for (error of ownerForm.address().errors(); track error.kind) {
+              <div class="invalid-feedback">
+                @switch (error.kind) {
+                  @case ('required') { Address is required }
+                  @case ('maxLength') { Address may be at most 255 characters long }
+                }
+              </div>
+            }
           }
         </div>
       </div>
@@ -79,12 +81,16 @@
       <div class="row mb-3">
         <label for="city" class="col-sm-2 col-form-label">City</label>
         <div class="col-sm-10">
-          <input type="text" class="form-control" id="city" [(ngModel)]="owner.city" name="city" maxlength="80" required #city="ngModel" [class.is-valid]="city.dirty && city.valid" [class.is-invalid]="city.dirty && city.invalid" />
-          @if (city.dirty && city.hasError('required')) {
-            <div class="invalid-feedback">City is required</div>
-          }
-          @if (city.dirty && city.hasError('maxlength')) {
-            <div class="invalid-feedback">City may be at most 80 characters long</div>
+          <input type="text" class="form-control" id="city" [formField]="ownerForm.city" [class.is-valid]="ownerForm.city().dirty() && ownerForm.city().valid()" [class.is-invalid]="ownerForm.city().dirty() && ownerForm.city().invalid()" />
+          @if (ownerForm.city().dirty()) {
+            @for (error of ownerForm.city().errors(); track error.kind) {
+              <div class="invalid-feedback">
+                @switch (error.kind) {
+                  @case ('required') { City is required }
+                  @case ('maxLength') { City may be at most 80 characters long }
+                }
+              </div>
+            }
           }
         </div>
       </div>
@@ -92,15 +98,18 @@
       <div class="row mb-3">
         <label for="telephone" class="col-sm-2 col-form-label">Telephone</label>
         <div class="col-sm-10">
-          <input type="text" class="form-control" id="telephone" [(ngModel)]="owner.telephone" name="telephone" required minlength="1" maxlength="20" pattern="^[0-9]*$" #telephone="ngModel" [class.is-valid]="telephone.dirty && telephone.valid" [class.is-invalid]="telephone.dirty && telephone.invalid" />
-          @if (telephone.dirty && telephone.hasError('required')) {
-            <div class="invalid-feedback">Phone number is required</div>
-          }
-          @if (telephone.dirty && telephone.hasError('maxlength')) {
-            <div class="invalid-feedback">Phone number cannot be more than 20 digits long</div>
-          }
-          @if (telephone.dirty && telephone.hasError('pattern')) {
-            <div class="invalid-feedback">Phone number only accepts digits</div>
+          <input type="text" class="form-control" id="telephone" [formField]="ownerForm.telephone" [class.is-valid]="ownerForm.telephone().dirty() && ownerForm.telephone().valid()" [class.is-invalid]="ownerForm.telephone().dirty() && ownerForm.telephone().invalid()" />
+          @if (ownerForm.telephone().dirty()) {
+            @for (error of ownerForm.telephone().errors(); track error.kind) {
+              <div class="invalid-feedback">
+                @switch (error.kind) {
+                  @case ('required') { Phone number is required }
+                  @case ('minLength') { Phone number must be exactly 10 digits }
+                  @case ('maxLength') { Phone number must be exactly 10 digits }
+                  @case ('pattern') { Phone number only accepts digits }
+                }
+              </div>
+            }
           }
         </div>
       </div>
@@ -108,7 +117,7 @@
       <div class="row">
         <div class="offset-sm-2 col-sm-10 d-flex gap-2">
           <button class="btn btn-secondary" type="button" (click)="gotoOwnersList()">Back</button>
-          <button class="btn btn-secondary" type="submit" [disabled]="ownerForm.invalid">Add Owner</button>
+          <button class="btn btn-secondary" type="submit" [disabled]="ownerForm().invalid()">Add Owner</button>
         </div>
       </div>
     </form>

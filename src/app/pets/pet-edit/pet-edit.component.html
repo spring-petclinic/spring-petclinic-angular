@@ -22,32 +22,29 @@
     @if (errorMessage()) {
       <div class="alert alert-danger">{{ errorMessage() }}</div>
     }
-    <form (ngSubmit)="onSubmit(petForm.value)" #petForm="ngForm" novalidate>
-      <input type="hidden" id="id" [(ngModel)]="pet().id" name="id" />
-      <input type="hidden" id="owner" [(ngModel)]="pet().owner" name="owner" />
-
+    <form [formRoot]="petForm">
       <div class="row mb-3">
         <label for="owner_name" class="col-sm-2 col-form-label">Owner</label>
         <div class="col-sm-10">
-          <input id="owner_name" name="owner_name" class="form-control" type="text" value="{{ currentOwner().firstName }} {{ currentOwner().lastName }}" readonly />
+          <input id="owner_name" class="form-control" type="text" value="{{ currentOwner().firstName }} {{ currentOwner().lastName }}" readonly />
         </div>
       </div>
 
       <div class="row mb-3">
         <label for="name" class="col-sm-2 col-form-label">Name</label>
         <div class="col-sm-10">
-          <input id="name" name="name" class="form-control" minlength="1" maxlength="30" pattern="^[A-Za-z0-9].{0,29}$" required type="text" [(ngModel)]="pet().name" #name="ngModel" [class.is-valid]="name.dirty && name.valid" [class.is-invalid]="name.dirty && name.invalid" />
-          @if (name.dirty && name.hasError('required')) {
-            <div class="invalid-feedback">Name is required</div>
-          }
-          @if (name.dirty && name.hasError('minlength')) {
-            <div class="invalid-feedback">Name must be at least 1 character long</div>
-          }
-          @if (name.dirty && name.hasError('maxlength')) {
-            <div class="invalid-feedback">Name may be at most 30 characters long</div>
-          }
-          @if (name.dirty && name.hasError('pattern')) {
-            <div class="invalid-feedback">Name must begin with a letter or digit</div>
+          <input type="text" class="form-control" id="name" [formField]="petForm.name" [class.is-valid]="petForm.name().dirty() && petForm.name().valid()" [class.is-invalid]="petForm.name().dirty() && petForm.name().invalid()" />
+          @if (petForm.name().dirty()) {
+            @for (error of petForm.name().errors(); track error.kind) {
+              <div class="invalid-feedback">
+                @switch (error.kind) {
+                  @case ('required') { Name is required }
+                  @case ('minLength') { Name must be at least 1 character long }
+                  @case ('maxLength') { Name may be at most 30 characters long }
+                  @case ('pattern') { Name must begin with a letter or digit }
+                }
+              </div>
+            }
           }
         </div>
       </div>
@@ -55,30 +52,42 @@
       <div class="row mb-3">
         <label for="birthDate" class="col-sm-2 col-form-label">Birth Date</label>
         <div class="col-sm-10">
-          <input id="birthDate" matInput [matDatepicker]="birthDateDatepicker" required [ngModel]="pet().birthDate | date:'yyyy-MM-dd'" name="birthDate" #birthDate="ngModel" [class.is-valid]="birthDate.dirty && birthDate.valid" [class.is-invalid]="birthDate.dirty && birthDate.invalid" />
+          <input id="birthDate" matInput [matDatepicker]="birthDateDatepicker" [formField]="petForm.birthDate" [class.is-valid]="petForm.birthDate().dirty() && petForm.birthDate().valid()" [class.is-invalid]="petForm.birthDate().dirty() && petForm.birthDate().invalid()" />
           <mat-datepicker-toggle matSuffix [for]="birthDateDatepicker" />
           <mat-datepicker #birthDateDatepicker />
-          @if (birthDate.dirty && birthDate.hasError('required')) {
-            <div class="invalid-feedback">Birth date is required</div>
+          @if (petForm.birthDate().dirty()) {
+            @for (error of petForm.birthDate().errors(); track error.kind) {
+              <div class="invalid-feedback">
+                @switch (error.kind) {
+                  @case ('required') { Birth date is required }
+                }
+              </div>
+            }
           }
         </div>
       </div>
 
       <div class="row mb-3">
-        <label for="type" class="col-sm-2 col-form-label">Type</label>
+        <label for="typeId" class="col-sm-2 col-form-label">Type</label>
         <div class="col-sm-10">
           <div class="row g-2">
             <div class="col-sm-3">
-              <input id="type1" name="type1" class="form-control" type="text" value="{{ pet().type?.name }}" readonly />
+              <input id="type1" class="form-control" type="text" value="{{ pet().type?.name }}" readonly />
             </div>
             <div class="col-sm-9">
-              <select id="type" name="pettype" class="form-select" required [compareWith]="comparePetTypes" [(ngModel)]="pet().type" #pettype="ngModel" [class.is-valid]="pettype.dirty && pettype.valid" [class.is-invalid]="pettype.dirty && pettype.invalid">
-                @for (petType of petTypes(); track petType) {
-                  <option [ngValue]="petType">{{ petType.name }}</option>
+              <select id="typeId" class="form-select" [formField]="petForm.typeId" [class.is-valid]="petForm.typeId().dirty() && petForm.typeId().valid()" [class.is-invalid]="petForm.typeId().dirty() && petForm.typeId().invalid()">
+                @for (petType of petTypes(); track petType.id) {
+                  <option [value]="petType.id">{{ petType.name }}</option>
                 }
               </select>
-              @if (pettype.dirty && pettype.hasError('required')) {
-                <div class="invalid-feedback">Pet type is required</div>
+              @if (petForm.typeId().dirty()) {
+                @for (error of petForm.typeId().errors(); track error.kind) {
+                  <div class="invalid-feedback">
+                    @switch (error.kind) {
+                      @case ('required') { Pet type is required }
+                    }
+                  </div>
+                }
               }
             </div>
           </div>
@@ -88,7 +97,7 @@
       <div class="row">
         <div class="offset-sm-2 col-sm-10 d-flex gap-2">
           <button class="btn btn-secondary" type="button" (click)="gotoOwnerDetail(currentOwner())">Back</button>
-          <button class="btn btn-secondary" type="submit" [disabled]="petForm.invalid">Update Pet</button>
+          <button class="btn btn-secondary" type="submit" [disabled]="petForm().invalid()">Update Pet</button>
         </div>
       </div>
     </form>

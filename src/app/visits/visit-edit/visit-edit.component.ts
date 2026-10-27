@@ -27,7 +27,10 @@ import {Pet} from '../../pets/pet';
 import {Owner} from '../../owners/owner';
 import {VisitService} from '../visit.service';
 import {Router} from '@angular/router';
-import {resourceErrorMessage, valueOrDefault} from '../../resource-utils';
+import {form} from '@angular/forms/signals';
+import {firstValueFrom} from 'rxjs';
+import {VisitFormModel, visitSchema} from '../visit-form';
+import {resourceErrorMessage, valueOrDefault} from '../../utils/resource-utils';
 
 import moment from 'moment';
 import {OwnerService} from '../../owners/owner.service';
@@ -66,8 +69,12 @@ export class VisitEditComponent {
   private readonly emptyPet = {} as Pet;
   private readonly emptyOwner = {} as Owner;
 
-  // working copy bound to the form fields with ngModel: the loaded visit is never mutated
-  readonly visit = linkedSignal(() => ({ ...valueOrDefault(this.visitResource, this.emptyVisit) }));
+  private readonly loadedVisit = computed(() => valueOrDefault(this.visitResource, this.emptyVisit));
+  // working copy edited through the signal form: the loaded visit is never mutated
+  private readonly visit = linkedSignal<VisitFormModel>(() => {
+    const { date = null, description = '' } = this.loadedVisit();
+    return { date, description };
+  });
   readonly currentPet = computed(() => valueOrDefault(this.petResource, this.emptyPet));
   readonly currentOwner = computed(() => valueOrDefault(this.ownerResource, this.emptyOwner));
   readonly updateSuccess = signal(false);
@@ -76,17 +83,27 @@ export class VisitEditComponent {
     () => this.submitError() ?? resourceErrorMessage(this.visitResource)
   );
 
-  onSubmit(visit: Visit) {
-    visit.pet = this.currentPet();
-
-    // format output from datepicker to short string yyyy-mm-dd format (rfc3339)
-    visit.date = moment(visit.date).format('YYYY-MM-DD');
-
-    this.visitService.updateVisit(visit.id.toString(), visit).subscribe({
-      next: () => this.gotoOwnerDetail(),
-      error: error => this.submitError.set(String(error))
-    });
-  }
+  protected readonly visitForm = form(this.visit, visitSchema, {
+    submission: {
+      action: async () => {
+        const { date, description } = this.visit();
+        const visit = {
+          id: this.loadedVisit().id,
+          pet: this.currentPet(),
+          // format output from datepicker to short string yyyy-mm-dd format (rfc3339)
+          date: moment(date).format('YYYY-MM-DD'),
+          description
+        } as Visit;
+        try {
+          await firstValueFrom(this.visitService.updateVisit(visit.id.toString(), visit));
+          this.gotoOwnerDetail();
+        } catch (error) {
+          this.submitError.set(String(error));
+        }
+        return undefined;
+      }
+    }
+  });
 
   gotoOwnerDetail() {
     this.router.navigate(['/owners', this.currentOwner().id]);

@@ -20,12 +20,14 @@
  * @author Vitaliy Fedoriv
  */
 
-import { Component, effect, inject, input, signal } from '@angular/core';
+import { Component, inject, input, linkedSignal, signal } from '@angular/core';
 import {Vet} from '../vet';
 import {VetService} from '../vet.service';
 import {Router} from '@angular/router';
 import {Specialty} from '../../specialties/specialty';
-import {FormBuilder, FormGroup, FormControl, Validators} from '@angular/forms';
+import {form} from '@angular/forms/signals';
+import {firstValueFrom} from 'rxjs';
+import {vetNamesSchema} from '../vet-form';
 
 @Component({
   selector: 'app-vet-edit',
@@ -34,7 +36,6 @@ import {FormBuilder, FormGroup, FormControl, Validators} from '@angular/forms';
   styleUrls: ['./vet-edit.component.css']
 })
 export class VetEditComponent {
-  private formBuilder = inject(FormBuilder);
   private vetService = inject(VetService);
   private router = inject(Router);
 
@@ -42,52 +43,31 @@ export class VetEditComponent {
   readonly vet = input<Vet>();
   readonly specs = input<Specialty[]>([]);
 
-  vetEditForm: FormGroup;
-  idCtrl: FormControl;
-  firstNameCtrl: FormControl;
-  lastNameCtrl: FormControl;
-  specialtiesCtrl: FormControl;
-
   readonly errorMessage = signal<string | null>(null);
 
-  constructor() {
-    this.buildForm();
-    // the reactive form is not signal based: keep it in sync with the resolved vet
-    effect(() => this.initFormValues(this.vet()));
-  }
+  // working copy edited through the signal form: the resolved vet is never mutated
+  private readonly vetModel = linkedSignal(() => {
+    const { firstName = '', lastName = '', specialties = [] } = this.vet() ?? {};
+    return { firstName, lastName, specialties: [...specialties] };
+  });
 
-  buildForm() {
-    this.idCtrl = new FormControl(null);
-    this.firstNameCtrl = new FormControl('', [Validators.required, Validators.minLength(2)]);
-    this.lastNameCtrl = new FormControl('', [Validators.required, Validators.minLength(2)]);
-    this.specialtiesCtrl = new FormControl(null);
-    this.vetEditForm = this.formBuilder.group({
-      id: this.idCtrl,
-      firstName: this.firstNameCtrl,
-      lastName: this.lastNameCtrl,
-      specialties: this.specialtiesCtrl
-    });
-  }
+  protected readonly vetForm = form(this.vetModel, vetNamesSchema(2), {
+    submission: {
+      action: async () => {
+        const vet = { id: this.vet().id, ...this.vetModel() } as Vet;
+        try {
+          await firstValueFrom(this.vetService.updateVet(vet.id.toString(), vet));
+          this.gotoVetList();
+        } catch (error) {
+          this.errorMessage.set(String(error));
+        }
+        return undefined;
+      }
+    }
+  });
 
   compareSpecFn(c1: Specialty, c2: Specialty): boolean {
     return c1 && c2 ? c1.id === c2.id : c1 === c2;
-  }
-
-  initFormValues(vet: Vet | undefined) {
-    if (!vet) {
-      return;
-    }
-    this.idCtrl.setValue(vet.id);
-    this.firstNameCtrl.setValue(vet.firstName);
-    this.lastNameCtrl.setValue(vet.lastName);
-    this.specialtiesCtrl.setValue(vet.specialties);
-  }
-
-  onSubmit(vet: Vet) {
-    this.vetService.updateVet(vet.id.toString(), vet).subscribe({
-      next: () => this.gotoVetList(),
-      error: error => this.errorMessage.set(String(error))
-    });
   }
 
   gotoVetList() {
