@@ -24,15 +24,15 @@ import { Component, inject, signal } from '@angular/core';
 import {OwnerService} from '../owner.service';
 import {Owner} from '../owner';
 import {Router} from '@angular/router';
-import {form} from '@angular/forms/signals';
+import { form, FormRoot, FormField } from '@angular/forms/signals';
 import {firstValueFrom} from 'rxjs';
 import {emptyOwnerForm, ownerSchema} from '../owner-form';
 
 @Component({
-  selector: 'app-owner-add',
-  standalone: false,
-  templateUrl: './owner-add.component.html',
-  styleUrls: ['./owner-add.component.css']
+    selector: 'app-owner-add',
+    templateUrl: './owner-add.component.html',
+    styleUrls: ['./owner-add.component.css'],
+    imports: [FormRoot, FormField]
 })
 export class OwnerAddComponent {
   private ownerService = inject(OwnerService);

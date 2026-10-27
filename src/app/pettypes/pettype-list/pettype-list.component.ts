@@ -4,12 +4,13 @@ import {PetType} from '../pettype';
 import {Router} from '@angular/router';
 import {PetTypeService} from '../pettype.service';
 import {resourceErrorMessage, valueOrDefault} from '../../utils/resource-utils';
+import { PettypeAddComponent } from '../pettype-add/pettype-add.component';
 
 @Component({
-  selector: 'app-pettype-list',
-  standalone: false,
-  templateUrl: './pettype-list.component.html',
-  styleUrls: ['./pettype-list.component.css']
+    selector: 'app-pettype-list',
+    templateUrl: './pettype-list.component.html',
+    styleUrls: ['./pettype-list.component.css'],
+    imports: [PettypeAddComponent]
 })
 export class PettypeListComponent {
   private pettypeService = inject(PetTypeService);

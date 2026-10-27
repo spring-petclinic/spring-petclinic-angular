@@ -27,15 +27,14 @@ describe('PettypeAddComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            declarations: [PettypeAddComponent],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA],
-            imports: [FormField, FormRoot],
-            providers: [
-                { provide: PetTypeService, useClass: PetTypeServiceStub },
-                { provide: Router, useClass: RouterStub },
-                { provide: ActivatedRoute, useClass: ActivatedRouteStub }
-            ]
-        })
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    imports: [FormField, FormRoot, PettypeAddComponent],
+    providers: [
+        { provide: PetTypeService, useClass: PetTypeServiceStub },
+        { provide: Router, useClass: RouterStub },
+        { provide: ActivatedRoute, useClass: ActivatedRouteStub }
+    ]
+})
             .compileComponents();
     });
 

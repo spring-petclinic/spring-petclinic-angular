@@ -53,14 +53,13 @@ describe('SpecialtyEditComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            declarations: [SpecialtyEditComponent],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA],
-            imports: [FormField, FormRoot],
-            providers: [
-                { provide: SpecialtyService, useClass: SpecialityServiceStub },
-                { provide: Router, useClass: RouterStub }
-            ]
-        })
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    imports: [FormField, FormRoot, SpecialtyEditComponent],
+    providers: [
+        { provide: SpecialtyService, useClass: SpecialityServiceStub },
+        { provide: Router, useClass: RouterStub }
+    ]
+})
             .compileComponents();
     });
 

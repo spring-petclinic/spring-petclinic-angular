@@ -26,17 +26,17 @@ import {Specialty} from '../../specialties/specialty';
 import {SpecialtyService} from 'app/specialties/specialty.service';
 import {Vet} from '../vet';
 import {Router} from '@angular/router';
-import {form} from '@angular/forms/signals';
+import { form, FormRoot, FormField } from '@angular/forms/signals';
 import {firstValueFrom} from 'rxjs';
 import {vetNamesSchema} from '../vet-form';
 import {VetService} from '../vet.service';
 import {resourceErrorMessage, valueOrDefault} from '../../utils/resource-utils';
 
 @Component({
-  selector: 'app-vet-add',
-  standalone: false,
-  templateUrl: './vet-add.component.html',
-  styleUrls: ['./vet-add.component.css']
+    selector: 'app-vet-add',
+    templateUrl: './vet-add.component.html',
+    styleUrls: ['./vet-add.component.css'],
+    imports: [FormRoot, FormField]
 })
 export class VetAddComponent {
   private specialtyService = inject(SpecialtyService);

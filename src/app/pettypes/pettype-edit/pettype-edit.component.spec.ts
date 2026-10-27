@@ -29,14 +29,13 @@ describe('PettypeEditComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            declarations: [PettypeEditComponent],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA],
-            imports: [FormField, FormRoot],
-            providers: [
-                { provide: PetTypeService, useValue: { getPetTypeById: () => of(), updatePetType: () => of() } },
-                { provide: Router, useClass: RouterStub }
-            ]
-        })
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    imports: [FormField, FormRoot, PettypeEditComponent],
+    providers: [
+        { provide: PetTypeService, useValue: { getPetTypeById: () => of(), updatePetType: () => of() } },
+        { provide: Router, useClass: RouterStub }
+    ]
+})
             .compileComponents();
     });
 

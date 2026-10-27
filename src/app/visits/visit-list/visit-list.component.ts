@@ -26,10 +26,9 @@ import {VisitService} from '../visit.service';
 import {Router} from '@angular/router';
 
 @Component({
-  selector: 'app-visit-list',
-  standalone: false,
-  templateUrl: './visit-list.component.html',
-  styleUrls: ['./visit-list.component.css']
+    selector: 'app-visit-list',
+    templateUrl: './visit-list.component.html',
+    styleUrls: ['./visit-list.component.css']
 })
 export class VisitListComponent {
   private router = inject(Router);
