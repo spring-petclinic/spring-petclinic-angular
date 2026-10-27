@@ -51,7 +51,7 @@ export class SpecialtyService {
       );
   }
 
-  getSpecialtyById(specId: string): Observable<Specialty> {
+  getSpecialtyById(specId: number): Observable<Specialty> {
     return this.http.get<Specialty>((this.entityUrl + '/' + specId))
       .pipe(
         catchError(this.handlerError('getSpecialtyById', {} as Specialty))
@@ -65,14 +65,14 @@ export class SpecialtyService {
       );
   }
 
-  updateSpecialty(specId: string, specialty: Specialty): Observable<Specialty> {
+  updateSpecialty(specId: number, specialty: Specialty): Observable<Specialty> {
     return this.http.put<Specialty>((this.entityUrl + '/' + specId), specialty)
       .pipe(
         catchError(this.handlerError('updateSpecialty', specialty))
       );
   }
 
-  deleteSpecialty(specId: string): Observable<number> {
+  deleteSpecialty(specId: number): Observable<number> {
     return this.http.delete<number>((this.entityUrl + '/' + specId))
       .pipe(
         catchError(this.handlerError('deleteSpecialty', 0))

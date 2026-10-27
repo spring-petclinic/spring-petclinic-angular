@@ -131,7 +131,7 @@ describe('OwnerService', () => {
         };
 
         ownerService
-            .updateOwner(owner.id.toString(), owner)
+            .updateOwner(owner.id, owner)
             .subscribe({
                 next: (data) => expect(data, 'updated owner').toEqual(owner),
                 error: (error) => expect.fail(`Unexpected error: ${error}`),
@@ -150,7 +150,7 @@ describe('OwnerService', () => {
 
     it('delete Owner', () => {
         console.log('Inside Delete Owner');
-        ownerService.deleteOwner('1').subscribe();
+        ownerService.deleteOwner(1).subscribe();
         const req = httpTestingController.expectOne(ownerService.entityUrl + '/1');
         expect(req.request.method).toEqual('DELETE');
         expect(req.request.body).toEqual(null);

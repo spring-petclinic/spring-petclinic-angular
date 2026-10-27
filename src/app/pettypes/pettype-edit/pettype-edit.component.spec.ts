@@ -86,7 +86,7 @@ describe('PettypeEditComponent', () => {
         await typeName('dog');
         fixture.nativeElement.querySelector('form').dispatchEvent(new Event('submit'));
         await fixture.whenStable();
-        expect(updateSpy).toHaveBeenCalledWith('1', { id: 1, name: 'dog' });
+        expect(updateSpy).toHaveBeenCalledWith(1, { id: 1, name: 'dog' });
         expect(router.navigate).toHaveBeenCalledWith(['/pettypes']);
     });
 });

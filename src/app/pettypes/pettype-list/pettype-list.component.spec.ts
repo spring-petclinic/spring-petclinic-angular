@@ -12,7 +12,7 @@ import { Observable, of } from 'rxjs';
 type Spy = Mock;
 
 class PetTypeServiceStub {
-    deletePetType(typeId: string): Observable<number> {
+    deletePetType(typeId: number): Observable<number> {
         return of();
     }
     getPetTypes(): Observable<PetType[]> {

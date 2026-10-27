@@ -20,7 +20,7 @@
  * @author Vitaliy Fedoriv
  */
 
-import { Component, computed, inject, input, signal } from '@angular/core';
+import { Component, computed, inject, input, numberAttribute, signal } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 import {Visit} from '../visit';
 import {VisitService} from '../visit.service';
@@ -49,11 +49,11 @@ export class VisitAddComponent {
   private router = inject(Router);
 
   // pet id: route parameter, bound by the router (bindToComponentInputs)
-  readonly id = input<string>();
+  readonly id = input(undefined, { transform: numberAttribute });
 
   private readonly petResource = rxResource({
     params: () => this.id(),
-    stream: ({ params }) => this.petService.getPetById(Number(params)),
+    stream: ({ params }) => this.petService.getPetById(params),
   });
   // the owner is loaded once the pet, which references it, has been received
   private readonly ownerResource = rxResource({

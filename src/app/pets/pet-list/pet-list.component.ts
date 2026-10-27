@@ -45,7 +45,7 @@ export class PetListComponent {
   }
 
   deletePet(pet: Pet) {
-    this.petService.deletePet(pet.id.toString()).subscribe({
+    this.petService.deletePet(pet.id).subscribe({
       next: () => this.deleteSuccess.set(true),
       error: (error) => this.errorMessage.set(String(error))
     });

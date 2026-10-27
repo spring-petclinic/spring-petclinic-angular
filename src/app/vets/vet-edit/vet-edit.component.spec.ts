@@ -35,7 +35,7 @@ import {Observable, of} from 'rxjs';
 import {Vet} from '../vet';
 
 class VetServiceStub {
-  updateVet(id: string, vet: Vet): Observable<Vet> {
+  updateVet(id: number, vet: Vet): Observable<Vet> {
     return of(vet);
   }
 }
@@ -91,7 +91,7 @@ describe('VetEditComponent', () => {
     fixture.nativeElement.querySelector('form').dispatchEvent(new Event('submit'));
     await fixture.whenStable();
 
-    expect(updateVet).toHaveBeenCalledWith('1', {id: 1, firstName: 'Helen', lastName: 'Carter', specialties: []});
+    expect(updateVet).toHaveBeenCalledWith(1, {id: 1, firstName: 'Helen', lastName: 'Carter', specialties: []});
     expect(navigate).toHaveBeenCalledWith(['/vets']);
   });
 

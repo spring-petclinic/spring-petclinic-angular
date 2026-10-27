@@ -21,7 +21,7 @@
  * @author Vitaliy Fedoriv
  */
 
-import { Component, computed, inject, input, linkedSignal, signal } from '@angular/core';
+import { Component, computed, inject, input, linkedSignal, numberAttribute, signal } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 import {Pet} from '../pet';
 import {PetService} from '../pet.service';
@@ -50,14 +50,14 @@ export class PetEditComponent {
   private router = inject(Router);
 
   // route parameter, bound by the router (bindToComponentInputs)
-  readonly id = input<string>();
+  readonly id = input(undefined, { transform: numberAttribute });
 
   private readonly petTypesResource = rxResource({
     stream: () => this.petTypeService.getPetTypes(),
   });
   private readonly petResource = rxResource({
     params: () => this.id(),
-    stream: ({ params }) => this.petService.getPetById(Number(params)),
+    stream: ({ params }) => this.petService.getPetById(params),
   });
   // the owner is loaded once the pet, which references it, has been received
   private readonly ownerResource = rxResource({
@@ -95,7 +95,7 @@ export class PetEditComponent {
           type: this.petTypes().find(petType => String(petType.id) === typeId)
         } as Pet;
         try {
-          await firstValueFrom(this.petService.updatePet(pet.id.toString(), pet));
+          await firstValueFrom(this.petService.updatePet(pet.id, pet));
           this.gotoOwnerDetail(this.currentOwner());
         } catch (error) {
           this.submitError.set(String(error));
