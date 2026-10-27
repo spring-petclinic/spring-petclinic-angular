@@ -20,7 +20,7 @@
  * @author Vitaliy Fedoriv
  */
 
-import { Component, computed, inject, input, linkedSignal, signal } from '@angular/core';
+import { Component, computed, inject, input, linkedSignal, numberAttribute, signal } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 import {PetType} from '../pettype';
 import {PetTypeService} from '../pettype.service';
@@ -41,7 +41,7 @@ export class PettypeEditComponent {
   private router = inject(Router);
 
   // route parameter, bound by the router (bindToComponentInputs)
-  readonly id = input<string>();
+  readonly id = input(undefined, { transform: numberAttribute });
 
   private readonly pettypeResource = rxResource({
     params: () => this.id(),
@@ -63,7 +63,7 @@ export class PettypeEditComponent {
         action: async () => {
           const pettype = this.pettype();
           try {
-            await firstValueFrom(this.pettypeService.updatePetType(pettype.id.toString(), pettype));
+            await firstValueFrom(this.pettypeService.updatePetType(pettype.id, pettype));
             this.onBack();
           } catch (error) {
             this.submitError.set(String(error));

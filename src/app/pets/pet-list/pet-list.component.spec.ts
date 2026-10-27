@@ -36,7 +36,7 @@ import { Observable, of } from 'rxjs';
 type Spy = Mock;
 
 class PetServiceStub {
-    deletePet(petId: string): Observable<number> {
+    deletePet(petId: number): Observable<number> {
         return of();
     }
 }

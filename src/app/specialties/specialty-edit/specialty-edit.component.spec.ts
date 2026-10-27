@@ -36,10 +36,10 @@ import { Observable, of } from 'rxjs';
 type Spy = Mock;
 
 class SpecialityServiceStub {
-    getSpecialtyById(specId: string): Observable<Specialty> {
+    getSpecialtyById(specId: number): Observable<Specialty> {
         return of();
     }
-    updateSpecialty(specId: string, specialty: Specialty): Observable<Specialty> {
+    updateSpecialty(specId: number, specialty: Specialty): Observable<Specialty> {
         return of(specialty);
     }
 }
@@ -97,7 +97,7 @@ describe('SpecialtyEditComponent', () => {
 
         await submitForm(fixture);
 
-        expect(updateSpy).toHaveBeenCalledWith('1', { id: 1, name: 'surgery' });
+        expect(updateSpy).toHaveBeenCalledWith(1, { id: 1, name: 'surgery' });
         expect(router.navigate).toHaveBeenCalledWith(['/specialties']);
     });
 

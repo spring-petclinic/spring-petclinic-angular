@@ -56,7 +56,7 @@ export class VetEditComponent {
       action: async () => {
         const vet = { id: this.vet().id, ...this.vetModel() } as Vet;
         try {
-          await firstValueFrom(this.vetService.updateVet(vet.id.toString(), vet));
+          await firstValueFrom(this.vetService.updateVet(vet.id, vet));
           this.gotoVetList();
         } catch (error) {
           this.errorMessage.set(String(error));

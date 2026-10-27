@@ -45,7 +45,7 @@ export class VisitListComponent {
   }
 
   deleteVisit(visit: Visit) {
-    this.visitService.deleteVisit(visit.id.toString()).subscribe({
+    this.visitService.deleteVisit(visit.id).subscribe({
       next: () => {
         this.visitList.update(visits => visits.filter(v => v !== visit));
       },
