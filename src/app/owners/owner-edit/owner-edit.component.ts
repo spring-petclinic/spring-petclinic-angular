@@ -25,16 +25,16 @@ import { rxResource } from '@angular/core/rxjs-interop';
 import { OwnerService } from '../owner.service';
 import { Owner } from '../owner';
 import { Router } from '@angular/router';
-import { form } from '@angular/forms/signals';
+import { form, FormRoot, FormField } from '@angular/forms/signals';
 import { firstValueFrom } from 'rxjs';
 import { OwnerFormModel, ownerSchema } from '../owner-form';
 import { resourceErrorMessage, valueOrDefault } from '../../utils/resource-utils';
 
 @Component({
-  selector: 'app-owner-edit',
-  standalone: false,
-  templateUrl: './owner-edit.component.html',
-  styleUrls: ['./owner-edit.component.css'],
+    selector: 'app-owner-edit',
+    templateUrl: './owner-edit.component.html',
+    styleUrls: ['./owner-edit.component.css'],
+    imports: [FormRoot, FormField],
 })
 export class OwnerEditComponent {
   private ownerService = inject(OwnerService);

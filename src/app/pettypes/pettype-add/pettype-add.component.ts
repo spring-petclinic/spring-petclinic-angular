@@ -1,15 +1,15 @@
 import { Component, inject, output, signal } from '@angular/core';
-import { form } from '@angular/forms/signals';
+import { form, FormRoot, FormField } from '@angular/forms/signals';
 import { pettypeSchema } from '../pettype-form';
 import { firstValueFrom } from 'rxjs';
 import {PetType} from '../pettype';
 import {PetTypeService} from '../pettype.service';
 
 @Component({
-  selector: 'app-pettype-add',
-  standalone: false,
-  templateUrl: './pettype-add.component.html',
-  styleUrls: ['./pettype-add.component.css']
+    selector: 'app-pettype-add',
+    templateUrl: './pettype-add.component.html',
+    styleUrls: ['./pettype-add.component.css'],
+    imports: [FormRoot, FormField]
 })
 export class PettypeAddComponent {
   private pettypeService = inject(PetTypeService);

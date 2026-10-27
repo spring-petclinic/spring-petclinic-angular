@@ -26,12 +26,13 @@ import {Specialty} from '../specialty';
 import {SpecialtyService} from '../specialty.service';
 import {Router} from '@angular/router';
 import {resourceErrorMessage, valueOrDefault} from '../../utils/resource-utils';
+import { SpecialtyAddComponent } from '../specialty-add/specialty-add.component';
 
 @Component({
-  selector: 'app-specialty-list',
-  standalone: false,
-  templateUrl: './specialty-list.component.html',
-  styleUrls: ['./specialty-list.component.css']
+    selector: 'app-specialty-list',
+    templateUrl: './specialty-list.component.html',
+    styleUrls: ['./specialty-list.component.css'],
+    imports: [SpecialtyAddComponent]
 })
 export class SpecialtyListComponent {
   private specService = inject(SpecialtyService);

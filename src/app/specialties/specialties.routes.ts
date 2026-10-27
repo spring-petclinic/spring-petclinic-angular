@@ -20,32 +20,13 @@
  * @author Vitaliy Fedoriv
  */
 
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {FormField, FormRoot} from '@angular/forms/signals';
-import {SpecialtyService} from './specialty.service';
+import {Routes} from '@angular/router';
 import {SpecialtyListComponent} from './specialty-list/specialty-list.component';
-import {SpecialtiesRoutingModule} from './specialties-routing.module';
-import {SpecialtyAddComponent} from './specialty-add/specialty-add.component';
 import {SpecialtyEditComponent} from './specialty-edit/specialty-edit.component';
-import {SpecResolver} from './spec-resolver';
 
-@NgModule({
-  imports: [
-    CommonModule,
-    FormField,
-    FormRoot,
-    SpecialtiesRoutingModule
-  ],
-  declarations: [
-    SpecialtyListComponent,
-    SpecialtyAddComponent,
-    SpecialtyEditComponent
-  ],
-  exports: [
-    SpecialtyListComponent
-  ],
-  providers: [SpecialtyService, SpecResolver]
-})
-export class SpecialtiesModule {
-}
+export const specialtyRoutes: Routes = [
+  {path: 'specialties', component: SpecialtyListComponent},
+  // {path: 'specialties/add', component: SpecialtyAddComponent},
+  // {path: 'specialties/:id', component: SpecialtyDetailComponent},
+   {path: 'specialties/:id/edit', component: SpecialtyEditComponent}
+];

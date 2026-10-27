@@ -26,7 +26,7 @@ import { rxResource } from '@angular/core/rxjs-interop';
 import {Pet} from '../pet';
 import {PetService} from '../pet.service';
 import {Router} from '@angular/router';
-import {form} from '@angular/forms/signals';
+import { form, FormRoot, FormField } from '@angular/forms/signals';
 import {firstValueFrom} from 'rxjs';
 import {petSchema, PetFormModel} from '../pet-form';
 import {resourceErrorMessage, valueOrDefault} from '../../utils/resource-utils';
@@ -36,12 +36,13 @@ import {PetTypeService} from '../../pettypes/pettype.service';
 
 import moment from 'moment';
 import {OwnerService} from '../../owners/owner.service';
+import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
 
 @Component({
-  selector: 'app-pet-edit',
-  standalone: false,
-  templateUrl: './pet-edit.component.html',
-  styleUrls: ['./pet-edit.component.css']
+    selector: 'app-pet-edit',
+    templateUrl: './pet-edit.component.html',
+    styleUrls: ['./pet-edit.component.css'],
+    imports: [FormRoot, FormField, MatDatepickerInput, MatDatepickerToggle, MatDatepicker]
 })
 export class PetEditComponent {
   private petService = inject(PetService);

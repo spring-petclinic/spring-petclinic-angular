@@ -26,7 +26,7 @@ import {Vet} from './vet';
  * @author Vitaliy Fedoriv
  */
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class VetResolver  {
   private vetService = inject(VetService);
 

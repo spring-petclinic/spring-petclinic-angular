@@ -26,15 +26,14 @@ describe('SpecialtyAddComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            declarations: [SpecialtyAddComponent],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA],
-            imports: [FormField, FormRoot],
-            providers: [
-                { provide: SpecialtyService, useClass: SpecialityServiceStub },
-                { provide: Router, useClass: RouterStub },
-                { provide: ActivatedRoute, useClass: ActivatedRouteStub },
-            ],
-        }).compileComponents();
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    imports: [FormField, FormRoot, SpecialtyAddComponent],
+    providers: [
+        { provide: SpecialtyService, useClass: SpecialityServiceStub },
+        { provide: Router, useClass: RouterStub },
+        { provide: ActivatedRoute, useClass: ActivatedRouteStub },
+    ],
+}).compileComponents();
     });
     beforeEach(() => {
         fixture = TestBed.createComponent(SpecialtyAddComponent);
