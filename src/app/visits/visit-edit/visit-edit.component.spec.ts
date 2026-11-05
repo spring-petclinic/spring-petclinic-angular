@@ -60,7 +60,7 @@ describe('VisitEditComponent', () => {
 
         await submitForm(fixture);
 
-        expect(visitService.updateVisit).toHaveBeenCalledWith('3', {
+        expect(visitService.updateVisit).toHaveBeenCalledWith(3, {
             id: 3,
             pet,
             date: '2024-03-04',

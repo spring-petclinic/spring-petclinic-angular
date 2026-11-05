@@ -20,7 +20,7 @@
  * @author Vitaliy Fedoriv
  */
 
-import { Component, computed, inject, input } from '@angular/core';
+import { Component, computed, inject, input, numberAttribute } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 import {OwnerService} from '../owner.service';
 import {Router} from '@angular/router';
@@ -39,11 +39,11 @@ export class OwnerDetailComponent {
   private ownerService = inject(OwnerService);
 
   // route parameter, bound by the router (bindToComponentInputs)
-  readonly id = input<string>();
+  readonly id = input(undefined, { transform: numberAttribute });
 
   private readonly ownerResource = rxResource({
     params: () => this.id(),
-    stream: ({params}) => this.ownerService.getOwnerById(Number(params))
+    stream: ({params}) => this.ownerService.getOwnerById(params)
   });
 
   private readonly emptyOwner = {} as Owner;

@@ -50,7 +50,7 @@ export class SpecialtyListComponent {
   readonly errorMessage = computed(() => this.deleteError() ?? resourceErrorMessage(this.specialtiesResource));
 
   deleteSpecialty(specialty: Specialty) {
-    this.specService.deleteSpecialty(specialty.id.toString()).subscribe({
+    this.specService.deleteSpecialty(specialty.id).subscribe({
       next: () => this.specialties.update(specialties => specialties.filter(currentItem => currentItem.id !== specialty.id)),
       error: error => this.deleteError.set(String(error))
     });
@@ -66,7 +66,7 @@ export class SpecialtyListComponent {
   }
 
   showEditSpecialtyComponent(updatedSpecialty: Specialty) {
-    this.router.navigate(['/specialties', updatedSpecialty.id.toString(), 'edit']);
+    this.router.navigate(['/specialties', updatedSpecialty.id, 'edit']);
   }
 
   gotoHome() {

@@ -28,7 +28,7 @@ export class PettypeListComponent {
   readonly errorMessage = computed(() => this.deleteError() ?? resourceErrorMessage(this.pettypesResource));
 
   deletePettype(pettype: PetType) {
-    this.pettypeService.deletePetType(pettype.id.toString()).subscribe({
+    this.pettypeService.deletePetType(pettype.id).subscribe({
       next: () => this.pettypes.update(pettypes => pettypes.filter(currentItem => currentItem.id !== pettype.id)),
       error: error => this.deleteError.set(String(error))
     });
@@ -44,7 +44,7 @@ export class PettypeListComponent {
   }
 
   showEditPettypeComponent(updatedPetType: PetType) {
-    this.router.navigate(['/pettypes', updatedPetType.id.toString(), 'edit']);
+    this.router.navigate(['/pettypes', updatedPetType.id, 'edit']);
   }
 
   gotoHome() {

@@ -52,14 +52,14 @@ export class VetService {
       );
   }
 
-  getVetById(vetId: string): Observable<Vet> {
+  getVetById(vetId: number): Observable<Vet> {
     return this.http.get<Vet>((this.entityUrl + '/' + vetId))
       .pipe(
         catchError(this.handlerError('getVetById', {} as Vet))
       );
   }
 
-  updateVet(vetId: string, vet: Vet): Observable<Vet> {
+  updateVet(vetId: number, vet: Vet): Observable<Vet> {
     return this.http.put<Vet>(this.entityUrl + '/' + vetId, vet)
       .pipe(
         catchError(this.handlerError('updateVet', vet))
@@ -73,7 +73,7 @@ export class VetService {
       );
   }
 
-  deleteVet(vetId: string): Observable<number> {
+  deleteVet(vetId: number): Observable<number> {
     return this.http.delete<number>(this.entityUrl + '/' + vetId)
       .pipe(
         catchError(this.handlerError('deleteVet', 0))
