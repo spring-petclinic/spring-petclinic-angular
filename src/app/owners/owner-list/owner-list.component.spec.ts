@@ -25,20 +25,15 @@ import type { Mock } from 'vitest';
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
+import { DebugElement } from '@angular/core';
 
 import { OwnerListComponent } from './owner-list.component';
-import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, provideRouter } from '@angular/router';
 import { OwnerService } from '../owner.service';
 import { Owner } from '../owner';
 import { Observable, of } from 'rxjs';
-import { CommonModule } from '@angular/common';
-import { PartsModule } from '../../parts/parts.module';
 import { ActivatedRouteStub } from '../../testing/router-stubs';
 import { OwnerDetailComponent } from '../owner-detail/owner-detail.component';
-import { OwnersModule } from '../owners.module';
-import { DummyComponent } from '../../testing/dummy.component';
 import { OwnerAddComponent } from '../owner-add/owner-add.component';
 import { OwnerEditComponent } from '../owner-edit/owner-edit.component';
 type Spy = Mock;
@@ -76,19 +71,17 @@ describe('OwnerListComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            declarations: [DummyComponent],
-            schemas: [NO_ERRORS_SCHEMA],
-            imports: [CommonModule, FormsModule, PartsModule, OwnersModule],
-            providers: [
-                provideRouter([{ path: 'owners', component: OwnerListComponent },
-                    { path: 'owners/add', component: OwnerAddComponent },
-                    { path: 'owners/:id', component: OwnerDetailComponent },
-                    { path: 'owners/:id/edit', component: OwnerEditComponent }
-                ]),
-                { provide: OwnerService, useValue: ownerService },
-                { provide: ActivatedRoute, useClass: ActivatedRouteStub }
-            ]
-        })
+    imports: [OwnerListComponent],
+    providers: [
+        provideRouter([{ path: 'owners', component: OwnerListComponent },
+            { path: 'owners/add', component: OwnerAddComponent },
+            { path: 'owners/:id', component: OwnerDetailComponent },
+            { path: 'owners/:id/edit', component: OwnerEditComponent }
+        ]),
+        { provide: OwnerService, useValue: ownerService },
+        { provide: ActivatedRoute, useClass: ActivatedRouteStub }
+    ]
+})
             .compileComponents();
     });
 

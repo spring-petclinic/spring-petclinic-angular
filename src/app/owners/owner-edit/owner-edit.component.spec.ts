@@ -57,16 +57,14 @@ describe('OwnerEditComponent', () => {
     const submitButton = () => fixture.nativeElement.querySelector('button[type=submit]') as HTMLButtonElement;
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            declarations: [OwnerEditComponent],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA],
-            // schemas: [ NO_ERRORS_SCHEMA ],
-            imports: [FormField, FormRoot],
-            providers: [
-                provideRouter([{ path: 'owners', component: OwnerListComponent }]),
-                { provide: OwnerService, useClass: OwnserServiceStub },
-                { provide: Router, useClass: RouterStub },
-            ],
-        }).compileComponents();
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    imports: [FormField, FormRoot, OwnerEditComponent],
+    providers: [
+        provideRouter([{ path: 'owners', component: OwnerListComponent }]),
+        { provide: OwnerService, useClass: OwnserServiceStub },
+        { provide: Router, useClass: RouterStub },
+    ],
+}).compileComponents();
     });
 
     beforeEach(async () => {

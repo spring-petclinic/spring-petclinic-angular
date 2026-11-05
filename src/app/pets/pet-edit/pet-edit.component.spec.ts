@@ -26,16 +26,15 @@ describe('PetEditComponent', () => {
     beforeEach(async () => {
         petService.updatePet.mockClear();
         await TestBed.configureTestingModule({
-            declarations: [PetEditComponent],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA],
-            imports: [FormField, FormRoot, MatDatepickerModule, MatMomentDateModule],
-            providers: [
-                { provide: PetService, useValue: petService },
-                { provide: OwnerService, useValue: { getOwnerById: () => of(owner) } },
-                { provide: PetTypeService, useValue: { getPetTypes: () => of([cat, dog]) } },
-                { provide: Router, useClass: RouterStub }
-            ]
-        })
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    imports: [FormField, FormRoot, MatDatepickerModule, MatMomentDateModule, PetEditComponent],
+    providers: [
+        { provide: PetService, useValue: petService },
+        { provide: OwnerService, useValue: { getOwnerById: () => of(owner) } },
+        { provide: PetTypeService, useValue: { getPetTypes: () => of([cat, dog]) } },
+        { provide: Router, useClass: RouterStub }
+    ]
+})
             .compileComponents();
 
         fixture = TestBed.createComponent(PetEditComponent);

@@ -50,15 +50,14 @@ describe('PetListComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            declarations: [PetListComponent],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA],
-            imports: [FormsModule],
-            providers: [
-                { provide: PetService, useClass: PetServiceStub },
-                { provide: Router, useClass: RouterStub },
-                { provide: ActivatedRoute, useClass: ActivatedRouteStub },
-            ],
-        }).compileComponents();
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    imports: [FormsModule, PetListComponent],
+    providers: [
+        { provide: PetService, useClass: PetServiceStub },
+        { provide: Router, useClass: RouterStub },
+        { provide: ActivatedRoute, useClass: ActivatedRouteStub },
+    ],
+}).compileComponents();
     });
 
     beforeEach(() => {

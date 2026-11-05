@@ -17,17 +17,17 @@
  */
 
 import { Component, inject, output, signal } from '@angular/core';
-import { form } from '@angular/forms/signals';
+import { form, FormRoot, FormField } from '@angular/forms/signals';
 import { specialtySchema } from '../specialty-form';
 import { firstValueFrom } from 'rxjs';
 import { Specialty } from '../specialty';
 import { SpecialtyService } from '../specialty.service';
 
 @Component({
-  selector: 'app-specialty-add',
-  standalone: false,
-  templateUrl: './specialty-add.component.html',
-  styleUrls: ['./specialty-add.component.css'],
+    selector: 'app-specialty-add',
+    templateUrl: './specialty-add.component.html',
+    styleUrls: ['./specialty-add.component.css'],
+    imports: [FormRoot, FormField],
 })
 export class SpecialtyAddComponent {
   private specialtyService = inject(SpecialtyService);
