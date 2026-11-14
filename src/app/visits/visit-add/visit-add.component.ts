@@ -25,7 +25,7 @@ import { rxResource } from '@angular/core/rxjs-interop';
 import {Visit} from '../visit';
 import {VisitService} from '../visit.service';
 import {Router} from '@angular/router';
-import {form} from '@angular/forms/signals';
+import { form, FormRoot, FormField } from '@angular/forms/signals';
 import {firstValueFrom} from 'rxjs';
 import {VisitFormModel, visitSchema} from '../visit-form';
 import {resourceErrorMessage, valueOrDefault} from '../../utils/resource-utils';
@@ -35,12 +35,14 @@ import {Owner} from '../../owners/owner';
 
 import moment from 'moment';
 import {OwnerService} from '../../owners/owner.service';
+import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
+import { VisitListComponent } from '../visit-list/visit-list.component';
 
 @Component({
-  selector: 'app-visit-add',
-  standalone: false,
-  templateUrl: './visit-add.component.html',
-  styleUrls: ['./visit-add.component.css']
+    selector: 'app-visit-add',
+    templateUrl: './visit-add.component.html',
+    styleUrls: ['./visit-add.component.css'],
+    imports: [FormRoot, MatDatepickerInput, FormField, MatDatepickerToggle, MatDatepicker, VisitListComponent]
 })
 export class VisitAddComponent {
   private visitService = inject(VisitService);

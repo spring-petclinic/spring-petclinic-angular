@@ -28,10 +28,9 @@ import {Router} from '@angular/router';
 import {resourceErrorMessage, valueOrDefault} from '../../utils/resource-utils';
 
 @Component({
-  selector: 'app-vet-list',
-  standalone: false,
-  templateUrl: './vet-list.component.html',
-  styleUrls: ['./vet-list.component.css']
+    selector: 'app-vet-list',
+    templateUrl: './vet-list.component.html',
+    styleUrls: ['./vet-list.component.css']
 })
 export class VetListComponent {
   private vetService = inject(VetService);

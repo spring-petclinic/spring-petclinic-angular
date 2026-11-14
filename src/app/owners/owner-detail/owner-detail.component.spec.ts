@@ -48,15 +48,14 @@ describe('OwnerDetailComponent', () => {
     let router: Router;
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            declarations: [OwnerDetailComponent],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA],
-            imports: [FormsModule],
-            providers: [
-                provideRouter([]),
-                { provide: OwnerService, useClass: OwnerServiceStub },
-                { provide: Router, useClass: RouterStub },
-            ],
-        }).compileComponents();
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    imports: [FormsModule, OwnerDetailComponent],
+    providers: [
+        provideRouter([]),
+        { provide: OwnerService, useClass: OwnerServiceStub },
+        { provide: Router, useClass: RouterStub },
+    ],
+}).compileComponents();
     });
     const owner: Owner = {
         id: 10,

@@ -24,18 +24,14 @@
 
 import { TestBed } from '@angular/core/testing';
 import {AppComponent} from './app.component';
-import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
-import {FormsModule} from '@angular/forms';
+import {provideRouter} from '@angular/router';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
-        AppComponent
-      ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [FormsModule]
-    }).compileComponents();
+    imports: [AppComponent],
+    providers: [provideRouter([])]
+}).compileComponents();
   });
 
   it('should create the app', () => {

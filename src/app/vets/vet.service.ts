@@ -29,7 +29,7 @@ import {HandleError, HttpErrorHandler} from '../error.service';
 import {catchError} from 'rxjs/operators';
 
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class VetService {
   private http = inject(HttpClient);
   private httpErrorHandler = inject(HttpErrorHandler);

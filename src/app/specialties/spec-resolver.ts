@@ -26,7 +26,7 @@ import {Observable} from 'rxjs';
  * @author Vitaliy Fedoriv
  */
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class SpecResolver  {
   private specialtyService = inject(SpecialtyService);
 
