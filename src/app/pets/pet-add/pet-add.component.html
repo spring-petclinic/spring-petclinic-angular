@@ -57,13 +57,11 @@
           <mat-datepicker #birthDateDatepicker />
           @if (petForm.birthDate().dirty()) {
             @for (error of petForm.birthDate().errors(); track error.kind) {
-              <div class="invalid-feedback">
-                @switch (error.kind) {
-                  @case ('required') { Birth date is required }
-                  @case ('futureBirthDate') { Birth date cannot be in the future }
-                  @case ('tooOldBirthDate') { Birth date cannot be older than 50 years }
-                }
-              </div>
+              @switch (error.kind) {
+                @case ('required') { <div class="invalid-feedback">Birth date is required</div> }
+                @case ('futureBirthDate') { <div class="invalid-feedback">Birth date cannot be in the future</div> }
+                @case ('tooOldBirthDate') { <div class="invalid-feedback">Birth date cannot be older than 50 years</div> }
+              }
             }
           }
         </div>
