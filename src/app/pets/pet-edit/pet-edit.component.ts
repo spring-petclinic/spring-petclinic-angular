@@ -28,7 +28,7 @@ import {PetService} from '../pet.service';
 import {Router} from '@angular/router';
 import {form} from '@angular/forms/signals';
 import {firstValueFrom} from 'rxjs';
-import {petSchema, PetFormModel} from '../pet-form';
+import {maxBirthDate, minBirthDate, petSchema, PetFormModel} from '../pet-form';
 import {resourceErrorMessage, valueOrDefault} from '../../utils/resource-utils';
 import {Owner} from '../../owners/owner';
 import {PetType} from '../../pettypes/pettype';
@@ -64,6 +64,9 @@ export class PetEditComponent {
     params: () => (this.petResource.hasValue() ? this.petResource.value().ownerId : undefined),
     stream: ({ params }) => this.ownerService.getOwnerById(params),
   });
+
+  protected readonly minBirthDate = minBirthDate();
+  protected readonly maxBirthDate = maxBirthDate();
 
   private readonly emptyPet = {} as Pet;
   private readonly emptyOwner = {} as Owner;
