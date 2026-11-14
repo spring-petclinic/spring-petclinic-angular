@@ -5,6 +5,7 @@ import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { Router } from '@angular/router';
 import { of } from 'rxjs';
+import moment from 'moment';
 
 import { PetAddComponent } from './pet-add.component';
 import { PetService } from '../pet.service';
@@ -76,5 +77,30 @@ describe('PetAddComponent', () => {
             type: dog
         });
         expect(router.navigate).toHaveBeenCalledWith(['/owners', 1]);
+    });
+
+    it('should reject a birth date in the future', async () => {
+        await setValue(fixture, '#name', 'Leo');
+        await setValue(fixture, '#typeId', '2');
+        await setValue(fixture, '#birthDate', moment().add(1, 'day').format('M/D/YYYY'));
+        expect(fixture.nativeElement.textContent).toContain('Birth date cannot be in the future');
+        expect(submitButton(fixture).disabled).toBe(true);
+    });
+
+    it('should reject a birth date older than 50 years', async () => {
+        await setValue(fixture, '#name', 'Leo');
+        await setValue(fixture, '#typeId', '2');
+        await setValue(fixture, '#birthDate', moment().subtract(50, 'years').subtract(1, 'day').format('M/D/YYYY'));
+        expect(fixture.nativeElement.textContent).toContain('Birth date cannot be older than 50 years');
+        expect(submitButton(fixture).disabled).toBe(true);
+    });
+
+    it('should accept today and the date 50 years ago as birth dates', async () => {
+        await setValue(fixture, '#name', 'Leo');
+        await setValue(fixture, '#typeId', '2');
+        await setValue(fixture, '#birthDate', moment().format('M/D/YYYY'));
+        expect(submitButton(fixture).disabled).toBe(false);
+        await setValue(fixture, '#birthDate', moment().subtract(50, 'years').format('M/D/YYYY'));
+        expect(submitButton(fixture).disabled).toBe(false);
     });
 });

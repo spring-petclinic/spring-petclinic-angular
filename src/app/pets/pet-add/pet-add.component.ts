@@ -29,7 +29,7 @@ import {Owner} from '../../owners/owner';
 import {Router} from '@angular/router';
 import {form} from '@angular/forms/signals';
 import {firstValueFrom} from 'rxjs';
-import {petSchema, PetFormModel} from '../pet-form';
+import {maxBirthDate, minBirthDate, petSchema, PetFormModel} from '../pet-form';
 import {resourceErrorMessage, valueOrDefault} from '../../utils/resource-utils';
 import {PetTypeService} from '../../pettypes/pettype.service';
 import {PetService} from '../pet.service';
@@ -61,6 +61,9 @@ export class PetAddComponent {
   });
 
   private readonly emptyOwner = {} as Owner;
+
+  protected readonly minBirthDate = minBirthDate();
+  protected readonly maxBirthDate = maxBirthDate();
 
   private readonly pet = signal<PetFormModel>({ name: '', birthDate: null, typeId: '' });
   readonly petTypes = computed(() => valueOrDefault(this.petTypesResource, [] as PetType[]));

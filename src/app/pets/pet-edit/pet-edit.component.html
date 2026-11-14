@@ -52,7 +52,7 @@
       <div class="row mb-3">
         <label for="birthDate" class="col-sm-2 col-form-label">Birth Date</label>
         <div class="col-sm-10">
-          <input id="birthDate" matInput [matDatepicker]="birthDateDatepicker" [formField]="petForm.birthDate" [class.is-valid]="petForm.birthDate().dirty() && petForm.birthDate().valid()" [class.is-invalid]="petForm.birthDate().dirty() && petForm.birthDate().invalid()" />
+          <input id="birthDate" matInput [matDatepicker]="birthDateDatepicker" [min]="minBirthDate" [max]="maxBirthDate" [formField]="petForm.birthDate" [class.is-valid]="petForm.birthDate().dirty() && petForm.birthDate().valid()" [class.is-invalid]="petForm.birthDate().dirty() && petForm.birthDate().invalid()" />
           <mat-datepicker-toggle matSuffix [for]="birthDateDatepicker" />
           <mat-datepicker #birthDateDatepicker />
           @if (petForm.birthDate().dirty()) {
@@ -60,6 +60,8 @@
               <div class="invalid-feedback">
                 @switch (error.kind) {
                   @case ('required') { Birth date is required }
+                  @case ('futureBirthDate') { Birth date cannot be in the future }
+                  @case ('tooOldBirthDate') { Birth date cannot be older than 50 years }
                 }
               </div>
             }
