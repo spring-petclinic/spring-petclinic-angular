@@ -64,7 +64,7 @@ describe('PetEditComponent', () => {
 
         await submitForm(fixture);
 
-        expect(petService.updatePet).toHaveBeenCalledWith('7', {
+        expect(petService.updatePet).toHaveBeenCalledWith(7, {
             id: 7,
             owner: undefined,
             name: 'Leon',

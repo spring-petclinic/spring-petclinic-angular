@@ -49,7 +49,7 @@ export class VetListComponent {
   readonly errorMessage = computed(() => this.deleteError() ?? resourceErrorMessage(this.vetsResource));
 
   deleteVet(vet: Vet) {
-    this.vetService.deleteVet(vet.id.toString()).subscribe({
+    this.vetService.deleteVet(vet.id).subscribe({
       next: () => this.vets.update(vets => vets.filter(currentItem => currentItem.id !== vet.id)),
       error: error => this.deleteError.set(String(error))
     });

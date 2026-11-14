@@ -51,7 +51,7 @@ export class VisitService {
       );
   }
 
-  getVisitById(visitId: string): Observable<Visit> {
+  getVisitById(visitId: number): Observable<Visit> {
     return this.http.get<Visit>(this.entityUrl + '/' + visitId)
       .pipe(
         catchError(this.handlerError('getVisitById', {} as Visit))
@@ -68,14 +68,14 @@ export class VisitService {
       );
   }
 
-  updateVisit(visitId: string, visit: Visit): Observable<Visit> {
+  updateVisit(visitId: number, visit: Visit): Observable<Visit> {
     return this.http.put<Visit>(this.entityUrl + '/' + visitId, visit)
       .pipe(
         catchError(this.handlerError('updateVisit', visit))
       );
   }
 
-  deleteVisit(visitId: string): Observable<number> {
+  deleteVisit(visitId: number): Observable<number> {
     return this.http.delete<number>(this.entityUrl + '/' + visitId)
       .pipe(
         catchError(this.handlerError('deleteVisit', 0))
