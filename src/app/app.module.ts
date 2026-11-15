@@ -33,7 +33,6 @@ import {VetsModule} from './vets/vets.module';
 import {PartsModule} from './parts/parts.module';
 import {SpecialtiesModule} from './specialties/specialties.module';
 import {HttpErrorHandler} from './error.service';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 
 @NgModule({
@@ -50,7 +49,6 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     VetsModule,
     SpecialtiesModule,
     PartsModule,
-    BrowserAnimationsModule,
     AppRoutingModule
   ],
   providers: [
