@@ -31,7 +31,7 @@ export const petSchema = schema<PetFormModel>(path => {
   required(path.name);
   minLength(path.name, 1);
   maxLength(path.name, 30);
-  pattern(path.name, /^[A-Za-z0-9].{0,29}$/);
+  pattern(path.name, /^[\p{L}][\p{L}\s\-']{0,29}$/u);
   required(path.birthDate);
   validate(path.birthDate, ({value}) => {
     const birthDate = value();

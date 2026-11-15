@@ -48,7 +48,7 @@ describe('VetAddComponent', () => {
     expect(submitButton(fixture).disabled).toBe(true);
     await setValue(fixture, '#firstName', 'Helen');
     await setValue(fixture, '#lastName', 'Leary1');
-    expect(fixture.nativeElement.textContent).toContain('Last name may only consist of letters');
+    expect(fixture.nativeElement.textContent).toContain('Last name may only contain letters');
     expect(submitButton(fixture).disabled).toBe(true);
   });
 

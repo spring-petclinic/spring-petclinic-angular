@@ -17,12 +17,12 @@ export const ownerSchema = schema<OwnerFormModel>(path => {
   required(path.firstName);
   minLength(path.firstName, 1);
   maxLength(path.firstName, 30);
-  pattern(path.firstName, /^[a-zA-Z]*$/);
+  pattern(path.firstName, /^[\p{L}]+([ '-][\p{L}]+){0,2}$/u);
 
   required(path.lastName);
   minLength(path.lastName, 1);
   maxLength(path.lastName, 30);
-  pattern(path.lastName, /^[a-zA-Z]*$/);
+  pattern(path.lastName, /^[\p{L}]+([ '-][\p{L}]+){0,2}\.?$/u);
 
   required(path.address);
   notBlank(path.address);
