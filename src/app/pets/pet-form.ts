@@ -1,4 +1,4 @@
-import {maxLength, minLength, pattern, required, schema, validate} from '@angular/forms/signals';
+import {maxLength, minLength, required, schema, validate} from '@angular/forms/signals';
 import moment from 'moment';
 import type {Moment} from 'moment';
 
@@ -31,7 +31,6 @@ export const petSchema = schema<PetFormModel>(path => {
   required(path.name);
   minLength(path.name, 1);
   maxLength(path.name, 30);
-  pattern(path.name, /^[\p{L}][\p{L}\s\-']{0,29}$/u);
   required(path.birthDate);
   validate(path.birthDate, ({value}) => {
     const birthDate = value();
