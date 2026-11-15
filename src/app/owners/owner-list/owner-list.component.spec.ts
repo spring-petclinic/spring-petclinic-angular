@@ -115,7 +115,7 @@ describe('OwnerListComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    it('should call ngOnInit() method', () => {
+    it('should load owners on init', () => {
         fixture.detectChanges();
         expect(vi.mocked(spy).mock.calls.length > 0, 'getOwners called').toBe(true);
     });
