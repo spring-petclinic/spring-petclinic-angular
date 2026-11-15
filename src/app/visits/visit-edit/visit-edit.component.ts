@@ -27,7 +27,7 @@ import {Pet} from '../../pets/pet';
 import {Owner} from '../../owners/owner';
 import {VisitService} from '../visit.service';
 import {Router} from '@angular/router';
-import {form} from '@angular/forms/signals';
+import { form, FormRoot, FormField } from '@angular/forms/signals';
 import {firstValueFrom} from 'rxjs';
 import {VisitFormModel, visitSchema} from '../visit-form';
 import {resourceErrorMessage, valueOrDefault} from '../../utils/resource-utils';
@@ -35,12 +35,13 @@ import {resourceErrorMessage, valueOrDefault} from '../../utils/resource-utils';
 import moment from 'moment';
 import {OwnerService} from '../../owners/owner.service';
 import {PetService} from '../../pets/pet.service';
+import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
 
 @Component({
-  selector: 'app-visit-edit',
-  standalone: false,
-  templateUrl: './visit-edit.component.html',
-  styleUrls: ['./visit-edit.component.css']
+    selector: 'app-visit-edit',
+    templateUrl: './visit-edit.component.html',
+    styleUrls: ['./visit-edit.component.css'],
+    imports: [FormRoot, MatDatepickerInput, FormField, MatDatepickerToggle, MatDatepicker]
 })
 export class VisitEditComponent {
   private visitService = inject(VisitService);

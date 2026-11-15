@@ -20,30 +20,13 @@
  * @author Vitaliy Fedoriv
  */
 
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {FormField, FormRoot} from '@angular/forms/signals';
-import {PetTypeService} from './pettype.service';
+import {Routes} from '@angular/router';
 import {PettypeListComponent} from './pettype-list/pettype-list.component';
 import {PettypeAddComponent} from './pettype-add/pettype-add.component';
 import {PettypeEditComponent} from './pettype-edit/pettype-edit.component';
-import {PettypesRoutingModule} from './pettypes-routing.module';
 
-@NgModule({
-  imports: [
-    CommonModule,
-    FormField,
-    FormRoot,
-    PettypesRoutingModule
-  ],
-  declarations: [
-    PettypeListComponent,
-    PettypeAddComponent,
-    PettypeEditComponent],
-  exports: [
-    PettypeListComponent
-  ],
-  providers: [PetTypeService]
-})
-export class PetTypesModule {
-}
+export const pettypesRoutes: Routes = [
+  {path: 'pettypes', component: PettypeListComponent},
+  {path: 'pettypes/add', component: PettypeAddComponent},
+  {path: 'pettypes/:id/edit', component: PettypeEditComponent}
+];

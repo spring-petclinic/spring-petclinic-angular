@@ -28,7 +28,7 @@ import {HandleError, HttpErrorHandler} from '../error.service';
 import {HttpClient} from '@angular/common/http';
 import {catchError} from 'rxjs/operators';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class VisitService {
   private http = inject(HttpClient);
   private httpErrorHandler = inject(HttpErrorHandler);

@@ -24,14 +24,14 @@ import {Component, computed, inject, signal} from '@angular/core';
 import {rxResource} from '@angular/core/rxjs-interop';
 import {OwnerService} from '../owner.service';
 import {Owner} from '../owner';
-import {Router} from '@angular/router';
-import {form, maxLength} from '@angular/forms/signals';
+import { Router, RouterLinkActive, RouterLink } from '@angular/router';
+import { form, maxLength, FormRoot, FormField } from '@angular/forms/signals';
 
 @Component({
-  selector: 'app-owner-list',
-  standalone: false,
-  templateUrl: './owner-list.component.html',
-  styleUrls: ['./owner-list.component.css']
+    selector: 'app-owner-list',
+    templateUrl: './owner-list.component.html',
+    styleUrls: ['./owner-list.component.css'],
+    imports: [FormRoot, FormField, RouterLinkActive, RouterLink]
 })
 export class OwnerListComponent {
   private router = inject(Router);

@@ -20,21 +20,24 @@
  * @author Vitaliy Fedoriv
  */
 
-import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
+import {Routes} from '@angular/router';
 import {PageNotFoundComponent} from './parts/page-not-found/page-not-found.component';
 import {WelcomeComponent} from './parts/welcome/welcome.component';
+import {ownerRoutes} from './owners/owners.routes';
+import {petRoutes} from './pets/pets.routes';
+import {visitRoutes} from './visits/visits.routes';
+import {pettypesRoutes} from './pettypes/pettypes.routes';
+import {vetRoutes} from './vets/vets.routes';
+import {specialtyRoutes} from './specialties/specialties.routes';
 
-const appRoutes: Routes = [
+export const routes: Routes = [
+  ...ownerRoutes,
+  ...petRoutes,
+  ...visitRoutes,
+  ...pettypesRoutes,
+  ...vetRoutes,
+  ...specialtyRoutes,
   {path: 'welcome', component: WelcomeComponent},
   {path: '', component: WelcomeComponent},
   {path: '**', component: PageNotFoundComponent}
 ];
-
-@NgModule({
-  imports: [RouterModule.forRoot(appRoutes, {bindToComponentInputs: true})],
-  exports: [RouterModule]
-})
-
-export class AppRoutingModule {
-}

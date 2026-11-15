@@ -26,13 +26,14 @@ import {OwnerService} from '../owner.service';
 import {Router} from '@angular/router';
 import {resourceErrorMessage, valueOrDefault} from '../../utils/resource-utils';
 import {Owner} from '../owner';
+import { PetListComponent } from '../../pets/pet-list/pet-list.component';
 
 
 @Component({
-  selector: 'app-owner-detail',
-  standalone: false,
-  templateUrl: './owner-detail.component.html',
-  styleUrls: ['./owner-detail.component.css']
+    selector: 'app-owner-detail',
+    templateUrl: './owner-detail.component.html',
+    styleUrls: ['./owner-detail.component.css'],
+    imports: [PetListComponent]
 })
 export class OwnerDetailComponent {
   private router = inject(Router);

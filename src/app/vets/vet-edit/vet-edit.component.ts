@@ -25,15 +25,16 @@ import {Vet} from '../vet';
 import {VetService} from '../vet.service';
 import {Router} from '@angular/router';
 import {Specialty} from '../../specialties/specialty';
-import {form} from '@angular/forms/signals';
+import { form, FormRoot, FormField } from '@angular/forms/signals';
 import {firstValueFrom} from 'rxjs';
 import {vetNamesSchema} from '../vet-form';
+import { MatFormField, MatSelect, MatOption } from '@angular/material/select';
 
 @Component({
-  selector: 'app-vet-edit',
-  standalone: false,
-  templateUrl: './vet-edit.component.html',
-  styleUrls: ['./vet-edit.component.css']
+    selector: 'app-vet-edit',
+    templateUrl: './vet-edit.component.html',
+    styleUrls: ['./vet-edit.component.css'],
+    imports: [FormRoot, FormField, MatFormField, MatSelect, MatOption]
 })
 export class VetEditComponent {
   private vetService = inject(VetService);

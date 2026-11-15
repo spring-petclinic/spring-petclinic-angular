@@ -20,12 +20,27 @@
  * @author Vitaliy Fedoriv
  */
 
-import {Component} from '@angular/core';
+import {Routes} from '@angular/router';
+import {PetListComponent} from './pet-list/pet-list.component';
+import {VisitAddComponent} from '../visits/visit-add/visit-add.component';
+import {PetEditComponent} from './pet-edit/pet-edit.component';
+import {PetAddComponent} from './pet-add/pet-add.component';
 
-@Component({
-  standalone: false,
-  template: ''
-})
-export class DummyComponent {
+export const petRoutes: Routes = [
+  {path: 'pets', component: PetListComponent},
+  {path: 'pets/add', component: PetAddComponent},
+  {
+    path: 'pets/:id',
+    children: [
+      {
+        path: 'edit',
+        component: PetEditComponent
+      },
+      {
+        path: 'visits\/add',
+        component: VisitAddComponent
+      }
+    ]
+  }
 
-}
+];

@@ -21,15 +21,14 @@ describe('VetAddComponent', () => {
   beforeEach(async () => {
     vetService.addVet.mockClear();
     await TestBed.configureTestingModule({
-      declarations: [VetAddComponent],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [FormField, FormRoot],
-      providers: [
-        {provide: SpecialtyService, useValue: {getSpecialties: () => of([radiology, surgery])}},
-        {provide: VetService, useValue: vetService},
-        {provide: Router, useClass: RouterStub}
-      ]
-    })
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    imports: [FormField, FormRoot, VetAddComponent],
+    providers: [
+        { provide: SpecialtyService, useValue: { getSpecialties: () => of([radiology, surgery]) } },
+        { provide: VetService, useValue: vetService },
+        { provide: Router, useClass: RouterStub }
+    ]
+})
       .compileComponents();
 
     fixture = TestBed.createComponent(VetAddComponent);

@@ -1,6 +1,6 @@
 /*
  *
- *  * Copyright 2016-2018 the original author or authors.
+ *  * Copyright 2016-2017 the original author or authors.
  *  *
  *  * Licensed under the Apache License, Version 2.0 (the "License");
  *  * you may not use this file except in compliance with the License.
@@ -20,36 +20,15 @@
  * @author Vitaliy Fedoriv
  */
 
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {FormField, FormRoot} from '@angular/forms/signals';
-import {MatSelectModule} from '@angular/material/select';
+import {Routes} from '@angular/router';
 import {VetListComponent} from './vet-list/vet-list.component';
-import {VetService} from './vet.service';
-import {VetsRoutingModule} from './vets-routing.module';
-import {VetEditComponent} from './vet-edit/vet-edit.component';
 import {VetAddComponent} from './vet-add/vet-add.component';
+import {VetEditComponent} from './vet-edit/vet-edit.component';
 import {VetResolver} from './vet-resolver';
+import {SpecResolver} from '../specialties/spec-resolver';
 
-@NgModule({
-  imports: [
-    CommonModule,
-    FormField,
-    FormRoot,
-    MatSelectModule,
-    VetsRoutingModule
-  ],
-  declarations: [
-    VetListComponent,
-    VetEditComponent,
-    VetAddComponent
-  ],
-  exports: [
-    VetListComponent,
-    VetEditComponent,
-    VetAddComponent
-  ],
-  providers: [VetService, VetResolver]
-})
-export class VetsModule {
-}
+export const vetRoutes: Routes = [
+  {path: 'vets', component: VetListComponent},
+  {path: 'vets/add', component: VetAddComponent},
+  {path: 'vets/:id/edit', component: VetEditComponent, resolve: {vet: VetResolver, specs: SpecResolver}}
+];

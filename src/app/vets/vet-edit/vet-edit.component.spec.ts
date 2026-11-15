@@ -46,14 +46,13 @@ describe('VetEditComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [VetEditComponent],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [FormField, FormRoot, MatSelectModule],
-      providers: [
-        {provide: VetService, useClass: VetServiceStub},
-        {provide: Router, useClass: RouterStub}
-      ]
-    })
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    imports: [FormField, FormRoot, MatSelectModule, VetEditComponent],
+    providers: [
+        { provide: VetService, useClass: VetServiceStub },
+        { provide: Router, useClass: RouterStub }
+    ]
+})
       .compileComponents();
   });
 

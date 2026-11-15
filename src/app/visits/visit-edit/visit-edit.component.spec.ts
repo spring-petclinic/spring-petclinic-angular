@@ -24,16 +24,15 @@ describe('VisitEditComponent', () => {
     beforeEach(async () => {
         visitService.updateVisit.mockClear();
         await TestBed.configureTestingModule({
-            declarations: [VisitEditComponent],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA],
-            imports: [FormField, FormRoot, MatDatepickerModule, MatMomentDateModule],
-            providers: [
-                { provide: PetService, useValue: { getPetById: () => of(pet) } },
-                { provide: VisitService, useValue: visitService },
-                { provide: OwnerService, useValue: { getOwnerById: () => of({ id: 5 }) } },
-                { provide: Router, useClass: RouterStub }
-            ]
-        })
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    imports: [FormField, FormRoot, MatDatepickerModule, MatMomentDateModule, VisitEditComponent],
+    providers: [
+        { provide: PetService, useValue: { getPetById: () => of(pet) } },
+        { provide: VisitService, useValue: visitService },
+        { provide: OwnerService, useValue: { getOwnerById: () => of({ id: 5 }) } },
+        { provide: Router, useClass: RouterStub }
+    ]
+})
             .compileComponents();
 
         fixture = TestBed.createComponent(VisitEditComponent);

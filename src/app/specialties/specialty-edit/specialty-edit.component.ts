@@ -25,16 +25,16 @@ import { rxResource } from '@angular/core/rxjs-interop';
 import {Specialty} from '../specialty';
 import {SpecialtyService} from '../specialty.service';
 import {Router} from '@angular/router';
-import {form} from '@angular/forms/signals';
+import { form, FormRoot, FormField } from '@angular/forms/signals';
 import {specialtySchema} from '../specialty-form';
 import {firstValueFrom} from 'rxjs';
 import {resourceErrorMessage, valueOrDefault} from '../../utils/resource-utils';
 
 @Component({
-  selector: 'app-specialty-edit',
-  standalone: false,
-  templateUrl: './specialty-edit.component.html',
-  styleUrls: ['./specialty-edit.component.css']
+    selector: 'app-specialty-edit',
+    templateUrl: './specialty-edit.component.html',
+    styleUrls: ['./specialty-edit.component.css'],
+    imports: [FormRoot, FormField]
 })
 export class SpecialtyEditComponent {
   private specialtyService = inject(SpecialtyService);

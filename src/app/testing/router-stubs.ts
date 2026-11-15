@@ -21,28 +21,10 @@
 // export for convenience.
 export {ActivatedRoute, Router, RouterLink, RouterOutlet} from '@angular/router';
 
-import {Component, Directive, HostListener, Injectable, input} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {NavigationExtras} from '@angular/router';
 // Only implements params and part of snapshot.params
 import {BehaviorSubject} from 'rxjs';
-
-@Directive({
-  selector: '[appRouterLink]',
-  standalone: false,
-})
-export class RouterLinkStubDirective {
-  readonly linkParams = input<any>(undefined);
-  navigatedTo: any = null;
-
-  @HostListener('click', ['$event'])
-  onClick() {
-    this.navigatedTo = this.linkParams();
-  }
-}
-
-@Component({selector: 'app-router-outlet', standalone: false, template: ''})
-export class RouterOutletStubComponent {
-}
 
 @Injectable()
 export class RouterStub {

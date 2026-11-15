@@ -25,16 +25,16 @@ import { rxResource } from '@angular/core/rxjs-interop';
 import {PetType} from '../pettype';
 import {PetTypeService} from '../pettype.service';
 import {Router} from '@angular/router';
-import {form} from '@angular/forms/signals';
+import { form, FormRoot, FormField } from '@angular/forms/signals';
 import {pettypeSchema} from '../pettype-form';
 import {firstValueFrom} from 'rxjs';
 import {resourceErrorMessage, valueOrDefault} from '../../utils/resource-utils';
 
 @Component({
-  selector: 'app-pettype-edit',
-  standalone: false,
-  templateUrl: './pettype-edit.component.html',
-  styleUrls: ['./pettype-edit.component.css']
+    selector: 'app-pettype-edit',
+    templateUrl: './pettype-edit.component.html',
+    styleUrls: ['./pettype-edit.component.css'],
+    imports: [FormRoot, FormField]
 })
 export class PettypeEditComponent {
   private pettypeService = inject(PetTypeService);

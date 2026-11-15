@@ -32,7 +32,6 @@ import { RouterStub } from '../../testing/router-stubs';
 import { Owner } from '../owner';
 import { Observable, of } from 'rxjs';
 import { By } from '@angular/platform-browser';
-import { OwnersRoutingModule } from '../owners-routing.module';
 import { OwnerListComponent } from '../owner-list/owner-list.component';
 
 class OwnserServiceStub {
@@ -55,15 +54,14 @@ describe('OwnerAddComponent', () => {
     const submitButton = () => fixture.nativeElement.querySelector('button[type=submit]') as HTMLButtonElement;
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            declarations: [OwnerAddComponent],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA],
-            imports: [FormField, FormRoot],
-            providers: [
-                provideRouter([]),
-                { provide: OwnerService, useClass: OwnserServiceStub },
-                { provide: Router, useClass: RouterStub },
-            ],
-        }).compileComponents();
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    imports: [FormField, FormRoot, OwnerAddComponent],
+    providers: [
+        provideRouter([]),
+        { provide: OwnerService, useClass: OwnserServiceStub },
+        { provide: Router, useClass: RouterStub },
+    ],
+}).compileComponents();
     });
 
     beforeEach(() => {
