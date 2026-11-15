@@ -7,6 +7,7 @@ export const vetNamesSchema = (minNameLength: number) =>
       required(name);
       minLength(name, minNameLength);
       maxLength(name, 30);
-      pattern(name, /^[a-zA-Z]*$/);
     }
+    pattern(path.firstName, /^[\p{L}]+([ '-][\p{L}]+){0,2}$/u);
+    pattern(path.lastName, /^[\p{L}]+([ '-][\p{L}]+){0,2}\.?$/u);
   });

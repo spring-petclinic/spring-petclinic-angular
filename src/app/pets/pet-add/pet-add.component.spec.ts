@@ -58,7 +58,7 @@ describe('PetAddComponent', () => {
 
     it('should show validation errors', async () => {
         await setValue(fixture, '#name', '-Leo');
-        expect(fixture.nativeElement.textContent).toContain('Name must begin with a letter or digit');
+        expect(fixture.nativeElement.textContent).toContain('Name must begin with a letter and may only contain letters');
     });
 
     it('should add the pet and go back to the owner', async () => {

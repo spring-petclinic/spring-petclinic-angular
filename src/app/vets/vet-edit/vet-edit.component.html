@@ -33,7 +33,7 @@
                 @switch (error.kind) {
                   @case ('maxLength') { First name may be only 30 characters long }
                   @case ('minLength') { First name must be at least 2 characters long }
-                  @case ('pattern') { First name may only consist of letters }
+                  @case ('pattern') { First name may only contain letters, optionally separated by spaces, hyphens or apostrophes }
                   @case ('required') { First name is required }
                 }
               </div>
@@ -52,7 +52,7 @@
                 @switch (error.kind) {
                   @case ('maxLength') { Last name may be only 30 characters long }
                   @case ('minLength') { Last name must be at least 2 characters long }
-                  @case ('pattern') { Last name may only consist of letters }
+                  @case ('pattern') { Last name may only contain letters, optionally separated by spaces, hyphens or apostrophes }
                   @case ('required') { Last name is required }
                 }
               </div>

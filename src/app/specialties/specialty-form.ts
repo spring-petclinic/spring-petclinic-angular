@@ -5,5 +5,5 @@ export const specialtySchema = schema<{ name: string }>(path => {
   required(path.name);
   minLength(path.name, 1);
   maxLength(path.name, 80);
-  pattern(path.name, /^[A-Za-z0-9].{0,79}$/);
+  pattern(path.name, /^[\p{L}][\p{L}\s\-&/]{0,79}$/u);
 });

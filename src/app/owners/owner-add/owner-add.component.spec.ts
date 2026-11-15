@@ -140,7 +140,7 @@ describe('OwnerAddComponent', () => {
         await setValue('#telephone', '60855a');
         await setValue('#city', '');
         const text = fixture.nativeElement.textContent;
-        expect(text).toContain('First name must consist of letters only');
+        expect(text).toContain('First name may only contain letters');
         expect(text).toContain('Phone number only accepts digits');
         expect(text).toContain('City is required');
         expect(submitButton().disabled).toBe(true);
