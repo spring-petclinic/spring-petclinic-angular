@@ -19,7 +19,6 @@
 import {ApplicationConfig, provideZonelessChangeDetection} from '@angular/core';
 import {provideHttpClient} from '@angular/common/http';
 import {provideRouter, withComponentInputBinding} from '@angular/router';
-import {provideAnimations} from '@angular/platform-browser/animations';
 import {provideMomentDateAdapter} from '@angular/material-moment-adapter';
 import {routes} from './app.routes';
 
@@ -39,7 +38,6 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideZonelessChangeDetection(),
     provideHttpClient(),
-    provideAnimations(),
     provideRouter(routes, withComponentInputBinding()),
     provideMomentDateAdapter(MY_DATE_FORMATS),
   ]

@@ -20,7 +20,7 @@
  * @author Vitaliy Fedoriv
  */
 
-import { Component, computed, inject, input, linkedSignal, signal } from '@angular/core';
+import { Component, computed, inject, input, linkedSignal, numberAttribute, signal } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 import {Visit} from '../visit';
 import {Pet} from '../../pets/pet';
@@ -50,7 +50,7 @@ export class VisitEditComponent {
   private router = inject(Router);
 
   // route parameter, bound by the router (bindToComponentInputs)
-  readonly id = input<string>();
+  readonly id = input(undefined, { transform: numberAttribute });
 
   private readonly visitResource = rxResource({
     params: () => this.id(),
@@ -96,7 +96,7 @@ export class VisitEditComponent {
           description
         } as Visit;
         try {
-          await firstValueFrom(this.visitService.updateVisit(visit.id.toString(), visit));
+          await firstValueFrom(this.visitService.updateVisit(visit.id, visit));
           this.gotoOwnerDetail();
         } catch (error) {
           this.submitError.set(String(error));

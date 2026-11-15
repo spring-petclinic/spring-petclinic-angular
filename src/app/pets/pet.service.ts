@@ -67,14 +67,14 @@ export class PetService {
       );
   }
 
-  updatePet(petId: string, pet: Pet): Observable<Pet> {
+  updatePet(petId: number, pet: Pet): Observable<Pet> {
     return this.http.put<Pet>(this.entityUrl + '/' + petId, pet)
       .pipe(
         catchError(this.handlerError('updatePet', pet))
       );
   }
 
-  deletePet(petId: string): Observable<number> {
+  deletePet(petId: number): Observable<number> {
     return this.http.delete<number>(this.entityUrl + '/' + petId)
       .pipe(
         catchError(this.handlerError('deletePet', 0))

@@ -20,7 +20,7 @@
  * @author Vitaliy Fedoriv
  */
 
-import { Component, computed, inject, input, linkedSignal, signal } from '@angular/core';
+import { Component, computed, inject, input, linkedSignal, numberAttribute, signal } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { OwnerService } from '../owner.service';
 import { Owner } from '../owner';
@@ -41,11 +41,11 @@ export class OwnerEditComponent {
   private router = inject(Router);
 
   // route parameter, bound by the router (bindToComponentInputs)
-  readonly id = input<string>();
+  readonly id = input(undefined, { transform: numberAttribute });
 
   private readonly ownerResource = rxResource({
     params: () => this.id(),
-    stream: ({ params }) => this.ownerService.getOwnerById(Number(params)),
+    stream: ({ params }) => this.ownerService.getOwnerById(params),
   });
 
   private readonly emptyOwner = {} as Owner;

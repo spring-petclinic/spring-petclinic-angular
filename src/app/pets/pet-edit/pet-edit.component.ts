@@ -21,14 +21,14 @@
  * @author Vitaliy Fedoriv
  */
 
-import { Component, computed, inject, input, linkedSignal, signal } from '@angular/core';
+import { Component, computed, inject, input, linkedSignal, numberAttribute, signal } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 import {Pet} from '../pet';
 import {PetService} from '../pet.service';
 import {Router} from '@angular/router';
 import { form, FormRoot, FormField } from '@angular/forms/signals';
 import {firstValueFrom} from 'rxjs';
-import {petSchema, PetFormModel} from '../pet-form';
+import {maxBirthDate, minBirthDate, petSchema, PetFormModel} from '../pet-form';
 import {resourceErrorMessage, valueOrDefault} from '../../utils/resource-utils';
 import {Owner} from '../../owners/owner';
 import {PetType} from '../../pettypes/pettype';
@@ -51,20 +51,23 @@ export class PetEditComponent {
   private router = inject(Router);
 
   // route parameter, bound by the router (bindToComponentInputs)
-  readonly id = input<string>();
+  readonly id = input(undefined, { transform: numberAttribute });
 
   private readonly petTypesResource = rxResource({
     stream: () => this.petTypeService.getPetTypes(),
   });
   private readonly petResource = rxResource({
     params: () => this.id(),
-    stream: ({ params }) => this.petService.getPetById(Number(params)),
+    stream: ({ params }) => this.petService.getPetById(params),
   });
   // the owner is loaded once the pet, which references it, has been received
   private readonly ownerResource = rxResource({
     params: () => (this.petResource.hasValue() ? this.petResource.value().ownerId : undefined),
     stream: ({ params }) => this.ownerService.getOwnerById(params),
   });
+
+  protected readonly minBirthDate = minBirthDate();
+  protected readonly maxBirthDate = maxBirthDate();
 
   private readonly emptyPet = {} as Pet;
   private readonly emptyOwner = {} as Owner;
@@ -96,7 +99,7 @@ export class PetEditComponent {
           type: this.petTypes().find(petType => String(petType.id) === typeId)
         } as Pet;
         try {
-          await firstValueFrom(this.petService.updatePet(pet.id.toString(), pet));
+          await firstValueFrom(this.petService.updatePet(pet.id, pet));
           this.gotoOwnerDetail(this.currentOwner());
         } catch (error) {
           this.submitError.set(String(error));

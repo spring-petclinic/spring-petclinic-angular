@@ -189,7 +189,7 @@ test('owner form displays Bootstrap invalid state and feedback', async ({ page }
   await firstName.blur();
 
   await expect(firstName).toHaveClass(/is-invalid/);
-  await expect(page.getByText('First name must consist of letters only')).toBeVisible();
+  await expect(page.getByText('First name may only contain letters')).toBeVisible();
   await expect(page.getByRole('button', { name: 'Add Owner' })).toBeDisabled();
 });
 

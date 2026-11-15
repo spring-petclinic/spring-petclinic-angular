@@ -51,14 +51,14 @@ export class PetTypeService {
       );
   }
 
-  getPetTypeById(typeId: string): Observable<PetType> {
+  getPetTypeById(typeId: number): Observable<PetType> {
     return this.http.get<PetType>((this.entityUrl + '/' + typeId))
       .pipe(
         catchError(this.handlerError('getPetTypeById', {} as PetType))
       );
   }
 
-  updatePetType(typeId: string, petType: PetType): Observable<PetType> {
+  updatePetType(typeId: number, petType: PetType): Observable<PetType> {
     return this.http.put<PetType>(this.entityUrl + '/' + typeId, petType)
       .pipe(
         catchError(this.handlerError('updatePetType', petType))
@@ -72,7 +72,7 @@ export class PetTypeService {
       );
   }
 
-  deletePetType(typeId: string): Observable<number> {
+  deletePetType(typeId: number): Observable<number> {
     return this.http.delete<number>(this.entityUrl + '/' + typeId)
       .pipe(
         catchError(this.handlerError('deletePetType', 0))

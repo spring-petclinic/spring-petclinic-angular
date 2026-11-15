@@ -62,13 +62,13 @@ export class OwnerService {
   }
 
 
-  updateOwner(ownerId: string, owner: Owner): Observable<{}> {
+  updateOwner(ownerId: number, owner: Owner): Observable<{}> {
     return this.http
       .put<Owner>(this.entityUrl + '/' + ownerId, owner)
       .pipe(catchError(this.handlerError('updateOwner', owner)));
   }
 
-  deleteOwner(ownerId: string): Observable<{}> {
+  deleteOwner(ownerId: number): Observable<{}> {
     return this.http
       .delete<Owner>(this.entityUrl + '/' + ownerId)
       .pipe(catchError(this.handlerError('deleteOwner', [ownerId])));

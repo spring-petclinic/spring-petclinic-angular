@@ -56,7 +56,7 @@ describe('SpecialtyAddComponent', () => {
     it('should disable the submit button until the name is valid', async () => {
         expect(submitButton(fixture).disabled).toBe(true);
         await setValue(fixture, '#name', '-dentistry');
-        expect(fixture.nativeElement.textContent).toContain('Name must begin with a letter or digit');
+        expect(fixture.nativeElement.textContent).toContain('Name must begin with a letter and may only contain letters');
         expect(submitButton(fixture).disabled).toBe(true);
         await setValue(fixture, '#name', 'dentistry');
         expect(submitButton(fixture).disabled).toBe(false);

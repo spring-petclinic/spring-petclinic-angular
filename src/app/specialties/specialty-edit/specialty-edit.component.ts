@@ -20,7 +20,7 @@
  * @author Vitaliy Fedoriv
  */
 
-import { Component, computed, inject, input, linkedSignal, signal } from '@angular/core';
+import { Component, computed, inject, input, linkedSignal, numberAttribute, signal } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 import {Specialty} from '../specialty';
 import {SpecialtyService} from '../specialty.service';
@@ -41,7 +41,7 @@ export class SpecialtyEditComponent {
   private router = inject(Router);
 
   // route parameter, bound by the router (bindToComponentInputs)
-  readonly id = input<string>();
+  readonly id = input(undefined, { transform: numberAttribute });
 
   private readonly specialtyResource = rxResource({
     params: () => this.id(),
@@ -66,7 +66,7 @@ export class SpecialtyEditComponent {
         action: async () => {
           const specialty = this.specialty();
           try {
-            await firstValueFrom(this.specialtyService.updateSpecialty(specialty.id.toString(), specialty));
+            await firstValueFrom(this.specialtyService.updateSpecialty(specialty.id, specialty));
             this.onBack();
           } catch (error) {
             this.submitError.set(String(error));

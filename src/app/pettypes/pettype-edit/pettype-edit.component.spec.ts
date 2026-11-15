@@ -71,9 +71,9 @@ describe('PettypeEditComponent', () => {
         expect(fixture.nativeElement.querySelector('button[type=submit]').disabled).toBe(true);
     });
 
-    it('should reject a name that does not begin with a letter or digit', async () => {
+    it('should reject a name that does not begin with a letter', async () => {
         await typeName('-dog');
-        expect(fixture.nativeElement.textContent).toContain('Name must begin with a letter or digit');
+        expect(fixture.nativeElement.textContent).toContain('Name must begin with a letter and may only contain letters');
     });
 
     it('should reject a name longer than 80 characters', async () => {
@@ -85,7 +85,7 @@ describe('PettypeEditComponent', () => {
         await typeName('dog');
         fixture.nativeElement.querySelector('form').dispatchEvent(new Event('submit'));
         await fixture.whenStable();
-        expect(updateSpy).toHaveBeenCalledWith('1', { id: 1, name: 'dog' });
+        expect(updateSpy).toHaveBeenCalledWith(1, { id: 1, name: 'dog' });
         expect(router.navigate).toHaveBeenCalledWith(['/pettypes']);
     });
 });

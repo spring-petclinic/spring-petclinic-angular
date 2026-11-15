@@ -21,7 +21,7 @@
  */
 
 
-import { Component, computed, inject, input, signal } from '@angular/core';
+import { Component, computed, inject, input, numberAttribute, signal } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 import {Pet} from '../pet';
 import {PetType} from '../../pettypes/pettype';
@@ -29,7 +29,7 @@ import {Owner} from '../../owners/owner';
 import {Router} from '@angular/router';
 import { form, FormRoot, FormField } from '@angular/forms/signals';
 import {firstValueFrom} from 'rxjs';
-import {petSchema, PetFormModel} from '../pet-form';
+import {maxBirthDate, minBirthDate, petSchema, PetFormModel} from '../pet-form';
 import {resourceErrorMessage, valueOrDefault} from '../../utils/resource-utils';
 import {PetTypeService} from '../../pettypes/pettype.service';
 import {PetService} from '../pet.service';
@@ -51,17 +51,20 @@ export class PetAddComponent {
   private router = inject(Router);
 
   // owner id: route parameter, bound by the router (bindToComponentInputs)
-  readonly id = input<string>();
+  readonly id = input(undefined, { transform: numberAttribute });
 
   private readonly petTypesResource = rxResource({
     stream: () => this.petTypeService.getPetTypes(),
   });
   private readonly ownerResource = rxResource({
     params: () => this.id(),
-    stream: ({ params }) => this.ownerService.getOwnerById(Number(params)),
+    stream: ({ params }) => this.ownerService.getOwnerById(params),
   });
 
   private readonly emptyOwner = {} as Owner;
+
+  protected readonly minBirthDate = minBirthDate();
+  protected readonly maxBirthDate = maxBirthDate();
 
   private readonly pet = signal<PetFormModel>({ name: '', birthDate: null, typeId: '' });
   readonly petTypes = computed(() => valueOrDefault(this.petTypesResource, [] as PetType[]));
