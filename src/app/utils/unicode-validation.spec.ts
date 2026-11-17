@@ -56,16 +56,9 @@ describe('Unicode-aware validation patterns', () => {
             ['1cat', 'cat!!!', 'cat<script>', '-cat', 'cat & dog', 'cat/dog']);
     });
 
-    it('should validate the pet name', () => {
+    it('should not restrict the pet name characters, as the REST backend only enforces its length', () => {
         const check = (v: string) =>
             hasPatternError({ name: v, birthDate: null, typeId: '' }, petSchema, 'name');
-        personNames(check, ['Leo', 'Éclair', 'Бобик', 'Mon Chat', 'D\'Artagnan', 'Jean-Luc'],
-            ['1Leo', 'Leo!', '-Leo', 'Leo<script>', 'Leo_2']);
-    });
-
-    it('should reject names longer than the allowed length', () => {
-        const check = (v: string) => hasPatternError({ name: v, birthDate: null, typeId: '' }, petSchema, 'name');
-        expect(check('É'.repeat(30))).toBe(false);
-        expect(check('É'.repeat(31))).toBe(true);
+        ['Leo', 'Éclair', 'Бобик', 'D\'Artagnan', 'R2-D2', '1Leo', 'Mr. Bean'].forEach(v => expect(check(v), v).toBe(false));
     });
 });

@@ -56,8 +56,13 @@ describe('PetAddComponent', () => {
     });
 
     it('should show validation errors', async () => {
-        await setValue(fixture, '#name', '-Leo');
-        expect(fixture.nativeElement.textContent).toContain('Name must begin with a letter and may only contain letters');
+        await setValue(fixture, '#name', 'L'.repeat(31));
+        expect(fixture.nativeElement.textContent).toContain('Name may be at most 30 characters long');
+    });
+
+    it('should accept any pet name within the length limit, as the REST backend does', async () => {
+        await setValue(fixture, '#name', 'R2-D2 (Mr. Bean) 🐶');
+        expect(fixture.nativeElement.textContent).not.toContain('Name must');
     });
 
     it('should add the pet and go back to the owner', async () => {
