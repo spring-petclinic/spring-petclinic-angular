@@ -35,7 +35,7 @@
     "tslib": "^2.9.1"
   },
   "devDependencies": {
-    "@angular-eslint/builder": "22.6.0",
+    "@angular-eslint/builder": "22.7.0",
     "@angular/build": "22.2.6",
     "@angular/cli": "22.2.6",
     "@angular/compiler-cli": "22.2.5",
