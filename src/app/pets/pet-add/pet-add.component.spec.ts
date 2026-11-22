@@ -58,6 +58,10 @@ describe('PetAddComponent', () => {
     it('should show validation errors', async () => {
         await setValue(fixture, '#name', 'L'.repeat(31));
         expect(fixture.nativeElement.textContent).toContain('Name may be at most 30 characters long');
+
+        await setValue(fixture, '#name', '   ');
+        expect(fixture.nativeElement.textContent).toContain('Name is required');
+        expect(submitButton(fixture).disabled).toBe(true);
     });
 
     it('should accept any pet name within the length limit, as the REST backend does', async () => {

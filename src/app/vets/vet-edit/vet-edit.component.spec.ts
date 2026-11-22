@@ -94,9 +94,19 @@ describe('VetEditComponent', () => {
     expect(navigate).toHaveBeenCalledWith(['/vets']);
   });
 
-  it('should disable the submit button when the form is invalid', async () => {
+  it('should accept single-character first and last names', async () => {
+    await setValue('#firstName', 'J');
     await setValue('#lastName', 'C');
-    expect(fixture.nativeElement.textContent).toContain('Last name must be at least 2 characters long');
+    expect(submitButton().disabled).toBe(false);
+  });
+
+  it('should disable the submit button when the form is invalid', async () => {
+    await setValue('#lastName', '');
+    expect(fixture.nativeElement.textContent).toContain('Last name is required');
+    expect(submitButton().disabled).toBe(true);
+
+    await setValue('#lastName', 'Carter1');
+    expect(fixture.nativeElement.textContent).toContain('Last name may only contain letters');
     expect(submitButton().disabled).toBe(true);
   });
 });

@@ -74,8 +74,12 @@ describe('PetEditComponent', () => {
         expect(router.navigate).toHaveBeenCalledWith(['/owners', 1]);
     });
 
-    it('should disable the submit button when the name is empty', async () => {
+    it('should disable the submit button when the name is empty or blank', async () => {
         await setValue(fixture, '#name', '');
+        expect(fixture.nativeElement.textContent).toContain('Name is required');
+        expect(submitButton(fixture).disabled).toBe(true);
+
+        await setValue(fixture, '#name', '   ');
         expect(fixture.nativeElement.textContent).toContain('Name is required');
         expect(submitButton(fixture).disabled).toBe(true);
     });

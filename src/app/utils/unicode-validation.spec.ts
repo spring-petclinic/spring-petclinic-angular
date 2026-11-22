@@ -39,7 +39,7 @@ describe('Unicode-aware validation patterns', () => {
 
     it('should validate the vet names', () => {
         const vet = (field: 'firstName' | 'lastName') => (v: string) =>
-            hasPatternError({ firstName: 'James', lastName: 'Carter', [field]: v }, vetNamesSchema(2), field);
+            hasPatternError({ firstName: 'James', lastName: 'Carter', [field]: v }, vetNamesSchema, field);
         personNames(vet('firstName'), validFirstNames, invalidFirstNames);
         personNames(vet('lastName'), validLastNames, invalidLastNames);
     });
