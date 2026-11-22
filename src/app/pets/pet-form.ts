@@ -1,6 +1,7 @@
 import {maxLength, minLength, required, schema, validate} from '@angular/forms/signals';
 import moment from 'moment';
 import type {Moment} from 'moment';
+import {notBlank} from '../utils/form-utils';
 
 /** Oldest age allowed for a pet, as enforced by the REST backend (@PetAgeValidation). */
 export const MAX_PET_AGE_YEARS = 50;
@@ -29,6 +30,7 @@ export interface PetFormModel {
 /** Validation rules shared by the pet add and edit forms. */
 export const petSchema = schema<PetFormModel>(path => {
   required(path.name);
+  notBlank(path.name);
   minLength(path.name, 1);
   maxLength(path.name, 30);
   required(path.birthDate);

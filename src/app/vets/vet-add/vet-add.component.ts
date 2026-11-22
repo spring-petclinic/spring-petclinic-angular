@@ -55,7 +55,7 @@ export class VetAddComponent {
     () => this.submitError() ?? resourceErrorMessage(this.specialtiesResource)
   );
 
-  protected readonly vetForm = form(this.vet, vetNamesSchema(1), {
+  protected readonly vetForm = form(this.vet, vetNamesSchema, {
     submission: {
       action: async () => {
         const { firstName, lastName, specialtyId } = this.vet();

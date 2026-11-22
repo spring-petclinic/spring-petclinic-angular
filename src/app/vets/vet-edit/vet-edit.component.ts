@@ -52,7 +52,7 @@ export class VetEditComponent {
     return { firstName, lastName, specialties: [...specialties] };
   });
 
-  protected readonly vetForm = form(this.vetModel, vetNamesSchema(2), {
+  protected readonly vetForm = form(this.vetModel, vetNamesSchema, {
     submission: {
       action: async () => {
         const vet = { id: this.vet().id, ...this.vetModel() } as Vet;
