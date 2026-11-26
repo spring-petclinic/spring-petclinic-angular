@@ -42,7 +42,7 @@
     "@angular/language-service": "22.2.5",
     "@playwright/test": "^1.65.1",
     "@types/node": "^26.6.6",
-    "@vitest/coverage-v8": "^5.1.0",
+    "@vitest/coverage-v8": "^5.1.1",
     "angular-eslint": "22.8.0",
     "eslint": "^10.15.0",
     "jsdom": "^31.0.1",
